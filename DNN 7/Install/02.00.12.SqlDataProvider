@@ -1,0 +1,3 @@
+﻿UPDATE {databaseOwner}{objectQualifier}Packages SET IconFile = N'~/Providers/HtmlEditorProviders/CKEditor/LogoCKEditor.png' 
+Where Name = 'DotNetNuke.CKHtmlEditorProvider' and IconFile = '~/LogoCKEditor.png'
+GO

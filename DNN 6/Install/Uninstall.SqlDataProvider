@@ -1,0 +1,31 @@
+IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}{objectQualifier}CKEditor_DeleteAllModuleSettings') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE {databaseOwner}{objectQualifier}CKEditor_DeleteAllModuleSettings
+GO
+
+IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}{objectQualifier}CKEditor_DeleteAllPageSettings') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE {databaseOwner}{objectQualifier}CKEditor_DeleteAllPageSettings
+GO
+
+IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}{objectQualifier}CKEditor_DeleteCurrentPageSettings') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE {databaseOwner}{objectQualifier}CKEditor_DeleteCurrentPageSettings
+GO
+
+IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}{objectQualifier}CKEditor_DeleteAllPortalSettings') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE {databaseOwner}{objectQualifier}CKEditor_DeleteAllPortalSettings
+GO
+
+IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}{objectQualifier}CKEditor_DeleteAllChildPageSettings') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE {databaseOwner}{objectQualifier}CKEditor_DeleteAllChildPageSettings
+GO
+
+IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}{objectQualifier}CKEditor_DeleteAllModuleSettingsByTab') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE {databaseOwner}{objectQualifier}CKEditor_DeleteAllModuleSettingsByTab
+GO
+
+/** Delete All settings **/
+
+delete from {databaseOwner}{objectQualifier}HostSettings where SettingName like 'DNNCK%'
+GO
+
+delete from {databaseOwner}{objectQualifier}ModuleSettings where SettingName like 'DNNCKMI#%'
+GO

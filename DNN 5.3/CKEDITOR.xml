@@ -1,0 +1,2784 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>WatchersNET.CKEditor</name>
+    </assembly>
+    <members>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblHeader">
+            <summary>
+            lblHeader control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblPortal">
+            <summary>
+            lblPortal control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblPage">
+            <summary>
+            lblPage control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblModType">
+            <summary>
+            lblModType control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblModName">
+            <summary>
+            lblModName control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblModInst">
+            <summary>
+            lblModInst control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblUName">
+            <summary>
+            lblUName control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblSettings">
+            <summary>
+            lblSettings control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblSetFor">
+            <summary>
+            lblSetFor control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.rBlSetMode">
+            <summary>
+            rBlSetMode control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lnkRemove">
+            <summary>
+            lnkRemove control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblImExport">
+            <summary>
+            lblImExport control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblImport">
+            <summary>
+            lblImport control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lnkExport">
+            <summary>
+            lnkExport control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lnkImportNow">
+            <summary>
+            lnkImportNow control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblMainSet">
+            <summary>
+            lblMainSet control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblBlanktext">
+            <summary>
+            lblBlanktext control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.txtBlanktext">
+            <summary>
+            txtBlanktext control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblSkin">
+            <summary>
+            lblSkin control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.ddlSkin">
+            <summary>
+            ddlSkin control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblToolbars">
+            <summary>
+            lblToolbars control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.gvToolbars">
+            <summary>
+            gvToolbars control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblCustomConfig">
+            <summary>
+            lblCustomConfig control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblUseJquery">
+            <summary>
+            lblUseJquery control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.cbUseJquery">
+            <summary>
+            cbUseJquery control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblWidth">
+            <summary>
+            lblWidth control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.txtWidth">
+            <summary>
+            txtWidth control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblHeight">
+            <summary>
+            lblHeight control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.txtHeight">
+            <summary>
+            txtHeight control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblBrowsSec">
+            <summary>
+            lblBrowsSec control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblBrowser">
+            <summary>
+            lblBrowser control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.ddlBrowser">
+            <summary>
+            ddlBrowser control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblBrowAllow">
+            <summary>
+            lblBrowAllow control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.chblBrowsGr">
+            <summary>
+            chblBrowsGr control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblBrowserDirs">
+            <summary>
+            lblBrowserDirs control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.cbBrowserDirs">
+            <summary>
+            cbBrowserDirs control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblResizeWidth">
+            <summary>
+            lblResizeWidth control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.txtResizeWidth">
+            <summary>
+            txtResizeWidth control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblResizeHeight">
+            <summary>
+            lblResizeHeight control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.txtResizeHeight">
+            <summary>
+            txtResizeHeight control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblStyles">
+            <summary>
+            lblStyles control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblStylesURL">
+            <summary>
+            lblStylesURL control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblCssurl">
+            <summary>
+            lblCssurl control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblTemplates">
+            <summary>
+            lblTemplates control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblTemplFiles">
+            <summary>
+            lblTemplFiles control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblCustomToolbars">
+            <summary>
+            lblCustomToolbars control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblToolbarList">
+            <summary>
+            lblToolbarList control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.dDlCustomToolbars">
+            <summary>
+            dDlCustomToolbars control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.iBEdit">
+            <summary>
+            iBEdit control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.iBDelete">
+            <summary>
+            iBDelete control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblToolbName">
+            <summary>
+            lblToolbName control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.dnnTxtToolBName">
+            <summary>
+            dnnTxtToolBName control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.iBAdd">
+            <summary>
+            iBAdd control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.iBCancel">
+            <summary>
+            iBCancel control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblToolbSet">
+            <summary>
+            lblToolbSet control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblToolbarGuideLnk">
+            <summary>
+            lblToolbarGuideLnk control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.dnnTxtToolbars">
+            <summary>
+            dnnTxtToolbars control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblToolbarGuide">
+            <summary>
+            lblToolbarGuide control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblToolbarPriority">
+            <summary>
+            lblToolbarPriority control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.dDlToolbarPrio">
+            <summary>
+            dDlToolbarPrio control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.lblInfo">
+            <summary>
+            lblInfo control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.btnOk">
+            <summary>
+            btnOk control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKEditorOptions.btnCancel">
+            <summary>
+            btnCancel control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="M:WatchersNET.CKEditor.CKEditorOptions.BindGridView">
+            <summary>
+            Bind User Groups to GridView
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.CKEditorOptions.InsertToolbars">
+            <summary>
+            Insert Toolbar Names from Serialized Xml File
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.CKEditorOptions.HideAddToolbar">
+            <summary>
+            Hide Add Toolbar Button if all Priorities are used
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.CKEditorOptions.FillRoles">
+            <summary>
+            Loads all DNN Roles
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.CKEditorOptions.LoadSettings(System.Int32)">
+            <summary>
+            Load All Editor Settings
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.CKEditorOptions.LoadDefaultSettings">
+            <summary>
+            Load Default Host Settings from 'web.config'
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.CKEditorOptions.LoadPageSettings">
+            <summary>
+            Load Page Settings
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.CKEditorOptions.LoadModulSettings">
+            <summary>
+            Load Modul Instance Settings
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.CKEditorOptions.FillInformations">
+            <summary>
+            Write Informations
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.CKEditorOptions.SetLanguage">
+            <summary>
+            Set Current Language
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.CKEditorOptions.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.CKEditorOptions.lnkRemove_Click(System.Object,System.EventArgs)">
+            <summary>
+            Remove Current Setttings
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.CKEditorOptions.lnkImport_Click(System.Object,System.EventArgs)">
+            <summary>
+            Import Current Settings
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.CKEditorOptions.lnkExport_Click(System.Object,System.EventArgs)">
+            <summary>
+            Export Current Settings
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.CKEditorOptions.DelPortalSettings">
+            <summary>
+            Delete Settings for this Portal
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.CKEditorOptions.DelPageSettings">
+            <summary>
+            Delete Settings for this Page
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.CKEditorOptions.DelModulSettings">
+            <summary>
+            Delete Settings only for this Modul Instance
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.CKEditorOptions.FillSkinList">
+            <summary>
+            Loads the List of available Skins.
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.CKEditorOptions.btnOK_Click(System.Object,System.EventArgs)">
+            <summary>
+            Saves all Settins and Close Options
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.CKEditorOptions.SaveSettings">
+            <summary>
+            Save all Settings for the Current Selected Mode
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.CKEditorOptions.FormatURL(System.String)">
+            <summary>
+            Formats Url from the Url Control
+            </summary>
+            <param name="sInputUrl"></param>
+            <returns>Correctly formatet url</returns>
+        </member>
+        <member name="M:WatchersNET.CKEditor.CKEditorOptions.ReFormatURL(System.String)">
+            <summary>
+            Re-Formats Url from the Url Control
+            </summary>
+            <param name="sInputUrl"></param>
+            <returns></returns>
+        </member>
+        <member name="M:WatchersNET.CKEditor.CKEditorOptions.SavePortalSettings">
+            <summary>
+            Save Settings for this Portal
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.CKEditorOptions.SavePageSettings">
+            <summary>
+            Save Settings for this Page
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.CKEditorOptions.SaveModulSettings">
+            <summary>
+            Save Settings only for this Modul Instance
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.CKEditorOptions.btnCancel_Click(System.Object,System.EventArgs)">
+            <summary>
+            Exit Dialog
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.CKEditorOptions.IbAddClick(System.Object,System.Web.UI.ImageClickEventArgs)">
+            <summary>
+            Add new/Save Toolbar Set
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.CKEditorOptions.IbCancelClick(System.Object,System.Web.UI.ImageClickEventArgs)">
+            <summary>
+            Cancel Edit Toolbar
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.CKEditorOptions.IbEditClick(System.Object,System.Web.UI.ImageClickEventArgs)">
+            <summary>
+            Edit Selected Toolbar
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.CKEditorOptions.IbDeleteClick(System.Object,System.Web.UI.ImageClickEventArgs)">
+            <summary>
+            Delete Selected Toolbar Set
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.CKEditorOptions.IsNumeric(System.Object)">
+            <summary>
+            Check if Object is a Number
+            </summary>
+            <param name="valueToCheck">Object to Check</param>
+            <returns>Returns bool Value</returns>
+        </member>
+        <member name="M:WatchersNET.CKEditor.CKEditorOptions.IsUnit(System.Object)">
+            <summary>
+            Chek if Object is a Unit
+            </summary>
+            <param name="valueToCheck">Object to Check</param>
+            <returns>Returns if Object is a Unit</returns>
+        </member>
+        <member name="P:WatchersNET.CKEditor.CKEditorOptions.SLang">
+            <summary>
+            Gets Current Language from Url
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.CKEditorOptions.SResXFile">
+            <summary>
+            Get Name for the Current Resource file name
+            </summary>
+        </member>
+        <member name="T:WatchersNET.CKEditor.Utility">
+            <summary>
+            Utility Class for misc Functions
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Utility.IsHttps(System.Web.HttpRequest)">
+            <summary>
+            Check for secure connection
+            </summary>
+            <param name="httpRequest">
+            The http request.
+            </param>
+            <returns>
+            returns value if true or false
+            </returns>
+        </member>
+        <member name="T:WatchersNET.CKEditor.SettingBase">
+            <summary>
+            The Settings Base
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.SettingBase.bSubDirs">
+            <summary>
+            Gets or sets a value indicating whether Use Subdirs for Users.
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.SettingBase.bUseJquery">
+            <summary>
+            Gets or sets a value indicating whether Use jQuery Adapter
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.SettingBase.iResizeHeight">
+            <summary>
+            Gets or sets a value indicating whether Default Resize Image Height
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.SettingBase.iResizeWidth">
+            <summary>
+            Gets or sets a value indicating whether Default Resize Image Width
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.SettingBase.listToolbRoles">
+            <summary>
+            Gets or sets a value indicating whether Toolbar Roles
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.SettingBase.sBlankText">
+            <summary>
+            Gets or sets a value indicating whether Blank Initialtext
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.SettingBase.sBrowser">
+            <summary>
+            Gets or sets a value indicating whether Editor File Browser
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.SettingBase.sBrowserRoles">
+            <summary>
+            Gets or sets a value indicating whether Allowed Browser Roles
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.SettingBase.sConfig">
+            <summary>
+            Gets or sets a value indicating whether Custom Config file
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.SettingBase.sCss">
+            <summary>
+            Gets or sets a value indicating whether Css File
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.SettingBase.sSkin">
+            <summary>
+            Gets or sets a value indicating whether Editor Skin
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.SettingBase.sStyles">
+            <summary>
+            Gets or sets a value indicating whether Styles File
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.SettingBase.sTemplates">
+            <summary>
+            Gets or sets a value indicating whether Templates File
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.SettingBase.settingMode">
+            <summary>
+            Gets or sets a value indicating whether Current Setting Mode
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.SettingBase.uHeight">
+            <summary>
+            Gets or sets a value indicating whether Browser Height
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.SettingBase.uWidth">
+            <summary>
+            Gets or sets a value indicating whether Browser Width
+            </summary>
+        </member>
+        <member name="T:WatchersNET.CKEditor.Options">
+            <summary>
+            The options.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Options.request">
+            <summary>
+            The request.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Options.curPortalSettings">
+            <summary>
+            The _portal settings.
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Options.OnPreRender(System.EventArgs)">
+            <summary>
+            Register Js scripts and css
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Options.OnInit(System.EventArgs)">
+            <summary>
+            The on init.
+            </summary>
+            <param name="e">
+            The e.
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Options.Page_Load(System.Object,System.EventArgs)">
+            <summary>
+            The page_ load.
+            </summary>
+            <param name="sender">
+            The sender.
+            </param>
+            <param name="e">
+            The e.
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Options.ClosePage">
+            <summary>
+            The close page.
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Options.GetPortalSettings">
+            <summary>
+            The get portal settings.
+            </summary>
+            <returns>
+            The Portal Settings
+            </returns>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Options.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+              the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Options.LoadFavIcon">
+            <summary>
+            Load Favicon from Cache or from Current Portal Home Directory
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Options.favicon">
+            <summary>
+            favicon control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Options.ckOptionsForm">
+            <summary>
+            ckOptionsForm control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Options.phControls">
+            <summary>
+            phControls control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="T:WatchersNET.CKEditor.Web.CKEditorControl">
+            <summary>
+            The ck editor control.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Web.CKEditorControl.ProviderType">
+            <summary>
+            The provider type.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Web.CKEditorControl._portalSettings">
+            <summary>
+            The _portal settings.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Web.CKEditorControl.objRoleController">
+            <summary>
+            The obj role controller.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Web.CKEditorControl.roleToolbs">
+            <summary>
+            The role toolbs.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Web.CKEditorControl.roles">
+            <summary>
+            The roles.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Web.CKEditorControl._hasMsAjax">
+            <summary>
+            The _has ms ajax.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Web.CKEditorControl._mtdRegisterStartupScript">
+            <summary>
+            The _mtd register startup script.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Web.CKEditorControl._typScriptManager">
+            <summary>
+            The _typ script manager.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Web.CKEditorControl._isMerged">
+            <summary>
+            The _is merged.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Web.CKEditorControl._settings">
+            <summary>
+            The _settings.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Web.CKEditorControl.bUseBrowser">
+            <summary>
+            The b use browser.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Web.CKEditorControl.bUseCKFinder">
+            <summary>
+            The b use ck finder.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Web.CKEditorControl.bUseJquery">
+            <summary>
+            The b use jquery.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Web.CKEditorControl.bUseSubDirs">
+            <summary>
+            The b use sub dirs.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Web.CKEditorControl.iParModulId">
+            <summary>
+            The i par modul id.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Web.CKEditorControl.iResizeHeight">
+            <summary>
+            The i resize height.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Web.CKEditorControl.iResizeWidth">
+            <summary>
+            The i resize width.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Web.CKEditorControl.myParModule">
+            <summary>
+            The my par module.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Web.CKEditorControl.sBlanktext">
+            <summary>
+            The s blanktext.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Web.CKEditorControl.sBrowser">
+            <summary>
+            The s browser.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Web.CKEditorControl.sConfig">
+            <summary>
+            The s config.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Web.CKEditorControl.sCss">
+            <summary>
+            The s css.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Web.CKEditorControl.sSkin">
+            <summary>
+            The s skin.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Web.CKEditorControl.sStyles">
+            <summary>
+            The s styles.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Web.CKEditorControl.sTemplates">
+            <summary>
+            The s templates.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Web.CKEditorControl.sToolBarName">
+            <summary>
+            The s tool bar name.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Web.CKEditorControl.unHeight">
+            <summary>
+            The un height.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Web.CKEditorControl.unWidth">
+            <summary>
+            The un width.
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Web.CKEditorControl.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:WatchersNET.CKEditor.Web.CKEditorControl"/> class.
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Web.CKEditorControl.FindModuleInstance(System.Web.UI.Control)">
+            <summary>
+            The find module instance.
+            </summary>
+            <param name="fCtl">
+            The f ctl.
+            </param>
+            <returns>
+             The Founded Instances
+            </returns>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Web.CKEditorControl.HasRenderedTextArea(System.Web.UI.Control)">
+            <summary>
+            The has rendered text area.
+            </summary>
+            <param name="control">
+            The control.
+            </param>
+            <returns>
+            The has rendered text area.
+            </returns>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Web.CKEditorControl.LoadPostData(System.String,System.Collections.Specialized.NameValueCollection)">
+            <summary>
+            The load post data.
+            </summary>
+            <param name="postDataKey">
+            The post data key.
+            </param>
+            <param name="postCollection">
+            The post collection.
+            </param>
+            <returns>
+            The load post data.
+            </returns>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Web.CKEditorControl.RaisePostDataChangedEvent">
+            <summary>
+            The raise post data changed event.
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Web.CKEditorControl.OnPreRender(System.EventArgs)">
+            <summary>
+            Update the Editor after the Postback 
+              And Create Main Script to Render the Editor
+            </summary>
+            <param name="e">
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Web.CKEditorControl.Render(System.Web.UI.HtmlTextWriter)">
+            <summary>
+            The render.
+            </summary>
+            <param name="outWriter">
+            The out writer.
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Web.CKEditorControl.IsNumeric(System.Object)">
+            <summary>
+            Check if Object is a Number
+            </summary>
+            <param name="valueToCheck">
+            Object to Check
+            </param>
+            <returns>
+            Returns bool Value
+            </returns>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Web.CKEditorControl.CKEditorInit(System.Object,System.EventArgs)">
+            <summary>
+            The ck editor init.
+            </summary>
+            <param name="sender">
+            The sender.
+            </param>
+            <param name="e">
+            The e.
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Web.CKEditorControl.CheckFileBrowser">
+            <summary>
+            The check file browser.
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Web.CKEditorControl.FormatUrl(System.String)">
+            <summary>
+            Format the Url from FileID to File Path Url
+            </summary>
+            <param name="sInputUrl">
+            </param>
+            <returns>
+            The format url.
+            </returns>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Web.CKEditorControl.LoadModulSettings">
+            <summary>
+            Load Modul Instance Settings
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Web.CKEditorControl.LoadPageSettings">
+            <summary>
+            Load Page Settings
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Web.CKEditorControl.LoadPortalSettings">
+            <summary>
+            The load portal settings.
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Web.CKEditorControl.LoadSettings">
+            <summary>
+            Load Settings
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Web.CKEditorControl.RegisterStartupScript(System.String,System.String,System.Boolean)">
+            <summary>
+            This registers a startup javascript with compatibility with the Microsoft Ajax
+            </summary>
+            <param name="key">
+            The key.
+            </param>
+            <param name="script">
+            The script.
+            </param>
+            <param name="addScriptTags">
+            The add Script Tags.
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Web.CKEditorControl.SetUserToolbar">
+            <summary>
+            Set Toolbar based on Current User
+            </summary>
+            <returns>
+            Toolbar Name
+            </returns>
+        </member>
+        <member name="P:WatchersNET.CKEditor.Web.CKEditorControl.IsRendered">
+            <summary>
+            Gets a value indicating whether IsRendered.
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.Web.CKEditorControl.Settings">
+            <summary>
+            Gets Settings.
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.Web.CKEditorControl.ToolBarName">
+            <summary>
+             Gets or sets The ToolBarName defined in config.js override all other Toolbars
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.Web.CKEditorControl.Value">
+            <summary>
+            Gets or sets Value.
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.Web.CKEditorControl.HasMsAjax">
+            <summary>
+            Gets a value indicating whether Has Microsoft Ajax is installed.
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.Web.CKEditorControl.SResXFile">
+            <summary>
+              Gets Name for the Current Resource file name
+            </summary>
+        </member>
+        <member name="T:WatchersNET.CKEditor.LinkItem">
+            <summary>
+            A Link Item Class
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.LinkItem.Anchor">
+            <summary>
+              Gets or sets Anchor.
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.LinkItem.Href">
+            <summary>
+              Gets or sets Href.
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.LinkItem.Text">
+            <summary>
+              Gets or sets Text.
+            </summary>
+        </member>
+        <member name="T:WatchersNET.CKEditor.Controls.ClickableGridView">
+            <summary>
+            Summary description for ClickableGridView
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Controls.ClickableGridView.RowSelect(System.String)">
+            <summary>
+            Select a File (Row)
+            </summary>
+            <param name="sName">
+            FileName to Find
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Controls.ClickableGridView.OnRowClicked(WatchersNET.CKEditor.Controls.GridViewRowClickedEventArgs)">
+            <summary>
+            The on row clicked.
+            </summary>
+            <param name="e">
+            The e.
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Controls.ClickableGridView.PrepareControlHierarchy">
+            <summary>
+            The prepare control hierarchy.
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Controls.ClickableGridView.RaisePostBackEvent(System.String)">
+            <summary>
+            The raise post back event.
+            </summary>
+            <param name="eventArgument">
+            The event argument.
+            </param>
+        </member>
+        <member name="E:WatchersNET.CKEditor.Controls.ClickableGridView.RowClicked">
+            <summary>
+            The row clicked.
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.Controls.ClickableGridView.EnableRowClick">
+            <summary>
+            Gets or sets a value indicating whether EnableRowClick.
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.Controls.ClickableGridView.HoverRowCssClass">
+            <summary>
+            Gets or sets HoverRowCssClass.
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.Controls.ClickableGridView.RowCssClass">
+            <summary>
+            Gets or sets RowCssClass.
+            </summary>
+        </member>
+        <member name="T:WatchersNET.CKEditor.AnchorFinder">
+            <summary>
+            Finds, and extract all Anchors from a Page
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.AnchorFinder.ListAll(System.String)">
+            <summary>
+            Extract the Anchors
+            </summary>
+            <param name="file">
+            The file.
+            </param>
+            <returns>
+            All Anchors on the Page
+            </returns>
+        </member>
+        <member name="T:WatchersNET.CKEditor.ToolbarRoles">
+            <summary>
+            Toolbar List
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.ToolbarRoles.iRoleId">
+            <summary>
+            Gets or sets a value indicating whether Role ID
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.ToolbarRoles.sToolbar">
+            <summary>
+            Gets or sets a value indicating whether Toolbar Name
+            </summary>
+        </member>
+        <member name="T:WatchersNET.CKEditor.Browser.ProcessImage">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.ProcessImage.GenerateName(System.String,System.String)">
+            <summary>
+            Generats the New File Path
+            </summary>
+            <param name="sNewFileName">New File Name for the Image</param>
+            <param name="sSourceFullPath">The Full Path of the Original Image</param>
+            <returns></returns>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.ProcessImage.RotateImage(System.Drawing.Image,System.Double)">
+            <summary>
+            Method to rotate an image either clockwise or counter-clockwise
+            </summary>
+            <param name="img">the image to be rotated</param>
+            <param name="rotationAngle">the angle (in degrees). 
+            Positive values will rotate clockwise
+            negative values will rotate counter-clockwise
+            </param>
+            <returns></returns>
+        </member>
+        <member name="T:WatchersNET.CKEditor.CKHtmlEditorProvider">
+            <summary>
+            The ck html editor provider.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKHtmlEditorProvider.additionalToolbars">
+            <summary>
+            The _additional toolbars.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKHtmlEditorProvider.htmlEditorControl">
+            <summary>
+            The _html editor control.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.CKHtmlEditorProvider.rootImageDirectory">
+            <summary>
+            The _root image directory.
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.CKHtmlEditorProvider.AddToolbar">
+            <summary>
+            The add toolbar.
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.CKHtmlEditorProvider.Initialize">
+            <summary>
+            The initialize.
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.CKHtmlEditorProvider.AdditionalToolbars">
+            <summary>
+            Gets or sets AdditionalToolbars.
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.CKHtmlEditorProvider.ControlID">
+            <summary>
+            Gets or sets ControlID.
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.CKHtmlEditorProvider.Height">
+            <summary>
+            Gets or sets Height.
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.CKHtmlEditorProvider.HtmlEditorControl">
+            <summary>
+            Gets HtmlEditorControl.
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.CKHtmlEditorProvider.RootImageDirectory">
+            <summary>
+            Gets or sets RootImageDirectory.
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.CKHtmlEditorProvider.Text">
+            <summary>
+            Gets or sets Text.
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.CKHtmlEditorProvider.Width">
+            <summary>
+            Gets or sets Width.
+            </summary>
+        </member>
+        <member name="T:WatchersNET.CKEditor.Controls.GridViewRowClickedEventArgs">
+            <summary>
+            The grid view row clicked event args.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Controls.GridViewRowClickedEventArgs.row">
+            <summary>
+            The _row.
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Controls.GridViewRowClickedEventArgs.#ctor(System.Web.UI.WebControls.GridViewRow)">
+            <summary>
+            Initializes a new instance of the <see cref="T:WatchersNET.CKEditor.Controls.GridViewRowClickedEventArgs"/> class.
+            </summary>
+            <param name="aRow">
+            The a row.
+            </param>
+        </member>
+        <member name="P:WatchersNET.CKEditor.Controls.GridViewRowClickedEventArgs.Row">
+            <summary>
+            Gets Row.
+            </summary>
+        </member>
+        <member name="T:WatchersNET.CKEditor.Controls.RadioButtonListUl">
+            <summary>
+            The radio button list ul.
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Controls.RadioButtonListUl.Render(System.Web.UI.HtmlTextWriter)">
+            <summary>
+            The render.
+            </summary>
+            <param name="writer">
+            The writer.
+            </param>
+        </member>
+        <member name="T:WatchersNET.CKEditor.Controls.HtmlGenericSelfClosing">
+            <summary>
+            The html generic self closing.
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Controls.HtmlGenericSelfClosing.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:WatchersNET.CKEditor.Controls.HtmlGenericSelfClosing"/> class.
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Controls.HtmlGenericSelfClosing.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:WatchersNET.CKEditor.Controls.HtmlGenericSelfClosing"/> class.
+            </summary>
+            <param name="sTag">
+            The s tag.
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Controls.HtmlGenericSelfClosing.Render(System.Web.UI.HtmlTextWriter)">
+            <summary>
+            The render.
+            </summary>
+            <param name="writer">
+            The writer.
+            </param>
+        </member>
+        <member name="P:WatchersNET.CKEditor.Controls.HtmlGenericSelfClosing.Controls">
+            <summary>
+            Gets Controls.
+            </summary>
+            <exception cref="T:System.Exception">
+            </exception>
+        </member>
+        <member name="P:WatchersNET.CKEditor.Controls.HtmlGenericSelfClosing.InnerHtml">
+            <summary>
+            Gets or sets InnerHtml.
+            </summary>
+            <exception cref="T:System.Exception">
+            </exception>
+        </member>
+        <member name="P:WatchersNET.CKEditor.Controls.HtmlGenericSelfClosing.InnerText">
+            <summary>
+            Gets or sets InnerText.
+            </summary>
+            <exception cref="T:System.Exception">
+            </exception>
+        </member>
+        <member name="T:WatchersNET.CKEditor.Browser.Browser">
+            <summary>
+            The browser.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.allowedFlashExt">
+            <summary>
+              The allowed flash ext.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.allowedImageExt">
+            <summary>
+              The allowed image ext.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.request">
+            <summary>
+              The request.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser._portalSettings">
+            <summary>
+              The _portal settings.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.bUseSubDirs">
+            <summary>
+              The b use sub dirs.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.extensionWhiteList">
+            <summary>
+              The extension white list.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.iResizeHeight">
+            <summary>
+              The i resize height.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.iResizeWidth">
+            <summary>
+              The i resize width.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.sType">
+            <summary>
+              The s type.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.scriptManager1">
+            <summary>
+              Gets or sets The script manager.
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.GetFiles(System.String)">
+            <summary>
+            Get all Files and Put them in a DataTable for the GridView
+            </summary>
+            <param name="sDir">
+            </param>
+            <returns>
+            The File Table
+            </returns>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.OnPreRender(System.EventArgs)">
+            <summary>
+            Register Js scripts and css
+            </summary>
+            <param name="e"></param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.CmdCloseClick(System.Object,System.EventArgs)">
+            <summary>
+            Close Browser Window
+            </summary>
+            <param name="sender">
+            </param>
+            <param name="e">
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.GetJavaScriptCode(System.String,System.String)">
+            <summary>
+            The get java script code.
+            </summary>
+            <param name="sFileName">
+            The s file name.
+            </param>
+            <param name="sFileUrl">
+            The s file url.
+            </param>
+            <returns>
+            The get java script code.
+            </returns>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.GetJsUploadCode(System.String,System.String)">
+            <summary>
+            The get js upload code.
+            </summary>
+            <param name="sFileName">
+            The s file name.
+            </param>
+            <param name="sFileUrl">
+            The s file url.
+            </param>
+            <returns>
+            The get js upload code.
+            </returns>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.OnInit(System.EventArgs)">
+            <summary>
+            The on init.
+            </summary>
+            <param name="e">
+            The e.
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.Page_Load(System.Object,System.EventArgs)">
+            <summary>
+            The page_ load.
+            </summary>
+            <param name="sender">
+            The sender.
+            </param>
+            <param name="e">
+            The e.
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.cmdCreate_Click(System.Object,System.EventArgs)">
+            <summary>
+            Show Create New Folder Panel
+            </summary>
+            <param name="sender">
+            </param>
+            <param name="e">
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.cmdDelete_Click(System.Object,System.EventArgs)">
+            <summary>
+            Delete Selected File
+            </summary>
+            <param name="sender">
+            </param>
+            <param name="e">
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.cmdDownload_Click(System.Object,System.EventArgs)">
+            <summary>
+            Download selected File
+            </summary>
+            <param name="sender">
+            </param>
+            <param name="e">
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.cmdResizer_Click(System.Object,System.EventArgs)">
+            <summary>
+            Open Resizer Panel
+            </summary>
+            <param name="sender">
+            </param>
+            <param name="e">
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.cmdUpload_Click(System.Object,System.EventArgs)">
+            <summary>
+            Show Upload Controls
+            </summary>
+            <param name="sender">
+            </param>
+            <param name="e">
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.GetEncoder(System.Drawing.Imaging.ImageFormat)">
+            <summary>
+            The get encoder.
+            </summary>
+            <param name="format">
+            The format.
+            </param>
+            <returns>
+            The Encoder
+            </returns>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.GetResizedImage(System.Drawing.Image,System.Drawing.Size)">
+            <summary>
+             Get an Resized Image
+            </summary>
+            <param name="imgPhoto">
+            Original Image
+            </param>
+            <param name="ts">
+            New Size
+            </param>
+            <returns>
+            The Resized Image
+            </returns>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.MapUrl(System.String)">
+            <summary>
+            Formats a MapPath into relative MapUrl
+            </summary>
+            <param name="sPath">
+            MapPath Input string
+            </param>
+            <returns>
+            The output URL string
+            </returns>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.CreateThumbImage(System.Drawing.Image,System.String,System.Int32,System.Int32)">
+            <summary>
+            Generates a Cropped Thumbnail From the Image inside a Subdir "_thumbs"
+            </summary>
+            <param name="image">
+            The original Image
+            </param>
+            <param name="sFileName">
+            The Image Filename
+            </param>
+            <param name="iWidth">
+            The Save Folder
+            </param>
+            <param name="iHeight">
+            The Save Folder
+            </param>
+            <returns>
+            The Fullpath of the new Thumbnail
+            </returns>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.FillFolderTree(System.String)">
+            <summary>
+            Fill the Folder TreeView with all (Sub)Directories
+            </summary>
+            <param name="sPath">
+            Root Path of the TreeView
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.FillQualityPrecentages">
+            <summary>
+            Fill Quality Values 1-100 %
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.GetPortalSettings">
+            <summary>
+            The get portal settings.
+            </summary>
+            <returns>
+            Current Portal Settings
+            </returns>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+              the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.LoadFavIcon">
+            <summary>
+            Load Favicon from Cache or from Current Portal Home Directory
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.RenderFolder(DotNetNuke.Services.FileSystem.FolderInfo)">
+            <summary>
+            Render all Directories and Sub Dirs Recursiv
+            </summary>
+            <param name="folderInfo">
+            </param>
+            <returns>
+            TreeNode List
+            </returns>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.RenderTabLevels(Telerik.Web.UI.RadTreeNode,System.Int32)">
+            <summary>
+            Render all Tabs including Child Tabs
+            </summary>
+            <param name="nodeParent">
+            Parent Node(Tab)
+            </param>
+            <param name="iParentTabId">
+            Parent Tab ID
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.RenderTabs">
+            <summary>
+            Load the Portal Tabs for the Page Links TreeView Selector
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.ScrollToSelectedFile">
+            <summary>
+            Scroll to a Selected File or Uploaded File
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.SetLanguage">
+            <summary>
+            Set Language for all Controls on this Page
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.ShowDirectoriesIn(System.String)">
+            <summary>
+            The show directories in.
+            </summary>
+            <param name="dir">
+            The dir.
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.ShowFileHelpUrl(System.String)">
+            <summary>
+            Show Preview for the Urls
+            </summary>
+            <param name="sFileName">
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.ShowFilesIn(System.String)">
+            <summary>
+            The show files in.
+            </summary>
+            <param name="dir">
+            The dir.
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.UploadFile(System.Web.HttpPostedFile,System.String)">
+            <summary>
+            Uploads a File
+            </summary>
+            <param name="oFile">
+            </param>
+            <param name="sCommand">
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.cmdCancel_Click(System.Object,System.EventArgs)">
+            <summary>
+            Exit Dialog
+            </summary>
+            <param name="sender">
+            </param>
+            <param name="e">
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.cmdCreateCancel_Click(System.Object,System.EventArgs)">
+            <summary>
+            Hide Create New Folder Panel
+            </summary>
+            <param name="sender">
+            </param>
+            <param name="e">
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.cmdCreateFolder_Click(System.Object,System.EventArgs)">
+            <summary>
+            Create a New Sub Folder
+            </summary>
+            <param name="sender">
+            </param>
+            <param name="e">
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.cmdCropNow_Click(System.Object,System.EventArgs)">
+            <summary>
+            Save the New Croped Image
+            </summary>
+            <param name="sender">
+            </param>
+            <param name="e">
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.cmdResizeCancel_Click(System.Object,System.EventArgs)">
+            <summary>
+            Hide Image Resizer Panel
+            </summary>
+            <param name="sender">
+            </param>
+            <param name="e">
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.cmdResizeNow_Click(System.Object,System.EventArgs)">
+            <summary>
+            Resize Image based on User Input
+            </summary>
+            <param name="sender">
+            </param>
+            <param name="e">
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.cmdRotate_Click(System.Object,System.EventArgs)">
+            <summary>
+            Hide Resize Panel and Show CropZoom Panel
+            </summary>
+            <param name="sender">
+            </param>
+            <param name="e">
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.cmdUploadCancel_Click(System.Object,System.EventArgs)">
+            <summary>
+            Cancel Upload - Hide Upload Controls
+            </summary>
+            <param name="sender">
+            </param>
+            <param name="e">
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.cmdUploadNow_Click(System.Object,System.EventArgs)">
+            <summary>
+            Upload Selected File
+            </summary>
+            <param name="sender">
+            </param>
+            <param name="e">
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.dnntreeTabs_NodeClick(System.Object,Telerik.Web.UI.RadTreeNodeEventArgs)">
+            <summary>
+            Show Preview of the Page links
+            </summary>
+            <param name="sender">
+            </param>
+            <param name="e">
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.FindAnchorsOnTab(DotNetNuke.Entities.Tabs.TabInfo)">
+            <summary>
+            Find and List all Anchors from the Selected Page.
+            </summary>
+            <param name="selectedTab">
+            The selected tab.
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.gvFiles_RowClicked(System.Object,WatchersNET.CKEditor.Controls.GridViewRowClickedEventArgs)">
+            <summary>
+            Show Info for Selected File
+            </summary>
+            <param name="sender">
+            </param>
+            <param name="args">
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.gvFiles_RowDataBound(System.Object,System.Web.UI.WebControls.GridViewRowEventArgs)">
+            <summary>
+            Correct Image Url and handle Thumbnail
+            </summary>
+            <param name="sender">
+            </param>
+            <param name="e">
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.rblMode_SelectedIndexChanged(System.Object,System.EventArgs)">
+            <summary>
+            Switch Browser in Link Modus betweed Link and Page Mode
+            </summary>
+            <param name="sender">
+            </param>
+            <param name="e">
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.Browser.Browser.tvFolders_NodeClick(System.Object,Telerik.Web.UI.RadTreeNodeEventArgs)">
+            <summary>
+            The tv folders_ node click.
+            </summary>
+            <param name="sender">
+            The sender.
+            </param>
+            <param name="e">
+            The e.
+            </param>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.title">
+            <summary>
+            title control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.favicon">
+            <summary>
+            favicon control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.fBrowser">
+            <summary>
+            fBrowser control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.lblModus">
+            <summary>
+            lblModus control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.rblMode">
+            <summary>
+            rblMode control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.panPageMode">
+            <summary>
+            panPageMode control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.lblChoosetab">
+            <summary>
+            lblChoosetab control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.dnntreeTabs">
+            <summary>
+            dnntreeTabs control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.chkHumanFriendy">
+            <summary>
+            chkHumanFriendy control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.LabelAnchor">
+            <summary>
+            LabelAnchor control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.AnchorList">
+            <summary>
+            AnchorList control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.panImageEdHead">
+            <summary>
+            panImageEdHead control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.lblResizeHeader">
+            <summary>
+            lblResizeHeader control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.lblOtherTools">
+            <summary>
+            lblOtherTools control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.cmdCrop">
+            <summary>
+            cmdCrop control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.cmdZoom">
+            <summary>
+            cmdZoom control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.cmdRotate">
+            <summary>
+            cmdRotate control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.cmdResize2">
+            <summary>
+            cmdResize2 control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.panThumb">
+            <summary>
+            panThumb control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.lblWidth">
+            <summary>
+            lblWidth control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.txtWidth">
+            <summary>
+            txtWidth control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.lblHeight">
+            <summary>
+            lblHeight control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.txtHeight">
+            <summary>
+            txtHeight control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.chkAspect">
+            <summary>
+            chkAspect control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.lblThumbName">
+            <summary>
+            lblThumbName control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.txtThumbName">
+            <summary>
+            txtThumbName control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.lblImgQuality">
+            <summary>
+            lblImgQuality control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.dDlQuality">
+            <summary>
+            dDlQuality control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.cmdResizeNow">
+            <summary>
+            cmdResizeNow control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.cmdResizeCancel">
+            <summary>
+            cmdResizeCancel control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.panImageEditor">
+            <summary>
+            panImageEditor control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.lblCropImageName">
+            <summary>
+            lblCropImageName control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.txtCropImageName">
+            <summary>
+            txtCropImageName control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.cmdCropNow">
+            <summary>
+            cmdCropNow control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.cmdCropCancel">
+            <summary>
+            cmdCropCancel control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.lblShowPreview">
+            <summary>
+            lblShowPreview control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.lblClearPreview">
+            <summary>
+            lblClearPreview control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.panImagePreview">
+            <summary>
+            panImagePreview control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.lblOriginal">
+            <summary>
+            lblOriginal control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.lblPreview">
+            <summary>
+            lblPreview control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.imgOriginal">
+            <summary>
+            imgOriginal control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.lblCropInfo">
+            <summary>
+            lblCropInfo control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.imgResized">
+            <summary>
+            imgResized control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.panLinkMode">
+            <summary>
+            panLinkMode control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.lblCurrent">
+            <summary>
+            lblCurrent control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.lblCurrentDir">
+            <summary>
+            lblCurrentDir control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.panUploadDiv">
+            <summary>
+            panUploadDiv control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.ctlUpload">
+            <summary>
+            ctlUpload control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.cmdUploadNow">
+            <summary>
+            cmdUploadNow control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.cmdUploadCancel">
+            <summary>
+            cmdUploadCancel control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.panCreate">
+            <summary>
+            panCreate control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.lblNewFoldName">
+            <summary>
+            lblNewFoldName control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.tbFolderName">
+            <summary>
+            tbFolderName control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.cmdCreateFolder">
+            <summary>
+            cmdCreateFolder control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.cmdCreateCancel">
+            <summary>
+            cmdCreateCancel control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.cmdCreate">
+            <summary>
+            cmdCreate control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.cmdUpload">
+            <summary>
+            cmdUpload control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.cmdDownload">
+            <summary>
+            cmdDownload control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.cmdDelete">
+            <summary>
+            cmdDelete control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.cmdResizer">
+            <summary>
+            cmdResizer control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.lblSubDirs">
+            <summary>
+            lblSubDirs control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.tvFolders">
+            <summary>
+            tvFolders control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.lblConFiles">
+            <summary>
+            lblConFiles control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.gvFiles">
+            <summary>
+            gvFiles control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.panInfo">
+            <summary>
+            panInfo control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.lblUrlType">
+            <summary>
+            lblUrlType control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.rblLinkType">
+            <summary>
+            rblLinkType control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.lblFileName">
+            <summary>
+            lblFileName control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.lblUrlHelp">
+            <summary>
+            lblUrlHelp control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.cmdClose">
+            <summary>
+            cmdClose control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="F:WatchersNET.CKEditor.Browser.Browser.cmdCancel">
+            <summary>
+            cmdCancel control.
+            </summary>
+            <remarks>
+            Auto-generated field.
+            To modify move field declaration from designer file to code-behind file.
+            </remarks>
+        </member>
+        <member name="P:WatchersNET.CKEditor.Browser.Browser.SLang">
+            <summary>
+              Gets Current Language from Url
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.Browser.Browser.SResXFile">
+            <summary>
+              Gets the Name for the Current Resource file name
+            </summary>
+        </member>
+        <member name="T:WatchersNET.CKEditor.Toolbar">
+            <summary>
+            Toolbar Class
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.Toolbar.sToolbarName">
+            <summary>
+            Gets or sets The Name of the Toolbar Set
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.Toolbar.sToolbarSet">
+            <summary>
+            Gets or sets The Hole Toolbar Set
+            </summary>
+        </member>
+        <member name="P:WatchersNET.CKEditor.Toolbar.iPriority">
+            <summary>
+            Gets or sets Toolbar Prioritity from 1-20
+            </summary>
+        </member>
+        <member name="T:WatchersNET.CKEditor.Controls.GridViewRowClicked">
+            <summary>
+            The grid view row clicked.
+            </summary>
+            <param name="sender">
+            The sender.
+            </param>
+            <param name="args">
+            The args.
+            </param>
+        </member>
+        <member name="T:WatchersNET.CKEditor.ToolbarUtil">
+            <summary>
+            Toolbar Helper Class
+            </summary>
+        </member>
+        <member name="M:WatchersNET.CKEditor.ToolbarUtil.CreateDefaultXml(System.String)">
+            <summary>
+            Create Default Toolbar xml File
+            </summary>
+            <param name="sHomeDirPath">
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.ToolbarUtil.FindHighestToolbar(System.Collections.Generic.List{WatchersNET.CKEditor.Toolbar},System.Int32)">
+            <summary>
+            Find the Toolbar with the x Value
+            </summary>
+            <param name="toolbars">
+            Toolbar List to Search in
+            </param>
+            <param name="iMax">
+            The Value of the Priority
+            </param>
+            <returns>
+            The Toolbar List
+            </returns>
+        </member>
+        <member name="M:WatchersNET.CKEditor.ToolbarUtil.GetToolbars(System.String)">
+            <summary>
+            Get Toolbars from the Serialized Xml File
+            </summary>
+            <param name="sHomeDirPath">
+            Current Portal Home directory
+            </param>
+            <returns>
+            The Toolbar List
+            </returns>
+        </member>
+        <member name="M:WatchersNET.CKEditor.ToolbarUtil.SaveToolbars(System.Collections.Generic.List{WatchersNET.CKEditor.Toolbar},System.String)">
+            <summary>
+            Save Toolbar list as serialized Xml File
+            </summary>
+            <param name="toolBars">
+            The Toolbar list
+            </param>
+            <param name="sHomeDirPath">
+            Save Path
+            </param>
+        </member>
+        <member name="M:WatchersNET.CKEditor.ToolbarUtil.InsertMissingPrio(System.Collections.Generic.List{WatchersNET.CKEditor.Toolbar},System.String)">
+            <summary>
+            Insert Missing Priorities to the Default Toolbars 
+              'Full' and 'Basic'
+            </summary>
+            <param name="toolBars">
+             The Toolbar list
+            </param>
+            <param name="sHomeDirPath">
+            Portal Home dir
+            </param>
+            <returns>
+             Updated ToolbarList
+            </returns>
+        </member>
+        <member name="T:WatchersNET.CKEditor.SettingsMode">
+            <summary>
+            Settings Mode
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.SettingsMode.Portal">
+            <summary>
+            The portal.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.SettingsMode.Page">
+            <summary>
+            The page.
+            </summary>
+        </member>
+        <member name="F:WatchersNET.CKEditor.SettingsMode.ModulInstance">
+            <summary>
+            The modul instance.
+            </summary>
+        </member>
+    </members>
+</doc>

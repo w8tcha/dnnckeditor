@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="MSBuild.Community.Tasks.Targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\MicrosoftAjax\AjaxMin.tasks" />
+
+  <Target Name="PackageModule" Condition=" '$(Configuration)|$(Platform)' == 'Deploy|AnyCPU' ">
+    <XmlRead Prefix="n"
+                    Namespace="http://schemas.microsoft.com/developer/msbuild/2003"
+                    XPath="dotnetnuke/packages/package[starts-with(@name,'DotNetNuke.CKHtmlEditorProvider')]/@version"
+                    XmlFileName="$(MSBuildProjectDirectory)\..\DNN 5.3\Install\$(DNNFileName).dnn">
+      <Output TaskParameter="Value" PropertyName="Version" />
+    </XmlRead>
+    
+    <ItemGroup>
+      <DefaultExclude Include="**\.svn\**" />
+      <DefaultExclude Include="**\bin\**" />
+      <DefaultExclude Include="**\obj\**" />
+      <DefaultExclude Include="**\Release\**" />
+      <DefaultExclude Include="**\Debug\**" />
+      <DefaultExclude Include="**\Test\**" />
+      <DefaultExclude Include="**\TestResults\**" />
+      <DefaultExclude Include="**\doc\**" />
+      <DefaultExclude Include="**\www\**" />
+      <DefaultExclude Include="**\*.user" />
+      <DefaultExclude Include="**\*.suo" />
+      <DefaultExclude Include="**\*.zip" />
+      <DefaultExclude Include="**\*.db" />
+      <DefaultExclude Include="**\*.txt" />
+      <DefaultExclude Include="**\*ReSharper.*\**" />
+      <DefaultExclude Include="**\VRK.Controls\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <InstallInclude Include="$(MSBuildProjectDirectory)\..\CKEditor\**\*.*" Exclude="$(MSBuildProjectDirectory)\..\CKEditor\**\Thumbs.db;$(MSBuildProjectDirectory)\..\CKEditor\**\_source\**;" />
+    </ItemGroup>
+    
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\Install\bin\$(AssemblyName).dll" DestinationFolder="$(MSBuildProjectDirectory)/../packages/Install/DNN 4/bin"/>
+
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\..\license.txt" DestinationFolder="$(MSBuildProjectDirectory)\..\packages\Install\"/>
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\..\readme.html" DestinationFolder="$(MSBuildProjectDirectory)\..\packages\Install\"/>
+
+    <!-- create the INSTALL RESOURCES.ZIP file -->
+    <Copy SourceFiles="@(InstallInclude)" DestinationFolder="$(MSBuildProjectDirectory)\..\packages\Install\DNN 4\Providers\HtmlEditorProviders\CKEditor\%(RecursiveDir)" />
+
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\..\CKToolbarButtons.xml" DestinationFolder="$(MSBuildProjectDirectory)\..\packages\Install\DNN 4\Portals\_default\"/>
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\..\CKToolbarSets.xml" DestinationFolder="$(MSBuildProjectDirectory)\..\packages\Install\DNN 4\Portals\_default\"/>
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\..\CKEditorDefaultSettings.xml" DestinationFolder="$(MSBuildProjectDirectory)\..\packages\Install\DNN 4\Portals\_default\"/>
+    
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\CKEditorOptions.ascx" DestinationFolder="$(MSBuildProjectDirectory)\..\packages\Install\DNN 4\Providers\HtmlEditorProviders\CKEditor\"/>
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\Options.aspx" DestinationFolder="$(MSBuildProjectDirectory)\..\packages\Install\DNN 4\Providers\HtmlEditorProviders\CKEditor\"/>
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\UrlControl.ascx" DestinationFolder="$(MSBuildProjectDirectory)\..\packages\Install\DNN 4\Providers\HtmlEditorProviders\CKEditor\"/>
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\Tabs.ashx" DestinationFolder="$(MSBuildProjectDirectory)\..\packages\Install\DNN 4\Providers\HtmlEditorProviders\CKEditor\"/>
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\Browser\Browser.aspx" DestinationFolder="$(MSBuildProjectDirectory)\..\packages\Install\DNN 4\Providers\HtmlEditorProviders\CKEditor\Browser"/>
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\Browser\ProcessImage.ashx" DestinationFolder="$(MSBuildProjectDirectory)\..\packages\Install\DNN 4\Providers\HtmlEditorProviders\CKEditor\Browser"/>
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\CKFinder\config.ascx" DestinationFolder="$(MSBuildProjectDirectory)\..\packages\Install\DNN 4\Providers\HtmlEditorProviders\CKEditor\CKFinder"/>
+
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\App_LocalResources\Browser.aspx.de-DE.resx" DestinationFolder="$(MSBuildProjectDirectory)\..\packages\Install\DNN 4\Providers\HtmlEditorProviders\CKEditor\Browser\App_LocalResources"/>
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\App_LocalResources\Browser.aspx.pl-PL.resx" DestinationFolder="$(MSBuildProjectDirectory)\..\packages\Install\DNN 4\Providers\HtmlEditorProviders\CKEditor\Browser\App_LocalResources"/>
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\App_LocalResources\Browser.aspx.resx" DestinationFolder="$(MSBuildProjectDirectory)\..\packages\Install\DNN 4\Providers\HtmlEditorProviders\CKEditor\Browser\App_LocalResources"/>
+
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\App_LocalResources\Options.aspx.de-DE.resx" DestinationFolder="$(MSBuildProjectDirectory)\..\packages\Install\DNN 4\Providers\HtmlEditorProviders\CKEditor\App_LocalResources"/>
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\App_LocalResources\Options.aspx.pl-PL.resx" DestinationFolder="$(MSBuildProjectDirectory)\..\packages\Install\DNN 4\Providers\HtmlEditorProviders\CKEditor\App_LocalResources"/>
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\App_LocalResources\Options.aspx.resx" DestinationFolder="$(MSBuildProjectDirectory)\..\packages\Install\DNN 4\Providers\HtmlEditorProviders\CKEditor\App_LocalResources"/>
+
+    <!-- Minify JS and CSS Files -->
+    <ItemGroup>
+      <JS Include="$(MSBuildProjectDirectory)\..\packages\Install\DNN 4\Providers\HtmlEditorProviders\CKEditor\Browser\*.js" Exclude="**\*.min.js" />
+      <JS Include="$(MSBuildProjectDirectory)\..\packages\Install\DNN 4\Providers\HtmlEditorProviders\CKEditor\js\*.js" Exclude="**\*.min.js" />
+    </ItemGroup>
+    <ItemGroup>
+      <CSS Include="$(MSBuildProjectDirectory)\..\packages\Install\DNN 4\Providers\HtmlEditorProviders\CKEditor\**\*.css" Exclude="**\*.min.css;$(MSBuildProjectDirectory)\..\packages\Install\DNN 4\Providers\HtmlEditorProviders\CKEditor\skins\**\*.css;;$(MSBuildProjectDirectory)\..\packages\Install\DNN 4\Providers\HtmlEditorProviders\CKEditor\plugins\**\*.css;" />
+    </ItemGroup>
+    <AjaxMin JsSourceFiles="@(JS)" JsSourceExtensionPattern="\.js$" JsTargetExtension=".js" CssSourceFiles="@(CSS)" CssSourceExtensionPattern="\.css$" CssTargetExtension=".css"  />
+
+    <CreateItem Include="$(MSBuildProjectDirectory)\..\packages\Install\**\*.*">
+      <Output TaskParameter="Include" ItemName="InstallCompleteContent" />
+    </CreateItem>
+
+    <!-- Create the Install package -->
+    <Zip Files="@(InstallCompleteContent)" WorkingDirectory="$(MSBuildProjectDirectory)\..\packages\Install" ZipFileName="$(PackageName)_$(Version)-UNZIP_FIRST.$(Extension)" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\$(PackageName)_$(Version)-UNZIP_FIRST.$(Extension)" DestinationFolder="$(MSBuildProjectDirectory)/../packages" />
+
+    <Delete Files="$(MSBuildProjectDirectory)\$(PackageName)_$(Version)-UNZIP_FIRST.$(Extension)" />
+
+    <RemoveDir Directories ="$(MSBuildProjectDirectory)\..\packages\Install" />
+
+  </Target>
+</Project>
