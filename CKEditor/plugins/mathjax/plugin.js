@@ -14,7 +14,7 @@
 	var cdn = 'http:\/\/cdn.mathjax.org\/mathjax\/2.2-latest\/MathJax.js?config=TeX-AMS_HTML';
 
 	CKEDITOR.plugins.add( 'mathjax', {
-		lang: 'ar,ca,cs,cy,de,el,en,en-gb,es,fa,fi,fr,gl,hr,hu,ja,km,nb,nl,no,pl,pt,pt-br,ro,ru,sl,sv,uk,zh,zh-cn', // %REMOVE_LINE_CORE%
+		lang: 'ar,ca,cs,cy,de,el,en,en-gb,es,fa,fi,fr,gl,he,hr,hu,it,ja,km,nb,nl,no,pl,pt,pt-br,ro,ru,sl,sv,tt,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
 		requires: 'widget,dialog',
 		icons: 'mathjax',
 		hidpi: true, // %REMOVE_LINE_CORE%
@@ -28,6 +28,15 @@
 				button: editor.lang.mathjax.button,
 				mask: true,
 				allowedContent: 'span(!' + cls + ')',
+				// Allow style classes only on spans having mathjax class.
+				styleToAllowedContentRules: function( style ) {
+					var classes = style.getClassesArray();
+					if ( !classes )
+						return null;
+					classes.push( '!' + cls );
+
+					return 'span(' + classes.join( ',' ) + ')';
+				},
 				pathName: editor.lang.mathjax.pathName,
 
 				template: '<span class="' + cls + '" style="display:inline-block" data-cke-survive=1></span>',
