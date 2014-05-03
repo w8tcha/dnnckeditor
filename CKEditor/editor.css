@@ -14,3 +14,6 @@ div.blog_rte div{width:auto}
     padding: 0!important;
     width: auto!important;
 }
+
+
+.editor {visibility: hidden; display: none;}
