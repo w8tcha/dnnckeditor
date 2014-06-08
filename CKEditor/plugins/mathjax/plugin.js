@@ -14,7 +14,7 @@
 	var cdn = 'http:\/\/cdn.mathjax.org\/mathjax\/2.2-latest\/MathJax.js?config=TeX-AMS_HTML';
 
 	CKEDITOR.plugins.add( 'mathjax', {
-		lang: 'ar,ca,cs,cy,de,el,en,en-gb,es,fa,fi,fr,gl,he,hr,hu,it,ja,km,nb,nl,no,pl,pt,pt-br,ro,ru,sl,sv,tt,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
+		lang: 'ar,ca,cs,cy,de,el,en,en-gb,eo,es,fa,fi,fr,gl,he,hr,hu,it,ja,km,nb,nl,no,pl,pt,pt-br,ro,ru,sl,sv,tt,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
 		requires: 'widget,dialog',
 		icons: 'mathjax',
 		hidpi: true, // %REMOVE_LINE_CORE%
@@ -91,7 +91,7 @@
 					if ( el.children.length > 1 || el.children[ 0 ].type != CKEDITOR.NODE_TEXT )
 						return;
 
-					data.math = el.children[ 0 ].value;
+					data.math = CKEDITOR.tools.htmlDecode( el.children[ 0 ].value );
 
 					// Add style display:inline-block to have proper height of widget wrapper and mask.
 					var attrs = el.attributes;
@@ -110,7 +110,7 @@
 				},
 
 				downcast: function( el ) {
-					el.children[ 0 ].replaceWith( new CKEDITOR.htmlParser.text( this.data.math ) );
+					el.children[ 0 ].replaceWith( new CKEDITOR.htmlParser.text( CKEDITOR.tools.htmlEncode( this.data.math ) ) );
 
 					// Remove style display:inline-block.
 					var attrs = el.attributes;
@@ -384,7 +384,7 @@
 				 * @param {String} value TeX string.
 				 */
 				setValue: function( value ) {
-					newValue = value;
+					newValue = CKEDITOR.tools.htmlEncode( value );
 
 					if ( isInit && !isRunning )
 						update();
@@ -410,7 +410,7 @@
 					var doc = iFrame.getFrameDocument(),
 						tex = doc.getById( 'tex' );
 
-					tex.setHtml( CKEDITOR.plugins.mathjax.trim( value ) );
+					tex.setHtml( CKEDITOR.plugins.mathjax.trim( CKEDITOR.tools.htmlEncode( value ) ) );
 
 					CKEDITOR.plugins.mathjax.copyStyles( iFrame, tex );
 

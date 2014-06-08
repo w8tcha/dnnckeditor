@@ -465,6 +465,7 @@ a.cke_dialog_ui_button span
 {
 	color: #fff;
 	font-weight: bold;
+        background:gray;
 }
 
 /* The inner part of the button. */

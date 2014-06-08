@@ -5,12 +5,13 @@
 
 (function() {
     if (!supportsLocalStorage()) {
+        CKEDITOR.plugins.add("autosave", {}); //register a dummy plugin to pass CKEditor plugin initialization process
         return;
     }
 
     CKEDITOR.plugins.add("autosave", {
-        lang: 'de,en,jp,pl,pt-BR,sv,zh,zh-cn', // %REMOVE_LINE_CORE%
-        version: 0.09,
+        lang: 'de,en,jp,pl,pt-br,sv,zh,zh-cn', // %REMOVE_LINE_CORE%
+        version: 0.10,
         init: function(editor) {
             CKEDITOR.document.appendStyleSheet(CKEDITOR.getUrl(CKEDITOR.plugins.getPath('autosave') + 'css/autosave.min.css'));
 
@@ -31,10 +32,10 @@
 
     function loadPlugin(editorInstance) {
         var autoSaveKey = editorInstance.config.autosave_SaveKey != null ? editorInstance.config.autosave_SaveKey : 'autosave_' + window.location;
-        var notOlderThan = editorInstance.config.autosave_NotOlderThan != null ? editorInstance.autosave_NotOlderThan : 1440;
-        var saveOnDestroy = editorInstance.config.autosave_saveOnDestroy != null ? editorInstance.autosave_saveOnDestroy : false;
+        var notOlderThan = editorInstance.config.autosave_NotOlderThan != null ? editorInstance.config.autosave_NotOlderThan : 1440;
+        var saveOnDestroy = editorInstance.config.autosave_saveOnDestroy != null ? editorInstance.config.autosave_saveOnDestroy : false;
         var saveDetectionSelectors =
-            editorInstance.config.autosave_saveDetectionSelectors != null ? editorInstance.autosave_saveDetectionSelectors : "a[href^='javascript:__doPostBack'][id*='Save'],a[id*='Cancel']";
+            editorInstance.config.autosave_saveDetectionSelectors != null ? editorInstance.config.autosave_saveDetectionSelectors : "a[href^='javascript:__doPostBack'][id*='Save'],a[id*='Cancel']";
 
 
         CKEDITOR.scriptLoader.load(CKEDITOR.getUrl(CKEDITOR.plugins.getPath('autosave') + 'js/extensions.min.js'), function() {
@@ -47,7 +48,7 @@
             RemoveStorage(autoSaveKey);
         });
 
-        editorInstance.on('key', startTimer);
+        editorInstance.on('change', startTimer);
 
         editorInstance.on('destroy', function() {
             if (saveOnDestroy) {
@@ -96,7 +97,16 @@
 
     // localStorage detection
     function supportsLocalStorage() {
-        return typeof (Storage) !== 'undefined';
+        if (typeof (Storage) === 'undefined') {
+            return false;
+        }
+
+        try {
+            localStorage.getItem("___test_key");
+            return true;
+        } catch (e) {
+            return false;
+        }
     }
 
     function GenerateAutoSaveDialog(editorInstance, autoSaveKey) {
@@ -223,6 +233,10 @@
     }
 
     function RemoveStorage(autoSaveKey) {
+        if (timeOutId) {
+            clearTimeout(timeOutId);
+        }
+
         localStorage.removeItem(autoSaveKey);
     }
 
