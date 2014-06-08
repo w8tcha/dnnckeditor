@@ -861,6 +861,8 @@ namespace WatchersNET.CKEditor.Browser
                     break;
             }
 
+            this.OverrideFile.Checked = this.currentSettings.OverrideFileOnUpload;
+
             if (this.currentSettings.BrowserMode.Equals(Constants.Browser.StandardBrowser)
                 && HttpContext.Current.Request.IsAuthenticated)
             {
@@ -2306,6 +2308,7 @@ namespace WatchersNET.CKEditor.Browser
             this.chkAspect.Text = Localization.GetString("chkAspect.Text", this.ResXFile, this.LanguageCode);
             this.chkHumanFriendy.Text = Localization.GetString("chkHumanFriendy.Text", this.ResXFile, this.LanguageCode);
             this.TrackClicks.Text = Localization.GetString("TrackClicks.Text", this.ResXFile, this.LanguageCode);
+            this.OverrideFile.Text = Localization.GetString("OverrideFile.Text", this.ResXFile, this.LanguageCode);
 
             // LinkButtons (with Image)
             this.Syncronize.Text = string.Format(
@@ -2690,7 +2693,9 @@ namespace WatchersNET.CKEditor.Browser
 
                 var uploadPhysicalPath = this.StartingDir().PhysicalPath;
 
-                var currentFolderInfo = Utility.ConvertFilePathToFolderInfo(this.lblCurrentDir.Text, this._portalSettings);
+                var currentFolderInfo = Utility.ConvertFilePathToFolderInfo(
+                    this.lblCurrentDir.Text,
+                    this._portalSettings);
 
                 if (!this.currentSettings.UploadDirId.Equals(-1) && !this.currentSettings.SubDirs)
                 {
@@ -2706,7 +2711,7 @@ namespace WatchersNET.CKEditor.Browser
 
                 string sFilePath = Path.Combine(uploadPhysicalPath, fileName);
 
-                if (File.Exists(sFilePath))
+                if (File.Exists(sFilePath) && !this.OverrideFile.Checked)
                 {
                     iCounter++;
                     fileName = string.Format("{0}_{1}{2}", sFileNameNoExt, iCounter, Path.GetExtension(file.FileName));
@@ -2715,7 +2720,11 @@ namespace WatchersNET.CKEditor.Browser
                 }
                 else
                 {
-                    FileManager.Instance.AddFile(currentFolderInfo, fileName, file.InputStream);
+                    FileManager.Instance.AddFile(
+                        currentFolderInfo,
+                        fileName,
+                        file.InputStream,
+                        this.OverrideFile.Checked);
                 }
 
                 this.Response.Write("<script type=\"text/javascript\">");
@@ -2727,7 +2736,9 @@ namespace WatchersNET.CKEditor.Browser
                 this.Page.ClientScript.RegisterStartupScript(
                     this.GetType(),
                     "errorcloseScript",
-                    string.Format("javascript:alert('{0}')", Localization.GetString("Error2.Text", this.ResXFile, this.LanguageCode)),
+                    string.Format(
+                        "javascript:alert('{0}')",
+                        Localization.GetString("Error2.Text", this.ResXFile, this.LanguageCode)),
                     true);
 
                 this.Response.End();

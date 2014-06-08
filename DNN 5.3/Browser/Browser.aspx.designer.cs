@@ -46,7 +46,7 @@ namespace WatchersNET.CKEditor.Browser {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.ScriptManager scriptManager1;
+        protected global::System.Web.UI.WebControls.WebParts.ScriptManager scriptManager1;
         
         /// <summary>
         /// lblModus control.
@@ -497,6 +497,15 @@ namespace WatchersNET.CKEditor.Browser {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.FileUpload ctlUpload;
+        
+        /// <summary>
+        /// OverrideFile control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox OverrideFile;
         
         /// <summary>
         /// MaximumUploadSizeInfo control.

@@ -469,12 +469,15 @@
     <value>Należy wprowadzić nazwę dla paska narzędziowego</value>
   </data>
   <data name="ToolbarSetCreated.Text" xml:space="preserve">
- 	<value>Stworzono nowy zestaw pasków narzędziowych "{0}"!</value>
+    <value>Stworzono nowy zestaw pasków narzędziowych "{0}"!</value>
   </data>
   <data name="ToolbarSetDeleted.Text" xml:space="preserve">
- 	<value>Wybrany zestaw pasków narzędziowych został usunięty!</value>
+    <value>Wybrany zestaw pasków narzędziowych został usunięty!</value>
   </data>
   <data name="ToolbarSetSaved.Text" xml:space="preserve">
- 	<value>Zestaw pasków narzędziowych zapisany!</value>
-  </data> 
+    <value>Zestaw pasków narzędziowych zapisany!</value>
+  </data>
+  <data name="OverrideFileOnUploadLabel.Text" xml:space="preserve">
+    <value>Override File if exists on upload, otherwise a new File with underscore _1 will be created?</value>
+  </data>
 </root>

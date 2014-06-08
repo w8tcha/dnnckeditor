@@ -494,4 +494,7 @@
   <data name="CustomJsFileLabel.Text" xml:space="preserve">
     <value>Eigene JS Datei</value>
   </data>
+  <data name="OverrideFileOnUploadLabel.Text" xml:space="preserve">
+    <value>Datei beim hochladen überschreiben wenn existiert, ansonsten wird eine neue Datei erzeugt?</value>
+  </data>
 </root>

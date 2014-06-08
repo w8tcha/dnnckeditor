@@ -482,6 +482,19 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
+            if (settingsDictionary.ContainsKey(string.Format("{0}{1}", key, SettingConstants.OVERRIDEFILEONUPLOAD)))
+            {
+                if (!string.IsNullOrEmpty((string)settingsDictionary[string.Format("{0}{1}", key, SettingConstants.OVERRIDEFILEONUPLOAD)]))
+                {
+                    bool bResult;
+                    if (bool.TryParse(
+                        (string)settingsDictionary[string.Format("{0}{1}", key, SettingConstants.OVERRIDEFILEONUPLOAD)], out bResult))
+                    {
+                        currentSettings.OverrideFileOnUpload = bResult;
+                    }
+                }
+            }
+
             if (settingsDictionary.ContainsKey(string.Format("{0}{1}", key, SettingConstants.SUBDIRS)))
             {
                 if (!string.IsNullOrEmpty((string)settingsDictionary[string.Format("{0}{1}", key, SettingConstants.SUBDIRS)]))
@@ -884,6 +897,15 @@ namespace WatchersNET.CKEditor.Utilities
                 if (bool.TryParse((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.SHOWPAGELINKSTABFIRST)], out bResult))
                 {
                     currentSettings.ShowPageLinksTabFirst = bResult;
+                }
+            }
+
+            if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.OVERRIDEFILEONUPLOAD)]))
+            {
+                bool bResult;
+                if (bool.TryParse((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.OVERRIDEFILEONUPLOAD)], out bResult))
+                {
+                    currentSettings.OverrideFileOnUpload = bResult;
                 }
             }
 

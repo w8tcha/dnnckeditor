@@ -171,6 +171,9 @@
               <div>
                   <asp:FileUpload ID="ctlUpload" runat="server" />
               </div>
+              <div class="OverrideFile">
+                  <asp:CheckBox runat="server" ID="OverrideFile" />
+              </div>
               <div class="maximumFileUploadInfo">
                   <asp:Label ID="MaximumUploadSizeInfo" runat="server"></asp:Label>
               </div>

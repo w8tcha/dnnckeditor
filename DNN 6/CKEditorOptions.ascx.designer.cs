@@ -91,7 +91,7 @@ namespace WatchersNET.CKEditor {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel ExportDialogUpdatePanel;
+        protected global::System.Web.UI.WebControls.WebParts.UpdatePanel ExportDialogUpdatePanel;
         
         /// <summary>
         /// ExportDir control.
@@ -136,7 +136,7 @@ namespace WatchersNET.CKEditor {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel upNewUpdatePanel;
+        protected global::System.Web.UI.WebControls.WebParts.UpdatePanel upNewUpdatePanel;
         
         /// <summary>
         /// ctlImportFile control.
@@ -163,7 +163,7 @@ namespace WatchersNET.CKEditor {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel upOptions;
+        protected global::System.Web.UI.WebControls.WebParts.UpdatePanel upOptions;
         
         /// <summary>
         /// LastTabId control.
@@ -605,6 +605,24 @@ namespace WatchersNET.CKEditor {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList UploadDir;
+        
+        /// <summary>
+        /// OverrideFileOnUploadLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label OverrideFileOnUploadLabel;
+        
+        /// <summary>
+        /// OverrideFileOnUpload control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox OverrideFileOnUpload;
         
         /// <summary>
         /// lblResizeWidth control.

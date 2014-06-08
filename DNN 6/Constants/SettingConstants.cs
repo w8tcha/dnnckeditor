@@ -73,6 +73,11 @@ namespace WatchersNET.CKEditor.Constants
         public const string CSS = "css";
 
         /// <summary>
+        /// The OverrideFileOnUpload setting name.
+        /// </summary>
+        public const string OVERRIDEFILEONUPLOAD = "OverrideFileOnUpload";
+
+        /// <summary>
         /// The file list page size setting name.
         /// </summary>
         public const string FILELISTPAGESIZE = "FileListPageSize";

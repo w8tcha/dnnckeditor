@@ -30,6 +30,7 @@ namespace WatchersNET.CKEditor.Objects
         /// </summary>
         public EditorProviderSettings()
         {
+            this.OverrideFileOnUpload = false;
             this.UseAnchorSelector = true;
             this.FileListPageSize = 20;
             this.FileListViewMode = FileListView.DetailView;
@@ -47,6 +48,14 @@ namespace WatchersNET.CKEditor.Objects
             this.Config = new EditorConfig();
         }
         #region Properties
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [override file on upload].
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if [override file on upload]; otherwise, <c>false</c>.
+        /// </value>
+        public bool OverrideFileOnUpload { get; set; }
 
         /// <summary>
         /// Gets or sets How many Items to Show per Page on the File List.

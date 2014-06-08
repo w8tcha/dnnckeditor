@@ -491,4 +491,7 @@
   <data name="CustomJsFileLabel.Text" xml:space="preserve">
     <value>Custom JS File</value>
   </data>
+  <data name="OverrideFileOnUploadLabel.Text" xml:space="preserve">
+    <value>Override File if exists on upload, otherwise a new File with underscore _1 will be created?</value>
+  </data>
 </root>

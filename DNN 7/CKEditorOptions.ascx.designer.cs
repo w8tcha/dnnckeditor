@@ -607,6 +607,24 @@ namespace WatchersNET.CKEditor {
         protected global::System.Web.UI.WebControls.DropDownList UploadDir;
         
         /// <summary>
+        /// OverrideFileOnUploadLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label OverrideFileOnUploadLabel;
+        
+        /// <summary>
+        /// OverrideFileOnUpload control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.CheckBox OverrideFileOnUpload;
+        
+        /// <summary>
         /// lblResizeWidth control.
         /// </summary>
         /// <remarks>

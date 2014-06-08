@@ -710,6 +710,7 @@ namespace WatchersNET.CKEditor
                 (LinkMode)Enum.Parse(typeof(LinkMode), this.DefaultLinkMode.SelectedValue);
             exportSettings.UseAnchorSelector = this.UseAnchorSelector.Checked;
             exportSettings.ShowPageLinksTabFirst = this.ShowPageLinksTabFirst.Checked;
+            exportSettings.OverrideFileOnUpload = this.OverrideFileOnUpload.Checked;
             exportSettings.SubDirs = this.cbBrowserDirs.Checked;
             exportSettings.BrowserRootDirId = int.Parse(this.BrowserRootDir.SelectedValue);
             exportSettings.UploadDirId = int.Parse(this.UploadDir.SelectedValue);
@@ -1041,6 +1042,9 @@ namespace WatchersNET.CKEditor
 
             this.cbBrowserDirs.Checked = importedSettings.SubDirs;
 
+            this.OverrideFileOnUpload.Checked = importedSettings.OverrideFileOnUpload;
+            
+
             this.BrowserRootDir.SelectedValue =
                 this.BrowserRootDir.Items.FindByValue(importedSettings.BrowserRootDirId.ToString()) != null
                     ? importedSettings.BrowserRootDirId.ToString()
@@ -1297,6 +1301,9 @@ namespace WatchersNET.CKEditor
                 this.ModuleId, string.Format("{0}{1}", moduleKey, SettingConstants.USEANCHORSELECTOR));
             moduleController.DeleteModuleSetting(
                 this.ModuleId, string.Format("{0}{1}", moduleKey, SettingConstants.SHOWPAGELINKSTABFIRST));
+            moduleController.DeleteModuleSetting(
+                this.ModuleId,
+                string.Format("{0}{1}", moduleKey, SettingConstants.OVERRIDEFILEONUPLOAD));
             moduleController.DeleteModuleSetting(
                 this.ModuleId, string.Format("{0}{1}", moduleKey, SettingConstants.SUBDIRS));
             moduleController.DeleteModuleSetting(
@@ -2698,6 +2705,10 @@ namespace WatchersNET.CKEditor
                 this.ShowPageLinksTabFirst.Checked.ToString());
             moduleController.UpdateModuleSetting(
                 this.ModuleId,
+                string.Format("{0}{1}", key, SettingConstants.OVERRIDEFILEONUPLOAD),
+                this.OverrideFileOnUpload.Checked.ToString());
+            moduleController.UpdateModuleSetting(
+                this.ModuleId,
                 string.Format("{0}{1}", key, SettingConstants.SUBDIRS),
                 this.cbBrowserDirs.Checked.ToString());
             moduleController.UpdateModuleSetting(
@@ -2965,6 +2976,9 @@ namespace WatchersNET.CKEditor
                 string.Format("{0}{1}", key, SettingConstants.SHOWPAGELINKSTABFIRST),
                 this.ShowPageLinksTabFirst.Checked.ToString());
             hostSettings.UpdateHostSetting(
+                string.Format("{0}{1}", key, SettingConstants.OVERRIDEFILEONUPLOAD),
+                this.OverrideFileOnUpload.Checked.ToString());
+            hostSettings.UpdateHostSetting(
                 string.Format("{0}{1}", key, SettingConstants.SUBDIRS), this.cbBrowserDirs.Checked.ToString());
             hostSettings.UpdateHostSetting(
                 string.Format("{0}{1}", key, SettingConstants.BROWSERROOTDIRID), this.BrowserRootDir.SelectedValue);
@@ -3117,6 +3131,7 @@ namespace WatchersNET.CKEditor
             this.lblBrowAllow.Text = Localization.GetString("lblBrowAllow.Text", this.ResXFile, this.LangCode);
             this.BrowserRootFolder.Text = Localization.GetString("BrowserRootFolder.Text", this.ResXFile, this.LangCode);
             this.lblBrowserDirs.Text = Localization.GetString("lblBrowserDirs.Text", this.ResXFile, this.LangCode);
+            this.OverrideFileOnUploadLabel.Text = Localization.GetString("OverrideFileOnUploadLabel.Text", this.ResXFile, this.LangCode);
             this.UploadFolderLabel.Text = Localization.GetString("UploadFolderLabel.Text", this.ResXFile, this.LangCode);
             this.lblCustomConfig.Text = Localization.GetString("lblCustomConfig.Text", this.ResXFile, this.LangCode);
             this.lblInjectSyntaxJs.Text = Localization.GetString("lblInjectSyntaxJs.Text", this.ResXFile, this.LangCode);

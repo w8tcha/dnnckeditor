@@ -386,4 +386,7 @@
   <data name="FileToBig.Text" xml:space="preserve">
     <value>File is to big to upload.</value>
   </data>
+  <data name="OverrideFile.Text" xml:space="preserve">
+    <value>Override File if exists, otherwise a new File with underscore _1 will be created?</value>
+  </data>
 </root>

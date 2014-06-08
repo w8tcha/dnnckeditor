@@ -223,6 +223,10 @@
         <td class="settingValueColumn"><asp:DropDownList ID="UploadDir" runat="server" CssClass="DefaultDropDown"></asp:DropDownList></td>
       </tr>
       <tr>
+        <td class="settingNameColumn"><asp:label id="OverrideFileOnUploadLabel" runat="server">Override File on Upload?</asp:label></td>
+        <td class="settingValueColumn"><asp:Checkbox ID="OverrideFileOnUpload" runat="server"></asp:Checkbox></td>
+      </tr>
+      <tr>
         <td class="settingNameColumn"><asp:label id="lblResizeWidth" runat="server">Default Image Resize Width:</asp:label></td>
         <td class="settingValueColumn"><asp:TextBox ID="txtResizeWidth" runat="server" CssClass="settingValueInputNumeric"></asp:TextBox>px</td>
       </tr>

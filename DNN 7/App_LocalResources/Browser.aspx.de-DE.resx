@@ -386,4 +386,7 @@
   <data name="FileToBig.Text" xml:space="preserve">
     <value>Datei ist zu groß zum hochladen.</value>
   </data>
+  <data name="OverrideFile.Text" xml:space="preserve">
+    <value>Datei überschreiben wenn existiert, ansonsten wird eine neue Datei erzeugt?</value>
+  </data>
 </root>
