@@ -21,6 +21,9 @@
         <td></td>
         <td>
             <div class="Toolbar">
+                <asp:LinkButton id="CopyToAllChild" runat="server" Text="Copy Settings to Child Pages" CssClass="copyButton"></asp:LinkButton>
+            </div>
+            <div class="Toolbar">
                 <asp:LinkButton id="lnkRemoveAll" runat="server" Text="Delete All Settings" CssClass="removeButton"></asp:LinkButton>
                 <asp:LinkButton id="lnkRemoveChild" runat="server" Text="Delete Child Settings" CssClass="removeButton"></asp:LinkButton>
                 <asp:LinkButton id="lnkRemove" runat="server" Text="Delete Settings" CssClass="removeButton"></asp:LinkButton>

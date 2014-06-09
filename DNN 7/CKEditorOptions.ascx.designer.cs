@@ -40,6 +40,15 @@ namespace WatchersNET.CKEditor {
         protected global::System.Web.UI.WebControls.RadioButtonList rBlSetMode;
         
         /// <summary>
+        /// CopyToAllChild control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton CopyToAllChild;
+        
+        /// <summary>
         /// lnkRemoveAll control.
         /// </summary>
         /// <remarks>

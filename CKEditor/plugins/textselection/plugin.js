@@ -7,7 +7,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
      */
     CKEDITOR.plugins.add('textselection',
     {
-        version: 1.02,
+        version: 1.03,
         init: function (editor) {
             // Corresponding text range of wysiwyg bookmark.
             var wysiwygBookmark;
@@ -73,7 +73,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
                 }, null, null, 10);
 
                 editor.on('beforeGetModeData', function () {
-                    if (editor.mode === 'wysiwyg') {
+                    if (editor.mode === 'wysiwyg' && editor.getData()) {
                         if (CKEDITOR.env.gecko && !editor.focusManager.hasFocus) {
                             return;
                         }

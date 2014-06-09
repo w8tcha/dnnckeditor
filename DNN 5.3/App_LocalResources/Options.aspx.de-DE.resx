@@ -497,4 +497,13 @@
   <data name="OverrideFileOnUploadLabel.Text" xml:space="preserve">
     <value>Datei beim hochladen überschreiben wenn existiert, ansonsten wird eine neue Datei erzeugt?</value>
   </data>
+  <data name="CopyPageChild.Help" xml:space="preserve">
+    <value>Kopiert die aktuellen Einstellungen für alle Unterseiten</value>
+  </data>
+  <data name="CopyPageChild.Text" xml:space="preserve">
+    <value>Einstellungen für Unterseiten kopieren</value>
+  </data>
+  <data name="lblInfoCopyAll.Text" xml:space="preserve">
+    <value>Settings copied to all Child Pages.</value>
+  </data>
 </root>

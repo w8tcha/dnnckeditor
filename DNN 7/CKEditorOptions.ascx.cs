@@ -500,297 +500,7 @@ namespace WatchersNET.CKEditor
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void Export_Click(object sender, EventArgs e)
         {
-            var exportSettings = new EditorProviderSettings { SettingMode = SettingsMode.Default };
-
-            exportSettings.SettingMode = this.CurrentSettingsMode;
-
-            // Export all Editor config settings
-            foreach (
-                PropertyInfo info in
-                    SettingsUtil.GetEditorConfigProperties())
-            {
-                switch (info.PropertyType.Name)
-                {
-                    case "String":
-                        {
-                            var textBox =
-                                Utility.FindControl<TextBox>(this.EditorConfigHolder, info.Name);
-
-                            if (!string.IsNullOrEmpty(textBox.Text))
-                            {
-                                info.SetValue(exportSettings.Config, textBox.Text, null);
-                            }
-                        }
-
-                        break;
-                    case "Int32":
-                        {
-                            var textBox =
-                                Utility.FindControl<TextBox>(this.EditorConfigHolder, info.Name);
-
-                            if (!string.IsNullOrEmpty(textBox.Text))
-                            {
-                                info.SetValue(exportSettings.Config, int.Parse(textBox.Text), null);
-                            }
-                        }
-
-                        break;
-                    case "Decimal":
-                        {
-                            var textBox =
-                                Utility.FindControl<TextBox>(this.EditorConfigHolder, info.Name);
-
-                            if (!string.IsNullOrEmpty(textBox.Text))
-                            {
-                                info.SetValue(exportSettings.Config, decimal.Parse(textBox.Text), null);
-                            }
-                        }
-
-                        break;
-                    case "Boolean":
-                        {
-                            var checkBox =
-                                Utility.FindControl<CheckBox>(this.EditorConfigHolder, info.Name);
-
-                            info.SetValue(
-                                exportSettings.Config,
-                                checkBox.Checked,
-                                null);
-                        }
-
-                        break;
-                }
-
-                switch (info.Name)
-                {
-                    case "ToolbarLocation":
-                        {
-                            var dropDownList = Utility.FindControl<DropDownList>(this.EditorConfigHolder, info.Name);
-
-                            if (dropDownList.SelectedItem != null)
-                            {
-                                info.SetValue(
-                                    exportSettings.Config,
-                                    (ToolBarLocation)Enum.Parse(typeof(ToolBarLocation), dropDownList.SelectedValue),
-                                    null);
-                            }
-                        }
-
-                        break;
-                    case "DefaultLinkType":
-                        {
-                            var dropDownList = Utility.FindControl<DropDownList>(this.EditorConfigHolder, info.Name);
-
-                            if (dropDownList.SelectedItem != null)
-                            {
-                                info.SetValue(
-                                    exportSettings.Config,
-                                    (LinkType)Enum.Parse(typeof(LinkType), dropDownList.SelectedValue),
-                                    null);
-                            }
-                        }
-
-                        break;
-                    case "EnterMode":
-                    case "ShiftEnterMode":
-                        {
-                            var dropDownList = Utility.FindControl<DropDownList>(this.EditorConfigHolder, info.Name);
-
-                            if (dropDownList.SelectedItem != null)
-                            {
-                                info.SetValue(
-                                    exportSettings.Config,
-                                    (EnterModus)Enum.Parse(typeof(EnterModus), dropDownList.SelectedValue),
-                                    null);
-                            }
-                        }
-
-                        break;
-                    case "ContentsLangDirection":
-                        {
-                            var dropDownList = Utility.FindControl<DropDownList>(this.EditorConfigHolder, info.Name);
-
-                            if (dropDownList.SelectedItem != null)
-                            {
-                                info.SetValue(
-                                    exportSettings.Config,
-                                    (LanguageDirection)Enum.Parse(typeof(LanguageDirection), dropDownList.SelectedValue),
-                                    null);
-                            }
-                        }
-
-                        break;
-                    case "CodeMirror":
-                        {
-                            foreach (var codeMirrorInfo in
-                                typeof(CodeMirror).GetProperties()
-                                    .Where(codeMirrorInfo => !codeMirrorInfo.Name.Equals("Theme")))
-                            {
-                                switch (codeMirrorInfo.PropertyType.Name)
-                                {
-                                    case "String":
-                                        {
-                                            var textBox = Utility.FindControl<TextBox>(
-                                                this.EditorConfigHolder,
-                                                codeMirrorInfo.Name);
-
-                                            if (!string.IsNullOrEmpty(textBox.Text))
-                                            {
-                                                codeMirrorInfo.SetValue(
-                                                    exportSettings.Config.CodeMirror,
-                                                    textBox.Text,
-                                                    null);
-                                            }
-                                        }
-
-                                        break;
-
-                                    case "Boolean":
-                                        {
-                                            var checkBox = Utility.FindControl<CheckBox>(
-                                                this.EditorConfigHolder,
-                                                codeMirrorInfo.Name);
-
-                                            codeMirrorInfo.SetValue(
-                                                exportSettings.Config.CodeMirror,
-                                                checkBox.Checked,
-                                                null);
-                                        }
-
-                                        break;
-                                }
-                            }
-                        }
-
-                        break;
-                    case "WordCount":
-                        {
-                            foreach (var wordCountInfo in typeof(WordCountConfig).GetProperties())
-                            {
-                                switch (wordCountInfo.PropertyType.Name)
-                                {
-                                    case "String":
-                                        {
-                                            var textBox = Utility.FindControl<TextBox>(
-                                                this.EditorConfigHolder,
-                                                wordCountInfo.Name);
-
-                                            if (!string.IsNullOrEmpty(textBox.Text))
-                                            {
-                                                wordCountInfo.SetValue(
-                                                    exportSettings.Config.WordCount,
-                                                    textBox.Text,
-                                                    null);
-                                            }
-                                        }
-
-                                        break;
-
-                                    case "Boolean":
-                                        {
-                                            var checkBox = Utility.FindControl<CheckBox>(
-                                                this.EditorConfigHolder,
-                                                wordCountInfo.Name);
-
-                                            wordCountInfo.SetValue(
-                                                exportSettings.Config.WordCount,
-                                                checkBox.Checked,
-                                                null);
-                                        }
-
-                                        break;
-                                }
-                            }
-                        }
-
-                        break;
-                }
-            }
-            ///////////////////
-
-            exportSettings.Config.Skin = this.ddlSkin.SelectedValue;
-            exportSettings.Config.CodeMirror.Theme = this.CodeMirrorTheme.SelectedValue;
-            exportSettings.Browser = this.ddlBrowser.SelectedValue;
-            exportSettings.FileListViewMode =
-                (FileListView)Enum.Parse(typeof(FileListView), this.FileListViewMode.SelectedValue);
-            exportSettings.DefaultLinkMode =
-                (LinkMode)Enum.Parse(typeof(LinkMode), this.DefaultLinkMode.SelectedValue);
-            exportSettings.UseAnchorSelector = this.UseAnchorSelector.Checked;
-            exportSettings.ShowPageLinksTabFirst = this.ShowPageLinksTabFirst.Checked;
-            exportSettings.OverrideFileOnUpload = this.OverrideFileOnUpload.Checked;
-            exportSettings.SubDirs = this.cbBrowserDirs.Checked;
-            exportSettings.BrowserRootDirId = int.Parse(this.BrowserRootDir.SelectedValue);
-            exportSettings.UploadDirId = int.Parse(this.UploadDir.SelectedValue);
-
-            if (Utility.IsNumeric(this.FileListPageSize.Text))
-            {
-                exportSettings.FileListPageSize = int.Parse(this.FileListPageSize.Text);
-            }
-
-            if (Utility.IsNumeric(this.txtResizeWidth.Text))
-            {
-                exportSettings.ResizeWidth = int.Parse(this.txtResizeWidth.Text);
-            }
-
-            if (Utility.IsNumeric(this.txtResizeHeight.Text))
-            {
-                exportSettings.ResizeHeight = int.Parse(this.txtResizeHeight.Text);
-            }
-
-            exportSettings.InjectSyntaxJs = this.InjectSyntaxJs.Checked;
-
-            if (Utility.IsUnit(this.txtWidth.Text))
-            {
-                exportSettings.EditorWidth = this.txtWidth.Text;
-            }
-
-            if (Utility.IsUnit(this.txtHeight.Text))
-            {
-                exportSettings.EditorHeight = this.txtHeight.Text;
-            }
-
-            exportSettings.BlankText = this.txtBlanktext.Text;
-            exportSettings.Config.StylesSet = this.StylesURL.Url;
-            exportSettings.Config.ContentsCss = this.CssUrl.Url;
-            exportSettings.Config.Templates_Files = this.TemplUrl.Url;
-            exportSettings.CustomJsFile = this.CustomJsFile.Url;
-            exportSettings.Config.CustomConfig = this.ConfigUrl.Url;
-
-            string sRoles = this.chblBrowsGr.Items.Cast<ListItem>().Where(item => item.Selected).Aggregate(
-                string.Empty, (current, item) => string.Format("{0}{1};", current, item.Value));
-
-            if (sRoles != string.Empty)
-            {
-                exportSettings.BrowserRoles = sRoles;
-            }
-
-            List<ToolbarRoles> listToolbarRoles = new List<ToolbarRoles>();
-
-            // Save Toolbar Setting for every Role
-            for (int i = 0; i < this.gvToolbars.Rows.Count; i++)
-            {
-                Label label = (Label)this.gvToolbars.Rows[i].Cells[0].FindControl("lblRoleName");
-
-                DropDownList ddLToolB = (DropDownList)this.gvToolbars.Rows[i].Cells[1].FindControl("ddlToolbars");
-
-                if (label == null || ddLToolB == null)
-                {
-                    continue;
-                }
-
-                if (label.Text.Equals("Unauthenticated Users"))
-                {
-                    listToolbarRoles.Add(new ToolbarRoles { RoleId = -1, Toolbar = ddLToolB.SelectedValue });
-                }
-                else
-                {
-                    RoleInfo objRole = this.objRoleController.GetRoleByName(this._portalSettings.PortalId, label.Text);
-
-                    listToolbarRoles.Add(new ToolbarRoles { RoleId = objRole.RoleID, Toolbar = ddLToolB.SelectedValue });
-                }
-            }
-
-            exportSettings.ToolBarRoles = listToolbarRoles;
+            var exportSettings = this.ExportSettings();
 
             // Save XML file
             try
@@ -1829,6 +1539,7 @@ namespace WatchersNET.CKEditor
                 this.lnkRemove.Click += this.Remove_Click;
                 this.lnkRemoveAll.Click += this.RemoveAll_Click;
                 this.lnkRemoveChild.Click += this.RemoveChild_Click;
+                this.CopyToAllChild.Click += this.CopyToAllChild_Click;
 
                 this.iBAdd.Click += this.IbAddClick;
                 this.iBCancel.Click += this.IbCancelClick;
@@ -2117,6 +1828,7 @@ namespace WatchersNET.CKEditor
 
             this.lnkRemoveAll.Visible = !currentMode.Equals(0);
             this.lnkRemoveChild.Visible = !currentMode.Equals(0);
+            this.CopyToAllChild.Visible = !currentMode.Equals(0);
 
             this.lnkRemove.Text = string.Format(
                 Localization.GetString("Remove.Text", this.ResXFile, this.LangCode),
@@ -2205,6 +1917,13 @@ namespace WatchersNET.CKEditor
                                 "RemovePageChild.Text", this.ResXFile, this.LangCode);
                         this.lnkRemoveChild.ToolTip = Localization.GetString(
                             "RemovePageChild.Help", this.ResXFile, this.LangCode);
+
+                        this.CopyToAllChild.Enabled = currentTab.HasChildren;
+
+                        this.CopyToAllChild.Text = Localization.GetString(
+                                "CopyPageChild.Text", this.ResXFile, this.LangCode);
+                        this.CopyToAllChild.ToolTip = Localization.GetString(
+                            "CopyPageChild.Help", this.ResXFile, this.LangCode);
                     }
 
                     break;
@@ -3500,6 +3219,29 @@ namespace WatchersNET.CKEditor
         }
 
         /// <summary>
+        /// Copies the current Page Settings to all Child Pages
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void CopyToAllChild_Click(object sender, EventArgs e)
+        {
+            var childTabs = TabController.GetTabsByParent(this.CurrentOrSelectedTabId, this.CurrentOrSelectedPortalId);
+
+            foreach (var tab in childTabs)
+            {
+                // Sa Settings to tab
+                this.SavePortalOrPageSettings(string.Format("DNNCKT#{0}#", tab.TabID));
+            }
+
+            // Finally Clear Cache
+            DataCache.ClearHostCache(true);
+
+            this.ShowNotification(
+                Localization.GetString("lblInfoCopyAll.Text", this.ResXFile, this.LangCode),
+                "success");
+        }
+
+        /// <summary>
         /// Reloaded the Settings of the Selected Mode
         /// </summary>
         /// <param name="sender">The source of the event.</param>
@@ -3555,6 +3297,307 @@ namespace WatchersNET.CKEditor
             this.CssUrl.ReloadFiles = true;
             this.StylesURL.ReloadFiles = true;
             this.ImportFile.ReloadFiles = true;
+        }
+
+        /// <summary>
+        /// Exports the settings.
+        /// </summary>
+        /// <returns>Returns the exported EditorProviderSettings</returns>
+        private EditorProviderSettings ExportSettings()
+        {
+            var exportSettings = new EditorProviderSettings { SettingMode = SettingsMode.Default };
+
+            exportSettings.SettingMode = this.CurrentSettingsMode;
+
+            // Export all Editor config settings
+            foreach (
+                PropertyInfo info in
+                    SettingsUtil.GetEditorConfigProperties())
+            {
+                switch (info.PropertyType.Name)
+                {
+                    case "String":
+                        {
+                            var textBox =
+                                Utility.FindControl<TextBox>(this.EditorConfigHolder, info.Name);
+
+                            if (!string.IsNullOrEmpty(textBox.Text))
+                            {
+                                info.SetValue(exportSettings.Config, textBox.Text, null);
+                            }
+                        }
+
+                        break;
+                    case "Int32":
+                        {
+                            var textBox =
+                                Utility.FindControl<TextBox>(this.EditorConfigHolder, info.Name);
+
+                            if (!string.IsNullOrEmpty(textBox.Text))
+                            {
+                                info.SetValue(exportSettings.Config, int.Parse(textBox.Text), null);
+                            }
+                        }
+
+                        break;
+                    case "Decimal":
+                        {
+                            var textBox =
+                                Utility.FindControl<TextBox>(this.EditorConfigHolder, info.Name);
+
+                            if (!string.IsNullOrEmpty(textBox.Text))
+                            {
+                                info.SetValue(exportSettings.Config, decimal.Parse(textBox.Text), null);
+                            }
+                        }
+
+                        break;
+                    case "Boolean":
+                        {
+                            var checkBox =
+                                Utility.FindControl<CheckBox>(this.EditorConfigHolder, info.Name);
+
+                            info.SetValue(
+                                exportSettings.Config,
+                                checkBox.Checked,
+                                null);
+                        }
+
+                        break;
+                }
+
+                switch (info.Name)
+                {
+                    case "ToolbarLocation":
+                        {
+                            var dropDownList = Utility.FindControl<DropDownList>(this.EditorConfigHolder, info.Name);
+
+                            if (dropDownList.SelectedItem != null)
+                            {
+                                info.SetValue(
+                                    exportSettings.Config,
+                                    (ToolBarLocation)Enum.Parse(typeof(ToolBarLocation), dropDownList.SelectedValue),
+                                    null);
+                            }
+                        }
+
+                        break;
+                    case "DefaultLinkType":
+                        {
+                            var dropDownList = Utility.FindControl<DropDownList>(this.EditorConfigHolder, info.Name);
+
+                            if (dropDownList.SelectedItem != null)
+                            {
+                                info.SetValue(
+                                    exportSettings.Config,
+                                    (LinkType)Enum.Parse(typeof(LinkType), dropDownList.SelectedValue),
+                                    null);
+                            }
+                        }
+
+                        break;
+                    case "EnterMode":
+                    case "ShiftEnterMode":
+                        {
+                            var dropDownList = Utility.FindControl<DropDownList>(this.EditorConfigHolder, info.Name);
+
+                            if (dropDownList.SelectedItem != null)
+                            {
+                                info.SetValue(
+                                    exportSettings.Config,
+                                    (EnterModus)Enum.Parse(typeof(EnterModus), dropDownList.SelectedValue),
+                                    null);
+                            }
+                        }
+
+                        break;
+                    case "ContentsLangDirection":
+                        {
+                            var dropDownList = Utility.FindControl<DropDownList>(this.EditorConfigHolder, info.Name);
+
+                            if (dropDownList.SelectedItem != null)
+                            {
+                                info.SetValue(
+                                    exportSettings.Config,
+                                    (LanguageDirection)Enum.Parse(typeof(LanguageDirection), dropDownList.SelectedValue),
+                                    null);
+                            }
+                        }
+
+                        break;
+                    case "CodeMirror":
+                        {
+                            foreach (var codeMirrorInfo in
+                                typeof(CodeMirror).GetProperties()
+                                    .Where(codeMirrorInfo => !codeMirrorInfo.Name.Equals("Theme")))
+                            {
+                                switch (codeMirrorInfo.PropertyType.Name)
+                                {
+                                    case "String":
+                                        {
+                                            var textBox = Utility.FindControl<TextBox>(
+                                                this.EditorConfigHolder,
+                                                codeMirrorInfo.Name);
+
+                                            if (!string.IsNullOrEmpty(textBox.Text))
+                                            {
+                                                codeMirrorInfo.SetValue(
+                                                    exportSettings.Config.CodeMirror,
+                                                    textBox.Text,
+                                                    null);
+                                            }
+                                        }
+
+                                        break;
+
+                                    case "Boolean":
+                                        {
+                                            var checkBox = Utility.FindControl<CheckBox>(
+                                                this.EditorConfigHolder,
+                                                codeMirrorInfo.Name);
+
+                                            codeMirrorInfo.SetValue(
+                                                exportSettings.Config.CodeMirror,
+                                                checkBox.Checked,
+                                                null);
+                                        }
+
+                                        break;
+                                }
+                            }
+                        }
+
+                        break;
+                    case "WordCount":
+                        {
+                            foreach (var wordCountInfo in typeof(WordCountConfig).GetProperties())
+                            {
+                                switch (wordCountInfo.PropertyType.Name)
+                                {
+                                    case "String":
+                                        {
+                                            var textBox = Utility.FindControl<TextBox>(
+                                                this.EditorConfigHolder,
+                                                wordCountInfo.Name);
+
+                                            if (!string.IsNullOrEmpty(textBox.Text))
+                                            {
+                                                wordCountInfo.SetValue(
+                                                    exportSettings.Config.WordCount,
+                                                    textBox.Text,
+                                                    null);
+                                            }
+                                        }
+
+                                        break;
+
+                                    case "Boolean":
+                                        {
+                                            var checkBox = Utility.FindControl<CheckBox>(
+                                                this.EditorConfigHolder,
+                                                wordCountInfo.Name);
+
+                                            wordCountInfo.SetValue(
+                                                exportSettings.Config.WordCount,
+                                                checkBox.Checked,
+                                                null);
+                                        }
+
+                                        break;
+                                }
+                            }
+                        }
+
+                        break;
+                }
+            }
+            ///////////////////
+
+            exportSettings.Config.Skin = this.ddlSkin.SelectedValue;
+            exportSettings.Config.CodeMirror.Theme = this.CodeMirrorTheme.SelectedValue;
+            exportSettings.Browser = this.ddlBrowser.SelectedValue;
+            exportSettings.FileListViewMode =
+                (FileListView)Enum.Parse(typeof(FileListView), this.FileListViewMode.SelectedValue);
+            exportSettings.DefaultLinkMode =
+                (LinkMode)Enum.Parse(typeof(LinkMode), this.DefaultLinkMode.SelectedValue);
+            exportSettings.UseAnchorSelector = this.UseAnchorSelector.Checked;
+            exportSettings.ShowPageLinksTabFirst = this.ShowPageLinksTabFirst.Checked;
+            exportSettings.OverrideFileOnUpload = this.OverrideFileOnUpload.Checked;
+            exportSettings.SubDirs = this.cbBrowserDirs.Checked;
+            exportSettings.BrowserRootDirId = int.Parse(this.BrowserRootDir.SelectedValue);
+            exportSettings.UploadDirId = int.Parse(this.UploadDir.SelectedValue);
+
+            if (Utility.IsNumeric(this.FileListPageSize.Text))
+            {
+                exportSettings.FileListPageSize = int.Parse(this.FileListPageSize.Text);
+            }
+
+            if (Utility.IsNumeric(this.txtResizeWidth.Text))
+            {
+                exportSettings.ResizeWidth = int.Parse(this.txtResizeWidth.Text);
+            }
+
+            if (Utility.IsNumeric(this.txtResizeHeight.Text))
+            {
+                exportSettings.ResizeHeight = int.Parse(this.txtResizeHeight.Text);
+            }
+
+            exportSettings.InjectSyntaxJs = this.InjectSyntaxJs.Checked;
+
+            if (Utility.IsUnit(this.txtWidth.Text))
+            {
+                exportSettings.EditorWidth = this.txtWidth.Text;
+            }
+
+            if (Utility.IsUnit(this.txtHeight.Text))
+            {
+                exportSettings.EditorHeight = this.txtHeight.Text;
+            }
+
+            exportSettings.BlankText = this.txtBlanktext.Text;
+            exportSettings.Config.StylesSet = this.StylesURL.Url;
+            exportSettings.Config.ContentsCss = this.CssUrl.Url;
+            exportSettings.Config.Templates_Files = this.TemplUrl.Url;
+            exportSettings.CustomJsFile = this.CustomJsFile.Url;
+            exportSettings.Config.CustomConfig = this.ConfigUrl.Url;
+
+            string sRoles = this.chblBrowsGr.Items.Cast<ListItem>().Where(item => item.Selected).Aggregate(
+                string.Empty, (current, item) => current + (item.Value + ";"));
+
+            if (sRoles != string.Empty)
+            {
+                exportSettings.BrowserRoles = sRoles;
+            }
+
+            List<ToolbarRoles> listToolbarRoles = new List<ToolbarRoles>();
+
+            // Save Toolbar Setting for every Role
+            for (int i = 0; i < this.gvToolbars.Rows.Count; i++)
+            {
+                Label label = (Label)this.gvToolbars.Rows[i].Cells[0].FindControl("lblRoleName");
+
+                DropDownList ddLToolB = (DropDownList)this.gvToolbars.Rows[i].Cells[1].FindControl("ddlToolbars");
+
+                if (label == null || ddLToolB == null)
+                {
+                    continue;
+                }
+
+                if (label.Text.Equals("Unauthenticated Users"))
+                {
+                    listToolbarRoles.Add(new ToolbarRoles { RoleId = -1, Toolbar = ddLToolB.SelectedValue });
+                }
+                else
+                {
+                    RoleInfo objRole = this.objRoleController.GetRoleByName(this._portalSettings.PortalId, label.Text);
+
+                    listToolbarRoles.Add(new ToolbarRoles { RoleId = objRole.RoleID, Toolbar = ddLToolB.SelectedValue });
+                }
+            }
+
+            exportSettings.ToolBarRoles = listToolbarRoles;
+
+            return exportSettings;
         }
 
         #endregion

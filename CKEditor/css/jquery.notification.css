@@ -35,20 +35,28 @@ body{
     height: 10px;
     margin-top: 3px;
 }
-.message_area{
-    font: 14px/100% Arial, Helvetica, sans-serif;
+.message_area {
+	font: 14px/100% Arial, Helvetica, sans-serif;
 	font-weight:bolder;
     color: white;
-    text-shadow: 0 1px 0 rgba(0,0,0,0.5);
+	-ms-text-shadow: 0 1px 0 #000000;
+	-ms-text-shadow: 0 1px 0 rgba(0,0,0,0.5);
+	text-shadow: 0 1px 0 #000000;
+	text-shadow: 0 1px 0 rgba(0,0,0,0.5);
 }
+
 .notification_background {
 	border: 1px solid black;
 	
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+	-webkit-filter: alpha(opacity=95);
+	-moz-filter: alpha(opacity=95);
+	-o-filter: alpha(opacity=95);
 	filter: alpha(opacity=95);
     -moz-opacity: 0.9;
     -khtml-opacity: 0.9;
-    opacity: 0.9;
+	-ms-opacity: 0.9;
+	opacity: 0.9;
 }
 
 .clearboth{
@@ -65,78 +73,101 @@ body{
     overflow: auto;
 }
 /* Error Message */
-.error_bg{
-    background: #ffcaca;
+.error_bg {
+	background: #ffcaca;
 
 	border-color:#ff9797;
 	
-	-webkit-box-shadow:  0px 3px 0px 0px rgba(255, 151, 151, 1);
-	-moz-box-shadow:  0px 3px 0px 0px rgba(255, 151, 151, 1);
-	box-shadow:  0px 3px 0px 0px rgba(255, 151, 151, 1);
+	-webkit-box-shadow:  0 3px 0 0 rgba(255, 151, 151, 1);
+	-moz-box-shadow:  0 3px 0 0 rgba(255, 151, 151, 1);
+	-ms-box-shadow:  0 3px 0 0 rgba(255, 151, 151, 1);
+	box-shadow:  0 3px 0 0 rgba(255, 151, 151, 1);
 }
+
 .error_bg .message_area {
-    color: #575757;
-    text-shadow:none;
+	color: #575757;
+	-ms-text-shadow:none;
+	text-shadow:none;
 }
+
 /**************/
 
 /* Success Message */
-.succ_bg{
-    background: #b9ffb6;
+.succ_bg {
+	background: #b9ffb6;
 
 	border-color:#99db96;
 	
-	-webkit-box-shadow:  0px 3px 0px 0px rgba(153, 219, 150, 1);
-	-moz-box-shadow:  0px 3px 0px 0px rgba(153, 219, 150, 1);
-	box-shadow:  0px 3px 0px 0px rgba(153, 219, 150, 1);
+	-webkit-box-shadow:  0 3px 0 0 rgba(153, 219, 150, 1);
+	-moz-box-shadow:  0 3px 0 0 rgba(153, 219, 150, 1);
+	-ms-box-shadow:  0 3px 0 0 rgba(153, 219, 150, 1);
+	box-shadow:  0 3px 0 0 rgba(153, 219, 150, 1);
 }
+
 .succ_bg .message_area {
-    color: #575757;
-    text-shadow:none;
+	color: #575757;
+	-ms-text-shadow:none;
+	text-shadow:none;
 }
+
 /**************/
 
 /* Info Message */
-.info_bg{
-    background: #446bb8;
+.info_bg {
+	background: #446bb8;
 
 	border-color:#032567;
 	
-	-webkit-box-shadow:  0px 3px 0px 0px rgba(3, 37, 103, 1);
-	-moz-box-shadow:  0px 3px 0px 0px rgba(3, 37, 103, 1);
-	box-shadow:  0px 3px 0px 0px rgba(3, 37, 103, 1);
+	-webkit-box-shadow:  0 3px 0 0 rgba(3, 37, 103, 1);
+	-moz-box-shadow:  0 3px 0 0 rgba(3, 37, 103, 1);
+	-ms-box-shadow:  0 3px 0 0 rgba(3, 37, 103, 1);
+	box-shadow:  0 3px 0 0 rgba(3, 37, 103, 1);
 }
+
 /**************/
 
 /* Warn Message */
-.warn_bg{
-    background: #ffcfac;
+.warn_bg {
+	background: #ffcfac;
 
 	border-color:#f7a467;
 	
-	-webkit-box-shadow:  0px 3px 0px 0px rgba(247, 164, 103, 1);
-	-moz-box-shadow:  0px 3px 0px 0px rgba(247, 164, 103, 1);
-	box-shadow:  0px 3px 0px 0px rgba(247, 164, 103, 1);
+	-webkit-box-shadow:  0 3px 0 0 rgba(247, 164, 103, 1);
+	-moz-box-shadow:  0 3px 0 0 rgba(247, 164, 103, 1);
+	-ms-box-shadow:  0 3px 0 0 rgba(247, 164, 103, 1);
+	box-shadow:  0 3px 0 0 rgba(247, 164, 103, 1);
 }
+
 .warn_bg .message_area {
-    color: #575757;
-    text-shadow:none;
+	color: #575757;
+	-ms-text-shadow:none;
+	text-shadow:none;
 }
+
 /**************/
 
 /* Progress Bar */
 .info_progress {
 	width: 0;
 	height: 4px;
+	background: #ffffff;
 	background: rgba(255,255,255,0.3);
 	position: absolute;
 	bottom: 5px;
 	left: 2%;
+	-ms-border-radius: 3px;
 	border-radius: 3px;
+	-webkit-box-shadow: 
+	          inset 0 1px 1px rgba(0,0,0,0.05), 
+	          0 -1px 0 rgba(255,255,255,0.6);
+	-ms-box-shadow: 
+	          inset 0 1px 1px rgba(0,0,0,0.05), 
+	          0 -1px 0 rgba(255,255,255,0.6);
 	box-shadow: 
 		inset 0 1px 1px rgba(0,0,0,0.05), 
 		0 -1px 0 rgba(255,255,255,0.6);
 }
+
 #info_message {
 	-webkit-animation: fadeOut 10s linear forwards;
 	-moz-animation: fadeOut 10s linear forwards;
@@ -157,7 +188,7 @@ body{
 @-webkit-keyframes fadeOut {
 	0% { opacity: 1; }
 	10% { opacity: 1; }
-	90% { opacity: 1; -webkit-transform: translateY(0px);}
+	90% { opacity: 1; -webkit-transform: translateY(0);}
 	99% { opacity: 0; -webkit-transform: translateY(-30px);}
 	100% { opacity: 0; }
 }
@@ -165,7 +196,7 @@ body{
 @-moz-keyframes fadeOut {
 	0% { opacity: 1; }
 	10% { opacity: 1; }
-	90% { opacity: 1; -moz-transform: translateY(0px);}
+	90% { opacity: 1; -moz-transform: translateY(0);}
 	99% { opacity: 0; -moz-transform: translateY(-30px);}
 	100% { opacity: 0; }
 }
@@ -173,7 +204,7 @@ body{
 @-o-keyframes fadeOut {
 	0% { opacity: 1; }
 	10% { opacity: 1; }
-	90% { opacity: 1; -o-transform: translateY(0px);}
+	90% { opacity: 1; -o-transform: translateY(0);}
 	99% { opacity: 0; -o-transform: translateY(-30px);}
 	100% { opacity: 0; }
 }
@@ -181,7 +212,7 @@ body{
 @-ms-keyframes fadeOut {
 	0% { opacity: 1; }
 	10% { opacity: 1; }
-	90% { opacity: 1; -ms-transform: translateY(0px);}
+	90% { opacity: 1; -ms-transform: translateY(0);}
 	99% { opacity: 0; -ms-transform: translateY(-30px);}
 	100% { opacity: 0; }
 }
@@ -189,32 +220,36 @@ body{
 @keyframes fadeOut {
 	0% { opacity: 1; }
 	10% { opacity: 1; }
-	90% { opacity: 1; transform: translateY(0px);}
+	90% { opacity: 1; transform: translateY(0);}
 	99% { opacity: 0; transform: translateY(-30px);}
 	100% { opacity: 0; }
 }
 
 @-webkit-keyframes runProgress {
-	0%{ width: 0%; background: rgba(255,255,255,0.3); }
-	100%{ width: 96%; background: rgba(255,255,255,1); }
+	0%{ width: 0;
+		background: #ffffff;
+		background: rgba(255,255,255,0.3); }
+	100%{ width: 96%;
+		background: #ffffff;
+		background: rgba(255,255,255,1); }
 }
 
 @-moz-keyframes runProgress {
-	0%{ width: 0%; background: rgba(255,255,255,0.3); }
+	0%{ width: 0; background: rgba(255,255,255,0.3); }
 	100%{ width: 96%; background: rgba(255,255,255,1); }
 }
 
 @-o-keyframes runProgress {
-	0%{ width: 0%; background: rgba(255,255,255,0.3); }
+	0%{ width: 0; background: rgba(255,255,255,0.3); }
 	100%{ width: 96%; background: rgba(255,255,255,1); }
 }
 
 @-ms-keyframes runProgress {
-	0%{ width: 0%; background: rgba(255,255,255,0.3); }
+	0%{ width: 0; background: rgba(255,255,255,0.3); }
 	100%{ width: 96%; background: rgba(255,255,255,1); }
 }
 
 @keyframes runProgress {
-	0%{ width: 0%; background: rgba(255,255,255,0.3); }
+	0%{ width: 0; background: rgba(255,255,255,0.3); }
 	100%{ width: 96%; background: rgba(255,255,255,1); }
 }

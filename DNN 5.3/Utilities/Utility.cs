@@ -26,9 +26,12 @@ namespace WatchersNET.CKEditor.Utilities
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Data;
     using DotNetNuke.Entities.Portals;
+    using DotNetNuke.Entities.Tabs;
     using DotNetNuke.Entities.Users;
     using DotNetNuke.Security.Permissions;
     using DotNetNuke.Services.FileSystem;
+
+    using WatchersNET.CKEditor.Objects;
 
     /// <summary>
     /// Utility Class for various helper Functions

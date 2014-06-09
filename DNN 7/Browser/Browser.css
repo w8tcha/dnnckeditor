@@ -45,6 +45,7 @@ img {border:0}
 
 .OverrideFile {
 	margin: 5px;
+	padding: 5px;
 	border-top: 1px dotted grey;
 	border-bottom: 1px dotted grey;
 }

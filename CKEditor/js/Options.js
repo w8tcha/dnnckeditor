@@ -11,7 +11,7 @@ function ShowNotificationBar(text,notificationType,imagePath) {
 function pageLoad() {
 	
 jQuery('.panelLoading').show();
-
+jQuery(".copyButton").button({ icons: { primary: "ui-icon-copy" } });
 jQuery(".removeButton").button({icons: {primary: "ui-icon-trash"}});
 jQuery(".importButton").button({icons: {primary: "ui-icon-arrowreturnthick-1-s"}});
 jQuery(".exportButton").button({icons: {primary: "ui-icon-disk"}});
