@@ -46,7 +46,7 @@ namespace WatchersNET.CKEditor.Browser {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.WebParts.ScriptManager scriptManager1;
+        protected global::System.Web.UI.ScriptManager scriptManager1;
         
         /// <summary>
         /// lblModus control.
