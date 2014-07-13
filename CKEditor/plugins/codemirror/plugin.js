@@ -519,9 +519,6 @@
                 };
             }
 
-            
-
-            
             editor.addMode('source', function(callback) {
                 if (typeof (CodeMirror) == 'undefined') {
                     
@@ -821,7 +818,7 @@
 
                     // Fly the range when create bookmark. 
                     delete range.element;
-                    range.createBookmark();
+                    range.createBookmark(editor);
                     sourceBookmark = true;
 
                     evt.data = range.content;
