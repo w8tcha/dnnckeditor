@@ -2703,7 +2703,7 @@ namespace WatchersNET.CKEditor.Browser
 
                 string sFilePath = Path.Combine(uploadPhysicalPath, fileName);
 
-                if (File.Exists(sFilePath) && !this.OverrideFile.Checked)
+                if (File.Exists(sFilePath))
                 {
                     iCounter++;
                     fileName = string.Format("{0}_{1}{2}", sFileNameNoExt, iCounter, Path.GetExtension(file.FileName));
@@ -2715,8 +2715,7 @@ namespace WatchersNET.CKEditor.Browser
                     FileManager.Instance.AddFile(
                         currentFolderInfo,
                         fileName,
-                        file.InputStream,
-                        this.OverrideFile.Checked);
+                        file.InputStream);
                 }
 
                 this.Response.Write("<script type=\"text/javascript\">");
@@ -3258,7 +3257,7 @@ namespace WatchersNET.CKEditor.Browser
                 var currentFolderInfo = Utility.ConvertFilePathToFolderInfo(this.lblCurrentDir.Text, this._portalSettings);
 
                 // Rename File if Exists
-                if (File.Exists(sFilePath))
+                if (File.Exists(sFilePath) && !this.OverrideFile.Checked)
                 {
                     iCounter++;
                     fileName = string.Format(
@@ -3270,7 +3269,11 @@ namespace WatchersNET.CKEditor.Browser
                 else
                 {
                     // FileSystemUtils.UploadFile(this.lblCurrentDir.Text, this.ctlUpload.PostedFile);
-                    FileManager.Instance.AddFile(currentFolderInfo, fileName, this.ctlUpload.PostedFile.InputStream);
+                    FileManager.Instance.AddFile(
+                        currentFolderInfo,
+                        fileName,
+                        this.ctlUpload.PostedFile.InputStream,
+                        this.OverrideFile.Checked);
                 }
 
                 string newDir = this.lblCurrentDir.Text;

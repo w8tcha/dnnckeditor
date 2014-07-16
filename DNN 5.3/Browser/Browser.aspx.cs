@@ -2622,7 +2622,7 @@ namespace WatchersNET.CKEditor.Browser
 
                 string sFilePath = Path.Combine(sUploadDir, fileName);
 
-                if (File.Exists(sFilePath) && !this.OverrideFile.Checked)
+                if (File.Exists(sFilePath))
                 {
                     iCounter++;
                     fileName = string.Format("{0}_{1}{2}", sFileNameNoExt, iCounter, Path.GetExtension(file.FileName));
@@ -3182,11 +3182,21 @@ namespace WatchersNET.CKEditor.Browser
                 // Rename File if Exists
                 if (File.Exists(sFilePath))
                 {
-                    iCounter++;
-                    fileName = string.Format(
-                        "{0}_{1}{2}", sFileNameNoExt, iCounter, Path.GetExtension(this.ctlUpload.PostedFile.FileName));
+                    if (this.OverrideFile.Checked)
+                    {
+                        iCounter++;
+                        fileName = string.Format(
+                            "{0}_{1}{2}",
+                            sFileNameNoExt,
+                            iCounter,
+                            Path.GetExtension(this.ctlUpload.PostedFile.FileName));
 
-                    FileSystemUtils.UploadFile(this.lblCurrentDir.Text, this.ctlUpload.PostedFile, fileName);
+                        this.ctlUpload.PostedFile.SaveAs(Path.Combine(this.lblCurrentDir.Text, fileName));
+                    }
+                    else
+                    {
+                        FileSystemUtils.UploadFile(this.lblCurrentDir.Text, this.ctlUpload.PostedFile, fileName);
+                    }
                 }
                 else
                 {
