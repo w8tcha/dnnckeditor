@@ -22,7 +22,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
 
                             // Fly the range when create bookmark. 
                             delete range.element;
-                            range.createBookmark();
+                            range.createBookmark(editor);
                             sourceBookmark = true;
                             evt.data = range.content;
                         }
@@ -87,7 +87,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
                 editor.on('afterModeUnload', function (evt) {
                     if (editor.mode === 'wysiwyg' && wysiwygBookmark) {
                         textRange = new CKEDITOR.dom.textRange(evt.data);
-                        textRange.moveToBookmark(wysiwygBookmark);
+                        textRange.moveToBookmark(wysiwygBookmark, editor);
 
                         evt.data = textRange.content;
                     }
@@ -292,7 +292,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
          * text removed. 
          * @param {Object} bookmark Exactly the one created by CKEDITOR.dom.range.createBookmark( true ). 
          */
-        moveToBookmark: function(bookmark) {
+        moveToBookmark: function(bookmark, editorInstance) {
             var content = this.content;
             function removeBookmarkText(bookmarkId) {
 
@@ -310,8 +310,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
             this.content = content;
             this.updateElement();
 
-            if (editor.undoManager) {
-                editor.undoManager.unlock();
+            if (editorInstance.undoManager) {
+                editorInstance.undoManager.unlock();
             }
         },
 
@@ -343,7 +343,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
             this.endOffset = end;
         },
 
-        createBookmark: function() {
+        createBookmark: function(editorInstance) {
             // Enlarge the range to avoid tag partial selection. 
             this.enlarge();
             var content = this.content,
@@ -355,9 +355,8 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
             content = content.substring(0, start) + bookmarkTemplate.replace('%1', id + 'S')
                 + content.substring(start, end) + bookmarkTemplate.replace('%1', id + 'E')
                 + content.substring(end);
-
-            if (editor.undoManager) {
-                editor.undoManager.lock();
+            if (editorInstance.undoManager) {
+                editorInstance.undoManager.lock();
             }
 
             this.content = content;
