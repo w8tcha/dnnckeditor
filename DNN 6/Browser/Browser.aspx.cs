@@ -820,8 +820,6 @@ namespace WatchersNET.CKEditor.Browser
             var settingsDictionary = HostController.Instance.GetSettingsDictionary();
             var portalRoles = new RoleController().GetPortalRoles(this._portalSettings.PortalId);
 
-            this.OverrideFile.Checked = this.currentSettings.OverrideFileOnUpload;
-
             switch (this.currentSettings.SettingMode)
             {
                 case SettingsMode.Default:
@@ -859,8 +857,6 @@ namespace WatchersNET.CKEditor.Browser
                     break;
             }
 
-            this.OverrideFile.Checked = this.currentSettings.OverrideFileOnUpload;
-
             if (this.currentSettings.BrowserMode.Equals(Constants.Browser.StandardBrowser)
                 && HttpContext.Current.Request.IsAuthenticated)
             {
@@ -887,6 +883,8 @@ namespace WatchersNET.CKEditor.Browser
 
                         if (!this.IsPostBack)
                         {
+                            this.OverrideFile.Checked = this.currentSettings.OverrideFileOnUpload;
+
                             this.title.InnerText = string.Format("{0} - WatchersNET.FileBrowser", this.lblModus.Text);
 
                             this.AnchorList.Visible = this.currentSettings.UseAnchorSelector;
@@ -3248,36 +3246,35 @@ namespace WatchersNET.CKEditor.Browser
 
             if (allowUpload)
             {
-                string sFileNameNoExt = Path.GetFileNameWithoutExtension(fileName);
+                var fileNameNoExtenstion = Path.GetFileNameWithoutExtension(fileName);
 
-                int iCounter = 0;
-
-                string sFilePath = Path.Combine(this.lblCurrentDir.Text, fileName);
-
-                var currentFolderInfo = Utility.ConvertFilePathToFolderInfo(this.lblCurrentDir.Text, this._portalSettings);
+                var currentFolderInfo = Utility.ConvertFilePathToFolderInfo(
+                    this.lblCurrentDir.Text,
+                    this._portalSettings);
 
                 // Rename File if Exists
-                if (File.Exists(sFilePath) && !this.OverrideFile.Checked)
+                if (!this.OverrideFile.Checked)
                 {
-                    iCounter++;
-                    fileName = string.Format(
-                        "{0}_{1}{2}", sFileNameNoExt, iCounter, Path.GetExtension(this.ctlUpload.PostedFile.FileName));
+                    var counter = 0;
 
-                    // FileSystemUtils.UploadFile(this.lblCurrentDir.Text, this.ctlUpload.PostedFile, sFileName);
-                    FileManager.Instance.AddFile(currentFolderInfo, fileName, this.ctlUpload.PostedFile.InputStream);
+                    while (File.Exists(Path.Combine(this.lblCurrentDir.Text, fileName)))
+                    {
+                        counter++;
+                        fileName = string.Format(
+                        "{0}_{1}{2}",
+                        fileNameNoExtenstion,
+                        counter,
+                        Path.GetExtension(this.ctlUpload.PostedFile.FileName));
+                    }
                 }
-                else
-                {
-                    // FileSystemUtils.UploadFile(this.lblCurrentDir.Text, this.ctlUpload.PostedFile);
-                    FileManager.Instance.AddFile(
+
+                FileManager.Instance.AddFile(
                         currentFolderInfo,
                         fileName,
                         this.ctlUpload.PostedFile.InputStream,
                         this.OverrideFile.Checked);
-                }
 
-                string newDir = this.lblCurrentDir.Text;
-                this.ShowFilesIn(newDir);
+                this.ShowFilesIn(this.lblCurrentDir.Text);
 
                 this.GoToSelectedFile(fileName);
             }

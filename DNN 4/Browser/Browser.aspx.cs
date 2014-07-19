@@ -846,8 +846,6 @@ namespace WatchersNET.CKEditor.Browser
                     break;
             }
 
-            this.OverrideFile.Checked = this.currentSettings.OverrideFileOnUpload;
-
             if (this.currentSettings.BrowserMode.Equals(Constants.Browser.StandardBrowser)
                 && HttpContext.Current.Request.IsAuthenticated)
             {
@@ -874,6 +872,8 @@ namespace WatchersNET.CKEditor.Browser
 
                         if (!this.IsPostBack)
                         {
+                            this.OverrideFile.Checked = this.currentSettings.OverrideFileOnUpload;
+
                             this.title.InnerText = string.Format("{0} - WatchersNET.FileBrowser", this.lblModus.Text);
 
                             this.AnchorList.Visible = this.currentSettings.UseAnchorSelector;
@@ -2894,35 +2894,31 @@ namespace WatchersNET.CKEditor.Browser
 
             if (allowUpload)
             {
-                string sFileNameNoExt = Path.GetFileNameWithoutExtension(fileName);
-
-                int iCounter = 0;
-
-                string sFilePath = Path.Combine(this.lblCurrentDir.Text, fileName);
+                var fileNameNoExtenstion = Path.GetFileNameWithoutExtension(fileName);
 
                 // Rename File if Exists
-                if (File.Exists(sFilePath))
+                if (this.OverrideFile.Checked)
                 {
-                    if (this.OverrideFile.Checked)
+                    FileSystemUtils.UploadFile(this.lblCurrentDir.Text, this.ctlUpload.PostedFile);
+                }
+                else
+                {
+                    var counter = 0;
+
+                    while (File.Exists(Path.Combine(this.lblCurrentDir.Text, fileName)))
                     {
-                        iCounter++;
+                        counter++;
                         fileName = string.Format(
-                            "{0}_{1}{2}",
-                            sFileNameNoExt,
-                            iCounter,
-                            Path.GetExtension(this.ctlUpload.PostedFile.FileName));
+                        "{0}_{1}{2}",
+                        fileNameNoExtenstion,
+                        counter,
+                        Path.GetExtension(this.ctlUpload.PostedFile.FileName));
                     }
 
                     this.ctlUpload.PostedFile.SaveAs(Path.Combine(this.lblCurrentDir.Text, fileName));
                 }
-                else
-                {
-                    FileSystemUtils.UploadFile(this.lblCurrentDir.Text, this.ctlUpload.PostedFile);
-                }
 
-                string newDir = this.lblCurrentDir.Text;
-
-                this.ShowFilesIn(newDir);
+                this.ShowFilesIn(this.lblCurrentDir.Text);
 
                 this.GoToSelectedFile(fileName);
             }
