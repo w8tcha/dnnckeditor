@@ -128,6 +128,7 @@
     <Compile Include="Module\UpgradeController.cs" />
     <Compile Include="Objects\CodeMirror.cs" />
     <Compile Include="Objects\EditorConfig.cs" />
+    <Compile Include="Objects\EditorHostSetting.cs" />
     <Compile Include="Objects\EditorProviderSettings.cs" />
     <Compile Include="Objects\ToolbarButton.cs" />
     <Compile Include="Objects\ToolbarGroup.cs" />
@@ -217,6 +218,7 @@
       <SubType>ASPXCodeBehind</SubType>
     </Content>
     <Content Include="Install\02.00.00.SqlDataProvider" />
+    <Content Include="Install\02.01.00.SqlDataProvider" />
     <None Include="Tabs.ashx">
       <SubType>ASPXCodeBehind</SubType>
     </None>

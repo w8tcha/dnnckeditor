@@ -130,6 +130,7 @@
     <Compile Include="Module\UpgradeController.cs" />
     <Compile Include="Objects\CodeMirror.cs" />
     <Compile Include="Objects\EditorConfig.cs" />
+    <Compile Include="Objects\EditorHostSetting.cs" />
     <Compile Include="Objects\EditorProviderSettings.cs" />
     <Compile Include="Objects\ToolbarButton.cs" />
     <Compile Include="Objects\ToolbarGroup.cs" />
@@ -268,6 +269,7 @@
     <None Include="Install\01.14.03.SqlDataProvider" />
     <Content Include="Install\02.00.00.SqlDataProvider" />
     <Content Include="Install\02.00.09.SqlDataProvider" />
+    <Content Include="Install\02.01.00.SqlDataProvider" />
     <None Include="Install\Uninstall.SqlDataProvider" />
     <None Include="Install\WatchersNET.CKHtmlEditorProvider.dnn">
       <SubType>Designer</SubType>

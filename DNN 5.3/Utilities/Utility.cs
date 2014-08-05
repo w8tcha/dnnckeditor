@@ -26,7 +26,6 @@ namespace WatchersNET.CKEditor.Utilities
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Data;
     using DotNetNuke.Entities.Portals;
-    using DotNetNuke.Entities.Tabs;
     using DotNetNuke.Entities.Users;
     using DotNetNuke.Security.Permissions;
     using DotNetNuke.Services.FileSystem;
@@ -391,6 +390,36 @@ namespace WatchersNET.CKEditor.Utilities
 
             // Finally Clear Cache
             DataCache.ClearHostCache(true);
+        }
+
+        /// <summary>
+        /// Gets the editor host settings.
+        /// </summary>
+        /// <returns>Returns the list of all Editor Host Settings</returns>
+        public static List<EditorHostSetting> GetEditorHostSettings()
+        {
+            var editorHostSettings = new List<EditorHostSetting>();
+
+            using (var dr = DataProvider.Instance().ExecuteReader("CKEditor_GetEditorHostSettings"))
+            {
+                while (dr.Read())
+                {
+                    editorHostSettings.Add(
+                        new EditorHostSetting(Convert.ToString(dr["SettingName"]), Convert.ToString(dr["SettingValue"])));
+                }
+            }
+
+            return editorHostSettings;
+        }
+
+        /// <summary>
+        /// Adds or update's the editor host setting.
+        /// </summary>
+        /// <param name="settingName">Name of the setting.</param>
+        /// <param name="settingValue">The setting value.</param>
+        public static void AddOrUpdateEditorHostSetting(string settingName, string settingValue)
+        {
+            DataProvider.Instance().ExecuteNonQuery("CKEditor_AddOrUpdateEditorHostSetting", settingName, settingValue);
         }
 
         /// <summary>

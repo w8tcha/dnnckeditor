@@ -30,6 +30,7 @@ namespace WatchersNET.CKEditor.Module
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Services.Localization;
 
+    using WatchersNET.CKEditor.Objects;
     using WatchersNET.CKEditor.Utilities;
 
     #endregion
@@ -359,7 +360,7 @@ namespace WatchersNET.CKEditor.Module
 
             var moduleController = new ModuleController();
 
-            var settingsDictionary = Host.GetHostSettingsDictionary();
+            var settingsDictionary = Utility.GetEditorHostSettings();
 
             if (this.PortalOnly.Checked)
             {
@@ -378,16 +379,16 @@ namespace WatchersNET.CKEditor.Module
         }
 
         /// <summary>
-        /// Renders the <paramref name="portal"/> node.
+        /// Renders the <paramref name="portal" /> node.
         /// </summary>
-        /// <param name="portal">The <paramref name="portal"/>.</param>
+        /// <param name="portal">The <paramref name="portal" />.</param>
         /// <param name="moduleController">The module controller.</param>
-        /// <param name="settingsDictionary">The settings dictionary.</param>
-        private void RenderPortalNode(PortalInfo portal, ModuleController moduleController, Dictionary<string, string> settingsDictionary)
+        /// <param name="editorHostSettings">The editor host settings.</param>
+        private void RenderPortalNode(PortalInfo portal, ModuleController moduleController, List<EditorHostSetting> editorHostSettings)
         {
             var portalKey = string.Format("DNNCKP#{0}#", portal.PortalID);
 
-            var portalSettingsExists = SettingsUtil.CheckExistsPortalOrPageSettings(settingsDictionary, portalKey);
+            var portalSettingsExists = SettingsUtil.CheckExistsPortalOrPageSettings(editorHostSettings, portalKey);
 
             // Portals
             var portalNode = new TreeNode
@@ -403,7 +404,7 @@ namespace WatchersNET.CKEditor.Module
 
             foreach (var tabInfo in TabController.GetTabsByParent(-1, portal.PortalID))
             {
-                this.RenderTabNode(portalNode, tabInfo, moduleController, settingsDictionary);
+                this.RenderTabNode(portalNode, tabInfo, moduleController, editorHostSettings);
             }
 
             this.PortalTabsAndModulesTree.Nodes.Add(portalNode);
@@ -415,16 +416,16 @@ namespace WatchersNET.CKEditor.Module
         /// <param name="parentNode">The parent node.</param>
         /// <param name="tabInfo">The tab info.</param>
         /// <param name="moduleController">The module controller.</param>
-        /// <param name="settingsDictionary">The settings dictionary.</param>
+        /// <param name="editorHostSettings">The editor host settings.</param>
         private void RenderTabNode(
             TreeNode parentNode,
             TabInfo tabInfo,
             ModuleController moduleController,
-            Dictionary<string, string> settingsDictionary)
+            List<EditorHostSetting> editorHostSettings)
         {
             var tabKey = string.Format("DNNCKT#{0}#", tabInfo.TabID);
 
-            var tabSettingsExists = SettingsUtil.CheckExistsPortalOrPageSettings(settingsDictionary, tabKey);
+            var tabSettingsExists = SettingsUtil.CheckExistsPortalOrPageSettings(editorHostSettings, tabKey);
 
             // Tabs
             var tabNode = new TreeNode
@@ -441,7 +442,7 @@ namespace WatchersNET.CKEditor.Module
             {
                 foreach (var childTab in TabController.GetTabsByParent(tabInfo.TabID, tabInfo.PortalID))
                 {
-                    this.RenderTabNode(tabNode, childTab, moduleController, settingsDictionary);
+                    this.RenderTabNode(tabNode, childTab, moduleController, editorHostSettings);
                 }
             }
 

@@ -412,7 +412,7 @@ namespace WatchersNET.CKEditor
                 }
                 else
                 {
-                    var settingsDictionary = HostController.Instance.GetSettingsDictionary();
+                    var settingsDictionary = Utility.GetEditorHostSettings();
 
                     this.LoadSettings(SettingsUtil.CheckExistsPortalOrPageSettings(settingsDictionary, pageKey) ? 1 : 0);
                 }
@@ -1877,7 +1877,7 @@ namespace WatchersNET.CKEditor
 
             this.LoadDefaultSettings();
 
-            var settingsDictionary = HostController.Instance.GetSettingsDictionary();
+            var settingsDictionary = Utility.GetEditorHostSettings();
             var portalRoles = new RoleController().GetPortalRoles(this._portalSettings.PortalId);
 
             var portalKey = string.Format("DNNCKP#{0}#", this._portalSettings.PortalId);
@@ -2566,9 +2566,6 @@ namespace WatchersNET.CKEditor
         /// </param>
         private void SavePortalOrPageSettings(string key)
         {
-            // Clear Cache before saving to make sure all settings are saved correctly.
-            DataCache.ClearHostCache(true);
-
             // Editor config settings
             foreach (PropertyInfo info in
                 SettingsUtil.GetEditorConfigProperties())
@@ -2583,13 +2580,9 @@ namespace WatchersNET.CKEditor
 
                             if (textBox != null)
                             {
-                                HostController.Instance.Update(
-                                    new ConfigurationSetting
-                                    {
-                                        Key = string.Format("{0}{1}", key, info.Name),
-                                        Value = textBox.Text,
-                                        IsSecure = false
-                                    });
+                                Utility.AddOrUpdateEditorHostSetting(
+                                    string.Format("{0}{1}", key, info.Name),
+                                    textBox.Text);
                             }
                         }
 
@@ -2600,13 +2593,9 @@ namespace WatchersNET.CKEditor
 
                             if (checkBox != null)
                             {
-                                HostController.Instance.Update(
-                                    new ConfigurationSetting
-                                    {
-                                        Key = string.Format("{0}{1}", key, info.Name),
-                                        Value = checkBox.Checked.ToString(),
-                                        IsSecure = false
-                                    });
+                                Utility.AddOrUpdateEditorHostSetting(
+                                    string.Format("{0}{1}", key, info.Name),
+                                    checkBox.Checked.ToString());
                             }
                         }
 
@@ -2627,13 +2616,9 @@ namespace WatchersNET.CKEditor
                             {
                                 if (dropDownList.SelectedItem != null)
                                 {
-                                    HostController.Instance.Update(
-                                        new ConfigurationSetting
-                                        {
-                                            Key = string.Format("{0}{1}", key, info.Name),
-                                            Value = dropDownList.SelectedValue,
-                                            IsSecure = false
-                                        });
+                                    Utility.AddOrUpdateEditorHostSetting(
+                                        string.Format("{0}{1}", key, info.Name),
+                                        dropDownList.SelectedValue);
                                 }
                             }
                         }
@@ -2641,28 +2626,23 @@ namespace WatchersNET.CKEditor
                         break;
                     case "CodeMirror":
                         {
-                            foreach (
-                           var codeMirrorInfo in
-                               typeof(CodeMirror).GetProperties()
-                                                 .Where(codeMirrorInfo => !codeMirrorInfo.Name.Equals("Theme")))
+                            foreach (var codeMirrorInfo in
+                                typeof(CodeMirror).GetProperties()
+                                    .Where(codeMirrorInfo => !codeMirrorInfo.Name.Equals("Theme")))
                             {
                                 switch (codeMirrorInfo.PropertyType.Name)
                                 {
                                     case "String":
                                         {
-                                            var textBox = Utility.FindControl<TextBox>(this.EditorConfigHolder, codeMirrorInfo.Name);
+                                            var textBox = Utility.FindControl<TextBox>(
+                                                this.EditorConfigHolder,
+                                                codeMirrorInfo.Name);
 
                                             if (textBox != null)
                                             {
-                                                HostController.Instance.Update(
-                                                    new ConfigurationSetting
-                                                    {
-                                                        Key =
-                                                            string.Format(
-                                                                "{0}{1}", key, codeMirrorInfo.Name),
-                                                        Value = textBox.Text,
-                                                        IsSecure = false
-                                                    });
+                                                Utility.AddOrUpdateEditorHostSetting(
+                                                    string.Format("{0}{1}", key, codeMirrorInfo.Name),
+                                                    textBox.Text);
                                             }
                                         }
 
@@ -2670,21 +2650,15 @@ namespace WatchersNET.CKEditor
 
                                     case "Boolean":
                                         {
-                                            var checkBox = Utility.FindControl<CheckBox>(this.EditorConfigHolder, codeMirrorInfo.Name);
+                                            var checkBox = Utility.FindControl<CheckBox>(
+                                                this.EditorConfigHolder,
+                                                codeMirrorInfo.Name);
 
                                             if (checkBox != null)
                                             {
-                                                HostController.Instance.Update(
-                                                    new ConfigurationSetting
-                                                    {
-                                                        Key =
-                                                            string.Format(
-                                                                "{0}{1}",
-                                                                key,
-                                                                codeMirrorInfo.Name),
-                                                        Value = checkBox.Checked.ToString(),
-                                                        IsSecure = false
-                                                    });
+                                                Utility.AddOrUpdateEditorHostSetting(
+                                                    string.Format("{0}{1}", key, codeMirrorInfo.Name),
+                                                    checkBox.Checked.ToString());
                                             }
                                         }
 
@@ -2702,19 +2676,15 @@ namespace WatchersNET.CKEditor
                                 {
                                     case "String":
                                         {
-                                            var textBox = Utility.FindControl<TextBox>(this.EditorConfigHolder, wordCountInfo.Name);
+                                            var textBox = Utility.FindControl<TextBox>(
+                                                this.EditorConfigHolder,
+                                                wordCountInfo.Name);
 
                                             if (textBox != null)
                                             {
-                                                HostController.Instance.Update(
-                                                     new ConfigurationSetting
-                                                     {
-                                                         Key =
-                                                             string.Format(
-                                                                 "{0}{1}", key, wordCountInfo.Name),
-                                                         Value = textBox.Text,
-                                                         IsSecure = false
-                                                     });
+                                                Utility.AddOrUpdateEditorHostSetting(
+                                                    string.Format("{0}{1}", key, wordCountInfo.Name),
+                                                    textBox.Text);
                                             }
                                         }
 
@@ -2722,19 +2692,15 @@ namespace WatchersNET.CKEditor
 
                                     case "Boolean":
                                         {
-                                            var checkBox = Utility.FindControl<CheckBox>(this.EditorConfigHolder, wordCountInfo.Name);
+                                            var checkBox = Utility.FindControl<CheckBox>(
+                                                this.EditorConfigHolder,
+                                                wordCountInfo.Name);
 
                                             if (checkBox != null)
                                             {
-                                                HostController.Instance.Update(
-                                                     new ConfigurationSetting
-                                                     {
-                                                         Key =
-                                                             string.Format(
-                                                                 "{0}{1}", key, wordCountInfo.Name),
-                                                         Value = checkBox.Checked.ToString(),
-                                                         IsSecure = false
-                                                     });
+                                                Utility.AddOrUpdateEditorHostSetting(
+                                                    string.Format("{0}{1}", key, wordCountInfo.Name),
+                                                    checkBox.Checked.ToString());
                                             }
                                         }
 
@@ -2748,200 +2714,104 @@ namespace WatchersNET.CKEditor
             }
             ///////////////////
 
-            HostController.Instance.Update(
-                new ConfigurationSetting
-                    {
-                        Key = string.Format("{0}{1}", key, SettingConstants.SKIN),
-                        Value = this.ddlSkin.SelectedValue,
-                        IsSecure = false
-                    });
-            HostController.Instance.Update(
-                new ConfigurationSetting
-                    {
-                        Key = string.Format("{0}{1}", key, SettingConstants.CODEMIRRORTHEME),
-                        Value = this.CodeMirrorTheme.SelectedValue,
-                        IsSecure = false
-                    });
-            HostController.Instance.Update(
-                new ConfigurationSetting
-                    {
-                        Key = string.Format("{0}{1}", key, SettingConstants.BROWSER),
-                        Value = this.ddlBrowser.SelectedValue,
-                        IsSecure = false
-                    });
-            HostController.Instance.Update(
-                new ConfigurationSetting
-                    {
-                        Key = string.Format("{0}{1}", key, SettingConstants.FILELISTVIEWMODE),
-                        Value = this.FileListViewMode.SelectedValue,
-                        IsSecure = false
-                    });
-            HostController.Instance.Update(
-                new ConfigurationSetting
-                {
-                    Key = string.Format("{0}{1}", key, SettingConstants.DEFAULTLINKMODE),
-                    Value = this.DefaultLinkMode.SelectedValue,
-                    IsSecure = false
-                });
-            HostController.Instance.Update(
-                new ConfigurationSetting
-                    {
-                        Key = string.Format("{0}{1}", key, SettingConstants.USEANCHORSELECTOR),
-                        Value = this.UseAnchorSelector.Checked.ToString(),
-                        IsSecure = false
-                    });
-            HostController.Instance.Update(
-                new ConfigurationSetting
-                    {
-                        Key = string.Format("{0}{1}", key, SettingConstants.SHOWPAGELINKSTABFIRST),
-                        Value = this.ShowPageLinksTabFirst.Checked.ToString(),
-                        IsSecure = false
-                    });
-            HostController.Instance.Update(
-                new ConfigurationSetting
-                    {
-                        Key = string.Format("{0}{1}", key, SettingConstants.OVERRIDEFILEONUPLOAD),
-                        Value = this.OverrideFileOnUpload.Checked.ToString(),
-                        IsSecure = false
-                    });
-            HostController.Instance.Update(
-                new ConfigurationSetting
-                    {
-                        Key = string.Format("{0}{1}", key, SettingConstants.SUBDIRS),
-                        Value = this.cbBrowserDirs.Checked.ToString(),
-                        IsSecure = false
-                    });
-            HostController.Instance.Update(
-                new ConfigurationSetting
-                    {
-                        Key = string.Format("{0}{1}", key, SettingConstants.BROWSERROOTDIRID),
-                        Value = this.BrowserRootDir.SelectedValue,
-                        IsSecure = false
-                    });
-            HostController.Instance.Update(
-                new ConfigurationSetting
-                    {
-                        Key = string.Format("{0}{1}", key, SettingConstants.UPLOADDIRID),
-                        Value = this.UploadDir.SelectedValue,
-                        IsSecure = false
-                    });
+            Utility.AddOrUpdateEditorHostSetting(
+                string.Format("{0}{1}", key, SettingConstants.SKIN),
+                this.ddlSkin.SelectedValue);
+            Utility.AddOrUpdateEditorHostSetting(
+                string.Format("{0}{1}", key, SettingConstants.CODEMIRRORTHEME),
+                this.CodeMirrorTheme.SelectedValue);
+            Utility.AddOrUpdateEditorHostSetting(
+                string.Format("{0}{1}", key, SettingConstants.BROWSER),
+                this.ddlBrowser.SelectedValue);
+
+            Utility.AddOrUpdateEditorHostSetting(
+                string.Format("{0}{1}", key, SettingConstants.FILELISTVIEWMODE),
+                this.FileListViewMode.SelectedValue);
+            Utility.AddOrUpdateEditorHostSetting(
+                string.Format("{0}{1}", key, SettingConstants.DEFAULTLINKMODE),
+                this.DefaultLinkMode.SelectedValue);
+            Utility.AddOrUpdateEditorHostSetting(
+                string.Format("{0}{1}", key, SettingConstants.USEANCHORSELECTOR),
+                this.UseAnchorSelector.Checked.ToString());
+            Utility.AddOrUpdateEditorHostSetting(
+                string.Format("{0}{1}", key, SettingConstants.SHOWPAGELINKSTABFIRST),
+                this.ShowPageLinksTabFirst.Checked.ToString());
+            Utility.AddOrUpdateEditorHostSetting(
+                string.Format("{0}{1}", key, SettingConstants.OVERRIDEFILEONUPLOAD),
+                this.OverrideFileOnUpload.Checked.ToString());
+            Utility.AddOrUpdateEditorHostSetting(
+                string.Format("{0}{1}", key, SettingConstants.SUBDIRS),
+                this.cbBrowserDirs.Checked.ToString());
+            Utility.AddOrUpdateEditorHostSetting(
+                string.Format("{0}{1}", key, SettingConstants.BROWSERROOTDIRID),
+                this.BrowserRootDir.SelectedValue);
+            Utility.AddOrUpdateEditorHostSetting(
+                string.Format("{0}{1}", key, SettingConstants.UPLOADDIRID),
+                this.UploadDir.SelectedValue);
 
             if (Utility.IsNumeric(this.FileListPageSize.Text))
             {
-                HostController.Instance.Update(
-                    new ConfigurationSetting
-                        {
-                            Key = string.Format("{0}{1}", key, SettingConstants.FILELISTPAGESIZE),
-                            Value = this.FileListPageSize.Text,
-                            IsSecure = false
-                        });
+                Utility.AddOrUpdateEditorHostSetting(
+                    string.Format("{0}{1}", key, SettingConstants.FILELISTPAGESIZE),
+                    this.FileListPageSize.Text);
             }
 
             if (Utility.IsNumeric(this.txtResizeWidth.Text))
             {
-                HostController.Instance.Update(
-                    new ConfigurationSetting
-                        {
-                            Key = string.Format("{0}{1}", key, SettingConstants.RESIZEWIDTH),
-                            Value = this.txtResizeWidth.Text,
-                            IsSecure = false
-                        });
+                Utility.AddOrUpdateEditorHostSetting(
+                    string.Format("{0}{1}", key, SettingConstants.RESIZEWIDTH),
+                    this.txtResizeWidth.Text);
             }
 
             if (Utility.IsNumeric(this.txtResizeHeight.Text))
             {
-                HostController.Instance.Update(
-                    new ConfigurationSetting
-                        {
-                            Key = string.Format("{0}{1}", key, SettingConstants.RESIZEHEIGHT),
-                            Value = this.txtResizeHeight.Text,
-                            IsSecure = false
-                        });
+                Utility.AddOrUpdateEditorHostSetting(
+                    string.Format("{0}{1}", key, SettingConstants.RESIZEHEIGHT),
+                    this.txtResizeHeight.Text);
             }
 
-            HostController.Instance.Update(
-                new ConfigurationSetting
-                    {
-                        Key = string.Format("{0}{1}", key, SettingConstants.INJECTJS),
-                        Value = this.InjectSyntaxJs.Checked.ToString(),
-                        IsSecure = false
-                    });
+            Utility.AddOrUpdateEditorHostSetting(
+                string.Format("{0}injectjs", key),
+                this.InjectSyntaxJs.Checked.ToString());
 
             if (Utility.IsUnit(this.txtWidth.Text))
             {
-                HostController.Instance.Update(
-                    new ConfigurationSetting
-                        {
-                            Key = string.Format("{0}{1}", key, SettingConstants.WIDTH),
-                            Value = this.txtWidth.Text,
-                            IsSecure = false
-                        });
+                Utility.AddOrUpdateEditorHostSetting(
+                    string.Format("{0}{1}", key, SettingConstants.WIDTH),
+                    this.txtWidth.Text);
             }
 
             if (Utility.IsUnit(this.txtHeight.Text))
             {
-                HostController.Instance.Update(
-                    new ConfigurationSetting
-                        {
-                            Key = string.Format("{0}{1}", key, SettingConstants.HEIGHT),
-                            Value = this.txtHeight.Text,
-                            IsSecure = false
-                        });
+                Utility.AddOrUpdateEditorHostSetting(
+                    string.Format("{0}{1}", key, SettingConstants.HEIGHT),
+                    this.txtHeight.Text);
             }
 
-            HostController.Instance.Update(
-                new ConfigurationSetting
-                    {
-                        Key = string.Format("{0}{1}", key, SettingConstants.BLANKTEXT),
-                        Value = this.txtBlanktext.Text,
-                        IsSecure = false
-                    });
-            HostController.Instance.Update(
-                new ConfigurationSetting
-                    {
-                        Key = string.Format("{0}{1}", key, SettingConstants.STYLES),
-                        Value = this.StylesURL.Url,
-                        IsSecure = false
-                    });
-            HostController.Instance.Update(
-                new ConfigurationSetting
-                    {
-                        Key = string.Format("{0}{1}", key, SettingConstants.CSS),
-                        Value = this.CssUrl.Url,
-                        IsSecure = false
-                    });
-            HostController.Instance.Update(
-                new ConfigurationSetting
-                    {
-                        Key = string.Format("{0}{1}", key, SettingConstants.TEMPLATEFILES),
-                        Value = this.TemplUrl.Url,
-                        IsSecure = false
-                    });
-            HostController.Instance.Update(
-                new ConfigurationSetting
-                {
-                    Key = string.Format("{0}{1}", key, SettingConstants.CUSTOMJSFILE),
-                    Value = this.CustomJsFile.Url,
-                    IsSecure = false
-                });
-            HostController.Instance.Update(
-                new ConfigurationSetting
-                    {
-                        Key = string.Format("{0}{1}", key, SettingConstants.CONFIG),
-                        Value = this.ConfigUrl.Url,
-                        IsSecure = false
-                    });
+            Utility.AddOrUpdateEditorHostSetting(
+                string.Format("{0}{1}", key, SettingConstants.BLANKTEXT),
+                this.txtBlanktext.Text);
+            Utility.AddOrUpdateEditorHostSetting(
+                string.Format("{0}{1}", key, SettingConstants.STYLES),
+                this.StylesURL.Url);
+            Utility.AddOrUpdateEditorHostSetting(string.Format("{0}{1}", key, SettingConstants.CSS), this.CssUrl.Url);
+            Utility.AddOrUpdateEditorHostSetting(
+                string.Format("{0}{1}", key, SettingConstants.TEMPLATEFILES),
+                this.TemplUrl.Url);
+            Utility.AddOrUpdateEditorHostSetting(
+                string.Format("{0}{1}", key, SettingConstants.CUSTOMJSFILE),
+                this.CustomJsFile.Url);
+            Utility.AddOrUpdateEditorHostSetting(
+                string.Format("{0}{1}", key, SettingConstants.CONFIG),
+                this.ConfigUrl.Url);
 
-            string sRoles = this.chblBrowsGr.Items.Cast<ListItem>().Where(item => item.Selected).Aggregate(
-                string.Empty, (current, item) => current + (item.Value + ";"));
+            string sRoles = this.chblBrowsGr.Items.Cast<ListItem>()
+                .Where(item => item.Selected)
+                .Aggregate(string.Empty, (current, item) => current + (item.Value + ";"));
 
             if (sRoles != string.Empty)
             {
-                HostController.Instance.Update(
-                    new ConfigurationSetting
-                        {
-                            Key = string.Format("{0}{1}", key, SettingConstants.ROLES), Value = sRoles, IsSecure = false 
-                        });
+                Utility.AddOrUpdateEditorHostSetting(string.Format("{0}{1}", key, SettingConstants.ROLES), sRoles);
             }
 
             // Save Toolbar Setting for every Role
@@ -2958,30 +2828,19 @@ namespace WatchersNET.CKEditor
 
                 if (label.Text.Equals("Unauthenticated Users"))
                 {
-                    HostController.Instance.Update(
-                        new ConfigurationSetting
-                            {
-                                Key = string.Format("{0}{2}#{1}", key, "-1", SettingConstants.TOOLB),
-                                Value = ddLToolB.SelectedValue,
-                                IsSecure = false
-                            });
+                    Utility.AddOrUpdateEditorHostSetting(
+                        string.Format("{0}toolb#{1}", key, "-1"),
+                        ddLToolB.SelectedValue);
                 }
                 else
                 {
                     RoleInfo objRole = this.objRoleController.GetRoleByName(this._portalSettings.PortalId, label.Text);
 
-                    HostController.Instance.Update(
-                        new ConfigurationSetting
-                            {
-                                Key = string.Format("{0}{2}#{1}", key, objRole.RoleID, SettingConstants.TOOLB),
-                                Value = ddLToolB.SelectedValue,
-                                IsSecure = false
-                            });
+                    Utility.AddOrUpdateEditorHostSetting(
+                        string.Format("{0}toolb#{1}", key, objRole.RoleID),
+                        ddLToolB.SelectedValue);
                 }
             }
-
-            // Finally Clear Cache
-            DataCache.ClearHostCache(true);
         }
 
         /// <summary>

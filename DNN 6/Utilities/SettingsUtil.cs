@@ -44,14 +44,21 @@ namespace WatchersNET.CKEditor.Utilities
         /// <summary>
         /// Checks the exists portal or page settings.
         /// </summary>
-        /// <param name="settingsDictionary">The settings dictionary.</param>
+        /// <param name="editorHostSettings">The editor host settings.</param>
         /// <param name="key">The key.</param>
-        /// <returns>Returns if Portal or Page Settings Exists</returns>
-        internal static bool CheckExistsPortalOrPageSettings(Dictionary<string, string> settingsDictionary, string key)
+        /// <returns>
+        /// Returns if Portal or Page Settings Exists
+        /// </returns>
+        internal static bool CheckExistsPortalOrPageSettings(List<EditorHostSetting> editorHostSettings, string key)
         {
-            if (settingsDictionary.ContainsKey(string.Format("{0}{1}", key, SettingConstants.SKIN)))
+            if (
+                editorHostSettings.Any(
+                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.SKIN))))
             {
-                return !string.IsNullOrEmpty(settingsDictionary[string.Format("{0}{1}", key, SettingConstants.SKIN)]);
+                return
+                    !string.IsNullOrEmpty(
+                        editorHostSettings.FirstOrDefault(
+                            setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.SKIN))).Value);
             }
 
             // No Portal/Page Settings Found
@@ -87,52 +94,63 @@ namespace WatchersNET.CKEditor.Utilities
         /// <summary>
         /// Loads the portal or page settings.
         /// </summary>
-        /// <param name="portalSettings">The current portal settings. </param>
+        /// <param name="portalSettings">The current portal settings.</param>
         /// <param name="currentSettings">The current settings.</param>
-        /// <param name="settingsDictionary">The Host settings dictionary.</param>
+        /// <param name="editorHostSettings">The editor host settings.</param>
         /// <param name="key">The Portal or Page key.</param>
         /// <param name="portalRoles">The Portal Roles</param>
         /// <returns>
         /// Returns the Filled Settings
         /// </returns>
-        internal static EditorProviderSettings LoadPortalOrPageSettings(PortalSettings portalSettings, EditorProviderSettings currentSettings, Dictionary<string, string> settingsDictionary, string key, ArrayList portalRoles)
+        internal static EditorProviderSettings LoadPortalOrPageSettings(
+            PortalSettings portalSettings,
+            EditorProviderSettings currentSettings,
+            List<EditorHostSetting> editorHostSettings,
+            string key,
+            ArrayList portalRoles)
         {
             var roleController = new RoleController();
 
             var roles = new ArrayList();
 
             // Import all Editor config settings
-            foreach (PropertyInfo info in
-                GetEditorConfigProperties()
-                    .Where(
-                        info =>
-                        settingsDictionary.ContainsKey(string.Format("{0}{1}", key, info.Name))
-                        && !string.IsNullOrEmpty(settingsDictionary[string.Format("{0}{1}", key, info.Name)])
-                        || info.Name.Equals("CodeMirror") || info.Name.Equals("WordCount")))
+            foreach (PropertyInfo info in GetEditorConfigProperties())
             {
+                if (!editorHostSettings.Any(s => s.Name.Equals(string.Format("{0}{1}", key, info.Name))))
+                {
+                    continue;
+                }
+
+                if (
+                    string.IsNullOrEmpty(
+                        editorHostSettings.FirstOrDefault(s => s.Name.Equals(string.Format("{0}{1}", key, info.Name)))
+                            .Value))
+                {
+                    continue;
+                }
+
+                if (!info.Name.Equals("CodeMirror") && !info.Name.Equals("WordCount"))
+                {
+                    continue;
+                }
+
+                var settingValue =
+                    editorHostSettings.FirstOrDefault(
+                        setting => setting.Name.Equals(string.Format("{0}{1}", key, info.Name))).Value;
+
                 switch (info.PropertyType.Name)
                 {
                     case "String":
-                        info.SetValue(
-                            currentSettings.Config, settingsDictionary[string.Format("{0}{1}", key, info.Name)], null);
+                        info.SetValue(currentSettings.Config, settingValue, null);
                         break;
                     case "Int32":
-                        info.SetValue(
-                            currentSettings.Config,
-                            int.Parse(settingsDictionary[string.Format("{0}{1}", key, info.Name)]),
-                            null);
+                        info.SetValue(currentSettings.Config, int.Parse(settingValue), null);
                         break;
                     case "Decimal":
-                        info.SetValue(
-                            currentSettings.Config,
-                            decimal.Parse(settingsDictionary[string.Format("{0}{1}", key, info.Name)]),
-                            null);
+                        info.SetValue(currentSettings.Config, decimal.Parse(settingValue), null);
                         break;
                     case "Boolean":
-                        info.SetValue(
-                            currentSettings.Config,
-                            bool.Parse(settingsDictionary[string.Format("{0}{1}", key, info.Name)]),
-                            null);
+                        info.SetValue(currentSettings.Config, bool.Parse(settingValue), null);
                         break;
                 }
 
@@ -141,58 +159,52 @@ namespace WatchersNET.CKEditor.Utilities
                     case "ToolbarLocation":
                         info.SetValue(
                             currentSettings.Config,
-                            (ToolBarLocation)
-                            Enum.Parse(
-                                typeof(ToolBarLocation), settingsDictionary[string.Format("{0}{1}", key, info.Name)]),
+                            (ToolBarLocation)Enum.Parse(typeof(ToolBarLocation), settingValue),
                             null);
                         break;
                     case "DefaultLinkType":
                         info.SetValue(
                             currentSettings.Config,
-                            (LinkType)
-                            Enum.Parse(typeof(LinkType), settingsDictionary[string.Format("{0}{1}", key, info.Name)]),
+                            (LinkType)Enum.Parse(typeof(LinkType), settingValue),
                             null);
                         break;
                     case "EnterMode":
                     case "ShiftEnterMode":
                         info.SetValue(
                             currentSettings.Config,
-                            (EnterModus)
-                            Enum.Parse(typeof(EnterModus), settingsDictionary[string.Format("{0}{1}", key, info.Name)]),
+                            (EnterModus)Enum.Parse(typeof(EnterModus), settingValue),
                             null);
                         break;
                     case "ContentsLangDirection":
                         info.SetValue(
                             currentSettings.Config,
-                            (LanguageDirection)
-                            Enum.Parse(
-                                typeof(LanguageDirection), settingsDictionary[string.Format("{0}{1}", key, info.Name)]),
+                            (LanguageDirection)Enum.Parse(typeof(LanguageDirection), settingValue),
                             null);
                         break;
                     case "CodeMirror":
                         foreach (var codeMirrorInfo in
                             typeof(CodeMirror).GetProperties()
-                                              .Where(codeMirrorInfo => !codeMirrorInfo.Name.Equals("Theme")))
+                                .Where(codeMirrorInfo => !codeMirrorInfo.Name.Equals("Theme")))
                         {
                             switch (codeMirrorInfo.PropertyType.Name)
                             {
                                 case "String":
-                                    if (settingsDictionary.ContainsKey(string.Format("{0}{1}", key, codeMirrorInfo.Name)))
+                                    if (
+                                        editorHostSettings.Any(
+                                            s => s.Name.Equals(string.Format("{0}{1}", key, codeMirrorInfo.Name))))
                                     {
-                                        codeMirrorInfo.SetValue(
-                                            currentSettings.Config.CodeMirror,
-                                            settingsDictionary[string.Format("{0}{1}", key, codeMirrorInfo.Name)],
-                                            null);
+                                        codeMirrorInfo.SetValue(currentSettings.Config.CodeMirror, settingValue, null);
                                     }
 
                                     break;
                                 case "Boolean":
-                                    if (settingsDictionary.ContainsKey(string.Format("{0}{1}", key, codeMirrorInfo.Name)))
+                                    if (
+                                        editorHostSettings.Any(
+                                            s => s.Name.Equals(string.Format("{0}{1}", key, codeMirrorInfo.Name))))
                                     {
                                         codeMirrorInfo.SetValue(
                                             currentSettings.Config.CodeMirror,
-                                            bool.Parse(
-                                                settingsDictionary[string.Format("{0}{1}", key, codeMirrorInfo.Name)]),
+                                            bool.Parse(settingValue),
                                             null);
                                     }
 
@@ -207,22 +219,22 @@ namespace WatchersNET.CKEditor.Utilities
                             switch (wordCountInfo.PropertyType.Name)
                             {
                                 case "String":
-                                    if (settingsDictionary.ContainsKey(string.Format("{0}{1}", key, wordCountInfo.Name)))
+                                    if (
+                                        editorHostSettings.Any(
+                                            s => s.Name.Equals(string.Format("{0}{1}", key, wordCountInfo.Name))))
                                     {
-                                        wordCountInfo.SetValue(
-                                            currentSettings.Config.WordCount,
-                                            settingsDictionary[string.Format("{0}{1}", key, wordCountInfo.Name)],
-                                            null);
+                                        wordCountInfo.SetValue(currentSettings.Config.WordCount, settingValue, null);
                                     }
 
                                     break;
                                 case "Boolean":
-                                    if (settingsDictionary.ContainsKey(string.Format("{0}{1}", key, wordCountInfo.Name)))
+                                    if (
+                                        editorHostSettings.Any(
+                                            s => s.Name.Equals(string.Format("{0}{1}", key, wordCountInfo.Name))))
                                     {
                                         wordCountInfo.SetValue(
                                             currentSettings.Config.WordCount,
-                                            bool.Parse(
-                                                settingsDictionary[string.Format("{0}{1}", key, wordCountInfo.Name)]),
+                                            bool.Parse(settingValue),
                                             null);
                                     }
 
@@ -236,52 +248,94 @@ namespace WatchersNET.CKEditor.Utilities
 
             /////////////////
 
-            if (settingsDictionary.ContainsKey(string.Format("{0}{1}", key, SettingConstants.SKIN)))
+            if (
+                editorHostSettings.Any(
+                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.SKIN))))
             {
-                if (!string.IsNullOrEmpty(settingsDictionary[string.Format("{0}{1}", key, SettingConstants.SKIN)]))
+                var settingValue =
+                    editorHostSettings.FirstOrDefault(
+                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.SKIN))).Value;
+
+                if (!string.IsNullOrEmpty(settingValue))
                 {
-                    currentSettings.Config.Skin = settingsDictionary[string.Format("{0}{1}", key, SettingConstants.SKIN)];
+                    currentSettings.Config.Skin = settingValue;
                 }
             }
 
-            if (settingsDictionary.ContainsKey(string.Format("{0}{1}", key, SettingConstants.CODEMIRRORTHEME)))
+            if (
+                editorHostSettings.Any(
+                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.CODEMIRRORTHEME))))
             {
-                if (!string.IsNullOrEmpty(settingsDictionary[string.Format("{0}{1}", key, SettingConstants.CODEMIRRORTHEME)]))
+                var settingValue =
+                    editorHostSettings.FirstOrDefault(
+                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.CODEMIRRORTHEME))).Value;
+
+                if (!string.IsNullOrEmpty(settingValue))
                 {
-                    currentSettings.Config.CodeMirror.Theme = settingsDictionary[string.Format("{0}{1}", key, SettingConstants.CODEMIRRORTHEME)];
+                    currentSettings.Config.CodeMirror.Theme = settingValue;
                 }
             }
 
             List<ToolbarRoles> listToolbarRoles = (from RoleInfo objRole in portalRoles
                                                    where
-                                                       settingsDictionary.ContainsKey(
-                                                           string.Format("{0}{2}#{1}", key, objRole.RoleID, SettingConstants.TOOLB))
+                                                       editorHostSettings.Any(
+                                                           setting =>
+                                                           setting.Name.Equals(
+                                                               string.Format(
+                                                                   "{0}{2}#{1}",
+                                                                   key,
+                                                                   objRole.RoleID,
+                                                                   SettingConstants.TOOLB)))
                                                    where
                                                        !string.IsNullOrEmpty(
-                                                           settingsDictionary[string.Format("{0}{2}#{1}", key, objRole.RoleID, SettingConstants.TOOLB)])
+                                                           editorHostSettings.FirstOrDefault(
+                                                               s =>
+                                                               s.Name.Equals(
+                                                                   string.Format(
+                                                                       "{0}{2}#{1}",
+                                                                       key,
+                                                                       objRole.RoleID,
+                                                                       SettingConstants.TOOLB))).Value)
                                                    let sToolbar =
-                                                       settingsDictionary[string.Format("{0}{2}#{1}", key, objRole.RoleID, SettingConstants.TOOLB)]
+                                                       editorHostSettings.FirstOrDefault(
+                                                           s =>
+                                                           s.Name.Equals(
+                                                               string.Format(
+                                                                   "{0}{2}#{1}",
+                                                                   key,
+                                                                   objRole.RoleID,
+                                                                   SettingConstants.TOOLB))).Value
                                                    select
                                                        new ToolbarRoles { RoleId = objRole.RoleID, Toolbar = sToolbar })
                 .ToList();
 
-            if (settingsDictionary.ContainsKey(string.Format("{0}{2}#{1}", key, "-1", SettingConstants.TOOLB)))
+            if (
+                editorHostSettings.Any(
+                    setting => setting.Name.Equals(string.Format("{0}{2}#{1}", key, "-1", SettingConstants.TOOLB))))
             {
-                if (!string.IsNullOrEmpty(settingsDictionary[string.Format("{0}{2}#{1}", key, "-1", SettingConstants.TOOLB)]))
-                {
-                    string sToolbar = settingsDictionary[string.Format("{0}{2}#{1}", key, "-1", SettingConstants.TOOLB)];
+                var settingValue =
+                    editorHostSettings.FirstOrDefault(
+                        s => s.Name.Equals(string.Format("{0}{2}#{1}", key, "-1", SettingConstants.TOOLB))).Value;
 
-                    listToolbarRoles.Add(new ToolbarRoles { RoleId = -1, Toolbar = sToolbar });
+                if (!string.IsNullOrEmpty(settingValue))
+                {
+                    listToolbarRoles.Add(new ToolbarRoles { RoleId = -1, Toolbar = settingValue });
                 }
             }
 
             currentSettings.ToolBarRoles = listToolbarRoles;
 
-            if (settingsDictionary.ContainsKey(string.Format("{0}{1}", key, SettingConstants.ROLES)))
+            if (
+                editorHostSettings.Any(
+                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.ROLES))))
             {
-                if (!string.IsNullOrEmpty(settingsDictionary[string.Format("{0}{1}", key, SettingConstants.ROLES)]))
+                var settingValue =
+                    editorHostSettings.FirstOrDefault(
+                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.ROLES))).Value;
+
+                if (!string.IsNullOrEmpty(settingValue))
                 {
-                    string sRoles = settingsDictionary[string.Format("{0}{1}", key, SettingConstants.ROLES)];
+                    string sRoles = settingValue;
 
                     currentSettings.BrowserRoles = sRoles;
 
@@ -291,8 +345,7 @@ namespace WatchersNET.CKEditor.Utilities
                     {
                         if (Utility.IsNumeric(sRoleName))
                         {
-                            RoleInfo roleInfo = roleController.GetRole(
-                                int.Parse(sRoleName), portalSettings.PortalId);
+                            RoleInfo roleInfo = roleController.GetRole(int.Parse(sRoleName), portalSettings.PortalId);
 
                             if (roleInfo != null)
                             {
@@ -307,11 +360,17 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (settingsDictionary.ContainsKey(string.Format("{0}{1}", key, SettingConstants.BROWSER)))
+            if (
+                editorHostSettings.Any(
+                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.BROWSER))))
             {
-                if (!string.IsNullOrEmpty(settingsDictionary[string.Format("{0}{1}", key, SettingConstants.BROWSER)]))
+                var settingValue =
+                    editorHostSettings.FirstOrDefault(
+                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.BROWSER))).Value;
+
+                if (!string.IsNullOrEmpty(settingValue))
                 {
-                    currentSettings.Browser = settingsDictionary[string.Format("{0}{1}", key, SettingConstants.BROWSER)];
+                    currentSettings.Browser = settingValue;
 
                     switch (currentSettings.Browser)
                     {
@@ -350,164 +409,263 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (settingsDictionary.ContainsKey(string.Format("{0}{1}", key, SettingConstants.INJECTJS)))
+            if (
+                editorHostSettings.Any(
+                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.INJECTJS))))
             {
-                if (!string.IsNullOrEmpty(settingsDictionary[string.Format("{0}{1}", key, SettingConstants.INJECTJS)]))
+                var settingValue =
+                    editorHostSettings.FirstOrDefault(
+                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.INJECTJS))).Value;
+
+                if (!string.IsNullOrEmpty(settingValue))
                 {
                     bool bResult;
-                    if (bool.TryParse(settingsDictionary[string.Format("{0}{1}", key, SettingConstants.INJECTJS)], out bResult))
+                    if (bool.TryParse(settingValue, out bResult))
                     {
                         currentSettings.InjectSyntaxJs = bResult;
                     }
                 }
             }
 
-            if (settingsDictionary.ContainsKey(string.Format("{0}{1}", key, SettingConstants.WIDTH)))
+            if (
+                editorHostSettings.Any(
+                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.WIDTH))))
             {
-                if (!string.IsNullOrEmpty(settingsDictionary[string.Format("{0}{1}", key, SettingConstants.WIDTH)]))
+                var settingValue =
+                    editorHostSettings.FirstOrDefault(
+                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.WIDTH))).Value;
+
+                if (!string.IsNullOrEmpty(settingValue))
                 {
-                    currentSettings.Config.Width = settingsDictionary[string.Format("{0}{1}", key, SettingConstants.WIDTH)];
+                    currentSettings.Config.Width = settingValue;
                 }
             }
 
-            if (settingsDictionary.ContainsKey(string.Format("{0}{1}", key, SettingConstants.HEIGHT)))
+            if (
+                editorHostSettings.Any(
+                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.HEIGHT))))
             {
-                if (!string.IsNullOrEmpty(settingsDictionary[string.Format("{0}{1}", key, SettingConstants.HEIGHT)]))
+                var settingValue =
+                    editorHostSettings.FirstOrDefault(
+                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.HEIGHT))).Value;
+
+                if (!string.IsNullOrEmpty(settingValue))
                 {
-                    currentSettings.Config.Height = settingsDictionary[string.Format("{0}{1}", key, SettingConstants.HEIGHT)];
+                    currentSettings.Config.Height = settingValue;
                 }
             }
 
-            if (settingsDictionary.ContainsKey(string.Format("{0}{1}", key, SettingConstants.BLANKTEXT)))
+            if (
+                editorHostSettings.Any(
+                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.BLANKTEXT))))
             {
-                if (!string.IsNullOrEmpty(settingsDictionary[string.Format("{0}{1}", key, SettingConstants.BLANKTEXT)]))
+                var settingValue =
+                    editorHostSettings.FirstOrDefault(
+                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.BLANKTEXT))).Value;
+
+                if (!string.IsNullOrEmpty(settingValue))
                 {
-                    currentSettings.BlankText = settingsDictionary[string.Format("{0}{1}", key, SettingConstants.BLANKTEXT)];
+                    currentSettings.BlankText = settingValue;
                 }
             }
 
-            if (settingsDictionary.ContainsKey(string.Format("{0}{1}", key, SettingConstants.STYLES)))
+            if (
+                editorHostSettings.Any(
+                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.STYLES))))
             {
-                if (!string.IsNullOrEmpty(settingsDictionary[string.Format("{0}{1}", key, SettingConstants.STYLES)]))
+                var settingValue =
+                    editorHostSettings.FirstOrDefault(
+                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.STYLES))).Value;
+
+                if (!string.IsNullOrEmpty(settingValue))
                 {
-                    currentSettings.Config.StylesSet = settingsDictionary[string.Format("{0}{1}", key, SettingConstants.STYLES)];
+                    currentSettings.Config.StylesSet = settingValue;
                 }
             }
 
-            if (settingsDictionary.ContainsKey(string.Format("{0}{1}", key, SettingConstants.CSS)))
+            if (
+                editorHostSettings.Any(
+                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.CSS))))
             {
-                if (!string.IsNullOrEmpty(settingsDictionary[string.Format("{0}{1}", key, SettingConstants.CSS)]))
+                var settingValue =
+                    editorHostSettings.FirstOrDefault(
+                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.CSS))).Value;
+
+                if (!string.IsNullOrEmpty(settingValue))
                 {
-                    currentSettings.Config.ContentsCss = settingsDictionary[string.Format("{0}{1}", key, SettingConstants.CSS)];
+                    currentSettings.Config.ContentsCss = settingValue;
                 }
             }
 
-            if (settingsDictionary.ContainsKey(string.Format("{0}{1}", key, SettingConstants.TEMPLATEFILES)))
+            if (
+                editorHostSettings.Any(
+                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.TEMPLATEFILES))))
             {
-                if (!string.IsNullOrEmpty(settingsDictionary[string.Format("{0}{1}", key, SettingConstants.TEMPLATEFILES)]))
+                var settingValue =
+                    editorHostSettings.FirstOrDefault(
+                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.TEMPLATEFILES))).Value;
+
+                if (!string.IsNullOrEmpty(settingValue))
                 {
-                    currentSettings.Config.Templates_Files = settingsDictionary[string.Format("{0}{1}", key, SettingConstants.TEMPLATEFILES)];
+                    currentSettings.Config.Templates_Files = settingValue;
                 }
             }
 
-            if (settingsDictionary.ContainsKey(string.Format("{0}{1}", key, SettingConstants.CUSTOMJSFILE)))
+            if (
+                editorHostSettings.Any(
+                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.CUSTOMJSFILE))))
             {
-                if (!string.IsNullOrEmpty(settingsDictionary[string.Format("{0}{1}", key, SettingConstants.CUSTOMJSFILE)]))
+                var settingValue =
+                    editorHostSettings.FirstOrDefault(
+                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.CUSTOMJSFILE))).Value;
+
+                if (!string.IsNullOrEmpty(settingValue))
                 {
-                    currentSettings.CustomJsFile = settingsDictionary[string.Format("{0}{1}", key, SettingConstants.CUSTOMJSFILE)];
+                    currentSettings.CustomJsFile = settingValue;
                 }
             }
 
-            if (!string.IsNullOrEmpty(settingsDictionary[string.Format("{0}{1}", key, SettingConstants.CONFIG)]))
+            if (
+                editorHostSettings.Any(
+                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.CONFIG))))
             {
-                currentSettings.Config.CustomConfig = settingsDictionary[string.Format("{0}{1}", key, SettingConstants.CONFIG)];
-            }
+                var settingValue =
+                    editorHostSettings.FirstOrDefault(
+                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.CONFIG))).Value;
 
-            if (settingsDictionary.ContainsKey(string.Format("{0}{1}", key, SettingConstants.FILELISTPAGESIZE)))
-            {
-                if (!string.IsNullOrEmpty(settingsDictionary[string.Format("{0}{1}", key, SettingConstants.FILELISTPAGESIZE)]))
+                if (!string.IsNullOrEmpty(settingValue))
                 {
-                    currentSettings.FileListPageSize = int.Parse(settingsDictionary[string.Format("{0}{1}", key, SettingConstants.FILELISTPAGESIZE)]);
+                    currentSettings.Config.CustomConfig = settingValue;
                 }
             }
 
-            if (settingsDictionary.ContainsKey(string.Format("{0}{1}", key, SettingConstants.FILELISTVIEWMODE)))
+            if (
+                editorHostSettings.Any(
+                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.FILELISTPAGESIZE))))
             {
-                if (!string.IsNullOrEmpty(settingsDictionary[string.Format("{0}{1}", key, SettingConstants.FILELISTVIEWMODE)]))
+                var settingValue =
+                    editorHostSettings.FirstOrDefault(
+                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.FILELISTPAGESIZE))).Value;
+
+                if (!string.IsNullOrEmpty(settingValue))
                 {
-                    currentSettings.FileListViewMode =
-                        (FileListView)
-                        Enum.Parse(typeof(FileListView), settingsDictionary[string.Format("{0}{1}", key, SettingConstants.FILELISTVIEWMODE)]);
+                    currentSettings.FileListPageSize = int.Parse(settingValue);
                 }
             }
 
-            if (settingsDictionary.ContainsKey(string.Format("{0}{1}", key, SettingConstants.DEFAULTLINKMODE)))
+            if (
+                editorHostSettings.Any(
+                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.FILELISTVIEWMODE))))
             {
-                if (!string.IsNullOrEmpty(settingsDictionary[string.Format("{0}{1}", key, SettingConstants.DEFAULTLINKMODE)]))
+                var settingValue =
+                    editorHostSettings.FirstOrDefault(
+                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.FILELISTVIEWMODE))).Value;
+
+                if (!string.IsNullOrEmpty(settingValue))
                 {
-                    currentSettings.DefaultLinkMode =
-                        (LinkMode)
-                        Enum.Parse(typeof(LinkMode), settingsDictionary[string.Format("{0}{1}", key, SettingConstants.DEFAULTLINKMODE)]);
+                    currentSettings.FileListViewMode = (FileListView)Enum.Parse(typeof(FileListView), settingValue);
                 }
             }
 
-            if (settingsDictionary.ContainsKey(string.Format("{0}{1}", key, SettingConstants.USEANCHORSELECTOR)))
+            if (
+                editorHostSettings.Any(
+                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.DEFAULTLINKMODE))))
             {
-                if (!string.IsNullOrEmpty(settingsDictionary[string.Format("{0}{1}", key, SettingConstants.USEANCHORSELECTOR)]))
+                var settingValue =
+                    editorHostSettings.FirstOrDefault(
+                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.DEFAULTLINKMODE))).Value;
+
+                if (!string.IsNullOrEmpty(settingValue))
+                {
+                    currentSettings.DefaultLinkMode = (LinkMode)Enum.Parse(typeof(LinkMode), settingValue);
+                }
+            }
+
+            if (
+                editorHostSettings.Any(
+                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.USEANCHORSELECTOR))))
+            {
+                var settingValue =
+                    editorHostSettings.FirstOrDefault(
+                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.USEANCHORSELECTOR))).Value;
+
+                if (!string.IsNullOrEmpty(settingValue))
                 {
                     bool bResult;
-                    if (bool.TryParse(settingsDictionary[string.Format("{0}{1}", key, SettingConstants.USEANCHORSELECTOR)], out bResult))
+                    if (bool.TryParse(settingValue, out bResult))
                     {
                         currentSettings.UseAnchorSelector = bResult;
                     }
                 }
             }
 
-            if (settingsDictionary.ContainsKey(string.Format("{0}{1}", key, SettingConstants.SHOWPAGELINKSTABFIRST)))
+            if (
+                editorHostSettings.Any(
+                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.SHOWPAGELINKSTABFIRST))))
             {
-                if (!string.IsNullOrEmpty(settingsDictionary[string.Format("{0}{1}", key, SettingConstants.SHOWPAGELINKSTABFIRST)]))
+                var settingValue =
+                    editorHostSettings.FirstOrDefault(
+                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.SHOWPAGELINKSTABFIRST))).Value;
+
+                if (!string.IsNullOrEmpty(settingValue))
                 {
                     bool bResult;
-                    if (bool.TryParse(settingsDictionary[string.Format("{0}{1}", key, SettingConstants.SHOWPAGELINKSTABFIRST)], out bResult))
+                    if (bool.TryParse(settingValue, out bResult))
                     {
                         currentSettings.ShowPageLinksTabFirst = bResult;
                     }
                 }
             }
 
-            if (settingsDictionary.ContainsKey(string.Format("{0}{1}", key, SettingConstants.OVERRIDEFILEONUPLOAD)))
+            if (
+                editorHostSettings.Any(
+                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.OVERRIDEFILEONUPLOAD))))
             {
-                if (!string.IsNullOrEmpty(settingsDictionary[string.Format("{0}{1}", key, SettingConstants.OVERRIDEFILEONUPLOAD)]))
+                var settingValue =
+                    editorHostSettings.FirstOrDefault(
+                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.OVERRIDEFILEONUPLOAD))).Value;
+
+                if (!string.IsNullOrEmpty(settingValue))
                 {
                     bool bResult;
-                    if (bool.TryParse(
-                        settingsDictionary[string.Format("{0}{1}", key, SettingConstants.OVERRIDEFILEONUPLOAD)], out bResult))
+                    if (bool.TryParse(settingValue, out bResult))
                     {
                         currentSettings.OverrideFileOnUpload = bResult;
                     }
                 }
             }
 
-            if (settingsDictionary.ContainsKey(string.Format("{0}{1}", key, SettingConstants.SUBDIRS)))
+            if (
+                editorHostSettings.Any(
+                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.SUBDIRS))))
             {
-                if (!string.IsNullOrEmpty(settingsDictionary[string.Format("{0}{1}", key, SettingConstants.SUBDIRS)]))
+                var settingValue =
+                    editorHostSettings.FirstOrDefault(
+                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.SUBDIRS))).Value;
+
+                if (!string.IsNullOrEmpty(settingValue))
                 {
                     bool bResult;
-                    if (bool.TryParse(settingsDictionary[string.Format("{0}{1}", key, SettingConstants.SUBDIRS)], out bResult))
+                    if (bool.TryParse(settingValue, out bResult))
                     {
                         currentSettings.SubDirs = bResult;
                     }
                 }
             }
 
-            if (settingsDictionary.ContainsKey(string.Format("{0}{1}", key, SettingConstants.BROWSERROOTDIRID)))
+            if (
+                editorHostSettings.Any(
+                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.BROWSERROOTDIRID))))
             {
-                if (!string.IsNullOrEmpty(settingsDictionary[string.Format("{0}{1}", key, SettingConstants.BROWSERROOTDIRID)]))
+                var settingValue =
+                    editorHostSettings.FirstOrDefault(
+                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.BROWSERROOTDIRID))).Value;
+
+                if (!string.IsNullOrEmpty(settingValue))
                 {
                     try
                     {
-                        currentSettings.BrowserRootDirId =
-                            int.Parse(settingsDictionary[string.Format("{0}{1}", key, SettingConstants.BROWSERROOTDIRID)]);
+                        currentSettings.BrowserRootDirId = int.Parse(settingValue);
                     }
                     catch (Exception)
                     {
@@ -516,14 +674,19 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (settingsDictionary.ContainsKey(string.Format("{0}{1}", key, SettingConstants.UPLOADDIRID)))
+            if (
+                editorHostSettings.Any(
+                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.UPLOADDIRID))))
             {
-                if (!string.IsNullOrEmpty(settingsDictionary[string.Format("{0}{1}", key, SettingConstants.UPLOADDIRID)]))
+                var settingValue =
+                    editorHostSettings.FirstOrDefault(
+                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.UPLOADDIRID))).Value;
+
+                if (!string.IsNullOrEmpty(settingValue))
                 {
                     try
                     {
-                        currentSettings.UploadDirId =
-                            int.Parse(settingsDictionary[string.Format("{0}{1}", key, SettingConstants.UPLOADDIRID)]);
+                        currentSettings.UploadDirId = int.Parse(settingValue);
                     }
                     catch (Exception)
                     {
@@ -532,14 +695,19 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (settingsDictionary.ContainsKey(string.Format("{0}{1}", key, SettingConstants.RESIZEWIDTH)))
+            if (
+                editorHostSettings.Any(
+                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.RESIZEWIDTH))))
             {
-                if (!string.IsNullOrEmpty(settingsDictionary[string.Format("{0}{1}", key, SettingConstants.RESIZEWIDTH)]))
+                var settingValue =
+                    editorHostSettings.FirstOrDefault(
+                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.RESIZEWIDTH))).Value;
+
+                if (!string.IsNullOrEmpty(settingValue))
                 {
                     try
                     {
-                        currentSettings.ResizeWidth =
-                            int.Parse(settingsDictionary[string.Format("{0}{1}", key, SettingConstants.RESIZEWIDTH)]);
+                        currentSettings.ResizeWidth = int.Parse(settingValue);
                     }
                     catch (Exception)
                     {
@@ -548,14 +716,19 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (settingsDictionary.ContainsKey(string.Format("{0}{1}", key, SettingConstants.RESIZEHEIGHT)))
+            if (
+                editorHostSettings.Any(
+                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.RESIZEHEIGHT))))
             {
-                if (!string.IsNullOrEmpty(settingsDictionary[string.Format("{0}{1}", key, SettingConstants.RESIZEHEIGHT)]))
+                var settingValue =
+                    editorHostSettings.FirstOrDefault(
+                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.RESIZEHEIGHT))).Value;
+
+                if (!string.IsNullOrEmpty(settingValue))
                 {
                     try
                     {
-                        currentSettings.ResizeHeight =
-                            int.Parse(settingsDictionary[string.Format("{0}{1}", key, SettingConstants.RESIZEHEIGHT)]);
+                        currentSettings.ResizeHeight = int.Parse(settingValue);
                     }
                     catch (Exception)
                     {

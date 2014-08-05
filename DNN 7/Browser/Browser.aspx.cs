@@ -821,7 +821,7 @@ namespace WatchersNET.CKEditor.Browser
             ProviderConfiguration providerConfiguration = ProviderConfiguration.GetProviderConfiguration("htmlEditor");
             Provider objProvider = (Provider)providerConfiguration.Providers[providerConfiguration.DefaultProvider];
 
-            var settingsDictionary = HostController.Instance.GetSettingsDictionary();
+            var settingsDictionary = Utility.GetEditorHostSettings();
             var portalRoles = new RoleController().GetPortalRoles(this._portalSettings.PortalId);
 
             switch (this.currentSettings.SettingMode)
