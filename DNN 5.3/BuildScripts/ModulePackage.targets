@@ -157,6 +157,18 @@
     <Delete Files="$(MSBuildProjectDirectory)\$(PackageName)_$(Version)_Source.$(Extension)" />
 
     <RemoveDir Directories ="$(MSBuildProjectDirectory)\Package" />
+
+    <CreateItem Include="$(MSBuildProjectDirectory)\..\packages\Install\**\*.*">
+      <Output TaskParameter="Include" ItemName="InstallCompleteContent" />
+    </CreateItem>
+
+    <!-- Create the Install package -->
+    <Zip Files="@(InstallCompleteContent)" WorkingDirectory="$(MSBuildProjectDirectory)\..\packages\Install" ZipFileName="$(PackageName)_$(Version)-UNZIP_FIRST.$(Extension)" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\$(PackageName)_$(Version)-UNZIP_FIRST.$(Extension)" DestinationFolder="$(MSBuildProjectDirectory)/../packages" />
+
+    <Delete Files="$(MSBuildProjectDirectory)\$(PackageName)_$(Version)-UNZIP_FIRST.$(Extension)" />
+
+    <RemoveDir Directories ="$(MSBuildProjectDirectory)\..\packages\Install" />
     
   </Target>
 </Project>

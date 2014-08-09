@@ -15,9 +15,11 @@
                 <h3 class="panel-title">Index</h3>
             </div>
             <div class="panel-body">
+            <div class="alert alert-danger" role="alert">
+                <p><span class="label label-danger">Warning</span> Be Aware Evoq Versions are not supported</p>
+            </div>
   <li><h3>Install</h3>
     <ul>
-      <li><a href="#InstallDNN4">Install - DotNetNuke 04.05.05-04.09.xx</a></li>
       <li><a href="#InstallDNN5">Install - DotNetNuke 05.xx.xx+ / 06.xx.xx / 07.xx.xx</a></li>
     </ul>
   </li>
@@ -30,22 +32,6 @@
          </div>
          </div>
          <div class="panel panel-default">
-            <div class="panel-heading">
-               <a name="InstallDNN4" id="InstallDNN4"></a>Installation for DotNetNuke 4.5+
-            </div>
-            <div class="panel-body">
-                <ol>
-  <li> Copy the folders <strong>bin</strong> and <strong>Providers</strong> to your DotNetNuke Root folder</li>
-  <li> Add the following line to your <strong>web.config</strong> (in the html editor provider area). <br />
-  <textarea class="form-control">&lt;add name=&quot;CKHtmlEditorProvider&quot; type=&quot;WatchersNET.CKEditor.CKHtmlEditorProvider, WatchersNET.CKEditor&quot;/&gt;</textarea></li>
-  <li> U can also add other CK Editor Settings like e.g: ck_uiColor (with the prefix <strong>ck_</strong>)</li>
-  <li> Make sure you set the defaultProvider attribute to <strong>CKHtmlEditorProvider</strong>.<br />
-  <textarea class="form-control">&lt;htmlEditor defaultProvider=&quot;CKHtmlEditorProvider&quot;&gt;</textarea>
-  </li>
-</ol>
-            </div>
-        </div>
-        <div class="panel panel-default">
             <div class="panel-heading">
                <a name="InstallDNN5" id="InstallDNN5"></a>Installation for DotNetNuke 5/6/7
             </div>
