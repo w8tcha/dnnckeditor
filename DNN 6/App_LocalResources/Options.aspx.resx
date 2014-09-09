@@ -206,9 +206,6 @@
   <data name="Options.Text" xml:space="preserve">
     <value>Custom Editor Options</value>
   </data>
-  <data name="Refresh.Text" xml:space="preserve">
-    <value>Refresh Editor</value>
-  </data>
   <data name="lblMainSet.Text" xml:space="preserve">
     <value>Main Settings</value>
   </data>

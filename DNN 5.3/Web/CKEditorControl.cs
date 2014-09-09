@@ -991,16 +991,7 @@ namespace WatchersNET.CKEditor.Web
                         CultureInfo.CurrentCulture.Name),
                     string.Format("{0}_ckoptions", this.ClientID.Replace("-", string.Empty).Replace(".", string.Empty)),
                     Localization.GetString("Options.Text", SResXFile));
-
-                outWriter.Write("&nbsp;|&nbsp;");
             }
-
-            outWriter.Write(
-                "<a href=\"{0}\" class=\"CommandButton\" id=\"{1}\" name=\"{2}\">{3}</a></p>",
-                HttpContext.Current.Request.RawUrl,
-                string.Format("{0}_ckrefresh", this.ClientID.Replace("-", string.Empty).Replace(".", string.Empty)),
-                string.Format("{0}_ckrefresh", this.UniqueID),
-                Localization.GetString("Refresh.Text", SResXFile));
 
             /////////////////
         }

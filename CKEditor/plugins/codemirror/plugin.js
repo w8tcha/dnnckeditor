@@ -68,8 +68,6 @@
                         oldData;
 
                     function loadCodeMirrorInline(editor, textarea) {
-                        var delay;
-
                         window["codemirror_" + editor.id] = CodeMirror.fromTextArea(textarea, {
                             mode: config.mode,
                             matchBrackets: config.matchBrackets,
@@ -144,14 +142,8 @@
                         }
 
                         window["codemirror_" + editor.id].on("change", function () {
-                            clearTimeout(delay);
-                            delay = setTimeout(function () {
-                                var cm = window["codemirror_" + editor.id];
-
-                                if (cm) {
-                                    cm.save();
-                                }
-                            }, 300);
+                            window["codemirror_" + editor.id].save();
+                            editor.fire('change', this);
                         });
 
                         window["codemirror_" + editor.id].setSize(holderWidth, holderHeight);
@@ -642,7 +634,7 @@
                 window["editable_" + editor.id].setData(editor.getData(1));
                 window["editable_" + editor.id].editorID = editor.id;
                 editor.fire('ariaWidget', this);
-                var delay;
+
                 var sourceAreaElement = window["editable_" + editor.id],
                     holderElement = sourceAreaElement.getParent();
 
@@ -770,14 +762,8 @@
                 }
 
                 window["codemirror_" + editor.id].on("change", function () {
-                    clearTimeout(delay);
-                    delay = setTimeout(function () {
-                        var cm = window["codemirror_" + editor.id];
-                    
-                        if (cm) {
-                            cm.save();
-                        }
-                    }, 300);
+                    window["codemirror_" + editor.id].save();
+                    editor.fire('change', this);
                 });
 
                 window["codemirror_" + editor.id].setSize(null, holderHeight);

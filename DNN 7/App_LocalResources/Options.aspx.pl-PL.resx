@@ -411,9 +411,6 @@
   <data name="PortalOnlyLabel.Text" xml:space="preserve">
     <value>Wyświetlać tylko ustawienia dla tej witryny, czy dla wszystkich?</value>
   </data>
-  <data name="Refresh.Text" xml:space="preserve">
-    <value>Odśwież edytor</value>
-  </data>
   <data name="Remove.Help" xml:space="preserve">
     <value>Usuwa ustawienie tylko dla bieżącej {0}.</value>
   </data>
