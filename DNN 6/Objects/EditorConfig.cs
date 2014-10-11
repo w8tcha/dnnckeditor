@@ -65,7 +65,7 @@ namespace WatchersNET.CKEditor.Objects
             this.Entities_Latin = false;
             this.Entities_ProcessNumerical = false;
             this.ExtraPlugins =
-                "mathjax,oembed,syntaxhighlight,tableresize,stylesheetparser,qrcodes,newsarticleslinks,codemirror,dnnpages,xmlstyles,xmltemplates,wordcount";
+                "mathjax,oembed,syntaxhighlight,tableresize,stylesheetparser,qrcodes,newsarticleslinks,codemirror,dnnpages,xmltemplates,wordcount";
             this.FileBrowserWindowFeatures =
                 "location=no,menubar=no,toolbar=no,dependent=yes,minimizable=no,modal=yes,alwaysRaised=yes,resizable=yes,scrollbars=yes";
             this.FileBrowserWindowHeight = "70%";

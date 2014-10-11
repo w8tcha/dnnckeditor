@@ -309,9 +309,6 @@
   <data name="lblStyles.Text" xml:space="preserve">
     <value>Style edytora</value>
   </data>
-  <data name="lblStylesURL.Text" xml:space="preserve">
-    <value>Lista dostępnych styli:</value>
-  </data>
   <data name="lblTemplates.Text" xml:space="preserve">
     <value>Szablony edytora</value>
   </data>
@@ -411,9 +408,6 @@
   <data name="PortalOnlyLabel.Text" xml:space="preserve">
     <value>Wyświetlać tylko ustawienia dla tej witryny, czy dla wszystkich?</value>
   </data>
-  <data name="Refresh.Text" xml:space="preserve">
-    <value>Odśwież edytor</value>
-  </data>
   <data name="Remove.Help" xml:space="preserve">
     <value>Usuwa ustawienie tylko dla bieżącej {0}.</value>
   </data>
@@ -488,5 +482,11 @@
   </data>
   <data name="lblInfoCopyAll.Text" xml:space="preserve">
     <value>Settings copied to all Child Pages.</value>
+  </data>
+  <data name="SizeLimitLabel.Text" xml:space="preserve">
+    <value>Upload File Size Limit</value>
+  </data>
+  <data name="UploadFileLimitLabel.Text" xml:space="preserve">
+    <value>Upload File Limits:</value>
   </data>
 </root>

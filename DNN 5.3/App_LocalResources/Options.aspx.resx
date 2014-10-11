@@ -179,9 +179,6 @@
   <data name="lblStyles.Text" xml:space="preserve">
     <value>Editor Styles</value>
   </data>
-  <data name="lblStylesURL.Text" xml:space="preserve">
-    <value>List of available styles:</value>
-  </data>
   <data name="lblToolbars.Text" xml:space="preserve">
     <value>Toolbars:</value>
   </data>
@@ -499,5 +496,11 @@
   </data>
   <data name="lblInfoCopyAll.Text" xml:space="preserve">
     <value>Settings copied to all Child Pages.</value>
+  </data>
+  <data name="SizeLimitLabel.Text" xml:space="preserve">
+    <value>Upload File Size Limit</value>
+  </data>
+  <data name="UploadFileLimitLabel.Text" xml:space="preserve">
+    <value>Upload File Limits:</value>
   </data>
 </root>

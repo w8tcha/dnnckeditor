@@ -857,6 +857,12 @@ namespace WatchersNET.CKEditor.Browser
                     break;
             }
 
+            // set current Upload file size limit
+            this.currentSettings.UploadFileSizeLimit = SettingsUtil.GetCurrentUserUploadSize(
+                this.currentSettings,
+                this._portalSettings,
+                HttpContext.Current.Request);
+
             if (this.currentSettings.BrowserMode.Equals(Constants.Browser.StandardBrowser)
                 && HttpContext.Current.Request.IsAuthenticated)
             {
@@ -2287,7 +2293,9 @@ namespace WatchersNET.CKEditor.Browser
             this.MaximumUploadSizeInfo.Text =
                 string.Format(
                     Localization.GetString("FileSizeRestriction", this.ResXFile, this.LanguageCode),
-                    Utility.GetMaxUploadSize() / (1024 * 1024),
+                    (this.currentSettings.UploadFileSizeLimit > 0
+                         ? this.currentSettings.UploadFileSizeLimit
+                         : Utility.GetMaxUploadSize()) / (1024 * 1024),
                     allowedExtensionsList);
 
             // RadioButtonList
@@ -2639,6 +2647,23 @@ namespace WatchersNET.CKEditor.Browser
             }
             else
             {
+                return;
+            }
+
+            // Check if file is to big for that user
+            if (this.currentSettings.UploadFileSizeLimit > 0
+                && file.ContentLength > this.currentSettings.UploadFileSizeLimit)
+            {
+                this.Page.ClientScript.RegisterStartupScript(
+                    this.GetType(),
+                    "errorcloseScript",
+                    string.Format(
+                        "javascript:alert('{0}')",
+                        Localization.GetString("FileToBigMessage.Text", this.ResXFile, this.LanguageCode)),
+                    true);
+
+                this.Response.End();
+
                 return;
             }
 

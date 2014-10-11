@@ -44,6 +44,10 @@ namespace WatchersNET.CKEditor.Objects
             this.BrowserRoles = "0;Administrators;";
             this.Browser = "standard";
             this.ToolBarRoles = new List<ToolbarRoles> { new ToolbarRoles { RoleId = 0, Toolbar = "Full" } };
+            this.UploadSizeRoles = new List<UploadSizeRoles>
+                                       {
+                                           new UploadSizeRoles { RoleId = 0, UploadFileLimit = -1 }
+                                       };
 
             this.Config = new EditorConfig();
         }
@@ -140,6 +144,19 @@ namespace WatchersNET.CKEditor.Objects
         /// Gets or sets a value indicating whether Toolbar Roles
         /// </summary>
         public List<ToolbarRoles> ToolBarRoles { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value setting the Upload Sizes for each Role
+        /// </summary>
+        public List<UploadSizeRoles> UploadSizeRoles { get; set; }
+
+        /// <summary>
+        /// Gets or sets the upload file size limit.
+        /// </summary>
+        /// <value>
+        /// The upload file size limit.
+        /// </value>
+        public int UploadFileSizeLimit { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether Blank Initial text

@@ -100,7 +100,7 @@ namespace WatchersNET.CKEditor {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel ExportDialogUpdatePanel;
+        protected global::System.Web.UI.WebControls.WebParts.UpdatePanel ExportDialogUpdatePanel;
         
         /// <summary>
         /// ExportDir control.
@@ -145,7 +145,7 @@ namespace WatchersNET.CKEditor {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel upNewUpdatePanel;
+        protected global::System.Web.UI.WebControls.WebParts.UpdatePanel upNewUpdatePanel;
         
         /// <summary>
         /// ctlImportFile control.
@@ -172,7 +172,7 @@ namespace WatchersNET.CKEditor {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.UpdatePanel upOptions;
+        protected global::System.Web.UI.WebControls.WebParts.UpdatePanel upOptions;
         
         /// <summary>
         /// LastTabId control.
@@ -454,24 +454,6 @@ namespace WatchersNET.CKEditor {
         protected global::System.Web.UI.WebControls.CheckBox InjectSyntaxJs;
         
         /// <summary>
-        /// lblStylesURL control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblStylesURL;
-        
-        /// <summary>
-        /// ctlStylesURL control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::WatchersNET.CKEditor.Controls.UrlControl ctlStylesURL;
-        
-        /// <summary>
         /// lblCssurl control.
         /// </summary>
         /// <remarks>
@@ -632,6 +614,24 @@ namespace WatchersNET.CKEditor {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox OverrideFileOnUpload;
+        
+        /// <summary>
+        /// UploadFileLimitLabel control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label UploadFileLimitLabel;
+        
+        /// <summary>
+        /// UploadFileLimits control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView UploadFileLimits;
         
         /// <summary>
         /// lblResizeWidth control.

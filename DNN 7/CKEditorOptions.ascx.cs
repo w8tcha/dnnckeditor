@@ -30,8 +30,6 @@ namespace WatchersNET.CKEditor
 
     using DotNetNuke.Common;
     using DotNetNuke.Common.Utilities;
-    using DotNetNuke.Entities;
-    using DotNetNuke.Entities.Controllers;
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Entities.Modules.Definitions;
     using DotNetNuke.Entities.Portals;
@@ -275,17 +273,6 @@ namespace WatchersNET.CKEditor
             get
             {
                 return this.ctlImportFile;
-            }
-        }
-
-        /// <summary>
-        ///   Gets the Styles Url Control.
-        /// </summary>
-        private UrlControl StylesURL
-        {
-            get
-            {
-                return this.ctlStylesURL;
             }
         }
 
@@ -881,9 +868,53 @@ namespace WatchersNET.CKEditor
                 }
             }
 
-            if (!string.IsNullOrEmpty(importedSettings.Config.StylesSet))
+            var imporUploadSizeRoles = importedSettings.UploadSizeRoles;
+
+            // Load Upload Size Setting for Each Portal Role
+            foreach (var uploadSizeRole in imporUploadSizeRoles)
             {
-                this.StylesURL.Url = this.ReFormatURL(importedSettings.Config.StylesSet);
+                if (uploadSizeRole.RoleId.Equals(-1))
+                {
+                    for (int i = 0; i < this.UploadFileLimits.Rows.Count; i++)
+                    {
+                        Label label = (Label)this.UploadFileLimits.Rows[i].Cells[0].FindControl("lblRoleName");
+
+                        if (label == null || !label.Text.Equals("Unauthenticated Users"))
+                        {
+                            continue;
+                        }
+
+                        var sizeLimit =
+                            (TextBox)this.UploadFileLimits.Rows[i].Cells[1].FindControl("SizeLimit");
+
+                        sizeLimit.Text = uploadSizeRole.UploadFileLimit.ToString();
+                    }
+                }
+                else
+                {
+                    RoleInfo objRole = this.objRoleController.GetRole(
+                        uploadSizeRole.RoleId, this._portalSettings.PortalId);
+
+                    if (objRole == null)
+                    {
+                        continue;
+                    }
+
+                    for (int i = 0; i < this.UploadFileLimits.Rows.Count; i++)
+                    {
+                        Label label = (Label)this.UploadFileLimits.Rows[i].Cells[0].FindControl("lblRoleName");
+
+                        if (label == null || !label.Text.Equals(objRole.RoleName))
+                        {
+                            continue;
+                        }
+
+                        var sizeLimit =
+                            (TextBox)this.UploadFileLimits.Rows[i].Cells[1].FindControl("SizeLimit");
+
+                        sizeLimit.Text = uploadSizeRole.UploadFileLimit.ToString();
+                    }
+                }
             }
 
             if (!string.IsNullOrEmpty(importedSettings.Config.ContentsCss))
@@ -979,6 +1010,16 @@ namespace WatchersNET.CKEditor
 
             lblRole.Text = Localization.GetString("lblRole.Text", this.ResXFile, this.LangCode);
             lblSelToolb.Text = Localization.GetString("lblSelToolb.Text", this.ResXFile, this.LangCode);
+
+            // Bind User Groups to UploadFileLimits GridView
+            this.UploadFileLimits.DataSource = lic;
+            this.UploadFileLimits.DataBind();
+
+            lblRole = (Label)this.UploadFileLimits.HeaderRow.FindControl("lblRole");
+            lblSelToolb = (Label)this.UploadFileLimits.HeaderRow.FindControl("SizeLimitLabel");
+
+            lblRole.Text = Localization.GetString("lblRole.Text", this.ResXFile, this.LangCode);
+            lblSelToolb.Text = Localization.GetString("SizeLimitLabel.Text", this.ResXFile, this.LangCode);
         }
 
         /// <summary>
@@ -1029,8 +1070,6 @@ namespace WatchersNET.CKEditor
                 this.ModuleId, string.Format("{0}{1}", moduleKey, SettingConstants.HEIGHT));
             moduleController.DeleteModuleSetting(
                 this.ModuleId, string.Format("{0}{1}", moduleKey, SettingConstants.BLANKTEXT));
-            moduleController.DeleteModuleSetting(
-                this.ModuleId, string.Format("{0}{1}", moduleKey, SettingConstants.STYLES));
             moduleController.DeleteModuleSetting(
                 this.ModuleId, string.Format("{0}{1}", moduleKey, SettingConstants.CSS));
             moduleController.DeleteModuleSetting(
@@ -1786,11 +1825,6 @@ namespace WatchersNET.CKEditor
                 this.ddlBrowser.SelectedValue = ckeditorProvider.Attributes["ck_Browser"];
             }
 
-            if (ckeditorProvider.Attributes["ck_stylesSet"] != string.Empty)
-            {
-                this.StylesURL.Url = ckeditorProvider.Attributes["ck_stylesSet"];
-            }
-
             if (ckeditorProvider.Attributes["ck_contentsCss"] != string.Empty)
             {
                 this.CssUrl.Url = ckeditorProvider.Attributes["ck_contentsCss"];
@@ -2474,8 +2508,6 @@ namespace WatchersNET.CKEditor
             moduleController.UpdateModuleSetting(
                 this.ModuleId, string.Format("{0}{1}", key, SettingConstants.BLANKTEXT), this.txtBlanktext.Text);
             moduleController.UpdateModuleSetting(
-                this.ModuleId, string.Format("{0}{1}", key, SettingConstants.STYLES), this.StylesURL.Url);
-            moduleController.UpdateModuleSetting(
                 this.ModuleId, string.Format("{0}{1}", key, SettingConstants.CSS), this.CssUrl.Url);
             moduleController.UpdateModuleSetting(
                 this.ModuleId, string.Format("{0}{1}", key, SettingConstants.TEMPLATEFILES), this.TemplUrl.Url);
@@ -2523,8 +2555,35 @@ namespace WatchersNET.CKEditor
                 }
             }
 
-            // Finally Clear Cache
-            DataCache.ClearHostCache(true);
+            // Save Upload File Limit Setting for every Role
+            for (int i = 0; i < this.UploadFileLimits.Rows.Count; i++)
+            {
+                Label label = (Label)this.UploadFileLimits.Rows[i].Cells[0].FindControl("lblRoleName");
+
+                var sizeLimit = (TextBox)this.UploadFileLimits.Rows[i].Cells[1].FindControl("SizeLimit");
+
+                if (label == null || string.IsNullOrEmpty(sizeLimit.Text))
+                {
+                    continue;
+                }
+
+                if (label.Text.Equals("Unauthenticated Users"))
+                {
+                    moduleController.UpdateModuleSetting(
+                        this.ModuleId,
+                        string.Format("{0}{2}#{1}", key, "-1", SettingConstants.UPLOADFILELIMITS),
+                        sizeLimit.Text);
+                }
+                else
+                {
+                    RoleInfo objRole = this.objRoleController.GetRoleByName(this._portalSettings.PortalId, label.Text);
+
+                    moduleController.UpdateModuleSetting(
+                        this.ModuleId,
+                        string.Format("{0}{2}#{1}", key, objRole.RoleID, SettingConstants.UPLOADFILELIMITS),
+                        sizeLimit.Text);
+                }
+            }
         }
 
         /// <summary>
@@ -2760,9 +2819,6 @@ namespace WatchersNET.CKEditor
             Utility.AddOrUpdateEditorHostSetting(
                 string.Format("{0}{1}", key, SettingConstants.BLANKTEXT),
                 this.txtBlanktext.Text);
-            Utility.AddOrUpdateEditorHostSetting(
-                string.Format("{0}{1}", key, SettingConstants.STYLES),
-                this.StylesURL.Url);
             Utility.AddOrUpdateEditorHostSetting(string.Format("{0}{1}", key, SettingConstants.CSS), this.CssUrl.Url);
             Utility.AddOrUpdateEditorHostSetting(
                 string.Format("{0}{1}", key, SettingConstants.TEMPLATEFILES),
@@ -2808,6 +2864,34 @@ namespace WatchersNET.CKEditor
                     Utility.AddOrUpdateEditorHostSetting(
                         string.Format("{0}toolb#{1}", key, objRole.RoleID),
                         ddLToolB.SelectedValue);
+                }
+            }
+
+            // Save Upload File Limit Setting for every Role
+            for (int i = 0; i < this.UploadFileLimits.Rows.Count; i++)
+            {
+                var label = (Label)this.UploadFileLimits.Rows[i].Cells[0].FindControl("lblRoleName");
+
+                var sizeLimit = (TextBox)this.UploadFileLimits.Rows[i].Cells[1].FindControl("SizeLimit");
+
+                if (label == null || string.IsNullOrEmpty(sizeLimit.Text))
+                {
+                    continue;
+                }
+
+                if (label.Text.Equals("Unauthenticated Users"))
+                {
+                    Utility.AddOrUpdateEditorHostSetting(
+                        string.Format("{0}{2}#{1}", key, "-1", SettingConstants.UPLOADFILELIMITS),
+                        sizeLimit.Text);
+                }
+                else
+                {
+                    RoleInfo objRole = this.objRoleController.GetRoleByName(this._portalSettings.PortalId, label.Text);
+
+                    Utility.AddOrUpdateEditorHostSetting(
+                        string.Format("{0}{2}#{1}", key, objRole.RoleID, SettingConstants.UPLOADFILELIMITS),
+                        sizeLimit.Text);
                 }
             }
         }
@@ -2889,9 +2973,9 @@ namespace WatchersNET.CKEditor
             this.lblWidth.Text = Localization.GetString("lblWidth.Text", this.ResXFile, this.LangCode);
             this.lblHeight.Text = Localization.GetString("lblHeight.Text", this.ResXFile, this.LangCode);
             this.lblEditorConfig.Text = Localization.GetString("lblEditorConfig.Text", this.ResXFile, this.LangCode);
-            this.lblStylesURL.Text = Localization.GetString("lblStylesURL.Text", this.ResXFile, this.LangCode);
             this.lblCssurl.Text = Localization.GetString("lblCSSURL.Text", this.ResXFile, this.LangCode);
             this.lblToolbars.Text = Localization.GetString("lblToolbars.Text", this.ResXFile, this.LangCode);
+            this.UploadFileLimitLabel.Text = Localization.GetString("UploadFileLimitLabel.Text", this.ResXFile, this.LangCode);
             this.lblTemplFiles.Text = Localization.GetString("lblTemplFiles.Text", this.ResXFile, this.LangCode);
             this.CustomJsFileLabel.Text = Localization.GetString("CustomJsFileLabel.Text", this.ResXFile, this.LangCode);
             this.lblCustomToolbars.Text = Localization.GetString("lblCustomToolbars.Text", this.ResXFile, this.LangCode);
@@ -3142,7 +3226,6 @@ namespace WatchersNET.CKEditor
             this.TemplUrl.PortalId = this._portalSettings.PortalId;
             this.CustomJsFile.PortalId = this._portalSettings.PortalId;
             this.CssUrl.PortalId = this._portalSettings.PortalId;
-            this.StylesURL.PortalId = this._portalSettings.PortalId;
             this.ImportFile.PortalId = this._portalSettings.PortalId;
 
             if (!reloadControls)
@@ -3154,7 +3237,6 @@ namespace WatchersNET.CKEditor
             this.ConfigUrl.ReloadFiles = true;
             this.CustomJsFile.ReloadFiles = true;
             this.CssUrl.ReloadFiles = true;
-            this.StylesURL.ReloadFiles = true;
             this.ImportFile.ReloadFiles = true;
         }
 
@@ -3169,16 +3251,14 @@ namespace WatchersNET.CKEditor
             exportSettings.SettingMode = this.CurrentSettingsMode;
 
             // Export all Editor config settings
-            foreach (
-                PropertyInfo info in
-                    SettingsUtil.GetEditorConfigProperties())
+            foreach (PropertyInfo info in
+                SettingsUtil.GetEditorConfigProperties())
             {
                 switch (info.PropertyType.Name)
                 {
                     case "String":
                         {
-                            var textBox =
-                                Utility.FindControl<TextBox>(this.EditorConfigHolder, info.Name);
+                            var textBox = Utility.FindControl<TextBox>(this.EditorConfigHolder, info.Name);
 
                             if (!string.IsNullOrEmpty(textBox.Text))
                             {
@@ -3189,8 +3269,7 @@ namespace WatchersNET.CKEditor
                         break;
                     case "Int32":
                         {
-                            var textBox =
-                                Utility.FindControl<TextBox>(this.EditorConfigHolder, info.Name);
+                            var textBox = Utility.FindControl<TextBox>(this.EditorConfigHolder, info.Name);
 
                             if (!string.IsNullOrEmpty(textBox.Text))
                             {
@@ -3201,8 +3280,7 @@ namespace WatchersNET.CKEditor
                         break;
                     case "Decimal":
                         {
-                            var textBox =
-                                Utility.FindControl<TextBox>(this.EditorConfigHolder, info.Name);
+                            var textBox = Utility.FindControl<TextBox>(this.EditorConfigHolder, info.Name);
 
                             if (!string.IsNullOrEmpty(textBox.Text))
                             {
@@ -3213,13 +3291,9 @@ namespace WatchersNET.CKEditor
                         break;
                     case "Boolean":
                         {
-                            var checkBox =
-                                Utility.FindControl<CheckBox>(this.EditorConfigHolder, info.Name);
+                            var checkBox = Utility.FindControl<CheckBox>(this.EditorConfigHolder, info.Name);
 
-                            info.SetValue(
-                                exportSettings.Config,
-                                checkBox.Checked,
-                                null);
+                            info.SetValue(exportSettings.Config, checkBox.Checked, null);
                         }
 
                         break;
@@ -3377,8 +3451,7 @@ namespace WatchersNET.CKEditor
             exportSettings.Browser = this.ddlBrowser.SelectedValue;
             exportSettings.FileListViewMode =
                 (FileListView)Enum.Parse(typeof(FileListView), this.FileListViewMode.SelectedValue);
-            exportSettings.DefaultLinkMode =
-                (LinkMode)Enum.Parse(typeof(LinkMode), this.DefaultLinkMode.SelectedValue);
+            exportSettings.DefaultLinkMode = (LinkMode)Enum.Parse(typeof(LinkMode), this.DefaultLinkMode.SelectedValue);
             exportSettings.UseAnchorSelector = this.UseAnchorSelector.Checked;
             exportSettings.ShowPageLinksTabFirst = this.ShowPageLinksTabFirst.Checked;
             exportSettings.OverrideFileOnUpload = this.OverrideFileOnUpload.Checked;
@@ -3414,21 +3487,21 @@ namespace WatchersNET.CKEditor
             }
 
             exportSettings.BlankText = this.txtBlanktext.Text;
-            exportSettings.Config.StylesSet = this.StylesURL.Url;
             exportSettings.Config.ContentsCss = this.CssUrl.Url;
             exportSettings.Config.Templates_Files = this.TemplUrl.Url;
             exportSettings.CustomJsFile = this.CustomJsFile.Url;
             exportSettings.Config.CustomConfig = this.ConfigUrl.Url;
 
-            string sRoles = this.chblBrowsGr.Items.Cast<ListItem>().Where(item => item.Selected).Aggregate(
-                string.Empty, (current, item) => current + (item.Value + ";"));
+            string sRoles = this.chblBrowsGr.Items.Cast<ListItem>()
+                .Where(item => item.Selected)
+                .Aggregate(string.Empty, (current, item) => current + (item.Value + ";"));
 
             if (sRoles != string.Empty)
             {
                 exportSettings.BrowserRoles = sRoles;
             }
 
-            List<ToolbarRoles> listToolbarRoles = new List<ToolbarRoles>();
+            var listToolbarRoles = new List<ToolbarRoles>();
 
             // Save Toolbar Setting for every Role
             for (int i = 0; i < this.gvToolbars.Rows.Count; i++)
@@ -3455,6 +3528,40 @@ namespace WatchersNET.CKEditor
             }
 
             exportSettings.ToolBarRoles = listToolbarRoles;
+
+            var listUploadSizeRoles = new List<UploadSizeRoles>();
+
+            // Save Upload File Limit Setting for every Role
+            for (int i = 0; i < this.UploadFileLimits.Rows.Count; i++)
+            {
+                var label = (Label)this.UploadFileLimits.Rows[i].Cells[0].FindControl("lblRoleName");
+
+                var sizeLimit = (TextBox)this.UploadFileLimits.Rows[i].Cells[1].FindControl("SizeLimit");
+
+                if (label == null || string.IsNullOrEmpty(sizeLimit.Text))
+                {
+                    continue;
+                }
+
+                if (label.Text.Equals("Unauthenticated Users"))
+                {
+                    listUploadSizeRoles.Add(
+                        new UploadSizeRoles { RoleId = -1, UploadFileLimit = Convert.ToInt32(sizeLimit.Text) });
+                }
+                else
+                {
+                    RoleInfo objRole = this.objRoleController.GetRoleByName(this._portalSettings.PortalId, label.Text);
+
+                    listUploadSizeRoles.Add(
+                        new UploadSizeRoles
+                            {
+                                RoleId = objRole.RoleID,
+                                UploadFileLimit = Convert.ToInt32(sizeLimit.Text)
+                            });
+                }
+            }
+
+            exportSettings.UploadSizeRoles = listUploadSizeRoles;
 
             return exportSettings;
         }

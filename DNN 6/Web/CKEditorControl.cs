@@ -339,13 +339,6 @@ namespace WatchersNET.CKEditor.Web
                     }
                 }
 
-                if (!string.IsNullOrEmpty(this.currentSettings.Config.StylesSet))
-                {
-                    var stylesUrl = this.FormatUrl(this.currentSettings.Config.StylesSet);
-
-                    this._settings["stylesSet"] = string.Format("CustomStyles:{0}", stylesUrl);
-                }
-
                 if (!string.IsNullOrEmpty(this.currentSettings.Config.ContentsCss))
                 {
                     this._settings["contentsCss"] = string.Format(
@@ -409,6 +402,12 @@ namespace WatchersNET.CKEditor.Web
                     {
                         this._settings["height"] = this.Height.ToString();
                     }
+                }
+
+                if (!string.IsNullOrEmpty(this._settings["extraPlugins"])
+                    && this._settings["extraPlugins"].Contains("xmlstyles"))
+                {
+                    this._settings["extraPlugins"] = this._settings["extraPlugins"].Replace(",xmlstyles", string.Empty);
                 }
 
                 // fix oEmbed/oembed issue and other bad settings

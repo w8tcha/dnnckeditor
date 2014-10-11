@@ -123,11 +123,6 @@ namespace WatchersNET.CKEditor.Constants
         public const string CODEMIRRORTHEME = "Codemirror_theme";
         
         /// <summary>
-        /// The styles setting name.
-        /// </summary>
-        public const string STYLES = "styles";
-
-        /// <summary>
         /// The sub directory setting name.
         /// </summary>
         public const string SUBDIRS = "subdirs";
@@ -146,6 +141,11 @@ namespace WatchersNET.CKEditor.Constants
         /// The toolbar setting name.
         /// </summary>
         public const string TOOLB = "toolb";
+
+        /// <summary>
+        /// The Upload file limits setting name.
+        /// </summary>
+        public const string UPLOADFILELIMITS = "uploadfileRoles";
 
         /// <summary>
         /// The upload folder id setting name.

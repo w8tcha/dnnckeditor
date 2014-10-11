@@ -136,9 +136,11 @@
     <Compile Include="Objects\EditorConfig.cs" />
     <Compile Include="Objects\EditorHostSetting.cs" />
     <Compile Include="Objects\EditorProviderSettings.cs" />
+    <Compile Include="Objects\SettingBase.cs" />
     <Compile Include="Objects\ToolbarButton.cs" />
     <Compile Include="Objects\ToolbarGroup.cs" />
     <Compile Include="Objects\ToolbarSet.cs" />
+    <Compile Include="Objects\UploadSizeRoles.cs" />
     <Compile Include="Objects\WordCountConfig.cs" />
     <Compile Include="Tabs.ashx.cs">
       <DependentUpon>Tabs.ashx</DependentUpon>
@@ -175,7 +177,6 @@
     <Compile Include="CKHtmlEditorProvider.cs">
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Objects\SettingBase.cs" />
     <Compile Include="Constants\SettingsMode.cs" />
     <Compile Include="Objects\Toolbar.cs" />
     <Compile Include="Objects\ToolbarRoles.cs" />

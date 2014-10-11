@@ -31,6 +31,7 @@ namespace WatchersNET.CKEditor.Utilities
 
     using WatchersNET.CKEditor.Constants;
     using WatchersNET.CKEditor.Objects;
+    using System.Web;
 
     #endregion
 
@@ -121,22 +122,19 @@ namespace WatchersNET.CKEditor.Utilities
                     continue;
                 }
 
-                if (
-                    string.IsNullOrEmpty(
-                        editorHostSettings.FirstOrDefault(s => s.Name.Equals(string.Format("{0}{1}", key, info.Name)))
-                            .Value))
+                /*if (!info.Name.Equals("CodeMirror") && !info.Name.Equals("WordCount"))
                 {
                     continue;
-                }
-
-                if (!info.Name.Equals("CodeMirror") && !info.Name.Equals("WordCount"))
-                {
-                    continue;
-                }
+                }*/
 
                 var settingValue =
                     editorHostSettings.FirstOrDefault(
                         setting => setting.Name.Equals(string.Format("{0}{1}", key, info.Name))).Value;
+
+                if (string.IsNullOrEmpty(settingValue))
+                {
+                    continue;
+                }
 
                 switch (info.PropertyType.Name)
                 {
@@ -325,6 +323,55 @@ namespace WatchersNET.CKEditor.Utilities
 
             currentSettings.ToolBarRoles = listToolbarRoles;
 
+            var listUploadSizeRoles = (from RoleInfo objRole in portalRoles
+                                       where
+                                           editorHostSettings.Any(
+                                               setting =>
+                                               setting.Name.Equals(
+                                                   string.Format(
+                                                       "{0}{2}#{1}",
+                                                       key,
+                                                       objRole.RoleID,
+                                                       SettingConstants.UPLOADFILELIMITS)))
+                                       where
+                                           !string.IsNullOrEmpty(
+                                               editorHostSettings.FirstOrDefault(
+                                                   s =>
+                                                   s.Name.Equals(
+                                                       string.Format(
+                                                           "{0}{2}#{1}",
+                                                           key,
+                                                           objRole.RoleID,
+                                                           SettingConstants.UPLOADFILELIMITS))).Value)
+                                       let uploadFileLimit =
+                                           editorHostSettings.FirstOrDefault(
+                                               s =>
+                                               s.Name.Equals(
+                                                   string.Format(
+                                                       "{0}{2}#{1}",
+                                                       key,
+                                                       objRole.RoleID,
+                                                       SettingConstants.UPLOADFILELIMITS))).Value
+                                       select
+                                           new UploadSizeRoles { RoleId = objRole.RoleID, UploadFileLimit = Convert.ToInt32(uploadFileLimit) })
+                .ToList();
+
+            if (
+                editorHostSettings.Any(
+                    setting => setting.Name.Equals(string.Format("{0}{2}#{1}", key, "-1", SettingConstants.UPLOADFILELIMITS))))
+            {
+                var settingValue =
+                    editorHostSettings.FirstOrDefault(
+                        s => s.Name.Equals(string.Format("{0}{2}#{1}", key, "-1", SettingConstants.UPLOADFILELIMITS))).Value;
+
+                if (!string.IsNullOrEmpty(settingValue))
+                {
+                    listUploadSizeRoles.Add(new UploadSizeRoles { RoleId = -1, UploadFileLimit = Convert.ToInt32(settingValue) });
+                }
+            }
+
+            currentSettings.UploadSizeRoles = listUploadSizeRoles;
+
             if (
                 editorHostSettings.Any(
                     setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.ROLES))))
@@ -466,20 +513,6 @@ namespace WatchersNET.CKEditor.Utilities
                 if (!string.IsNullOrEmpty(settingValue))
                 {
                     currentSettings.BlankText = settingValue;
-                }
-            }
-
-            if (
-                editorHostSettings.Any(
-                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.STYLES))))
-            {
-                var settingValue =
-                    editorHostSettings.FirstOrDefault(
-                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.STYLES))).Value;
-
-                if (!string.IsNullOrEmpty(settingValue))
-                {
-                    currentSettings.Config.StylesSet = settingValue;
                 }
             }
 
@@ -766,7 +799,7 @@ namespace WatchersNET.CKEditor.Utilities
                         .Where(
                             info =>
                             !string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, info.Name)])
-                            || info.Name.Equals("CodeMirror") || info.Name.Equals("WordCount")))
+                            /*|| info.Name.Equals("CodeMirror") || info.Name.Equals("WordCount")*/))
             {
                 switch (info.PropertyType.Name)
                 {
@@ -924,6 +957,37 @@ namespace WatchersNET.CKEditor.Utilities
 
             currentSettings.ToolBarRoles = listToolbarRoles;
 
+            var listUploadSizeRoles = (from RoleInfo objRole in portalRoles
+                                       where
+                                           !string.IsNullOrEmpty(
+                                               (string)
+                                               hshModSet[string.Format("{0}{2}#{1}", key, objRole.RoleID, SettingConstants.UPLOADFILELIMITS)])
+                                       let uploadFileLimit =
+                                           (string)
+                                           hshModSet[string.Format("{0}{2}#{1}", key, objRole.RoleID, SettingConstants.UPLOADFILELIMITS)]
+                                       select
+                                           new UploadSizeRoles { RoleId = objRole.RoleID, UploadFileLimit = Convert.ToInt32(uploadFileLimit) })
+                .ToList();
+
+            if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{2}#{1}", key, "-1", SettingConstants.UPLOADFILELIMITS)]))
+            {
+                listUploadSizeRoles.Add(
+                    new UploadSizeRoles
+                    {
+                        RoleId = -1,
+                        UploadFileLimit =
+                            Convert.ToInt32(
+                                hshModSet[
+                                    string.Format(
+                                        "{0}{2}#{1}",
+                                        key,
+                                        "-1",
+                                        SettingConstants.UPLOADFILELIMITS)])
+                    });
+            }
+
+            currentSettings.UploadSizeRoles = listUploadSizeRoles;
+
             if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.ROLES)]))
             {
                 string sRoles = (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.ROLES)];
@@ -1013,11 +1077,6 @@ namespace WatchersNET.CKEditor.Utilities
             if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.BLANKTEXT)]))
             {
                 currentSettings.BlankText = (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.BLANKTEXT)];
-            }
-
-            if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.STYLES)]))
-            {
-                currentSettings.Config.StylesSet = (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.STYLES)];
             }
 
             if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.CSS)]))
@@ -1315,27 +1374,21 @@ namespace WatchersNET.CKEditor.Utilities
         {
             return
                 typeof(EditorConfig).GetProperties()
-                                    .Where(
-                                        info =>
-                                        !info.Name.Equals("Magicline_KeystrokeNext")
-                                        && !info.Name.Equals("Magicline_KeystrokePrevious")
-                                        && !info.Name.Equals("Plugins") && !info.Name.Equals("Codemirror_Theme")
-                                        && !info.Name.Equals("Width") && !info.Name.Equals("Height")
-                                        && !info.Name.Equals("StylesSet") && !info.Name.Equals("ContentsCss")
-                                        && !info.Name.Equals("Templates_Files") && !info.Name.Equals("CustomConfig")
-                                        && !info.Name.Equals("Skin") && !info.Name.Equals("Templates_Files")
-                                        && !info.Name.Equals("Toolbar") && !info.Name.Equals("Language")
-                                        && !info.Name.Equals("FileBrowserWindowWidth")
-                                        && !info.Name.Equals("FileBrowserWindowHeight")
-                                        && !info.Name.Equals("FileBrowserWindowWidth")
-                                        && !info.Name.Equals("FileBrowserWindowHeight")
-                                        && !info.Name.Equals("FileBrowserUploadUrl")
-                                        && !info.Name.Equals("FileBrowserImageUploadUrl")
-                                        && !info.Name.Equals("FilebrowserImageBrowseLinkUrl")
-                                        && !info.Name.Equals("FileBrowserImageBrowseUrl")
-                                        && !info.Name.Equals("FileBrowserFlashUploadUrl")
-                                        && !info.Name.Equals("FileBrowserFlashBrowseUrl")
-                                        && !info.Name.Equals("FileBrowserBrowseUrl"));
+                    .Where(
+                        info =>
+                        !info.Name.Equals("Magicline_KeystrokeNext") && !info.Name.Equals("Magicline_KeystrokePrevious")
+                        && !info.Name.Equals("Plugins") && !info.Name.Equals("Codemirror_Theme")
+                        && !info.Name.Equals("Width") && !info.Name.Equals("Height") && !info.Name.Equals("ContentsCss")
+                        && !info.Name.Equals("Templates_Files") && !info.Name.Equals("CustomConfig")
+                        && !info.Name.Equals("Skin") && !info.Name.Equals("Templates_Files")
+                        && !info.Name.Equals("Toolbar") && !info.Name.Equals("Language")
+                        && !info.Name.Equals("FileBrowserWindowWidth") && !info.Name.Equals("FileBrowserWindowHeight")
+                        && !info.Name.Equals("FileBrowserWindowWidth") && !info.Name.Equals("FileBrowserWindowHeight")
+                        && !info.Name.Equals("FileBrowserUploadUrl") && !info.Name.Equals("FileBrowserImageUploadUrl")
+                        && !info.Name.Equals("FilebrowserImageBrowseLinkUrl")
+                        && !info.Name.Equals("FileBrowserImageBrowseUrl")
+                        && !info.Name.Equals("FileBrowserFlashUploadUrl")
+                        && !info.Name.Equals("FileBrowserFlashBrowseUrl") && !info.Name.Equals("FileBrowserBrowseUrl"));
         }
 
         /// <summary>
@@ -1391,7 +1444,6 @@ namespace WatchersNET.CKEditor.Utilities
                     CustomConfig = oldDefaultSettings.sConfig,
                     ContentsCss = oldDefaultSettings.sCss,
                     Skin = oldDefaultSettings.sSkin,
-                    StylesSet = oldDefaultSettings.sStyles,
                     Templates_Files = oldDefaultSettings.sTemplates,
                     Height = oldDefaultSettings.BrowserHeight,
                     Width = oldDefaultSettings.BrowserWidth,
@@ -1456,6 +1508,67 @@ namespace WatchersNET.CKEditor.Utilities
 
                 textWriter.Close();
             }
+        }
+
+        /// <summary>
+        /// Gets the size of the current user upload.
+        /// </summary>
+        /// <param name="settings">The settings.</param>
+        /// <param name="portalSettings">The portal settings.</param>
+        /// <param name="httpRequest">The HTTP request.</param>
+        /// <returns>Returns the MAX. upload file size for the current user</returns>
+        internal static int GetCurrentUserUploadSize(EditorProviderSettings settings, PortalSettings portalSettings, HttpRequest httpRequest)
+        {
+            var uploadFileLimitForPortal = Convert.ToInt32(Utility.GetMaxUploadSize());
+
+            var roleController = new RoleController();
+
+            if (settings.ToolBarRoles.Count <= 0)
+            {
+                return uploadFileLimitForPortal;
+            }
+
+            var listUserUploadFileSizes = new List<ToolbarSet>();
+
+            foreach (var roleUploadSize in settings.UploadSizeRoles)
+            {
+                if (roleUploadSize.RoleId.Equals(-1) && !httpRequest.IsAuthenticated)
+                {
+                    return roleUploadSize.UploadFileLimit;
+                }
+
+                if (roleUploadSize.RoleId.Equals(-1))
+                {
+                    continue;
+                }
+
+                // Role
+                var role = roleController.GetRole(roleUploadSize.RoleId, portalSettings.PortalId);
+
+                if (role == null)
+                {
+                    continue;
+                }
+
+                if (!PortalSecurity.IsInRole(role.RoleName))
+                {
+                    continue;
+                }
+
+                var toolbar = new ToolbarSet(role.RoleName, roleUploadSize.UploadFileLimit);
+
+                listUserUploadFileSizes.Add(toolbar);
+            }
+
+            if (listUserUploadFileSizes.Count <= 0)
+            {
+                return uploadFileLimitForPortal;
+            }
+
+            // Compare The User Toolbars if the User is more then One Role, and apply the Toolbar with the Highest Priority
+            int iHighestPrio = listUserUploadFileSizes.Max(toolb => toolb.Priority);
+
+            return listUserUploadFileSizes.Find(toolbarSel => toolbarSel.Priority.Equals(iHighestPrio)).Priority;
         }
 
         #endregion

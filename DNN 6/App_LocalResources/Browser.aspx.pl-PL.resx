@@ -375,4 +375,7 @@
   <data name="OverrideFile.Text" xml:space="preserve">
     <value>Override File if exists, otherwise a new File with underscore _1 will be created?</value>
   </data>
+  <data name="FileToBigMessage.Text" xml:space="preserve">
+    <value>Uploaded File is bigger then the allowed file size!</value>
+  </data>
 </root>
