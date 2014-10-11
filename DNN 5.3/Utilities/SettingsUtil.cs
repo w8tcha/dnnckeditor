@@ -798,7 +798,7 @@ namespace WatchersNET.CKEditor.Utilities
                     .Where(
                         info =>
                         !string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, info.Name)])
-                        || /*info.Name.Equals("CodeMirror") || info.Name.Equals("WordCount")*/))
+                /*|| info.Name.Equals("CodeMirror") || info.Name.Equals("WordCount")*/))
             {
                 switch (info.PropertyType.Name)
                 {
