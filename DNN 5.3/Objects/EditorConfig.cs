@@ -27,7 +27,7 @@ namespace WatchersNET.CKEditor.Objects
         /// </summary>
         public EditorConfig()
         {
-            this.AllowedContent = true;
+            this.AllowedContent = "true";
             this.AutoGrow_BottomSpace = 0;
             this.AutoGrow_MaxHeight = 0;
             this.AutoGrow_MinHeight = 200;
@@ -142,7 +142,7 @@ namespace WatchersNET.CKEditor.Objects
         /// </value>
         [XmlAttribute("allowedContent")]
         [Description("Allowed content rules. This setting is used when instantiating CKEDITOR.editor.filter.")]
-        public bool AllowedContent { get; set; }
+        public string AllowedContent { get; set; }
 
         /// <summary>
         /// Gets or sets the auto grow_ bottom space.
@@ -523,6 +523,16 @@ namespace WatchersNET.CKEditor.Objects
         public int Dialog_MagnetDistance { get; set; }
 
         /// <summary>
+        /// Gets or sets the dialog_ no confirm cancel.
+        /// </summary>
+        /// <value>
+        /// The dialog_ no confirm cancel.
+        /// </value>
+        [XmlAttribute("dialog_noConfirmCancel")]
+        [Description("Tells if user should not be asked to confirm close, if any dialog field was modified. By default it is set to false meaning that the confirmation dialog will be shown.")]
+        public int Dialog_NoConfirmCancel { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether [dialog_ startup focus tab].
         /// </summary>
         /// <value>
@@ -571,6 +581,16 @@ namespace WatchersNET.CKEditor.Objects
         [XmlAttribute("disableReadonlyStyling")]
         [Description("Disables inline styling on read-only elements.")]
         public bool DisableReadonlyStyling { get; set; }
+
+        /// <summary>
+        /// Gets or sets the content of the dis allowed.
+        /// </summary>
+        /// <value>
+        /// The content of the dis allowed.
+        /// </value>
+        [XmlAttribute("disallowedContent")]
+        [Description("Disallowed content rules. They have precedence over allowed content rules. Read more in the Disallowed Content guide")]
+        public string DisAllowedContent { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [div_ wrap table].
@@ -671,6 +691,16 @@ namespace WatchersNET.CKEditor.Objects
         [XmlAttribute("entities_processNumerical")]
         [Description("Whether to convert all remaining characters not included in the ASCII character table to their relative decimal numeric representation of HTML entity. When set to force, it will convert all entities into this format.")]
         public bool Entities_ProcessNumerical { get; set; }
+
+        /// <summary>
+        /// Gets or sets the content of the extra allowed.
+        /// </summary>
+        /// <value>
+        /// The content of the extra allowed.
+        /// </value>
+        [XmlAttribute("extraAllowedContent")]
+        [Description("This option makes it possible to set additional allowed content rules for CKEDITOR.editor.filter.")]
+        public string ExtraAllowedContent { get; set; }
 
         /// <summary>
         /// Gets or sets the extra plugins.
@@ -1193,13 +1223,23 @@ namespace WatchersNET.CKEditor.Objects
         public string Language { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether [link java script links allowed].
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if [link java script links allowed]; otherwise, <c>false</c>.
+        /// </value>
+        [XmlAttribute("linkJavaScriptLinksAllowed")]
+        [Description("Whether JavaScript code is allowed as a href attribute in an anchor tag. With this option enabled it is possible to create links")]
+        public bool LinkJavaScriptLinksAllowed { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether [link show advanced tab].
         /// </summary>
         /// <value>
         /// <c>true</c> if [link show advanced tab]; otherwise, <c>false</c>.
         /// </value>
         [XmlAttribute("linkShowAdvancedTab")]
-        [Description("")]
+        [Description("Whether to show the Advanced tab in the Link dialog window.")]
         public bool LinkShowAdvancedTab { get; set; }
 
         /// <summary>
@@ -1209,7 +1249,7 @@ namespace WatchersNET.CKEditor.Objects
         ///   <c>true</c> if [link show target tab]; otherwise, <c>false</c>.
         /// </value>
         [XmlAttribute("linkShowTargetTab")]
-        [Description("")]
+        [Description("Whether to show the Target tab in the Link dialog window.")]
         public bool LinkShowTargetTab { get; set; }
 
         /// <summary>

@@ -1367,8 +1367,19 @@ namespace WatchersNET.CKEditor.Web
                 currentCount++;
 
                 // Is boolean state or string
-                if (value.Equals("true") || value.Equals("false") || value.StartsWith("[") || value.StartsWith("{") || Utility.IsNumeric(value))
+                if (value.Equals("true", StringComparison.InvariantCultureIgnoreCase)
+                    || value.Equals("false", StringComparison.InvariantCultureIgnoreCase) || value.StartsWith("[")
+                    || value.StartsWith("{") || Utility.IsNumeric(value))
                 {
+                    if (value.Equals("True"))
+                    {
+                        value = "true";
+                    }
+                    else if (value.Equals("False"))
+                    {
+                        value = "false";
+                    } 
+
                     editorScript.AppendFormat("{0}:{1}", key, value);
 
                     editorScript.Append(currentCount == keysCount ? "};" : ",");
