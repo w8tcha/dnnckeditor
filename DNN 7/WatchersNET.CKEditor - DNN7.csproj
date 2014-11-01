@@ -111,6 +111,9 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Browser\FileUploader.ashx.cs">
+      <DependentUpon>FileUploader.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Constants\Browser.cs" />
     <Compile Include="Constants\EnterModus.cs" />
     <Compile Include="Constants\LanguageDirection.cs" />
@@ -136,6 +139,7 @@
     <Compile Include="Objects\EditorConfig.cs" />
     <Compile Include="Objects\EditorHostSetting.cs" />
     <Compile Include="Objects\EditorProviderSettings.cs" />
+    <Compile Include="Objects\FileUploadStatus.cs" />
     <Compile Include="Objects\SettingBase.cs" />
     <Compile Include="Objects\ToolbarButton.cs" />
     <Compile Include="Objects\ToolbarGroup.cs" />
@@ -217,7 +221,15 @@
     <Content Include="Browser\Browser.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
+    <Content Include="Browser\Browser.comb.css">
+      <DependentUpon>Browser.comb.css.bundle</DependentUpon>
+    </Content>
+    <Content Include="Browser\Browser.comb.min.css">
+      <DependentUpon>Browser.comb.css</DependentUpon>
+    </Content>
     <Content Include="Browser\Browser.css" />
+    <Content Include="Browser\jquery.fileupload-ui.css" />
+    <Content Include="Browser\jquery.fileupload.css" />
     <Content Include="CKEditorOptions.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
@@ -274,6 +286,8 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Browser\FileUploader.ashx" />
+    <Content Include="Browser\Browser.comb.css.bundle" />
     <None Include="BuildScripts\ModulePackage.targets">
       <SubType>Designer</SubType>
     </None>

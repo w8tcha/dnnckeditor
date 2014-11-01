@@ -110,6 +110,25 @@ namespace WatchersNET.CKEditor.Browser
         #region Properties
 
         /// <summary>
+        /// Gets or sets the accept file types.
+        /// </summary>
+        /// <value>
+        /// The accept file types.
+        /// </value>
+        public string AcceptFileTypes
+        {
+            get
+            {
+                return this.ViewState["AcceptFileTypes"] != null ? this.ViewState["AcceptFileTypes"].ToString() : ".*";
+            }
+
+            set
+            {
+                this.ViewState["AcceptFileTypes"] = value;
+            }
+        }
+
+        /// <summary>
         ///   Gets Current Language from Url
         /// </summary>
         protected string LanguageCode
@@ -141,6 +160,37 @@ namespace WatchersNET.CKEditor.Browser
             }
         }
 
+        /// <summary>
+        /// Gets the maximum size of the upload.
+        /// </summary>
+        /// <value>
+        /// The maximum size of the upload.
+        /// </value>
+        protected long MaxUploadSize
+        {
+            get
+            {
+                return this.currentSettings.UploadFileSizeLimit > 0
+                       && this.currentSettings.UploadFileSizeLimit <= Utility.GetMaxUploadSize()
+                           ? this.currentSettings.UploadFileSizeLimit
+                           : Utility.GetMaxUploadSize();
+            }
+        }
+
+        /// <summary>
+        /// Gets the get folder information identifier.
+        /// </summary>
+        /// <value>
+        /// The get folder information identifier.
+        /// </value>
+        protected int GetFolderInfoID
+        {
+            get
+            {
+                return Utility.ConvertFilePathToFolderInfo(this.lblCurrentDir.Text, this._portalSettings).FolderID;
+            }
+        }
+        
         /// <summary>
         /// Gets or sets the files table.
         /// </summary>
@@ -452,124 +502,126 @@ namespace WatchersNET.CKEditor.Browser
         {
             if (!this.panLinkMode.Visible && this.panPageMode.Visible)
             {
-                if (this.dnntreeTabs.SelectedNode != null)
+                if (this.dnntreeTabs.SelectedNode == null)
                 {
-                    var tabController = new TabController();
+                    return;
+                }
 
-                    var selectTab = tabController.GetTab(
-                        int.Parse(this.dnntreeTabs.SelectedValue), this._portalSettings.PortalId, true);
+                var tabController = new TabController();
 
-                    string fileName = null;
-                    var domainName = string.Format("http://{0}", Globals.GetDomainName(this.Request, true));
+                var selectTab = tabController.GetTab(
+                    int.Parse(this.dnntreeTabs.SelectedValue), this._portalSettings.PortalId, true);
 
-                    // Add Language Parameter ?!
-                    var localeSelected = this.LanguageRow.Visible && this.LanguageList.SelectedIndex > 0;
+                string fileName = null;
+                var domainName = string.Format("http://{0}", Globals.GetDomainName(this.Request, true));
 
-                    var friendlyUrl = localeSelected
-                                          ? Globals.FriendlyUrl(
-                                              selectTab,
-                                              string.Format(
-                                                  "{0}&language={1}",
-                                                  Globals.ApplicationURL(selectTab.TabID),
-                                                  this.LanguageList.SelectedValue),
-                                              this._portalSettings)
-                                          : Globals.FriendlyUrl(
-                                              selectTab, Globals.ApplicationURL(selectTab.TabID), this._portalSettings);
+                // Add Language Parameter ?!
+                var localeSelected = this.LanguageRow.Visible && this.LanguageList.SelectedIndex > 0;
 
-                    var locale = localeSelected
-                                     ? string.Format("language/{0}/", this.LanguageList.SelectedValue)
-                                     : string.Empty;
+                var friendlyUrl = localeSelected
+                                      ? Globals.FriendlyUrl(
+                                          selectTab,
+                                          string.Format(
+                                              "{0}&language={1}",
+                                              Globals.ApplicationURL(selectTab.TabID),
+                                              this.LanguageList.SelectedValue),
+                                          this._portalSettings)
+                                      : Globals.FriendlyUrl(
+                                          selectTab, Globals.ApplicationURL(selectTab.TabID), this._portalSettings);
 
-                    switch (this.rblLinkType.SelectedValue)
-                    {
-                        case "relLnk":
+                var locale = localeSelected
+                                 ? string.Format("language/{0}/", this.LanguageList.SelectedValue)
+                                 : string.Empty;
+
+                switch (this.rblLinkType.SelectedValue)
+                {
+                    case "relLnk":
+                        {
+                            if (this.chkHumanFriendy.Checked)
                             {
-                                if (this.chkHumanFriendy.Checked)
-                                {
-                                    fileName = friendlyUrl;
+                                fileName = friendlyUrl;
 
-                                    fileName =
-                                        Globals.ResolveUrl(
-                                            Regex.Replace(fileName, domainName, "~", RegexOptions.IgnoreCase));
-                                }
-                                else
-                                {
-                                    fileName =
-                                        Globals.ResolveUrl(
-                                            string.Format("~/tabid/{0}/{1}Default.aspx", selectTab.TabID, locale));
-                                }
-
-                                break;
+                                fileName =
+                                    Globals.ResolveUrl(
+                                        Regex.Replace(fileName, domainName, "~", RegexOptions.IgnoreCase));
                             }
-
-                        case "absLnk":
+                            else
                             {
-                                if (this.chkHumanFriendy.Checked)
-                                {
-                                    fileName = friendlyUrl;
-
-                                    fileName = Regex.Replace(
-                                        fileName, domainName, string.Format("{0}", domainName), RegexOptions.IgnoreCase);
-                                }
-                                else
-                                {
-                                    fileName = string.Format(
-                                        "{2}/tabid/{0}/{1}Default.aspx", selectTab.TabID, locale, domainName);
-                                }
+                                fileName =
+                                    Globals.ResolveUrl(
+                                        string.Format("~/tabid/{0}/{1}Default.aspx", selectTab.TabID, locale));
                             }
 
                             break;
-                        case "lnkClick":
+                        }
+
+                    case "absLnk":
+                        {
+                            if (this.chkHumanFriendy.Checked)
                             {
-                                fileName = Globals.LinkClick(
+                                fileName = friendlyUrl;
+
+                                fileName = Regex.Replace(
+                                    fileName, domainName, string.Format("{0}", domainName), RegexOptions.IgnoreCase);
+                            }
+                            else
+                            {
+                                fileName = string.Format(
+                                    "{2}/tabid/{0}/{1}Default.aspx", selectTab.TabID, locale, domainName);
+                            }
+                        }
+
+                        break;
+                    case "lnkClick":
+                        {
+                            fileName = Globals.LinkClick(
+                                selectTab.TabID.ToString(),
+                                this.TrackClicks.Checked
+                                    ? int.Parse(this.request.QueryString["tabid"])
+                                    : Null.NullInteger,
+                                Null.NullInteger);
+
+                            if (fileName.Contains("&language"))
+                            {
+                                fileName = fileName.Remove(fileName.IndexOf("&language"));
+                            }
+
+                            break;
+                        }
+
+                    case "lnkAbsClick":
+                        {
+                            fileName = string.Format(
+                                "{0}://{1}{2}",
+                                HttpContext.Current.Request.Url.Scheme,
+                                HttpContext.Current.Request.Url.Authority,
+                                Globals.LinkClick(
                                     selectTab.TabID.ToString(),
                                     this.TrackClicks.Checked
                                         ? int.Parse(this.request.QueryString["tabid"])
                                         : Null.NullInteger,
-                                    Null.NullInteger);
+                                    Null.NullInteger));
 
-                                if (fileName.Contains("&language"))
-                                {
-                                    fileName = fileName.Remove(fileName.IndexOf("&language"));
-                                }
-
-                                break;
-                            }
-
-                        case "lnkAbsClick":
+                            if (fileName.Contains("&language"))
                             {
-                                fileName = string.Format(
-                                    "{0}://{1}{2}",
-                                    HttpContext.Current.Request.Url.Scheme,
-                                    HttpContext.Current.Request.Url.Authority,
-                                    Globals.LinkClick(
-                                        selectTab.TabID.ToString(),
-                                        this.TrackClicks.Checked
-                                            ? int.Parse(this.request.QueryString["tabid"])
-                                            : Null.NullInteger,
-                                        Null.NullInteger));
-
-                                if (fileName.Contains("&language"))
-                                {
-                                    fileName = fileName.Remove(fileName.IndexOf("&language"));
-                                }
-
-                                break;
+                                fileName = fileName.Remove(fileName.IndexOf("&language"));
                             }
-                    }
 
-                    // Add Page Anchor if one is selected
-                    if (this.AnchorList.SelectedIndex > 0 && this.AnchorList.Items.Count > 1)
-                    {
-                        fileName = string.Format("{0}#{1}", fileName, this.AnchorList.SelectedItem.Text);
-                    }
-
-                    this.Response.Write("<script type=\"text/javascript\">");
-                    this.Response.Write(this.GetJavaScriptCode(fileName, null, true));
-                    this.Response.Write("</script>");
-
-                    this.Response.End();
+                            break;
+                        }
                 }
+
+                // Add Page Anchor if one is selected
+                if (this.AnchorList.SelectedIndex > 0 && this.AnchorList.Items.Count > 1)
+                {
+                    fileName = string.Format("{0}#{1}", fileName, this.AnchorList.SelectedItem.Text);
+                }
+
+                this.Response.Write("<script type=\"text/javascript\">");
+                this.Response.Write(this.GetJavaScriptCode(fileName, null, true));
+                this.Response.Write("</script>");
+
+                this.Response.End();
             }
             else if (this.panLinkMode.Visible && !this.panPageMode.Visible)
             {
@@ -889,6 +941,8 @@ namespace WatchersNET.CKEditor.Browser
 
                         if (!this.IsPostBack)
                         {
+                            this.GetAcceptedFileTypes();
+
                             this.OverrideFile.Checked = this.currentSettings.OverrideFileOnUpload;
 
                             this.title.InnerText = string.Format("{0} - WatchersNET.FileBrowser", this.lblModus.Text);
@@ -1779,64 +1833,6 @@ namespace WatchersNET.CKEditor.Browser
         }
 
         /// <summary>
-        /// Gets the user folder ("userfiles\[USERID]").
-        /// </summary>
-        /// <param name="startingDir">The Starting Directory.</param>
-        /// <returns>Returns the user folder path</returns>
-        [Obsolete("Please use GetUserFolderInfo instead")]
-        private string GetUserFolder(string startingDir)
-        {
-            var userFolderPath = Path.Combine(startingDir, "userfiles");
-
-            // Create "userfiles" folder if not exists
-            if (!Directory.Exists(userFolderPath))
-            {
-                var folderStart = userFolderPath;
-
-                folderStart =
-                    folderStart.Substring(this._portalSettings.HomeDirectoryMapPath.Length).Replace(
-                        "\\", "/");
-
-                var folderNew = FolderManager.Instance.AddFolder(this._portalSettings.PortalId, folderStart);
-
-                Directory.CreateDirectory(userFolderPath);
-
-                this.SetFolderPermission(folderNew);
-            }
-
-            // Create user folder based on the user id
-            userFolderPath = Path.Combine(
-                userFolderPath,
-                string.Format("{0}\\", UserController.GetCurrentUserInfo().UserID));
-
-            if (!Directory.Exists(userFolderPath))
-            {
-                var folderStart = userFolderPath;
-
-                folderStart =
-                    folderStart.Substring(this._portalSettings.HomeDirectoryMapPath.Length).Replace(
-                        "\\", "/");
-
-                var folderNew = FolderManager.Instance.AddFolder(this._portalSettings.PortalId, folderStart);
-
-                Directory.CreateDirectory(userFolderPath);
-
-                this.SetFolderPermission(folderNew);
-
-                this.SetUserFolderPermission(folderNew, UserController.GetCurrentUserInfo());
-            }
-            else
-            {
-                var userFolderInfo = Utility.ConvertFilePathToFolderInfo(userFolderPath, this._portalSettings);
-
-                // make sure the user has the correct permissions set
-                this.SetUserFolderPermission(userFolderInfo, UserController.GetCurrentUserInfo());
-            }
-
-            return userFolderPath;
-        }
-
-        /// <summary>
         /// Gets the user folder Info.
         /// </summary>
         /// <param name="startingDir">The Starting Directory.</param>
@@ -1977,36 +1973,35 @@ namespace WatchersNET.CKEditor.Browser
                 tnFolder.ExpandedImageUrl = "Images/folderdb.gif";
             }
 
-            /*ArrayList folders = FileSystemUtils.GetFoldersByParentFolder(
-                this._portalSettings.PortalId, folderInfo.FolderPath);*/
-
             var folders = FolderManager.Instance.GetFolders(folderInfo).ToList();
 
-            if (folders.Any())
+            if (!folders.Any())
             {
-                foreach (RadTreeNode node in
-                    folders.Cast<FolderInfo>().Select(this.RenderFolder).Where(node => node != null))
+                return tnFolder;
+            }
+
+            foreach (RadTreeNode node in
+                folders.Cast<FolderInfo>().Select(this.RenderFolder).Where(node => node != null))
+            {
+                switch (this.GetStorageLocationType(Convert.ToInt32(node.ToolTip)))
                 {
-                    switch (this.GetStorageLocationType(Convert.ToInt32(node.ToolTip)))
-                    {
-                        case FolderController.StorageLocationTypes.SecureFileSystem:
-                            {
-                                node.ImageUrl = "Images/folderLocked.gif";
-                                node.ExpandedImageUrl = "Images/folderOpenLocked.gif";
-                            }
+                    case FolderController.StorageLocationTypes.SecureFileSystem:
+                        {
+                            node.ImageUrl = "Images/folderLocked.gif";
+                            node.ExpandedImageUrl = "Images/folderOpenLocked.gif";
+                        }
 
-                            break;
-                        case FolderController.StorageLocationTypes.DatabaseSecure:
-                            {
-                                node.ImageUrl = "Images/folderdb.gif";
-                                node.ExpandedImageUrl = "Images/folderdb.gif";
-                            }
+                        break;
+                    case FolderController.StorageLocationTypes.DatabaseSecure:
+                        {
+                            node.ImageUrl = "Images/folderdb.gif";
+                            node.ExpandedImageUrl = "Images/folderdb.gif";
+                        }
 
-                            break;
-                    }
-
-                    tnFolder.Nodes.Add(node);
+                        break;
                 }
+
+                tnFolder.Nodes.Add(node);
             }
 
             return tnFolder;
@@ -2078,22 +2073,26 @@ namespace WatchersNET.CKEditor.Browser
             else
             {
                 // Set default locale and remove no locale if Content Localization is Enabled
-                if (this._portalSettings.ContentLocalizationEnabled)
+                if (!this._portalSettings.ContentLocalizationEnabled)
                 {
-                    var currentTab = new TabController().GetTab(
-                        int.Parse(this.request.QueryString["tabid"]), this._portalSettings.PortalId, false);
+                    return;
+                }
 
-                    if (currentTab != null && !string.IsNullOrEmpty(currentTab.CultureCode))
-                    {
-                        this.LanguageList.Items.RemoveAt(0);
+                var currentTab = new TabController().GetTab(
+                    int.Parse(this.request.QueryString["tabid"]), this._portalSettings.PortalId, false);
 
-                        var currentTabCultureItem = this.LanguageList.Items.FindByValue(currentTab.CultureCode);
+                if (currentTab == null || string.IsNullOrEmpty(currentTab.CultureCode))
+                {
+                    return;
+                }
 
-                        if (currentTabCultureItem != null)
-                        {
-                            currentTabCultureItem.Selected = true;
-                        }
-                    }
+                this.LanguageList.Items.RemoveAt(0);
+
+                var currentTabCultureItem = this.LanguageList.Items.FindByValue(currentTab.CultureCode);
+
+                if (currentTabCultureItem != null)
+                {
+                    currentTabCultureItem.Selected = true;
                 }
             }
         }
@@ -2232,7 +2231,6 @@ namespace WatchersNET.CKEditor.Browser
             this.cmdResizeCancel.Text = Localization.GetString("cmdResizeCancel.Text", this.ResXFile, this.LanguageCode);
             this.cmdResizeNow.Text = Localization.GetString("cmdResizeNow.Text", this.ResXFile, this.LanguageCode);
             this.cmdUploadCancel.Text = Localization.GetString("cmdUploadCancel.Text", this.ResXFile, this.LanguageCode);
-            this.cmdUploadNow.Text = Localization.GetString("cmdUploadNow.Text", this.ResXFile, this.LanguageCode);
             this.cmdCancel.Text = Localization.GetString("cmdCancel.Text", this.ResXFile, this.LanguageCode);
             this.cmdClose.Text = Localization.GetString("cmdClose.Text", this.ResXFile, this.LanguageCode);
             this.cmdCreateFolder.Text = Localization.GetString("cmdCreateFolder.Text", this.ResXFile, this.LanguageCode);
@@ -2267,36 +2265,17 @@ namespace WatchersNET.CKEditor.Browser
             this.LabelAnchor.Text = Localization.GetString("LabelAnchor.Text", this.ResXFile, this.LanguageCode);
             this.NewFolderTitle.Text = Localization.GetString("cmdCreate.Text", this.ResXFile, this.LanguageCode);
             this.UploadTitle.Text = Localization.GetString("cmdUpload.Text", this.ResXFile, this.LanguageCode);
+            this.AddFiles.Text = Localization.GetString("AddFiles.Text", this.ResXFile, this.LanguageCode);
             this.Wait.Text = Localization.GetString("Wait.Text", this.ResXFile, this.LanguageCode);
             this.WaitMessage.Text = Localization.GetString("WaitMessage.Text", this.ResXFile, this.LanguageCode);
             this.ExtraTabOptions.Text = Localization.GetString("ExtraTabOptions.Text", this.ResXFile, this.LanguageCode);
             this.LabelTabLanguage.Text = Localization.GetString("LabelTabLanguage.Text", this.ResXFile, this.LanguageCode);
-            string allowedExtensionsList;
-
-
-            switch (this.browserModus)
-            {
-                case "Flash":
-                    allowedExtensionsList = string.Join(",", this.allowedFlashExt);
-
-                    break;
-                case "Image":
-                    allowedExtensionsList = string.Join(",", this.allowedImageExt);
-
-                    break;
-                default:
-                    allowedExtensionsList = this.extensionWhiteList;
-
-                    break;
-            }
 
             this.MaximumUploadSizeInfo.Text =
                 string.Format(
                     Localization.GetString("FileSizeRestriction", this.ResXFile, this.LanguageCode),
-                    (this.currentSettings.UploadFileSizeLimit > 0
-                         ? this.currentSettings.UploadFileSizeLimit
-                         : Utility.GetMaxUploadSize()) / (1024 * 1024),
-                    allowedExtensionsList);
+                    this.MaxUploadSize / (1024 * 1024),
+                    this.AcceptFileTypes.Replace("|", ","));
 
             // RadioButtonList
             this.BrowserMode.Items[0].Text = Localization.GetString("FileLink.Text", this.ResXFile, this.LanguageCode);
@@ -3198,118 +3177,13 @@ namespace WatchersNET.CKEditor.Browser
         /// <summary>
         /// Upload Selected File
         /// </summary>
-        /// <param name="sender">
-        /// The sender.
-        /// </param>
-        /// <param name="e">
-        /// The e.
-        /// </param>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void UploadNow_Click(object sender, EventArgs e)
         {
-            if (this.ctlUpload.PostedFile == null)
-            {
-                return;
-            }
+            this.ShowFilesIn(this.lblCurrentDir.Text);
 
-            string fileName = Path.GetFileName(this.ctlUpload.PostedFile.FileName);
-
-            if (!string.IsNullOrEmpty(fileName))
-            {
-                // Replace dots in the name with underscores (only one dot can be there... security issue).
-                fileName = Regex.Replace(fileName, @"\.(?![^.]*$)", "_", RegexOptions.None);
-
-                // Check for Illegal Chars
-                if (Utility.ValidateFileName(fileName))
-                {
-                    fileName = Utility.CleanFileName(fileName);
-                }
-
-                // Convert Unicode Chars
-                fileName = Utility.ConvertUnicodeChars(fileName);
-            }
-            else
-            {
-                return;
-            }
-
-            if (fileName.Length > 220)
-            {
-                fileName = fileName.Substring(fileName.Length - 220);
-            }
-
-            var fileExtension = Path.GetExtension(this.ctlUpload.PostedFile.FileName);
-            fileExtension = fileExtension.TrimStart('.');
-
-            var allowUpload = false;
-
-            switch (this.browserModus)
-            {
-                case "Flash":
-                    if (this.allowedFlashExt.Any(sAllowExt => sAllowExt.Equals(fileExtension.ToLower())))
-                    {
-                        allowUpload = true;
-                    }
-
-                    break;
-                case "Image":
-                    if (this.allowedImageExt.Any(sAllowExt => sAllowExt.Equals(fileExtension.ToLower())))
-                    {
-                        allowUpload = true;
-                    }
-
-                    break;
-                default:
-                    {
-                        if (this.extensionWhiteList.Contains(fileExtension.ToLower()))
-                        {
-                            allowUpload = true;
-                        }
-                    }
-
-                    break;
-            }
-
-            if (allowUpload)
-            {
-                var fileNameNoExtenstion = Path.GetFileNameWithoutExtension(fileName);
-
-                var currentFolderInfo = Utility.ConvertFilePathToFolderInfo(
-                    this.lblCurrentDir.Text,
-                    this._portalSettings);
-
-                // Rename File if Exists
-                if (!this.OverrideFile.Checked)
-                {
-                    var counter = 0;
-
-                    while (File.Exists(Path.Combine(this.lblCurrentDir.Text, fileName)))
-                    {
-                        counter++;
-                        fileName = string.Format(
-                        "{0}_{1}{2}",
-                        fileNameNoExtenstion,
-                        counter,
-                        Path.GetExtension(this.ctlUpload.PostedFile.FileName));
-                    }
-                }
-
-                FileManager.Instance.AddFile(
-                        currentFolderInfo,
-                        fileName,
-                        this.ctlUpload.PostedFile.InputStream,
-                        this.OverrideFile.Checked);
-
-                this.ShowFilesIn(this.lblCurrentDir.Text);
-
-                this.GoToSelectedFile(fileName);
-            }
-            else
-            {
-                var error3Script = string.Format(
-                    "javascript:alert('{0}')", Localization.GetString("Error3.Text", this.ResXFile, this.LanguageCode));
-
-                this.Page.ClientScript.RegisterStartupScript(this.GetType(), "errorScript", error3Script, true);
-            }
+            //this.GoToSelectedFile(fileName);
 
             this.panUploadDiv.Visible = false;
         }
@@ -3333,7 +3207,6 @@ namespace WatchersNET.CKEditor.Browser
             var selectTab = tabController.GetTab(
                 int.Parse(this.dnntreeTabs.SelectedValue), this._portalSettings.PortalId, true);
 
-            string sFileName;
             string sDomainName = string.Format("http://{0}", Globals.GetDomainName(this.Request, true));
 
             // Add Language Parameter ?!
@@ -3341,31 +3214,31 @@ namespace WatchersNET.CKEditor.Browser
 
             if (this.chkHumanFriendy.Checked)
             {
-                sFileName = localeSelected
-                                ? Globals.FriendlyUrl(
-                                    selectTab,
-                                    string.Format(
-                                        "{0}&language={1}",
-                                        Globals.ApplicationURL(selectTab.TabID),
-                                        this.LanguageList.SelectedValue),
-                                    this._portalSettings)
-                                : Globals.FriendlyUrl(
-                                    selectTab, Globals.ApplicationURL(selectTab.TabID), this._portalSettings);
+                var fileName = localeSelected
+                                       ? Globals.FriendlyUrl(
+                                           selectTab,
+                                           string.Format(
+                                               "{0}&language={1}",
+                                               Globals.ApplicationURL(selectTab.TabID),
+                                               this.LanguageList.SelectedValue),
+                                           this._portalSettings)
+                                       : Globals.FriendlyUrl(
+                                           selectTab, Globals.ApplicationURL(selectTab.TabID), this._portalSettings);
 
                 // Relative Url
-                sFileName = Globals.ResolveUrl(Regex.Replace(sFileName, sDomainName, "~", RegexOptions.IgnoreCase));
+                fileName = Globals.ResolveUrl(Regex.Replace(fileName, sDomainName, "~", RegexOptions.IgnoreCase));
 
                 this.rblLinkType.Items[0].Text = Regex.Replace(
                     this.rblLinkType.Items[0].Text,
                     "/Images/MyImage.jpg",
-                    Globals.ResolveUrl(Regex.Replace(sFileName, sDomainName, "~", RegexOptions.IgnoreCase)),
+                    Globals.ResolveUrl(Regex.Replace(fileName, sDomainName, "~", RegexOptions.IgnoreCase)),
                     RegexOptions.IgnoreCase);
 
                 // Absolute Url  
                 this.rblLinkType.Items[1].Text = Regex.Replace(
                     this.rblLinkType.Items[1].Text,
                     "http://www.MyWebsite.com/Images/MyImage.jpg",
-                    Regex.Replace(sFileName, sDomainName, string.Format("{0}", sDomainName), RegexOptions.IgnoreCase),
+                    Regex.Replace(fileName, sDomainName, string.Format("{0}", sDomainName), RegexOptions.IgnoreCase),
                     RegexOptions.IgnoreCase);
             }
             else
@@ -3618,6 +3491,27 @@ namespace WatchersNET.CKEditor.Browser
                     Localization.GetString("SpaceUsed.Text", this.ResXFile, this.LanguageCode),
                     usedSpace,
                     spaceAvailable);
+        }
+
+        /// <summary>
+        /// Gets the accepted file types.
+        /// </summary>
+        private void GetAcceptedFileTypes()
+        {
+            switch (this.browserModus)
+            {
+                case "Flash":
+                    this.AcceptFileTypes = string.Join("|", this.allowedFlashExt);
+
+                    break;
+                case "Image":
+                    this.AcceptFileTypes = string.Join("|", this.allowedImageExt);
+
+                    break;
+                default:
+                    this.AcceptFileTypes = this.extensionWhiteList.Replace(",", "|");
+                    break;
+            }
         }
 
         #endregion

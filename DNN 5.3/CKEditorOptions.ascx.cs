@@ -30,7 +30,6 @@ namespace WatchersNET.CKEditor
 
     using DotNetNuke.Common;
     using DotNetNuke.Common.Utilities;
-    using DotNetNuke.Entities.Host;
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Entities.Modules.Definitions;
     using DotNetNuke.Entities.Portals;
@@ -1130,7 +1129,7 @@ namespace WatchersNET.CKEditor
                 string.Format("{0}{2}#{1}", moduleKey, "-1", SettingConstants.TOOLB));
 
             // Finally Clear Cache
-            DataCache.ClearHostCache(true);
+            DataCache.RemoveCache("CKEditorHost");
         }
 
         /// <summary>
@@ -3095,6 +3094,9 @@ namespace WatchersNET.CKEditor
 
                     break;
             }
+
+            // Finally Clear Cache
+            DataCache.RemoveCache("CKEditorHost");
         }
 
         /// <summary>
@@ -3390,7 +3392,7 @@ namespace WatchersNET.CKEditor
             }
 
             // Finally Clear Cache
-            DataCache.ClearHostCache(true);
+            DataCache.RemoveCache("CKEditorHost");
 
             this.ShowNotification(
                 Localization.GetString("lblInfoCopyAll.Text", this.ResXFile, this.LangCode),

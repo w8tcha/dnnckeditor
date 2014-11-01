@@ -8,7 +8,6 @@ body{
     top: 0;
 	left: 0;
 	right:0;
-    position: fixed;
     z-index: 50000;
     margin: 0;
     padding: 0;

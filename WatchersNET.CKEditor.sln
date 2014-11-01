@@ -21,6 +21,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchersNET.CKEditor - DNN7
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{56390B0B-DDEC-4A87-A81F-1504CCA1FA67}"
 	ProjectSection(SolutionItems) = preProject
+		BuildPackages.bat = BuildPackages.bat
+		CKEditorDefaultSettings.xml = CKEditorDefaultSettings.xml
+		CKToolbarButtons.xml = CKToolbarButtons.xml
+		CKToolbarSets.xml = CKToolbarSets.xml
+		readme.html = readme.html
 		WE-settings.xml = WE-settings.xml
 	EndProjectSection
 EndProject
@@ -28,7 +33,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CKEditor", "CKEditor", "{60
 	ProjectSection(SolutionItems) = preProject
 		CKEditor\CHANGES.md = CKEditor\CHANGES.md
 		CKEditor\ckeditor.js = CKEditor\ckeditor.js
-		CKEditor\config.js = CKEditor\config.js
 		CKEditor\contents.css = CKEditor\contents.css
 		CKEditor\editor.css = CKEditor\editor.css
 		CKEditor\LICENSE.md = CKEditor\LICENSE.md
@@ -38,7 +42,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CKEditor", "CKEditor", "{60
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Browser", "Browser", "{EE09520F-E6D1-4FBB-A186-6EA7840D88C0}"
 	ProjectSection(SolutionItems) = preProject
-		CKEditor\Browser\Browser.css = CKEditor\Browser\Browser.css
 		CKEditor\Browser\js\Browser.js = CKEditor\Browser\js\Browser.js
 	EndProjectSection
 EndProject

@@ -392,4 +392,13 @@
   <data name="FileToBigMessage.Text" xml:space="preserve">
     <value>Uploaded File is bigger then the allowed file size!</value>
   </data>
+  <data name="AddFiles.Text" xml:space="preserve">
+    <value>Add file(s)...</value>
+  </data>
+  <data name="DropHere.Text" xml:space="preserve">
+    <value>Drop file(s) here</value>
+  </data>
+  <data name="StartUploads.Text" xml:space="preserve">
+    <value>Start upload(s)</value>
+  </data>
 </root>

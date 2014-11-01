@@ -1096,7 +1096,7 @@ namespace WatchersNET.CKEditor
                 this.ModuleId, string.Format("{0}{2}#{1}", moduleKey, "-1", SettingConstants.TOOLB));
 
             // Finally Clear Cache
-            DataCache.ClearHostCache(true);
+            DataCache.RemoveCache("CKEditorHost");
         }
 
         /// <summary>
@@ -2931,6 +2931,9 @@ namespace WatchersNET.CKEditor
 
                     break;
             }
+
+            // Finally Clear Cache
+            DataCache.RemoveCache("CKEditorHost");
         }
 
         /// <summary>
@@ -3177,7 +3180,7 @@ namespace WatchersNET.CKEditor
             }
 
             // Finally Clear Cache
-            DataCache.ClearHostCache(true);
+            DataCache.RemoveCache("CKEditorHost");
 
             this.ShowNotification(
                 Localization.GetString("lblInfoCopyAll.Text", this.ResXFile, this.LangCode),

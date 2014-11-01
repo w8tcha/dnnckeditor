@@ -25,6 +25,7 @@ namespace WatchersNET.CKEditor.Utilities
     using DotNetNuke.Common;
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Data;
+    using DotNetNuke.Entities.Host;
     using DotNetNuke.Entities.Portals;
     using DotNetNuke.Entities.Users;
     using DotNetNuke.Security.Permissions;
@@ -211,15 +212,52 @@ namespace WatchersNET.CKEditor.Utilities
         /// <returns>The ASCII equivalent output</returns>
         public static string ConvertUnicodeChars(string input)
         {
-            /*input =
-                Encoding.ASCII.GetString(
-                    Encoding.Convert(
-                        Encoding.UTF8,
-                        Encoding.GetEncoding(
-                            Encoding.ASCII.EncodingName,
-                            new EncoderReplacementFallback(string.Empty),
-                            new DecoderExceptionFallback()),
-                        Encoding.UTF8.GetBytes(input)));*/
+            Regex regA = new Regex("[ã|à|â|ä|á|å]");
+            Regex regAA = new Regex("[Ã|À|Â|Ä|Á|Å]");
+            Regex regE = new Regex("[é|è|ê|ë]");
+            Regex regEE = new Regex("[É|È|Ê|Ë]");
+            Regex regI = new Regex("[í|ì|î|ï]");
+            Regex regII = new Regex("[Í|Ì|Î|Ï]");
+            Regex regO = new Regex("[õ|ò|ó|ô|ö]");
+            Regex regOO = new Regex("[Õ|Ó|Ò|Ô|Ö]");
+            Regex regU = new Regex("[ù|ú|û|ü|µ]");
+            Regex regUU = new Regex("[Ü|Ú|Ù|Û]");
+            Regex regY = new Regex("[ý|ÿ]");
+            Regex regYY = new Regex("[Ý]");
+            Regex regAE = new Regex("[æ]");
+            Regex regAEAE = new Regex("[Æ]");
+            Regex regOE = new Regex("[œ]");
+            Regex regOEOE = new Regex("[Œ]");
+            Regex regC = new Regex("[ç]");
+            Regex regCC = new Regex("[Ç]");
+            Regex regDD = new Regex("[Ð]");
+            Regex regN = new Regex("[ñ]");
+            Regex regNN = new Regex("[Ñ]");
+            Regex regS = new Regex("[š]");
+            Regex regSS = new Regex("[Š]");
+            input = regA.Replace(input, "a");
+            input = regAA.Replace(input, "A");
+            input = regE.Replace(input, "e");
+            input = regEE.Replace(input, "E");
+            input = regI.Replace(input, "i");
+            input = regII.Replace(input, "I");
+            input = regO.Replace(input, "o");
+            input = regOO.Replace(input, "O");
+            input = regU.Replace(input, "u");
+            input = regUU.Replace(input, "U");
+            input = regY.Replace(input, "y");
+            input = regYY.Replace(input, "Y");
+            input = regAE.Replace(input, "ae");
+            input = regAEAE.Replace(input, "AE");
+            input = regOE.Replace(input, "oe");
+            input = regOEOE.Replace(input, "OE");
+            input = regC.Replace(input, "c");
+            input = regCC.Replace(input, "C");
+            input = regDD.Replace(input, "D");
+            input = regN.Replace(input, "n");
+            input = regNN.Replace(input, "N");
+            input = regS.Replace(input, "s");
+            input = regSS.Replace(input, "S");
 
             input = input.Replace("�", string.Empty);
 
@@ -376,7 +414,7 @@ namespace WatchersNET.CKEditor.Utilities
             DataProvider.Instance().ExecuteNonQuery("CKEditor_DeleteAllPageSettings", portalId.ToString());
 
             // Finally Clear Cache
-            DataCache.ClearHostCache(true);
+            DataCache.RemoveCache("CKEditorHost");
         }
 
         /// <summary>
@@ -388,7 +426,7 @@ namespace WatchersNET.CKEditor.Utilities
             DataProvider.Instance().ExecuteNonQuery("CKEditor_DeleteCurrentPageSettings", tabId.ToString());
 
             // Finally Clear Cache
-            DataCache.ClearHostCache(true);
+            DataCache.RemoveCache("CKEditorHost");
         }
 
         /// <summary>
@@ -402,7 +440,7 @@ namespace WatchersNET.CKEditor.Utilities
             DataProvider.Instance().ExecuteNonQuery("CKEditor_DeleteAllChildPageSettings", tabId);
 
             // Finally Clear Cache
-            DataCache.ClearHostCache(true);
+            DataCache.RemoveCache("CKEditorHost");
         }
 
         /// <summary>
@@ -414,7 +452,7 @@ namespace WatchersNET.CKEditor.Utilities
             DataProvider.Instance().ExecuteNonQuery("CKEditor_DeleteAllPortalSettings", portalId.ToString());
 
             // Finally Clear Cache
-            DataCache.ClearHostCache(true);
+            DataCache.RemoveCache("CKEditorHost");
         }
 
         /// <summary>
@@ -425,13 +463,29 @@ namespace WatchersNET.CKEditor.Utilities
         {
             var editorHostSettings = new List<EditorHostSetting>();
 
-            using (var dr = DataProvider.Instance().ExecuteReader("CKEditor_GetEditorHostSettings"))
+            var cache = DataCache.GetCache("CKEditorHost");
+
+            if (cache == null)
             {
-                while (dr.Read())
+                var timeOut = 20 * Convert.ToInt32(Host.PerformanceSetting);
+
+                using (var dr = DataProvider.Instance().ExecuteReader("CKEditor_GetEditorHostSettings"))
                 {
-                    editorHostSettings.Add(
-                        new EditorHostSetting(Convert.ToString(dr["SettingName"]), Convert.ToString(dr["SettingValue"])));
+                    while (dr.Read())
+                    {
+                        editorHostSettings.Add(
+                            new EditorHostSetting(Convert.ToString(dr["SettingName"]), Convert.ToString(dr["SettingValue"])));
+                    }
                 }
+
+                if (timeOut > 0)
+                {
+                    DataCache.SetCache("CKEditorHost", editorHostSettings, TimeSpan.FromMinutes(timeOut));
+                }
+            }
+            else
+            {
+                editorHostSettings = cache as List<EditorHostSetting>;
             }
 
             return editorHostSettings;

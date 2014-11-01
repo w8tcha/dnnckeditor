@@ -24,38 +24,10 @@ jQuery(document).ready(function () {
     jQuery(".SelectedPager").addClass("ui-tabs-active ui-state-active ui-state-focus"),
 
     jQuery("#BrowserMode td").hover(function () {
-        $(this).addClass("ui-state-hover");
+        jQuery(this).addClass("ui-state-hover");
     }, function () {
-        $(this).removeClass("ui-state-hover");
+        jQuery(this).removeClass("ui-state-hover");
     });
+
+    jQuery("#panUploadDiv .MessageBox").draggable();
 });
-
-function GetFileSize(fileid, maxFileSize, errorMessage) {
-    try {
-        var fileSize;
-
-        if ($("#" + fileid)[0].files) {
-            //for FF, Safari, Opeara and Others
-            fileSize = $("#" + fileid)[0].files[0].size;
-            fileSize = fileSize;
-        } else {
-            javascript: __doPostBack('cmdUploadNow', '');
-        }
-
-    } catch(e) {
-        console.log(e);
-        return;
-    }
-
-    if (fileSize > maxFileSize) {
-        var fld = document.getElementById(fileid);
-        fld.form.reset();
-        fld.focus();
-
-        alert(errorMessage);
-    } else {
-        javascript: __doPostBack('cmdUploadNow', '');
-    }
-}
-
-

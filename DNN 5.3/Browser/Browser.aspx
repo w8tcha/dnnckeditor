@@ -7,7 +7,7 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta name="language" content="en" />
     <title id="title" runat="server">WatchersNET.FileBrowser</title>
-    <link rel="stylesheet" type="text/css" href="Browser.css" />
+    <link rel="stylesheet" type="text/css" href="Browser.comb.min.css" />
     <asp:Placeholder id="favicon" runat="server"></asp:Placeholder>
     <script src="js/Browser.js" type="text/javascript"></script>
   </head>
@@ -162,7 +162,52 @@
                 <h3><asp:Label id="UploadTitle" runat="server" Text="Upload a File" /></h3>
               </div>
               <div>
-                  <asp:FileUpload ID="ctlUpload" runat="server" />
+                  <div id="fileupload">
+                      <div class="fileupload-buttonbar">
+                          <div id="dropzone" class="fade ui-widget-header"><%= DotNetNuke.Services.Localization.Localization.GetString("DropHere.Text", this.ResXFile, this.LanguageCode) %></div>
+                          <div class="fileupload-buttons">
+                              <span class="fileinput-button">
+                                  <asp:Label id="AddFiles" runat="server" Text="Add file(s)..." />
+                                  <input type="file" name="files[]" multiple>
+                              </span>
+                              <button type="submit" class="start"><%= DotNetNuke.Services.Localization.Localization.GetString("StartUploads.Text", this.ResXFile, this.LanguageCode) %></button>
+                              <span class="fileupload-process"></span>
+                          </div>
+                          <div class="fileupload-progress fade" style="display:none">
+                              <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100"></div>
+                              <div class="progress-extended">&nbsp;</div>
+                          </div>
+                      </div>
+                      <div id="UploadFilesBox">
+                          <table role="presentation" class="UploadFiles"><tbody class="files"></tbody></table>
+                      </div>
+                  </div>
+                  <script id="template-upload" type="text/x-tmpl">
+                      {% for (var i=0, file; file=o.files[i]; i++) { %}
+                          <tr class="template-upload fade">
+                              <td>
+                                  <span class="preview"></span>
+                              </td>
+                              <td>
+                                  <p class="name">{%=file.name%}</p>
+                                  <strong class="error"></strong>
+                                  <p class="size">Processing...</p>
+                                  <div class="progress"></div>
+                              </td>
+                              <td>
+                                  {% if (!i && !o.options.autoUpload) { %}
+                <button class="start" disabled style="display:none">Start</button>
+            {% } %}
+                      {% if (!i) { %}
+                                      <button class="cancel"><%= DotNetNuke.Services.Localization.Localization.GetString("cmdCreateCancel.Text", this.ResXFile, this.LanguageCode) %></button>
+                                  {% } %}
+                              </td>
+                          </tr>
+                      {% } %}
+                  </script>
+                  
+                  <script id="template-download" type="text/x-tmpl">
+                  </script>
               </div>
               <div class="OverrideFile">
                   <asp:CheckBox runat="server" ID="OverrideFile" />
@@ -172,7 +217,6 @@
               </div>
               <hr />
               <div class="ModalFooter">
-                <input type="submit" name="UploadNow" value="Upload Now" onclick="GetFileSize('ctlUpload', <%= WatchersNET.CKEditor.Utilities.Utility.GetMaxUploadSize(false) %>,'<%= DotNetNuke.Services.Localization.Localization.GetString("FileToBig.Text", this.ResXFile, this.LanguageCode) %>');" id="UploadNow" />
                 <asp:Button ID="cmdUploadNow" Style="display:none" runat="server" />&nbsp;
                 <asp:Button ID="cmdUploadCancel" Text="Cancel Upload" runat="server" />
               </div>
@@ -332,6 +376,58 @@
       </asp:Panel>
       <!-- / Loading screen -->
     </form>
+    <script type="text/javascript">
+        $(function() {
+            'use strict';
+            var overrideFile = $('#<%= this.OverrideFile.ClientID %>').is(':checked');
+            var maxFileSize = <%= this.MaxUploadSize %>;
+
+            $('#fileupload').fileupload({
+                url: "FileUploader.ashx",
+                acceptFileTypes: new RegExp('(\.|\/)(' + '<%= this.AcceptFileTypes %>' + ')', 'i'),
+                maxFileSize: maxFileSize,
+                progressall: function (e, data) {
+                    var progress = parseInt(data.loaded / data.total * 100, 10);
+                    if (progress == 100) {
+                        __doPostBack('cmdUploadNow', '');
+                    }
+                },
+                formData: {
+                    storageFolderID: '<%= GetFolderInfoID %>',
+                    portalID: '<%= HttpContext.Current.Request.QueryString["PortalID"] %>',
+                    overrideFiles: overrideFile
+                },
+                dropZone: $('#dropzone')
+            });
+            $(document).bind('dragover', function (e) {
+                var dropZone = $('#dropzone'),
+                    timeout = window.dropZoneTimeout;
+                if (!timeout) {
+                    dropZone.addClass('ui-state-highlight');
+                } else {
+                    clearTimeout(timeout);
+                }
+                var found = false,
+                    node = e.target;
+                do {
+                    if (node === dropZone[0]) {
+                        found = true;
+                        break;
+                    }
+                    node = node.parentNode;
+                } while (node != null);
+                if (found) {
+                    dropZone.addClass('ui-widget-content');
+                } else {
+                    dropZone.removeClass('ui-widget-content');
+                }
+                window.dropZoneTimeout = setTimeout(function () {
+                    window.dropZoneTimeout = null;
+                    dropZone.removeClass('ui-state-highlight ui-widget-content');
+                }, 100);
+            });
+        });
+    </script>
   </body>
 </html>
 

@@ -105,6 +105,9 @@
     <Compile Include="..\GlobalAssemblyInfo.cs">
       <Link>Properties\GlobalAssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Browser\FileUploader.ashx.cs">
+      <DependentUpon>FileUploader.ashx</DependentUpon>
+    </Compile>
     <Compile Include="Constants\Browser.cs" />
     <Compile Include="Constants\EnterModus.cs" />
     <Compile Include="Constants\LanguageDirection.cs" />
@@ -130,6 +133,7 @@
     <Compile Include="Objects\EditorConfig.cs" />
     <Compile Include="Objects\EditorHostSetting.cs" />
     <Compile Include="Objects\EditorProviderSettings.cs" />
+    <Compile Include="Objects\FileUploadStatus.cs" />
     <Compile Include="Objects\SettingBase.cs" />
     <Compile Include="Objects\ToolbarButton.cs" />
     <Compile Include="Objects\ToolbarGroup.cs" />
@@ -211,7 +215,6 @@
     <Content Include="Browser\Browser.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
-    <Content Include="Browser\Browser.css" />
     <Content Include="CKEditorOptions.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
@@ -220,6 +223,7 @@
     </Content>
     <Content Include="Install\02.00.00.SqlDataProvider" />
     <Content Include="Install\02.01.00.SqlDataProvider" />
+    <Content Include="Browser\FileUploader.ashx" />
     <None Include="Tabs.ashx">
       <SubType>ASPXCodeBehind</SubType>
     </None>

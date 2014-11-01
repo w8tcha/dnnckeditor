@@ -22,13 +22,12 @@ namespace WatchersNET.CKEditor.Module
     using System.Web.UI.HtmlControls;
     using System.Web.UI.WebControls;
 
-    using DotNetNuke.Entities.Controllers;
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Entities.Portals;
     using DotNetNuke.Entities.Tabs;
-    using DotNetNuke.Framework;
     using DotNetNuke.Services.Exceptions;
     using DotNetNuke.Services.Localization;
+    using DotNetNuke.Web.Client.ClientResourceManagement;
 
     using WatchersNET.CKEditor.Objects;
     using WatchersNET.CKEditor.Utilities;
@@ -289,15 +288,17 @@ namespace WatchersNET.CKEditor.Module
         /// </summary>
         private void AddJavaScripts()
         {
-            ((CDefault)this.Page).AddStyleSheet(
-                "jquery.ui.Theme", "//ajax.googleapis.com/ajax/libs/jqueryui/1/themes/blitzer/jquery-ui.css");
+            ClientResourceManager.RegisterStyleSheet(
+                this.Page,
+                "//ajax.googleapis.com/ajax/libs/jqueryui/1/themes/blitzer/jquery-ui.css");
 
-            ((CDefault)this.Page).AddStyleSheet(
-                "jquery.notification",
+            ClientResourceManager.RegisterStyleSheet(
+                this.Page,
                 this.ResolveUrl("~/Providers/HtmlEditorProviders/CKEditor/css/jquery.notification.css"));
 
-            ((CDefault)this.Page).AddStyleSheet(
-                "Module", this.ResolveUrl("~/Providers/HtmlEditorProviders/CKEditor/css/Options.css"));
+            ClientResourceManager.RegisterStyleSheet(
+                this.Page,
+                this.ResolveUrl("~/Providers/HtmlEditorProviders/CKEditor/css/Options.css"));
 
             this.pageType = typeof(Page);
 

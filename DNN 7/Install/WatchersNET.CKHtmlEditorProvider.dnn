@@ -1,5 +1,5 @@
 ﻿<dotnetnuke type="Package" version="5.0">
-  <packages><package name="DotNetNuke.CKHtmlEditorProvider" type="Provider" version="2.01.00">
+  <packages><package name="DotNetNuke.CKHtmlEditorProvider" type="Provider" version="02.01.00">
   <friendlyName>CKEditor Editor Provider</friendlyName>
   <description>CKEditor Editor Provider for DNN</description>
   <iconFile>~/Providers/HtmlEditorProviders/CKEditor/LogoCKEditor.png</iconFile>
