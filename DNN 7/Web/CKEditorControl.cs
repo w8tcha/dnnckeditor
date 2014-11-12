@@ -429,7 +429,7 @@ namespace WatchersNET.CKEditor.Web
                     && this._settings["menu_groups"].Equals("clipboard,table,anchor,link,image"))
                 {
                     this._settings["menu_groups"] =
-                        "tablecell,tablecellproperties,tablerow,tablecolumn,table,anchor,link,image,flash,checkbox,radio,textfield,hiddenfield,imagebutton,button,select,textarea,div";
+                        "clipboard,tablecell,tablecellproperties,tablerow,tablecolumn,table,anchor,link,image,flash,checkbox,radio,textfield,hiddenfield,imagebutton,button,select,textarea,div";
                 }
 
                 // Inject maxFileSize

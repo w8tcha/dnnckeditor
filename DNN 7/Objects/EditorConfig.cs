@@ -97,7 +97,7 @@ namespace WatchersNET.CKEditor.Objects
             this.Magicline_PutEverywhere = false;
             this.Magicline_TriggerOffset = 30;
             this.Menu_SubMenuDelay = 400;
-            this.Menu_Groups = "tablecell,tablecellproperties,tablerow,tablecolumn,table,anchor,link,image,flash,checkbox,radio,textfield,hiddenfield,imagebutton,button,select,textarea,div";
+            this.Menu_Groups = "clipboard,tablecell,tablecellproperties,tablerow,tablecolumn,table,anchor,link,image,flash,checkbox,radio,textfield,hiddenfield,imagebutton,button,select,textarea,div";
             this.PasteFromWordCleanupFile = string.Empty;
             this.PasteFromWordNumberedHeadingToList = false;
             this.PasteFromWordPromptCleanup = false;
