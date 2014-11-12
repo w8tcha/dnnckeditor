@@ -12,6 +12,18 @@ IF  EXISTS (select top 1 1 from sys.objects where object_id = OBJECT_ID(N'{datab
 DROP PROCEDURE {databaseOwner}{objectQualifier}CKEditor_DeleteAllChildPageSettings
 GO
 
+IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}{objectQualifier}CKEditor_DeleteAllPageSettings') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE {databaseOwner}{objectQualifier}CKEditor_DeleteAllPageSettings
+GO
+
+IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}{objectQualifier}CKEditor_DeleteCurrentPageSettings') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE {databaseOwner}{objectQualifier}CKEditor_DeleteCurrentPageSettings
+GO
+
+IF  EXISTS (SELECT * FROM dbo.sysobjects WHERE id = OBJECT_ID(N'{databaseOwner}{objectQualifier}CKEditor_DeleteAllPortalSettings') and OBJECTPROPERTY(id, N'IsProcedure') = 1)
+DROP PROCEDURE {databaseOwner}{objectQualifier}CKEditor_DeleteAllPortalSettings
+GO
+
 CREATE PROCEDURE {databaseOwner}{objectQualifier}CKEditor_DeleteAllChildPageSettings
   @TabID int
 	AS
@@ -69,3 +81,28 @@ AS
 	                    values (@SettingName,@SettingValue)
 		end
 go
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}CKEditor_DeleteAllPageSettings
+  @PortalID varchar
+	AS
+	SET NOCOUNT ON
+	DELETE  hs
+  FROM {databaseOwner}{objectQualifier}CKEditorProviderSettings hs
+  INNER JOIN	
+		{databaseOwner}{objectQualifier}Tabs t  ON t.PortalID = @PortalID
+   Where SettingName like 'DNNCKT#%' AND t.TabID  = t.TabID
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}CKEditor_DeleteCurrentPageSettings
+  @TabID varchar
+	AS
+	SET NOCOUNT ON
+	delete from {databaseOwner}{objectQualifier}CKEditorProviderSettings where SettingName like 'DNNCKT#' + @TabID + '%'
+GO
+
+CREATE PROCEDURE {databaseOwner}{objectQualifier}CKEditor_DeleteAllPortalSettings
+  @PortalID varchar
+	AS
+	SET NOCOUNT ON
+	delete from {databaseOwner}{objectQualifier}CKEditorProviderSettings where SettingName like 'DNNCKP#' + @PortalID + '%'
+GO
