@@ -96,6 +96,7 @@
     <Copy SourceFiles="$(MSBuildProjectDirectory)\UrlControl.ascx" DestinationFolder="$(MSBuildProjectDirectory)\ResourcesZip"/>
     <Copy SourceFiles="$(MSBuildProjectDirectory)\Tabs.ashx" DestinationFolder="$(MSBuildProjectDirectory)\ResourcesZip"/>
     <Copy SourceFiles="$(MSBuildProjectDirectory)\Browser\Browser.aspx" DestinationFolder="$(MSBuildProjectDirectory)\ResourcesZip\Browser"/>
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\Browser\FileUploader.ashx" DestinationFolder="$(MSBuildProjectDirectory)\ResourcesZip\Browser"/>
     <Copy SourceFiles="$(MSBuildProjectDirectory)\Browser\ProcessImage.ashx" DestinationFolder="$(MSBuildProjectDirectory)\ResourcesZip\Browser"/>
     <Copy SourceFiles="$(MSBuildProjectDirectory)\CKFinder\config.ascx" DestinationFolder="$(MSBuildProjectDirectory)\ResourcesZip\CKFinder"/>
     <Copy SourceFiles="$(MSBuildProjectDirectory)\Module\EditorConfigManager.ascx" DestinationFolder="$(MSBuildProjectDirectory)\ResourcesZip\Module"/>
@@ -138,7 +139,9 @@
     <Copy SourceFiles="$(MSBuildProjectDirectory)\$(PackageName)_$(Version)_Install_DNN53.$(Extension)" DestinationFolder="$(MSBuildProjectDirectory)/../packages/Install/DNN 5.3" />
     
     <RemoveDir Directories ="$(MSBuildProjectDirectory)\Package" />
-    <RemoveDir Directories ="$(MSBuildProjectDirectory)\ResourcesZip" />
+
+    <Delete Files="$(MSBuildProjectDirectory)\ResourcesZip\**\*" ContinueOnError="true"/>
+    <RemoveDir Directories ="$(MSBuildProjectDirectory)\ResourcesZip" ContinueOnError="true" />
 
     <Delete Files="$(MSBuildProjectDirectory)\Resources.$(Extension)" />
    

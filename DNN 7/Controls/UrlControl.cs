@@ -283,6 +283,11 @@ namespace WatchersNET.CKEditor.Controls
                             this.Folders.Items[0].Selected = true;
                         }
 
+                        // Reload files list
+                        this.Files.Items.Clear();
+                        this.Files.DataSource = this.GetFileList(true);
+                        this.Files.DataBind();
+
                         if (this.Files.Items.FindByText(fileName) != null)
                         {
                             this.Files.ClearSelection();
