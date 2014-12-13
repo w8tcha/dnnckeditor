@@ -287,7 +287,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Browser\FileUploader.ashx" />
-    <Content Include="Browser\Browser.comb.css.bundle" />
+    <Content Include="Browser\Browser.comb.css.bundle">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="BuildScripts\ModulePackage.targets">
       <SubType>Designer</SubType>
     </None>

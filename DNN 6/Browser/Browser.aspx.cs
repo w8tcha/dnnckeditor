@@ -480,6 +480,13 @@ namespace WatchersNET.CKEditor.Browser
 
             this.favicon.Controls.Add(jqueryPageMetodScriptLink);
 
+            var jqueryFileUploadScriptLink = new HtmlGenericControl("script");
+
+            jqueryFileUploadScriptLink.Attributes["type"] = "text/javascript";
+            jqueryFileUploadScriptLink.Attributes["src"] = this.ResolveUrl("js/jquery.fileupload.comb.min.js");
+
+            this.favicon.Controls.Add(jqueryFileUploadScriptLink);
+
             var objCssLink = new HtmlGenericSelfClosing("link");
 
             objCssLink.Attributes["rel"] = "stylesheet";
