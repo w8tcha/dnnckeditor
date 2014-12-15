@@ -303,7 +303,7 @@ namespace WatchersNET.CKEditor.Module
                 var jqueryUiScriptLink = new HtmlGenericControl("script");
 
                 jqueryUiScriptLink.Attributes["type"] = "text/javascript";
-                jqueryUiScriptLink.Attributes["src"] = "//ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js";
+                jqueryUiScriptLink.Attributes["src"] = "//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js";
 
                 scriptHolder.Controls.Add(jqueryUiScriptLink);
             }
@@ -316,7 +316,7 @@ namespace WatchersNET.CKEditor.Module
                         this, this.pageType, "jquery.Migrate", "//code.jquery.com/jquery-migrate-1.0.0.js");
 
                 ScriptManager.RegisterClientScriptInclude(
-                    this, this.pageType, "jquery.ui.Latest", "//ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js");
+                    this, this.pageType, "jquery.ui.Latest", "//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js");
             }
 
             ScriptManager.RegisterClientScriptInclude(
@@ -337,7 +337,7 @@ namespace WatchersNET.CKEditor.Module
 
                 objCssLink.Attributes["rel"] = "stylesheet";
                 objCssLink.Attributes["type"] = "text/css";
-                objCssLink.Attributes["href"] = "//ajax.googleapis.com/ajax/libs/jqueryui/1/themes/blitzer/jquery-ui.css";
+                objCssLink.Attributes["href"] = "//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/blitzer/jquery-ui.css";
 
                 scriptHolder.Controls.Add(objCssLink);
 
@@ -360,7 +360,7 @@ namespace WatchersNET.CKEditor.Module
             else
             {
                 ((CDefault)this.Page).AddStyleSheet(
-                   "jquery.ui.Theme", "//ajax.googleapis.com/ajax/libs/jqueryui/1/themes/blitzer/jquery-ui.css");
+                   "jquery.ui.Theme", "//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/blitzer/jquery-ui.css");
 
                 ((CDefault)this.Page).AddStyleSheet(
                     "jquery.notification",

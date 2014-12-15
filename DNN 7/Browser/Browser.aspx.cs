@@ -451,7 +451,7 @@ namespace WatchersNET.CKEditor.Browser
             var jqueryUiScriptLink = new HtmlGenericControl("script");
 
             jqueryUiScriptLink.Attributes["type"] = "text/javascript";
-            jqueryUiScriptLink.Attributes["src"] = "//ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js";
+            jqueryUiScriptLink.Attributes["src"] = "//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js";
 
             this.favicon.Controls.Add(jqueryUiScriptLink);
 
@@ -494,7 +494,7 @@ namespace WatchersNET.CKEditor.Browser
 
             objCssLink.Attributes["rel"] = "stylesheet";
             objCssLink.Attributes["type"] = "text/css";
-            objCssLink.Attributes["href"] = "//ajax.googleapis.com/ajax/libs/jqueryui/1/themes/blitzer/jquery-ui.css";
+            objCssLink.Attributes["href"] = "//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/blitzer/jquery-ui.css";
 
             this.favicon.Controls.Add(objCssLink);
 

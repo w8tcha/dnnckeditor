@@ -122,7 +122,7 @@
                   <asp:Label id="lblSelToolb" runat="server"></asp:Label>
                 </HeaderTemplate>
                 <ItemTemplate>
-                  <asp:dropdownlist id="ddlToolbars" runat="server" Width="200">
+                  <asp:dropdownlist id="ddlToolbars" runat="server" CssClass="DefaultDropDown" Width="200">
 	              </asp:dropdownlist>
                 </ItemTemplate>
               </asp:TemplateField>

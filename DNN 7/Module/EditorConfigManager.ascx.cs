@@ -290,7 +290,7 @@ namespace WatchersNET.CKEditor.Module
         {
             ClientResourceManager.RegisterStyleSheet(
                 this.Page,
-                "//ajax.googleapis.com/ajax/libs/jqueryui/1/themes/blitzer/jquery-ui.css");
+                "//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/blitzer/jquery-ui.css");
 
             ClientResourceManager.RegisterStyleSheet(
                 this.Page,
@@ -323,7 +323,7 @@ namespace WatchersNET.CKEditor.Module
                 var jqueryUiScriptLink = new HtmlGenericControl("script");
 
                 jqueryUiScriptLink.Attributes["type"] = "text/javascript";
-                jqueryUiScriptLink.Attributes["src"] = "//ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js";
+                jqueryUiScriptLink.Attributes["src"] = "//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js";
 
                 scriptHolder.Controls.Add(jqueryUiScriptLink);
             }
@@ -339,7 +339,7 @@ namespace WatchersNET.CKEditor.Module
                     this,
                     this.pageType,
                     "jquery.ui.Latest",
-                    "//ajax.googleapis.com/ajax/libs/jqueryui/1/jquery-ui.min.js");
+                    "//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js");
             }
 
            ScriptManager.RegisterClientScriptInclude(

@@ -830,13 +830,33 @@ namespace WatchersNET.CKEditor.Web
         /// </param>
         protected override void Render(HtmlTextWriter outWriter)
         {
-            outWriter.Write("<div>");
-            outWriter.Write("<noscript>");
-            outWriter.Write("<p>");
+            // Render loading div
+            outWriter.AddAttribute(
+                HtmlTextWriterAttribute.Id,
+                string.Format("ckeditorLoading{0}", this.ClientID.Replace("-", string.Empty).Replace(".", string.Empty)));
+            outWriter.RenderBeginTag(HtmlTextWriterTag.Div);
+
+            outWriter.AddAttribute(HtmlTextWriterAttribute.Class, "ckeditorLoader");
+            outWriter.RenderBeginTag(HtmlTextWriterTag.Div);
+            outWriter.Write("CKEditor is loading, please wait...");
+            outWriter.RenderEndTag();
+
+            outWriter.AddAttribute(HtmlTextWriterAttribute.Class, "ckeditorLoaderText");
+            outWriter.RenderBeginTag(HtmlTextWriterTag.Div);
+            outWriter.Write("CKEditor is loading, please wait...");
+            outWriter.RenderEndTag();
+
+            outWriter.RenderEndTag();
+
+            outWriter.RenderBeginTag(HtmlTextWriterTag.Div);
+            outWriter.RenderBeginTag(HtmlTextWriterTag.Noscript);
+            outWriter.RenderBeginTag(HtmlTextWriterTag.P);
+
             outWriter.Write(Localization.GetString("NoJava.Text", SResXFile));
-            outWriter.Write("</p>");
-            outWriter.Write("</noscript>");
-            outWriter.Write("</div>");
+
+            outWriter.RenderEndTag();
+            outWriter.RenderEndTag();
+            outWriter.RenderEndTag();
 
             outWriter.Write(
                 "<input type=\"hidden\" name=\"CKDNNporid\" id=\"CKDNNporid\" value=\"{0}\">",
@@ -844,24 +864,29 @@ namespace WatchersNET.CKEditor.Web
 
             outWriter.Write(outWriter.NewLine);
 
-            var styleWidth = !string.IsNullOrEmpty(this.currentSettings.Config.Width)
-                                 ? string.Format(" style=\"width:{0};\"", this.currentSettings.Config.Width)
-                                 : string.Empty;
+            if (!string.IsNullOrEmpty(this.currentSettings.Config.Width))
+            {
+                outWriter.AddAttribute(
+                    HtmlTextWriterAttribute.Style,
+                    string.Format("width:{0};", this.currentSettings.Config.Width));
+            }
 
-            outWriter.Write("<div{0}>", styleWidth);
+            outWriter.RenderBeginTag(HtmlTextWriterTag.Div);
 
             // Write text area
-            outWriter.AddAttribute("id", this.ClientID.Replace("-", string.Empty).Replace(".", string.Empty));
-            outWriter.AddAttribute("name", this.UniqueID);
+            outWriter.AddAttribute(
+                HtmlTextWriterAttribute.Id,
+                this.ClientID.Replace("-", string.Empty).Replace(".", string.Empty));
+            outWriter.AddAttribute(HtmlTextWriterAttribute.Name, this.UniqueID);
 
-            outWriter.AddAttribute("cols", "80");
-            outWriter.AddAttribute("rows", "10");
+            outWriter.AddAttribute(HtmlTextWriterAttribute.Cols, "80");
+            outWriter.AddAttribute(HtmlTextWriterAttribute.Rows, "10");
 
-            outWriter.AddAttribute("class", "editor");
+            outWriter.AddAttribute(HtmlTextWriterAttribute.Class, "editor");
 
-            outWriter.AddAttribute("style", "visibility: hidden; display: none;");
+            outWriter.AddAttribute(HtmlTextWriterAttribute.Style, "visibility: hidden; display: none;");
 
-            outWriter.RenderBeginTag("textarea");
+            outWriter.RenderBeginTag(HtmlTextWriterTag.Textarea);
 
             if (string.IsNullOrEmpty(this.Value))
             {
@@ -877,7 +902,7 @@ namespace WatchersNET.CKEditor.Web
 
             outWriter.RenderEndTag();
 
-            outWriter.Write("</div>");
+            outWriter.RenderEndTag();
 
             this.IsRendered = true;
 
@@ -888,22 +913,35 @@ namespace WatchersNET.CKEditor.Web
                 return;
             }
 
-            outWriter.Write("<p style=\"text-align:center;\">");
-
             if (PortalSecurity.IsInRoles(this._portalSettings.AdministratorRoleName))
             {
-                outWriter.Write(
-                    "<a href=\"javascript:void(0)\" onclick=\"window.open('{0}','Options','width=850,height=750,resizable=yes')\" class=\"CommandButton\" id=\"{1}\">{2}</a>",
+                outWriter.AddAttribute(HtmlTextWriterAttribute.Style, "text-align:center;");
+                outWriter.RenderBeginTag(HtmlTextWriterTag.P);
+
+                outWriter.AddAttribute(HtmlTextWriterAttribute.Href, "javascript:void(0)");
+
+                outWriter.AddAttribute(
+                    HtmlTextWriterAttribute.Onclick,
                     string.Format(
-                        "{0}?mid={1}&amp;tid={2}&amp;minc={3}&amp;PortalID={4}&amp;langCode={5}",
+                        "window.open('{0}?mid={1}&amp;tid={2}&amp;minc={3}&amp;PortalID={4}&amp;langCode={5}','Options','width=850,height=750,resizable=yes')",
                         Globals.ResolveUrl("~/Providers/HtmlEditorProviders/CKEditor/Options.aspx"),
                         this.parentModulId,
                         this._portalSettings.ActiveTab.TabID,
                         this.ID,
                         this._portalSettings.PortalId,
-                        CultureInfo.CurrentCulture.Name),
-                    string.Format("{0}_ckoptions", this.ClientID.Replace("-", string.Empty).Replace(".", string.Empty)),
-                    Localization.GetString("Options.Text", SResXFile));
+                        CultureInfo.CurrentCulture.Name));
+
+                outWriter.AddAttribute(HtmlTextWriterAttribute.Class, "CommandButton");
+
+                outWriter.AddAttribute(
+                    HtmlTextWriterAttribute.Id,
+                    string.Format("{0}_ckoptions", this.ClientID.Replace("-", string.Empty).Replace(".", string.Empty)));
+
+                outWriter.RenderBeginTag(HtmlTextWriterTag.A);
+
+                outWriter.Write(Localization.GetString("Options.Text", SResXFile));
+
+                outWriter.RenderEndTag();
             }
 
             /////////////////
@@ -1409,6 +1447,9 @@ namespace WatchersNET.CKEditor.Web
 
             // firefox maximize fix
             editorScript.Append("CKEDITOR.on('instanceReady', function (ev) {");
+            editorScript.AppendFormat(
+                            "document.getElementById('ckeditorLoading{0}').style.display = 'none';",
+                            this.ClientID.Replace("-", string.Empty).Replace(".", string.Empty));
             editorScript.Append("ev.editor.on('maximize', function () {");
             editorScript.Append("if (ev.editor.commands.maximize.state == 1) {");
             editorScript.Append("var mainDocument = CKEDITOR.document;");

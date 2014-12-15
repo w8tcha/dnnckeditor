@@ -89,6 +89,10 @@ if (jQuery(".settingValueInputNumeric").spinner) {
 	jQuery(".settingValueInputNumeric").spinner();
 }
 
+if (jQuery.ui.selectmenu !== undefined) {
+    jQuery(".DefaultDropDown").selectmenu();
+} 
+
 if (jQuery(".settingValueContainer").tooltip) {
 	jQuery(".settingValueInputNumeric").tooltip();
 }

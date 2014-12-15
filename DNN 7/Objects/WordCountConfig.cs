@@ -25,11 +25,22 @@ namespace WatchersNET.CKEditor.Objects
         /// </summary>
         public WordCountConfig()
         {
+            this.ShowParagraphs = true;
             this.ShowWordCount = true;
             this.ShowCharCount = false;
-            /*this.CharLimit = "unlimited";
-            this.WordLimit = "unlimited";*/
+            this.CountSpacesAsChars = false;
+            this.CountHTML = false;
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [show paragraphs].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [show paragraphs]; otherwise, <c>false</c>.
+        /// </value>
+        [XmlAttribute("showParagraphs")]
+        [Description("Whether or not you want to show the Paragraphs Count.")]
+        public bool ShowParagraphs { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [show char count].
@@ -50,25 +61,25 @@ namespace WatchersNET.CKEditor.Objects
         [XmlAttribute("showWordCount")]
         [Description("Whether or not you want to show the Char Count")]
         public bool ShowWordCount { get; set; }
-        /*
-        /// <summary>
-        /// Gets or sets the char limit.
-        /// </summary>
-        /// <value>
-        /// The char limit.
-        /// </value>
-        [XmlAttribute("charLimit")]
-        [Description("Option to set a maximum limit of Chars in Numbers or use 'unlimited'")]
-        public string CharLimit { get; set; }
 
         /// <summary>
-        /// Gets or sets the word limit.
+        /// Gets or sets a value indicating whether [count spaces as chars].
         /// </summary>
         /// <value>
-        /// The word limit.
+        ///   <c>true</c> if [count spaces as chars]; otherwise, <c>false</c>.
         /// </value>
-        [XmlAttribute("wordLimit")]
-        [Description("Option to set a maximum limit of Words in Numbers or use 'unlimited'")]
-        public string WordLimit { get; set; }*/
+        [XmlAttribute("countSpacesAsChars")]
+        [Description("Whether or not you want to show the Char Count")]
+        public bool CountSpacesAsChars { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [count HTML].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [count HTML]; otherwise, <c>false</c>.
+        /// </value>
+        [XmlAttribute("countHTML")]
+        [Description("Whether or not to include Html chars in the Char Count")]
+        public bool CountHTML { get; set; }
     }
 }

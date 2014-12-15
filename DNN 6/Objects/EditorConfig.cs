@@ -37,7 +37,6 @@ namespace WatchersNET.CKEditor.Objects
             this.AutoUpdateElement = true;
             this.BaseFloatZIndex = 10000;
             this.BasicEntities = true;
-            this.BlockedKeystrokes = "[ CKEDITOR.CTRL + 66, CKEDITOR.CTRL + 73, CKEDITOR.CTRL + 85 ]";
             this.BrowserContextMenuOnCtrl = true;
             this.Clipboard_DefaultContentType = "html";
             this.CodeMirror = new CodeMirror();

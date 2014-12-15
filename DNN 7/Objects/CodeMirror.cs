@@ -24,63 +24,41 @@ namespace WatchersNET.CKEditor.Objects
         /// </summary>
         public CodeMirror()
         {
-            this.Theme = "default";
-            this.LineNumbers = true;
-            this.LineWrapping = true;
-            this.MatchBrackets = true;
+            this.AutoCloseBrackets = true;
             this.AutoCloseTags = false;
-            this.EnableSearchTools = true;
-            this.EnableCodeFolding = true;
-            this.EnableCodeFormatting = true;
             this.AutoFormatOnStart = false;
             this.AutoFormatOnUncomment = true;
-            this.HighlightActiveLine = true;
+            this.ContinueComments = true;
+            this.EnableCodeFolding = true;
+            this.EnableCodeFormatting = true;
+            this.EnableSearchTools = true;
             this.HighlightMatches = true;
-            this.ShowTabs = false;
-            this.ShowFormatButton = true;
+            this.IndentWithTabs = false;
+            this.LineNumbers = true;
+            this.LineWrapping = true;
+            this.Mode = "htmlmixed";
+            this.MatchBrackets = true;
+            this.MatchTags = true;
+            this.ShowAutoCompleteButton = true;
             this.ShowCommentButton = true;
+            this.ShowFormatButton = true;
+            this.ShowSearchButton = true;
+            this.ShowTrailingSpace = true;
             this.ShowUncommentButton = true;
+            this.StyleActiveLine = true;
+            this.Theme = "default";
+            this.UseBeautify = false;
         }
 
         /// <summary>
-        /// Gets or sets the theme.
+        /// Gets or sets a value indicating whether [automatic close brackets].
         /// </summary>
         /// <value>
-        /// The theme.
+        /// <c>true</c> if [automatic close brackets]; otherwise, <c>false</c>.
         /// </value>
-        [XmlAttribute("theme")]
-        [Description("Set this to the theme you wish to use (codemirror themes)")]
-        public string Theme { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether [line numbers].
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if [line numbers]; otherwise, <c>false</c>.
-        /// </value>
-        [XmlAttribute("lineNumbers")]
-        [Description("Whether or not you want to show line numbers")]
-        public bool LineNumbers { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether [line wrapping].
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if [line wrapping]; otherwise, <c>false</c>.
-        /// </value>
-        [XmlAttribute("lineWrapping")]
-        [Description("Whether or not you want to use line wrapping")]
-        public bool LineWrapping { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether [match brackets].
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if [match brackets]; otherwise, <c>false</c>.
-        /// </value>
-        [XmlAttribute("matchBrackets")]
-        [Description("Whether or not you want to highlight matching braces")]
-        public bool MatchBrackets { get; set; }
+        [XmlAttribute("autoCloseBrackets")]
+        [Description("Whether or not you want Brackets to automatically close themselves")]
+        public bool AutoCloseBrackets { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [auto close tags].
@@ -91,36 +69,6 @@ namespace WatchersNET.CKEditor.Objects
         [XmlAttribute("autoCloseTags")]
         [Description("Whether or not you want tags to automatically close themselves")]
         public bool AutoCloseTags { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether [enable search tools].
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if [enable search tools]; otherwise, <c>false</c>.
-        /// </value>
-        [XmlAttribute("enableSearchTools")]
-        [Description("Whether or not to enable search tools, CTRL+F (Find), CTRL+SHIFT+F (Replace), CTRL+SHIFT+R (Replace All), CTRL+G (Find Next), CTRL+SHIFT+G (Find Previous)")]
-        public bool EnableSearchTools { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether [enable code folding].
-        /// </summary>
-        /// <value>
-        ///   <c>true</c> if [enable code folding]; otherwise, <c>false</c>.
-        /// </value>
-        [XmlAttribute("enableCodeFolding")]
-        [Description("Whether or not you wish to enable code folding (requires 'lineNumbers' to be set to 'true')")]
-        public bool EnableCodeFolding { get; set; }
-
-        /// <summary>
-        /// Gets or sets a value indicating whether [enable code formatting].
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if [enable code formatting]; otherwise, <c>false</c>.
-        /// </value>
-        [XmlAttribute("enableCodeFormatting")]
-        [Description("Whether or not to enable code formatting")]
-        public bool EnableCodeFormatting { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [auto format on start].
@@ -143,14 +91,45 @@ namespace WatchersNET.CKEditor.Objects
         public bool AutoFormatOnUncomment { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether [highlight active line].
+        /// Gets or sets a value indicating whether [continue comments].
         /// </summary>
         /// <value>
-        ///   <c>true</c> if [highlight active line]; otherwise, <c>false</c>.
+        ///   <c>true</c> if [continue comments]; otherwise, <c>false</c>.
         /// </value>
-        [XmlAttribute("highlightActiveLine")]
-        [Description("Whether or not to highlight the currently active line")]
-        public bool HighlightActiveLine { get; set; }
+        [XmlAttribute("continueComments")]
+        [Description("Whether or not to continue a comment when you press Enter inside a comment block")]
+        public bool ContinueComments { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [enable code folding].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [enable code folding]; otherwise, <c>false</c>.
+        /// </value>
+        [XmlAttribute("enableCodeFolding")]
+        [Description("Whether or not you wish to enable code folding (requires 'lineNumbers' to be set to 'true')")]
+        public bool EnableCodeFolding { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [enable code formatting].
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if [enable code formatting]; otherwise, <c>false</c>.
+        /// </value>
+        [XmlAttribute("enableCodeFormatting")]
+        [Description("Whether or not to enable code formatting")]
+        public bool EnableCodeFormatting { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [enable search tools].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [enable search tools]; otherwise, <c>false</c>.
+        /// </value>
+        [XmlAttribute("enableSearchTools")]
+        [Description(
+            "Whether or not to enable search tools, CTRL+F (Find), CTRL+SHIFT+F (Replace), CTRL+SHIFT+R (Replace All), CTRL+G (Find Next), CTRL+SHIFT+G (Find Previous)")]
+        public bool EnableSearchTools { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [highlight matches].
@@ -163,24 +142,74 @@ namespace WatchersNET.CKEditor.Objects
         public bool HighlightMatches { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether [show tabs].
+        /// Gets or sets a value indicating whether [indent with tabs].
         /// </summary>
         /// <value>
-        ///   <c>true</c> if [show tabs]; otherwise, <c>false</c>.
+        ///   <c>true</c> if [indent with tabs]; otherwise, <c>false</c>.
         /// </value>
-        [XmlAttribute("showTabs")]
-        [Description("Whether or not to display tabs")]
-        public bool ShowTabs { get; set; }
+        [XmlAttribute("indentWithTabs")]
+        [Description("Whether, when indenting, the first N*tabSize spaces should be replaced by N tabs")]
+        public bool IndentWithTabs { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether [show format button].
+        /// Gets or sets a value indicating whether [line numbers].
         /// </summary>
         /// <value>
-        ///   <c>true</c> if [show format button]; otherwise, <c>false</c>.
+        ///   <c>true</c> if [line numbers]; otherwise, <c>false</c>.
         /// </value>
-        [XmlAttribute("showFormatButton")]
-        [Description("Whether or not to show the format button on the toolbar")]
-        public bool ShowFormatButton { get; set; }
+        [XmlAttribute("lineNumbers")]
+        [Description("Whether or not you want to show line numbers")]
+        public bool LineNumbers { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [line wrapping].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [line wrapping]; otherwise, <c>false</c>.
+        /// </value>
+        [XmlAttribute("lineWrapping")]
+        [Description("Whether or not you want to use line wrapping")]
+        public bool LineWrapping { get; set; }
+
+        /// <summary>
+        /// Gets or sets the theme.
+        /// </summary>
+        /// <value>
+        /// The theme.
+        /// </value>
+        [XmlAttribute("mode")]
+        [Description("Defines the language specific mode")]
+        public string Mode { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [match brackets].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [match brackets]; otherwise, <c>false</c>.
+        /// </value>
+        [XmlAttribute("matchBrackets")]
+        [Description("Whether or not you want to highlight matching braces")]
+        public bool MatchBrackets { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [match tags].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [match tags]; otherwise, <c>false</c>.
+        /// </value>
+        [XmlAttribute("matchTags")]
+        [Description("Whether or not you want to highlight matching tags")]
+        public bool MatchTags { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [show automatic complete button].
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if [show automatic complete button]; otherwise, <c>false</c>.
+        /// </value>
+        [XmlAttribute("showAutoCompleteButton")]
+        [Description("Whether or not to show the auto complete button on the toolbar")]
+        public bool ShowAutoCompleteButton { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [show comment button].
@@ -193,6 +222,37 @@ namespace WatchersNET.CKEditor.Objects
         public bool ShowCommentButton { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether [show format button].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [show format button]; otherwise, <c>false</c>.
+        /// </value>
+        [XmlAttribute("showFormatButton")]
+        [Description("Whether or not to show the format button on the toolbar")]
+        public bool ShowFormatButton { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [show search button].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [show search button]; otherwise, <c>false</c>.
+        /// </value>
+        [XmlAttribute("showSearchButton")]
+        [Description("Whether or not to show the search button on the toolbar")]
+        public bool ShowSearchButton { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [show trailing space].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [show trailing space]; otherwise, <c>false</c>.
+        /// </value>
+        [XmlAttribute("showTrailingSpace")]
+        [Description(
+            "Whether or not to add the CSS class cm-trailingspace to stretches of whitespace at the end of lines.")]
+        public bool ShowTrailingSpace { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether [show uncomment button].
         /// </summary>
         /// <value>
@@ -201,5 +261,35 @@ namespace WatchersNET.CKEditor.Objects
         [XmlAttribute("showUncommentButton")]
         [Description("Whether or not to show the uncomment button on the toolbar")]
         public bool ShowUncommentButton { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [style active line].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [style active line]; otherwise, <c>false</c>.
+        /// </value>
+        [XmlAttribute("highlightActiveLine")]
+        [Description("Whether or not to highlight the currently active line")]
+        public bool StyleActiveLine { get; set; }
+
+        /// <summary>
+        /// Gets or sets the theme.
+        /// </summary>
+        /// <value>
+        /// The theme.
+        /// </value>
+        [XmlAttribute("theme")]
+        [Description("Set this to the theme you wish to use (codemirror themes)")]
+        public string Theme { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [use beautify].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [use beautify]; otherwise, <c>false</c>.
+        /// </value>
+        [XmlAttribute("useBeautify")]
+        [Description("Whether or not to use Beautify for auto formatting")]
+        public bool UseBeautify { get; set; }
     }
 }
