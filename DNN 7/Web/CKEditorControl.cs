@@ -405,6 +405,12 @@ namespace WatchersNET.CKEditor.Web
                 }
 
                 if (!string.IsNullOrEmpty(this._settings["extraPlugins"])
+                    && this._settings["extraPlugins"].Contains("syntaxhighlight"))
+                {
+                    this._settings["extraPlugins"] = this._settings["extraPlugins"].Replace("syntaxhighlight", "codesnippet");
+                }
+
+                if (!string.IsNullOrEmpty(this._settings["extraPlugins"])
                     && this._settings["extraPlugins"].Contains("xmlstyles"))
                 {
                     this._settings["extraPlugins"] = this._settings["extraPlugins"].Replace(",xmlstyles", string.Empty);
@@ -765,12 +771,12 @@ namespace WatchersNET.CKEditor.Web
                 {
                     if (this.currentSettings.InjectSyntaxJs)
                     {
-                        if (postedValue.Contains("<pre class=\"brush:") && !postedValue.Contains("shCore.js"))
+                        if (postedValue.Contains("<code class=\"language-") && !postedValue.Contains("highlight.pack.js"))
                         {
-                            // Add Syntax Highlighter Plugin
+                            // Add CodeSnipped Plugin JS/CSS
                             postedValue =
                                 string.Format(
-                                    "<!-- Injected Syntax Highlight Code --><script type=\"text/javascript\" src=\"{0}plugins/syntaxhighlight/scripts/shCore.js\"></script><link type=\"text/css\" rel=\"stylesheet\" href=\"{0}plugins/syntaxhighlight/styles/shCore.css\"/><script type=\"text/javascript\">SyntaxHighlighter.all();</script>{1}",
+                                    "<!-- Injected  Highlight.js Code --><script type=\"text/javascript\" src=\"{0}plugins/codesnippet/lib/highlight/highlight.pack.js\"></script><link type=\"text/css\" rel=\"stylesheet\" href=\"{0}plugins/codesnippet/lib/highlight/styles/default.css\"/><script type=\"text/javascript\">window.onload = function() {{var aCodes = document.getElementsByTagName('pre');for (var i=0; i < aCodes.length;i++){{hljs.highlightBlock(aCodes[i]);}} }};</script>{1}",
                                     Globals.ResolveUrl("~/Providers/HtmlEditorProviders/CKEditor/"),
                                     postedValue);
                         }
@@ -780,7 +786,7 @@ namespace WatchersNET.CKEditor.Web
                             // Add MathJax Plugin
                             postedValue =
                                 string.Format(
-                                    "<!-- Injected MathJax Code --><script type=\"text/javascript\" src=\"//cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML\"></script>{0}",
+                                    "<!-- Injected MathJax Code --><script type=\"text/javascript\" src=\"//cdn.mathjax.org/mathjax/2.3-latest/MathJax.js?config=TeX-AMS_HTML\"></script>{0}",
                                     postedValue);
                         }
                     }

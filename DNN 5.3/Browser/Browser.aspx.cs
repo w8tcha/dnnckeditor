@@ -1136,14 +1136,7 @@ namespace WatchersNET.CKEditor.Browser
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected void Syncronize_Click(object sender, EventArgs e)
         {
-            var currentFolderInfo = Utility.ConvertFilePathToFolderInfo(this.lblCurrentDir.Text, this._portalSettings);
-
-            FileSystemUtils.SynchronizeFolder(
-                this._portalSettings.PortalId,
-                currentFolderInfo.PhysicalPath,
-                currentFolderInfo.FolderPath,
-                false,
-                this._portalSettings.HideFoldersEnabled);
+            this.SyncCurrentFolder();
 
             // Reload Folder
             this.ShowFilesIn(this.lblCurrentDir.Text);
@@ -2221,10 +2214,10 @@ namespace WatchersNET.CKEditor.Browser
         {
             var scriptSelected = new StringBuilder();
 
-            scriptSelected.Append("var editor = window.top.opener;");
-            scriptSelected.Append("if (typeof(CKEDITOR) !== 'undefined') {");
+            scriptSelected.Append("var parentCKEDITOR = window.top.opener.CKEDITOR;");
+            scriptSelected.Append("if (typeof(parentCKEDITOR) !== 'undefined') {");
             scriptSelected.AppendFormat(
-                "var selection = CKEDITOR.instances.{0}.getSelection(),", this.request.QueryString["CKEditor"]);
+                "var selection = parentCKEDITOR.instances.{0}.getSelection(),", this.request.QueryString["CKEditor"]);
             scriptSelected.Append("element = selection.getStartElement();");
 
             scriptSelected.Append("if( element.getName()  == 'img')");
@@ -3176,9 +3169,9 @@ namespace WatchersNET.CKEditor.Browser
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void UploadNow_Click(object sender, EventArgs e)
         {
-            this.ShowFilesIn(this.lblCurrentDir.Text);
+            this.SyncCurrentFolder();
 
-            //this.GoToSelectedFile(fileName);
+            this.ShowFilesIn(this.lblCurrentDir.Text, true);
 
             this.panUploadDiv.Visible = false;
         }
@@ -3508,6 +3501,21 @@ namespace WatchersNET.CKEditor.Browser
                     this.AcceptFileTypes = this.extensionWhiteList.Replace(",", "|");
                     break;
             }
+        }
+
+        /// <summary>
+        /// Synchronizes the current folder.
+        /// </summary>
+        private void SyncCurrentFolder()
+        {
+            var currentFolderInfo = Utility.ConvertFilePathToFolderInfo(this.lblCurrentDir.Text, this._portalSettings);
+
+            FileSystemUtils.SynchronizeFolder(
+                this._portalSettings.PortalId,
+                currentFolderInfo.PhysicalPath,
+                currentFolderInfo.FolderPath,
+                false,
+                this._portalSettings.HideFoldersEnabled);
         }
 
         #endregion

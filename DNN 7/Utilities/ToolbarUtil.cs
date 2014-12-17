@@ -566,9 +566,9 @@ namespace WatchersNET.CKEditor.Utilities
                                                          new ToolbarButton
                                                              {
                                                                  ToolbarName =
-                                                                     "syntaxhighlight",
+                                                                     "CodeSnippet",
                                                                  ToolbarIcon =
-                                                                     "syntaxhighlight.gif"
+                                                                     "codesnippet.png"
                                                              },
                                                          new ToolbarButton
                                                              {
@@ -822,7 +822,7 @@ namespace WatchersNET.CKEditor.Utilities
                                                 "Image",
                                                 "Mathjax",
                                                 "oembed",
-                                                "syntaxhighlight",
+                                                "CodeSnippet",
                                                 "Table",
                                                 "HorizontalRule",
                                                 "Smiley",

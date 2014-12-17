@@ -237,8 +237,8 @@
     <ToolbarIcon>oEmbed.png</ToolbarIcon>
   </ToolbarButton>
   <ToolbarButton>
-    <ToolbarName>syntaxhighlight</ToolbarName>
-    <ToolbarIcon>syntaxhighlight.gif</ToolbarIcon>
+    <ToolbarName>CodeSnippet</ToolbarName>
+    <ToolbarIcon>codesnippet.png</ToolbarIcon>
   </ToolbarButton>
   <ToolbarButton>
     <ToolbarName>qrcodes</ToolbarName>

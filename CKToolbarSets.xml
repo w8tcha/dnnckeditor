@@ -204,7 +204,7 @@
           <string>Image</string>
           <string>Mathjax</string>
           <string>oembed</string>
-          <string>syntaxhighlight</string>
+          <string>CodeSnippet</string>
           <string>Table</string>
           <string>HorizontalRule</string>
           <string>Smiley</string>
