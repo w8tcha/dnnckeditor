@@ -1055,16 +1055,16 @@ namespace WatchersNET.CKEditor.Browser
 
                         var startFolder = this.StartingDir();
 
-                        if (!Utility.IsInRoles(this._portalSettings.AdministratorRoleName, this._portalSettings))
+                        /*if (!Utility.IsInRoles(this._portalSettings.AdministratorRoleName, this._portalSettings))
                         {
                             // Hide physical file Path
                             this.lblCurrentDir.Visible = false;
                             this.lblCurrent.Visible = false;
-                        }
+                        }*/
 
                         this.FillFolderTree(startFolder);
 
-                        bool folderSelected = false;
+                        var folderSelected = false;
 
                         if (!string.IsNullOrEmpty(ckFileUrl))
                         {
@@ -1385,6 +1385,18 @@ namespace WatchersNET.CKEditor.Browser
             {
                 this.panThumb.Visible = false;
             }
+        }
+
+        /// <summary>
+        /// Shows the files in directory.
+        /// </summary>
+        /// <param name="directory">The directory.</param>
+        /// <param name="pagerChanged">if set to <c>true</c> [pager changed].</param>
+        protected void ShowFilesIn(string directory, bool pagerChanged = false)
+        {
+            var currentFolderInfo = Utility.ConvertFilePathToFolderInfo(directory, this._portalSettings);
+
+            this.ShowFilesIn(currentFolderInfo, pagerChanged);
         }
 
         /// <summary>
@@ -2204,6 +2216,8 @@ namespace WatchersNET.CKEditor.Browser
                 "var selection = parentCKEDITOR.instances.{0}.getSelection(),", this.request.QueryString["CKEditor"]);
             scriptSelected.Append("element = selection.getStartElement();");
 
+            scriptSelected.Append("if (element !== null) {");
+
             scriptSelected.Append("if( element.getName()  == 'img')");
             scriptSelected.Append("{");
 
@@ -2231,6 +2245,8 @@ namespace WatchersNET.CKEditor.Browser
             scriptSelected.Append("if (location.href.indexOf('reload')==-1) location.replace(location.href+'&reload=true');");
 
             scriptSelected.Append("} }");
+
+            scriptSelected.Append("}");
 
             scriptSelected.Append("}");
 
@@ -2563,22 +2579,15 @@ namespace WatchersNET.CKEditor.Browser
         /// <summary>
         /// Shows the files in directory.
         /// </summary>
-        /// <param name="directory">The directory.</param>
-        /// <param name="pagerChanged">if set to <c>true</c> [pager changed].</param>
-        protected void ShowFilesIn(string directory, bool pagerChanged = false)
-        {
-            var currentFolderInfo = Utility.ConvertFilePathToFolderInfo(directory, this._portalSettings);
-
-            this.ShowFilesIn(currentFolderInfo, pagerChanged);
-        }
-
-        /// <summary>
-        /// Shows the files in directory.
-        /// </summary>
         /// <param name="currentFolderInfo">The current folder information.</param>
         /// <param name="pagerChanged">if set to <c>true</c> [pager changed].</param>
         private void ShowFilesIn(IFolderInfo currentFolderInfo, bool pagerChanged = false)
         {
+            this.CurrentPathInfo.Text = string.Format(
+                "{0}/{1}",
+                Localization.GetString("Root.Text", this.ResXFile, this.LanguageCode),
+                currentFolderInfo.FolderPath);
+
             this.CheckFolderAccess(currentFolderInfo.FolderID, false);
 
             if (!pagerChanged)
@@ -3460,7 +3469,6 @@ namespace WatchersNET.CKEditor.Browser
             var newDir = this.FoldersTree.SelectedNode.Value;
 
             this.lblCurrentDir.Text = !newDir.EndsWith("\\") ? string.Format("{0}\\", newDir) : newDir;
-
             this.ShowFilesIn(newDir);
 
             // Reset selected file

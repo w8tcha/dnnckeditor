@@ -150,8 +150,11 @@
       </table>
       </asp:Panel>
       <asp:Panel id="panLinkMode" runat="server">
-        <p style="margin:5px 0 5px 5px"><strong><asp:Label id="lblCurrent" runat="server" text="Current Directory:"></asp:Label></strong> <asp:Label id="lblCurrentDir" runat="server"></asp:Label></p>
-      
+          <p class="CurrentDirInfo">
+              <strong><asp:Label id="lblCurrent" runat="server" text="Current Directory:"></asp:Label></strong> 
+              <asp:Label id="lblCurrentDir" runat="server" Visible="False"></asp:Label>
+              <asp:Label ID="CurrentPathInfo" runat="server"></asp:Label>
+          </p>
       <asp:Panel id="panUploadDiv" runat="server" Visible="false">
       <div class="ModalDialog_overlayBG" ></div>
       <div class="MessageBox">

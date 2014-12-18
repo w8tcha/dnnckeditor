@@ -1058,18 +1058,18 @@ namespace WatchersNET.CKEditor.Browser
 
                     this.GetLanguageList();
 
-                    string sStartingDir = this.StartingDir();
+                    var startFolder = this.StartingDir();
 
-                    if (!Utility.IsInRoles(this._portalSettings.AdministratorRoleName, this._portalSettings))
+                    /*if (!Utility.IsInRoles(this._portalSettings.AdministratorRoleName, this._portalSettings))
                     {
                         // Hide physical file Path
                         this.lblCurrentDir.Visible = false;
                         this.lblCurrent.Visible = false;
-                    }
+                    }*/
 
-                    this.ShowDirectoriesIn(sStartingDir);
+                    this.FillFolderTree(startFolder);
 
-                    bool folderSelected = false;
+                    var folderSelected = false;
 
                     if (!string.IsNullOrEmpty(ckFileUrl))
                     {
@@ -1087,9 +1087,10 @@ namespace WatchersNET.CKEditor.Browser
 
                     if (!folderSelected)
                     {
-                        this.lblCurrentDir.Text = sStartingDir;
+                        this.lblCurrentDir.Text = startFolder.PhysicalPath;
+                        this.CurrentPathInfo.Text = startFolder.FolderPath;
 
-                        this.ShowFilesIn(sStartingDir);
+                        this.ShowFilesIn(startFolder.PhysicalPath);
                     }
 
                     this.FillQualityPrecentages();
@@ -1670,14 +1671,12 @@ namespace WatchersNET.CKEditor.Browser
         /// <summary>
         /// Fill the Folder TreeView with all (Sub)Directories
         /// </summary>
-        /// <param name="path">
-        /// Root Path of the TreeView
-        /// </param>
-        private void FillFolderTree(string path)
+        /// <param name="currentFolderInfo">The current folder information.</param>
+        private void FillFolderTree(FolderInfo currentFolderInfo)
         {
             this.FoldersTree.Nodes.Clear();
 
-            DirectoryInfo dirInfo = new DirectoryInfo(path);
+            DirectoryInfo dirInfo = new DirectoryInfo(currentFolderInfo.PhysicalPath);
 
             RadTreeNode folderNode = new RadTreeNode
                 {
@@ -1687,7 +1686,7 @@ namespace WatchersNET.CKEditor.Browser
                     ExpandedImageUrl = "Images/folderOpen.gif"
                 };
 
-            switch (this.GetStorageLocationType(path))
+            switch (this.GetStorageLocationType(currentFolderInfo.PhysicalPath))
             {
                 case FolderController.StorageLocationTypes.SecureFileSystem:
                     {
@@ -1707,7 +1706,7 @@ namespace WatchersNET.CKEditor.Browser
 
             this.FoldersTree.Nodes.Add(folderNode);
 
-            string sFolder = path;
+            string sFolder = currentFolderInfo.PhysicalPath;
 
             sFolder = sFolder.Substring(this._portalSettings.HomeDirectoryMapPath.Length).Replace("\\", "/");
 
@@ -1796,62 +1795,71 @@ namespace WatchersNET.CKEditor.Browser
         /// <returns>
         /// Returns the Starting Directory.
         /// </returns>
-        private string StartingDir()
+        private FolderInfo StartingDir()
         {
-            var startingDir = this._portalSettings.HomeDirectoryMapPath;
+            var folderController = new FolderController();
+
+            FolderInfo startingFolderInfo = null;
 
             if (!this.currentSettings.BrowserRootDirId.Equals(-1))
             {
-                var rootFolder = new FolderController().GetFolderInfo(this._portalSettings.PortalId, this.currentSettings.BrowserRootDirId);
+                var rootFolder = folderController.GetFolderInfo(this._portalSettings.PortalId, this.currentSettings.BrowserRootDirId);
 
                 if (rootFolder != null)
                 {
-                    startingDir = rootFolder.PhysicalPath;
+                    startingFolderInfo = rootFolder;
                 }
             }
 
             if (Utility.IsInRoles(this._portalSettings.AdministratorRoleName, this._portalSettings))
             {
-                return startingDir;
+                return startingFolderInfo;
             }
 
             if (this.currentSettings.SubDirs)
             {
-                startingDir = this.GetUserFolder(startingDir);
+                startingFolderInfo = this.GetUserFolderInfo(startingFolderInfo.PhysicalPath);
             }
             else
             {
-                return startingDir;
+                return startingFolderInfo;
             }
 
-            if (Directory.Exists(startingDir))
+            if (Directory.Exists(startingFolderInfo.PhysicalPath))
             {
-                return startingDir;
+                return startingFolderInfo;
             }
 
-            string sFolderStart = startingDir;
+            var folderStart = startingFolderInfo.PhysicalPath;
 
-            sFolderStart =
-                sFolderStart.Substring(this._portalSettings.HomeDirectoryMapPath.Length).Replace(
+            folderStart =
+                folderStart.Substring(this._portalSettings.HomeDirectoryMapPath.Length).Replace(
                     "\\", "/");
+            
+            var folderId = folderController.AddFolder(this._portalSettings.PortalId, folderStart);
 
-            var folderId = new FolderController().AddFolder(this._portalSettings.PortalId, sFolderStart);
+            startingFolderInfo = folderController.GetFolderInfo(
+                this._portalSettings.PortalId,
+                folderId);
 
-            Directory.CreateDirectory(startingDir);
+            Directory.CreateDirectory(startingFolderInfo.PhysicalPath);
 
             this.SetFolderPermission(folderId);
 
-            return startingDir;
+            return startingFolderInfo;
         }
 
         /// <summary>
-        /// Gets the user folder ("userfiles\[USERID]").
+        /// Gets the user folder info.
         /// </summary>
         /// <param name="startingDir">The Starting Directory.</param>
         /// <returns>Returns the user folder path</returns>
-        private string GetUserFolder(string startingDir)
+        private FolderInfo GetUserFolderInfo(string startingDir)
         {
+            FolderInfo userFolderInfo; 
             var userFolderPath = Path.Combine(startingDir, "userfiles");
+
+            var folderController = new FolderController();
 
             // Create "userfiles" folder if not exists
             if (!Directory.Exists(userFolderPath))
@@ -1862,7 +1870,7 @@ namespace WatchersNET.CKEditor.Browser
                     folderStart.Substring(this._portalSettings.HomeDirectoryMapPath.Length).Replace(
                         "\\", "/");
 
-                var folderId = new FolderController().AddFolder(this._portalSettings.PortalId, folderStart);
+                var folderId = folderController.AddFolder(this._portalSettings.PortalId, folderStart);
 
                 Directory.CreateDirectory(userFolderPath);
 
@@ -1884,6 +1892,8 @@ namespace WatchersNET.CKEditor.Browser
 
                 var folderId = new FolderController().AddFolder(this._portalSettings.PortalId, folderStart);
 
+                userFolderInfo = folderController.GetFolderInfo(this._portalSettings.PortalId, folderId);
+
                 Directory.CreateDirectory(userFolderPath);
 
                 this.SetFolderPermission(folderId);
@@ -1892,13 +1902,13 @@ namespace WatchersNET.CKEditor.Browser
             }
             else
             {
-                var userFolderInfo = Utility.ConvertFilePathToFolderInfo(userFolderPath, this._portalSettings);
+                userFolderInfo = Utility.ConvertFilePathToFolderInfo(userFolderPath, this._portalSettings);
 
                 // make sure the user has the correct permissions set
                 this.SetUserFolderPermission(userFolderInfo.FolderID, UserController.GetCurrentUserInfo());
             }
 
-            return userFolderPath;
+            return userFolderInfo;
         }
 
         /// <summary>
@@ -2188,6 +2198,8 @@ namespace WatchersNET.CKEditor.Browser
             }
 
             this.lblCurrentDir.Text = selectedDir;
+            this.CurrentPathInfo.Text =
+                selectedDir.Substring(this._portalSettings.HomeDirectoryMapPath.Length).Replace("\\", "/");
 
             var newDir = this.lblCurrentDir.Text;
 
@@ -2220,6 +2232,8 @@ namespace WatchersNET.CKEditor.Browser
                 "var selection = parentCKEDITOR.instances.{0}.getSelection(),", this.request.QueryString["CKEditor"]);
             scriptSelected.Append("element = selection.getStartElement();");
 
+            scriptSelected.Append("if (element !== null) {");
+
             scriptSelected.Append("if( element.getName()  == 'img')");
             scriptSelected.Append("{");
             scriptSelected.Append("var imageUrl = element.getAttribute('src');");
@@ -2243,6 +2257,8 @@ namespace WatchersNET.CKEditor.Browser
             scriptSelected.Append("if (location.href.indexOf('reload')==-1) location.replace(location.href+'&reload=true');");
 
             scriptSelected.Append("} }");
+
+            scriptSelected.Append("}");
 
             scriptSelected.Append("}");
 
@@ -2399,17 +2415,6 @@ namespace WatchersNET.CKEditor.Browser
         }
 
         /// <summary>
-        /// The show directories in.
-        /// </summary>
-        /// <param name="dir">
-        /// The directory.
-        /// </param>
-        private void ShowDirectoriesIn(string dir)
-        {
-            this.FillFolderTree(dir);
-        }
-
-        /// <summary>
         /// Show Preview for the URLs
         /// </summary>
         /// <param name="fileName">
@@ -2547,6 +2552,11 @@ namespace WatchersNET.CKEditor.Browser
         {
             var currentFolderInfo = Utility.ConvertFilePathToFolderInfo(directory, this._portalSettings);
 
+            this.CurrentPathInfo.Text = string.Format(
+                "{0}/{1}",
+                Localization.GetString("Root.Text", this.ResXFile, this.LanguageCode),
+                currentFolderInfo.FolderPath);
+
             this.CheckFolderAccess(currentFolderInfo.FolderID, false);
 
             if (!pagerChanged)
@@ -2673,7 +2683,7 @@ namespace WatchersNET.CKEditor.Browser
 
                 int iCounter = 0;
 
-                string sUploadDir = this.StartingDir();
+                var uploadPhysicalPath = this.StartingDir().PhysicalPath;
 
                 if (!this.currentSettings.UploadDirId.Equals(-1) && !this.currentSettings.SubDirs)
                 {
@@ -2681,11 +2691,11 @@ namespace WatchersNET.CKEditor.Browser
 
                     if (uploadFolder != null)
                     {
-                        sUploadDir = uploadFolder.PhysicalPath;
+                        uploadPhysicalPath = uploadFolder.PhysicalPath;
                     }
                 }
 
-                string sFilePath = Path.Combine(sUploadDir, fileName);
+                string sFilePath = Path.Combine(uploadPhysicalPath, fileName);
 
                 if (File.Exists(sFilePath))
                 {
@@ -2693,15 +2703,15 @@ namespace WatchersNET.CKEditor.Browser
                     fileName = string.Format("{0}_{1}{2}", sFileNameNoExt, iCounter, Path.GetExtension(file.FileName));
 
                     // oFile.SaveAs(Path.Combine(sUploadDir, sFileName));
-                    FileSystemUtils.UploadFile(sUploadDir, file, fileName);
+                    FileSystemUtils.UploadFile(uploadPhysicalPath, file, fileName);
                 }
                 else
                 {
-                    FileSystemUtils.UploadFile(sUploadDir, file, fileName);
+                    FileSystemUtils.UploadFile(uploadPhysicalPath, file, fileName);
                 }
 
                 this.Response.Write("<script type=\"text/javascript\">");
-                this.Response.Write(this.GetJsUploadCode(fileName, MapUrl(sUploadDir)));
+                this.Response.Write(this.GetJsUploadCode(fileName, MapUrl(uploadPhysicalPath)));
                 this.Response.Write("</script>");
             }
             else
@@ -2789,7 +2799,11 @@ namespace WatchersNET.CKEditor.Browser
                         Directory.CreateDirectory(newDirPath);
                         var folderId = folderController.AddFolder(this._portalSettings.PortalId, sFolder, storageLocation, false, false);
 
+                        var folderInfo = folderController.GetFolderInfo(this._portalSettings.PortalId, folderId);
+
                         this.SetFolderPermission(folderId);
+
+                        this.CurrentPathInfo.Text = folderInfo.FolderPath;
                     }
 
                     this.lblCurrentDir.Text = string.Format("{0}\\", newDirPath);
@@ -2808,7 +2822,7 @@ namespace WatchersNET.CKEditor.Browser
                 }
                 finally
                 {
-                    this.ShowDirectoriesIn(this.StartingDir());
+                    this.FillFolderTree(this.StartingDir());
 
                     this.ShowFilesIn(newDirPath);
 
@@ -3429,6 +3443,8 @@ namespace WatchersNET.CKEditor.Browser
             var newDir = this.FoldersTree.SelectedNode.Value;
 
             this.lblCurrentDir.Text = !newDir.EndsWith("\\") ? string.Format("{0}\\", newDir) : newDir;
+            this.CurrentPathInfo.Text =
+                this.lblCurrentDir.Text.Substring(this._portalSettings.HomeDirectoryMapPath.Length).Replace("\\", "/");
 
             this.ShowFilesIn(newDir);
 

@@ -387,4 +387,7 @@
   <data name="StartUploads.Text" xml:space="preserve">
     <value>Start upload(s)</value>
   </data>
+  <data name="Root.Text" xml:space="preserve">
+    <value>Root</value>
+  </data>
 </root>

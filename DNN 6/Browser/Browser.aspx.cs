@@ -1049,16 +1049,16 @@ namespace WatchersNET.CKEditor.Browser
 
                         var startFolder = this.StartingDir();
 
-                        if (!Utility.IsInRoles(this._portalSettings.AdministratorRoleName, this._portalSettings))
+                        /*if (!Utility.IsInRoles(this._portalSettings.AdministratorRoleName, this._portalSettings))
                         {
                             // Hide physical file Path
                             this.lblCurrentDir.Visible = false;
                             this.lblCurrent.Visible = false;
-                        }
+                        }*/
 
                         this.FillFolderTree(startFolder);
 
-                        bool folderSelected = false;
+                        var folderSelected = false;
 
                         if (!string.IsNullOrEmpty(ckFileUrl))
                         {
@@ -1790,7 +1790,6 @@ namespace WatchersNET.CKEditor.Browser
 
             if (!this.currentSettings.BrowserRootDirId.Equals(-1))
             {
-                // var rootFolder = new FolderController().GetFolderInfo(this._portalSettings.PortalId, this.currentSettings.BrowserRootDirId);
                 var rootFolder = FolderManager.Instance.GetFolder(this.currentSettings.BrowserRootDirId);
 
                 if (rootFolder != null)
@@ -2194,6 +2193,8 @@ namespace WatchersNET.CKEditor.Browser
                 "var selection = parentCKEDITOR.instances.{0}.getSelection(),", this.request.QueryString["CKEditor"]);
             scriptSelected.Append("element = selection.getStartElement();");
 
+            scriptSelected.Append("if (element !== null) {");
+
             scriptSelected.Append("if( element.getName()  == 'img')");
             scriptSelected.Append("{");
 
@@ -2220,6 +2221,8 @@ namespace WatchersNET.CKEditor.Browser
             scriptSelected.Append("if (location.href.indexOf('reload')==-1) location.replace(location.href+'&reload=true');");
 
             scriptSelected.Append("} }");
+
+            scriptSelected.Append("}");
 
             scriptSelected.Append("}");
 
@@ -2566,6 +2569,11 @@ namespace WatchersNET.CKEditor.Browser
         /// <param name="pagerChanged">if set to <c>true</c> [pager changed].</param>
         private void ShowFilesIn(IFolderInfo currentFolderInfo, bool pagerChanged = false)
         {
+            this.CurrentPathInfo.Text = string.Format(
+                "{0}/{1}",
+                Localization.GetString("Root.Text", this.ResXFile, this.LanguageCode),
+                currentFolderInfo.FolderPath);
+
             this.CheckFolderAccess(currentFolderInfo.FolderID, false);
 
             if (!pagerChanged)
@@ -2815,6 +2823,8 @@ namespace WatchersNET.CKEditor.Browser
                         Directory.CreateDirectory(newDirPath);
 
                         var folderId = folderController.AddFolder(this._portalSettings.PortalId, sFolder, storageLocation, false, false);
+
+                        var folderInfo = FolderManager.Instance.GetFolder(folderId);
 
                         this.SetFolderPermission(folderId);
                     }
