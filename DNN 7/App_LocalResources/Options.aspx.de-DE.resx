@@ -506,4 +506,7 @@
   <data name="UploadFileLimitLabel.Text" xml:space="preserve">
     <value>Upload File Limits:</value>
   </data>
+  <data name="LoadingEditor.Text" xml:space="preserve">
+    <value>CKEditor wird geladen...</value>
+  </data>
 </root>

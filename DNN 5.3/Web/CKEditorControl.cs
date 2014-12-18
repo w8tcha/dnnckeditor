@@ -957,12 +957,12 @@ namespace WatchersNET.CKEditor.Web
 
             outWriter.AddAttribute(HtmlTextWriterAttribute.Class, "ckeditorLoader");
             outWriter.RenderBeginTag(HtmlTextWriterTag.Div);
-            outWriter.Write("CKEditor is loading, please wait...");
+            outWriter.Write(Localization.GetString("LoadingEditor.Text", SResXFile));
             outWriter.RenderEndTag();
 
             outWriter.AddAttribute(HtmlTextWriterAttribute.Class, "ckeditorLoaderText");
             outWriter.RenderBeginTag(HtmlTextWriterTag.Div);
-            outWriter.Write("CKEditor is loading, please wait...");
+            outWriter.Write(Localization.GetString("LoadingEditor.Text", SResXFile));
             outWriter.RenderEndTag();
 
             outWriter.RenderEndTag();
