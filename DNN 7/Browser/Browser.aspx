@@ -1,4 +1,5 @@
 ﻿<%@ Page language="c#" Codebehind="Browser.aspx.cs" AutoEventWireup="True" Inherits="WatchersNET.CKEditor.Browser.Browser" %>
+<%@ Register TagPrefix="asp" Namespace="System.Web.UI" Assembly="System.Web"%>
 <%@ Register TagPrefix="dnn" Assembly="DotNetNuke.Web" Namespace="DotNetNuke.Web.UI.WebControls" %>
 <%@ Register TagPrefix="wnet" Namespace="WatchersNET.CKEditor.Controls" Assembly="WatchersNET.CKEditor" %>
 <!DOCTYPE html>

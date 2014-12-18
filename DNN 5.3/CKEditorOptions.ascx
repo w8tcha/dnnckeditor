@@ -1,4 +1,5 @@
 <%@ Control Language="c#" AutoEventWireup="True" Codebehind="CKEditorOptions.ascx.cs" Inherits="WatchersNET.CKEditor.CKEditorOptions" %>
+<%@ Register TagPrefix="asp" Namespace="System.Web.UI" Assembly="System.Web"%>
 <%@ Register TagPrefix="dnn" TagName="URL" Src="UrlControl.ascx" %>
 <%@ Register TagPrefix="dnn" Assembly="DotNetNuke.Web" Namespace="DotNetNuke.Web.UI.WebControls"  %>
 
