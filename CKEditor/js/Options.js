@@ -89,11 +89,17 @@ if (jQuery(".settingValueInputNumeric").spinner) {
 	jQuery(".settingValueInputNumeric").spinner();
 }
 
-if (jQuery.ui.selectmenu !== undefined) {
-    jQuery(".DefaultDropDown").selectmenu();
-} 
+    if (jQuery.ui.selectmenu !== undefined) {
+        jQuery(".DefaultDropDown").selectmenu({
+            change: function() {
+                if (typeof (jQuery(this).attr('onchange')) !== 'undefined') {
+                    __doPostBack(jQuery(this).attr('name'), '');
+                }
+            }
+        });
+    }
 
-if (jQuery(".settingValueContainer").tooltip) {
+    if (jQuery(".settingValueContainer").tooltip) {
 	jQuery(".settingValueInputNumeric").tooltip();
 }
 

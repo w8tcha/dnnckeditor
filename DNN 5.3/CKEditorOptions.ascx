@@ -40,7 +40,7 @@
   <div id="ExportDialog" title='<%= DotNetNuke.Services.Localization.Localization.GetString("SettingsExportTitle.Text", this.ResXFile, this.LangCode) %>' style="display:none">
   <asp:UpdatePanel ID="ExportDialogUpdatePanel" UpdateMode="Conditional" ChildrenAsTriggers="true" runat="server">
             <ContentTemplate>
-                <div><asp:DropDownList id="ExportDir" runat="server" Width="300"></asp:DropDownList></div>
+                <div><asp:DropDownList id="ExportDir" runat="server" Width="300" CssClass="DefaultDropDown"></asp:DropDownList></div>
                 <div style="margin-top:6px"><asp:TextBox id="ExportFileName" runat="server" Width="294"></asp:TextBox></div>
                 <asp:LinkButton id="ExportNow" runat="server" OnClick="Export_Click" Text="Export Now" Visible="true" CssClass="Hidden ExportHidden"></asp:LinkButton>
                 <asp:HiddenField id="HiddenMessage" runat="server" Value=""/>
@@ -123,7 +123,7 @@
                   <asp:Label id="lblSelToolb" runat="server"></asp:Label>
                 </HeaderTemplate>
                 <ItemTemplate>
-                  <asp:dropdownlist id="ddlToolbars" runat="server" CssClass="DefaultDropDown" Width="200">
+                  <asp:dropdownlist id="ddlToolbars" runat="server" CssClass="DefaultDropDown" Width="200" CssClass="DefaultDropDown">
 	              </asp:dropdownlist>
                 </ItemTemplate>
               </asp:TemplateField>
@@ -310,7 +310,7 @@
                 <asp:label id="lblToolbarList" runat="server">Custom Toolbars List</asp:label>
             </div>
             <div class="settingValueContainer">
-                <asp:DropDownList id="dDlCustomToolbars" runat="server"></asp:DropDownList>
+                <asp:DropDownList id="dDlCustomToolbars" runat="server" CssClass="DefaultDropDown"></asp:DropDownList>
             </div>
             <div class="settingNameContainer">
             </div>
@@ -401,7 +401,7 @@
            <asp:label id="lblToolbarPriority" runat="server">Toolbar Set Priority</asp:label>
          </div>
          <div class="settingValueContainer">
-          <asp:DropDownList id="dDlToolbarPrio" runat="server">
+          <asp:DropDownList id="dDlToolbarPrio" runat="server" CssClass="DefaultDropDown">
                       <asp:ListItem Text="01" Value="01"></asp:ListItem>
             <asp:ListItem Text="02" Value="02"></asp:ListItem>
             <asp:ListItem Text="03" Value="03"></asp:ListItem>

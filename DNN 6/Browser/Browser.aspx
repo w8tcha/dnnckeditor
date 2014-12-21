@@ -53,7 +53,7 @@
                       <em><asp:Label id="LabelAnchor" runat="server" Text="Select an Page Anchor:"></asp:Label></em>
                     </td>
                     <td>
-                      <asp:DropDownList ID="AnchorList" runat="server">
+                      <asp:DropDownList ID="AnchorList" runat="server" CssClass="DefaultDropDown">
                         <asp:ListItem Text="None"></asp:ListItem>
                       </asp:DropDownList>
                     </td>
@@ -64,7 +64,7 @@
                     </td>
                     <td>
                       
-                      <asp:DropDownList ID="LanguageList" runat="server">
+                      <asp:DropDownList ID="LanguageList" runat="server" CssClass="DefaultDropDown">
                         <asp:ListItem Text="None"></asp:ListItem>
                       </asp:DropDownList>
                     </td>
@@ -101,7 +101,7 @@
           </div>
           <div class="PanelSubDivs">
             <asp:Label id="lblImgQuality" runat="server" Text="Image Quality:" Font-Bold="true"></asp:Label>&nbsp;
-            <asp:DropDownList id="dDlQuality" runat="server"></asp:DropDownList>&nbsp;%
+            <asp:DropDownList id="dDlQuality" runat="server" CssClass="DefaultDropDown"></asp:DropDownList>&nbsp;%
           </div>
           <div class="PanelSubDivs" style="padding-bottom:5px;">
             <asp:Button ID="cmdResizeNow" CssClass="DefaultButton" Text="Resize Now" runat="server" />&nbsp;
