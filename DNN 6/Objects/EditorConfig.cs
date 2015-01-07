@@ -105,7 +105,7 @@ namespace WatchersNET.CKEditor.Objects
             this.PasteFromWordPromptCleanup = false;
             this.PasteFromWordRemoveFontStyles = true;
             this.PasteFromWordRemoveStyles = true;
-            this.ProtectedSource = @"[( /<i class[\s\S]*?>/g ),( /<\/i>/g ),( /<span class[\s\S]*?>/g ),( /<\/span>/g ),( /<em class[\s\S]*?>/g ),( /<\/em>/g ),( /<button class[\s\S]*?>/g ),( /<\/button>/g )]";
+            this.ProtectedSource = @"[( /<i class[\s\S]*?>[\s\S]*?<\/i>/gi ),( /<span class[\s\S]*?>[\s\S]*?<\/span>/gi ),( /<em class[\s\S]*?>[\s\S]*?<\/em>/gi ),( /<button class[\s\S]*?>[\s\S]*?<\/button>/gi )]";
             this.ReadOnly = false;
             this.RemoveFormatAttributes = "class,style,lang,width,height,align,hspace,valign";
             this.RemoveFormatTags =
