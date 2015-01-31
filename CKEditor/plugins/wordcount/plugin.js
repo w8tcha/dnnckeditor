@@ -4,7 +4,7 @@
  */
 
 CKEDITOR.plugins.add('wordcount', {
-    lang: 'ca,de,el,en,es,fr,hr,it,jp,nl,no,pl,pt-br,ru,sv', // %REMOVE_LINE_CORE%
+    lang: 'ca,de,el,en,es,fr,hr,it,jp,nl,no,pl,pt-br,ru,sv,tr', // %REMOVE_LINE_CORE%
     version: 1.11,
     init: function(editor) {
         var defaultFormat = '',
@@ -17,7 +17,6 @@ CKEDITOR.plugins.add('wordcount', {
             showParagraphs: true,
             showWordCount: true,
             showCharCount: false,
-            //showSelectedCount: false,
             countSpacesAsChars: false,
             countHTML: false
         };
@@ -27,10 +26,6 @@ CKEDITOR.plugins.add('wordcount', {
 
         if (config.showParagraphs) {
             defaultFormat += editor.lang.wordcount.Paragraphs + ' %paragraphs%';
-
-            /*if (config.showSelectedCount) {
-                defaultFormat += " [" + editor.lang.wordcount.Selected + ' %paragraphsSelected%'+ "]";
-            }*/
         }
 
         if (config.showParagraphs && (config.showWordCount || config.showCharCount)) {
@@ -39,10 +34,6 @@ CKEDITOR.plugins.add('wordcount', {
 
         if (config.showWordCount) {
             defaultFormat += editor.lang.wordcount.WordCount + ' %wordCount%';
-
-            /*if (config.showSelectedCount) {
-                defaultFormat += " [" + editor.lang.wordcount.Selected + ' %wordCountSelected%' + "]";
-            }*/
         }
 
         if (config.showCharCount && config.showWordCount) {
@@ -50,15 +41,9 @@ CKEDITOR.plugins.add('wordcount', {
         }
 
         if (config.showCharCount) {
-            defaultFormat += editor.lang.wordcount.CharCount + ' %charCount%';
+            var charLabel = editor.lang.wordcount[config.countHTML ? 'CharCountWithHTML' : 'CharCount'];
 
-            /*if (config.showSelectedCount) {
-                defaultFormat += " [" + editor.lang.wordcount.Selected + ' %charCountSelected%' + "]";
-            }*/
-
-            if (config.countHTML) {
-                defaultFormat += editor.lang.wordcount.CharCountWithHTML;
-            }
+            defaultFormat += charLabel + ' %charCount%';
         }
 
         var format = defaultFormat;
@@ -86,43 +71,40 @@ CKEDITOR.plugins.add('wordcount', {
 
         function updateCounter(editorInstance) {
             var paragraphs = 0,
-                paragraphsSelected = 0,
                 wordCount = 0,
-                wordCountSelected = 0,
                 charCount = 0,
-                charCountSelected = 0,
-                charCountHTML = 0,
-                charCountHTMLSelected = 0,
                 normalizedText,
                 text;
 
             if (text = editorInstance.getData()) {
                 if (config.showCharCount) {
-                    charCountHTML = text.length;
+                    if (config.countHTML) {
+                        charCount = text.length;
+                    } else {
+                        // strip body tags
+                        if (editor.config.fullPage) {
+                            var i = text.search(new RegExp("<body>", "i"));
+                            if (i != -1) {
+                                var j = text.search(new RegExp("</body>", "i"));
+                                text = text.substring(i + 6, j);
+                            }
 
-                    // strip body tags
-                    if (editor.config.fullPage) {
-                        var i = text.search(new RegExp("<body>", "i"));
-                        if (i != -1) {
-                            var j = text.search(new RegExp("</body>", "i"));
-                            text = text.substring(i + 6, j);
                         }
 
-                    }
-
-                    normalizedText = text.
-                        replace(/(\r\n|\n|\r)/gm, "").
-                        replace(/^\s+|\s+$/g, "").
-                        replace("&nbsp;", "");
-
-                    if (!config.countSpacesAsChars) {
                         normalizedText = text.
-                            replace(/\s/g, "");
+                            replace(/(\r\n|\n|\r)/gm, "").
+                            replace(/^\s+|\s+$/g, "").
+                            replace("&nbsp;", "");
+
+                        if (!config.countSpacesAsChars) {
+                            normalizedText = text.
+                                replace(/\s/g, "");
+                        }
+
+                        normalizedText = strip(normalizedText).replace(/^([\s\t\r\n]*)$/, "");
+
+                        charCount = normalizedText.length;
                     }
-
-                    normalizedText = strip(normalizedText).replace(/^([\s\t\r\n]*)$/, "");
-
-                    charCount = normalizedText.length;
                 }
 
                 if (config.showParagraphs) {
@@ -148,66 +130,7 @@ CKEDITOR.plugins.add('wordcount', {
                     wordCount = words.length;
                 }
 
-                ////////////////////
-                /*var selectedText = editor.getSelection().getSelectedText();
-
-                if (config.showCharCount) {
-                    charCountHTMLSelected = selectedText.length;
-
-                    // strip body tags
-                    if (editor.config.fullPage) {
-                        var i = selectedText.search(new RegExp("<body>", "i"));
-                        if (i != -1) {
-                            var j = selectedText.search(new RegExp("</body>", "i"));
-                            selectedText = selectedText.substring(i + 6, j);
-                        }
-
-                    }
-
-                    normalizedText = selectedText.
-                        replace(/(\r\n|\n|\r)/gm, "").
-                        replace(/^\s+|\s+$/g, "").
-                        replace("&nbsp;", "");
-
-                    if (!config.countSpacesAsChars) {
-                        normalizedText = selectedText.
-                            replace(/\s/g, "");
-                    }
-
-                    normalizedText = strip(normalizedText).replace(/^([\s\t\r\n]*)$/, "");
-
-                    charCountSelected = normalizedText.length;
-                }
-
-                if (config.showWordCount) {
-                    normalizedText = selectedText.
-                        replace(/(\r\n|\n|\r)/gm, " ").
-                        replace(/^\s+|\s+$/g, "").
-                        replace("&nbsp;", " ");
-
-                    normalizedText = strip(normalizedText);
-
-                    var words = normalizedText.split(/\s+/);
-
-                    for (var wordIndex = words.length - 1; wordIndex >= 0; wordIndex--) {
-                        if (words[wordIndex].match(/^([\s\t\r\n]*)$/)) {
-                            words.splice(wordIndex, 1);
-                        }
-                    }
-
-                    wordCountSelected = words.length;
-                }
-                */
-                /////////////////////////
-
-                var html = format.replace('%wordCount%', wordCount).
-                    replace('%charCount%', charCount).
-                    replace('%charCountHTML%', charCountHTML).
-                    replace('%paragraphs%', paragraphs)/*.
-                    replace('%wordCountSelected%', wordCountSelected).
-                    replace('%charCountSelected%', charCountSelected).
-                    replace('%charCountHTMLSelected%', charCountHTMLSelected).
-                    replace('%paragraphsSelected%', paragraphsSelected)*/;
+                var html = format.replace('%wordCount%', wordCount).replace('%charCount%', charCount).replace('%paragraphs%', paragraphs);
 
                 editorInstance.plugins.wordcount.wordCount = wordCount;
                 editorInstance.plugins.wordcount.charCount = charCount;
@@ -278,8 +201,5 @@ CKEDITOR.plugins.add('wordcount', {
                 window.clearInterval(intervalId);
             }
         }, editor, null, 300);
-        /*editor.on('selectionChange', function (event) {
-           updateCounter(event.editor);
-        }, editor, null, 0);*/
     }
 });

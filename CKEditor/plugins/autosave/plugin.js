@@ -21,7 +21,7 @@
                     event.data.html += '<div class="autoSaveMessage" unselectable="on"><div unselectable="on" id="'
                         + autoSaveMessageId(event.editor)
                         + '"class="hidden">'
-                        + event.editor.lang.autosave.autoSaveMessage
+                        + editor.lang.autosave.autoSaveMessage
                         + '</div></div>';
                 }
             }, editor, null, 100);

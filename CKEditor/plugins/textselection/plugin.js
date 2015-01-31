@@ -60,6 +60,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
                                     }
                                 }
                             }
+                            return false;
                         };
                         walker.lastForward();
                         range.setStartAfter(startNode);
