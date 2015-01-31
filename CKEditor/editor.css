@@ -1,6 +1,9 @@
 /*
 DNN Custom Override Styles to fix issues with other modules
 */
+/* Fix for the Vertical ScrollBar */
+.paneGroup div.CodeMirror-scroll { height:100% }
+
 
 /* Fix for the DNN Blog Module */
 div.blog_rte div{width:auto}
