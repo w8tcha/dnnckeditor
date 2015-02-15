@@ -957,6 +957,7 @@ namespace WatchersNET.CKEditor.Web
                 outWriter.Write(Localization.GetString("Options.Text", SResXFile));
 
                 outWriter.RenderEndTag();
+                outWriter.RenderEndTag();
             }
 
             /////////////////
