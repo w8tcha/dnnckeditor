@@ -1313,39 +1313,44 @@ namespace WatchersNET.CKEditor.Web
         }
 
         /// <summary>
-        /// Format the Url from FileID to File Path Url
+        /// Format the URL from FileID to File Path URL
         /// </summary>
-        /// <param name="sInputUrl">
-        /// The s Input Url.
+        /// <param name="inputUrl">
+        /// The Input URL.
         /// </param>
         /// <returns>
-        /// The format url.
+        /// The formatted URL.
         /// </returns>
-        private string FormatUrl(string sInputUrl)
+        private string FormatUrl(string inputUrl)
         {
-            string sImageUrl = string.Empty;
+            var formattedUrl = string.Empty;
 
-            if (sInputUrl.Equals(string.Empty))
+            if (string.IsNullOrEmpty(inputUrl))
             {
-                return sImageUrl;
+                return formattedUrl;
             }
 
-            if (sInputUrl.StartsWith("http://"))
+            if (inputUrl.StartsWith("http://"))
             {
-                sImageUrl = sInputUrl;
+                formattedUrl = inputUrl;
             }
-            else if (sInputUrl.StartsWith("FileID="))
+            else if (inputUrl.StartsWith("FileID="))
             {
-                int iFileId = int.Parse(sInputUrl.Substring(7));
+                var fileId = int.Parse(inputUrl.Substring(7));
 
                 FileController objFileController = new FileController();
 
-                FileInfo objFileInfo = objFileController.GetFileById(iFileId, this._portalSettings.PortalId);
+                FileInfo objFileInfo = objFileController.GetFileById(fileId, this._portalSettings.PortalId);
 
-                sImageUrl = this._portalSettings.HomeDirectory + objFileInfo.Folder + objFileInfo.FileName;
+                formattedUrl = this._portalSettings.HomeDirectory + objFileInfo.Folder + objFileInfo.FileName;
+            }
+            else
+            {
+                formattedUrl = this._portalSettings.HomeDirectory + inputUrl;
             }
 
-            return sImageUrl;
+
+            return formattedUrl;
         }
 
         /// <summary>
