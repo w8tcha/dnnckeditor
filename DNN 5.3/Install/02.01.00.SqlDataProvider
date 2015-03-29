@@ -5,8 +5,9 @@
 	) ON [PRIMARY]
 GO
 
-ALTER TABLE {databaseOwner}[{objectQualifier}CKEditorProviderSettings] ADD CONSTRAINT [PK_{objectQualifier}CKEditorProviderSettings] PRIMARY KEY CLUSTERED  ([SettingName])
-GO
+if not exists (SELECT OBJECTPROPERTY(OBJECT_ID('{databaseOwner}[{objectQualifier}CKEditorProviderSettings]'), 'TableHasPrimaryKey'))
+	ALTER TABLE {databaseOwner}[{objectQualifier}CKEditorProviderSettings] ADD CONSTRAINT [PK_{objectQualifier}CKEditorProviderSettings] PRIMARY KEY CLUSTERED  ([SettingName])
+go
 
 IF  EXISTS (select top 1 1 from sys.objects where object_id = OBJECT_ID(N'{databaseOwner}{objectQualifier}CKEditor_DeleteAllChildPageSettings') and OBJECTPROPERTY(object_id, N'IsProcedure') = 1)
 DROP PROCEDURE {databaseOwner}{objectQualifier}CKEditor_DeleteAllChildPageSettings
