@@ -141,29 +141,6 @@
 				} );
 			}
 
-			// If the "contextmenu" plugin is loaded, register the listeners.
-			if ( editor.contextMenu ) {
-				editor.contextMenu.addListener( function( element ) {
-					if ( !element || element.isReadOnly() )
-						return null;
-
-					var anchor = CKEDITOR.plugins.link.tryRestoreFakeAnchor( editor, element );
-
-					if ( !anchor && !( anchor = CKEDITOR.plugins.link.getSelectedLink( editor ) ) )
-						return null;
-
-					var menu = {};
-
-					if ( anchor.getAttribute( 'href' ) && anchor.getChildCount() )
-						menu = { link: CKEDITOR.TRISTATE_OFF, unlink: CKEDITOR.TRISTATE_OFF };
-
-					if ( anchor && anchor.hasAttribute( 'name' ) )
-						menu.anchor = menu.removeAnchor = CKEDITOR.TRISTATE_OFF;
-
-					return menu;
-				} );
-			}
-
 			this.compiledProtectionFunction = getCompiledProtectionFunction( editor );
 		},
 
