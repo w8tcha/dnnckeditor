@@ -853,7 +853,9 @@ namespace WatchersNET.CKEditor.Web
 
             outWriter.AddAttribute(HtmlTextWriterAttribute.Class, "ckeditorLoader");
             outWriter.RenderBeginTag(HtmlTextWriterTag.Div);
-            outWriter.Write(Localization.GetString("LoadingEditor.Text", SResXFile));
+            //outWriter.Write(Localization.GetString("LoadingEditor.Text", SResXFile));
+
+            outWriter.Write("<img src=\"{0}\" alt=\"loader\" width=\"50\" height\"50\" />", this.ResolveUrl("~/images/loading.gif"));
             outWriter.RenderEndTag();
 
             outWriter.AddAttribute(HtmlTextWriterAttribute.Class, "ckeditorLoaderText");
