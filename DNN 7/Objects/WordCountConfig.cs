@@ -16,7 +16,7 @@ namespace WatchersNET.CKEditor.Objects
     using System.Xml.Serialization;
 
     /// <summary>
-    /// WordCount Plugin Config
+    /// WordCount Plugin Config.
     /// </summary>
     public class WordCountConfig
     {
@@ -30,6 +30,8 @@ namespace WatchersNET.CKEditor.Objects
             this.ShowCharCount = false;
             this.CountSpacesAsChars = false;
             this.CountHTML = false;
+            this.MaxCharCount = -1;
+            this.MaxWordCount = -1;
         }
 
         /// <summary>
@@ -81,5 +83,25 @@ namespace WatchersNET.CKEditor.Objects
         [XmlAttribute("countHTML")]
         [Description("Whether or not to include Html chars in the Char Count")]
         public bool CountHTML { get; set; }
+
+        /// <summary>
+        /// Gets or sets the maximum character count.
+        /// </summary>
+        /// <value>
+        /// The maximum character count.
+        /// </value>
+        [XmlAttribute("maxCharCount")]
+        [Description("Maximum allowed Word Count, -1 is default for unlimited")]
+        public int MaxCharCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets the maximum word count.
+        /// </summary>
+        /// <value>
+        /// The maximum word count.
+        /// </value>
+        [XmlAttribute("maxWordCount")]
+        [Description("Maximum allowed Char Count, -1 is default for unlimited")]
+        public int MaxWordCount { get; set; }
     }
 }

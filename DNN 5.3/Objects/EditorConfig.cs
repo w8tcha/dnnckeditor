@@ -63,7 +63,7 @@ namespace WatchersNET.CKEditor.Objects
             this.Entities_Greek = false;
             this.Entities_Latin = false;
             this.Entities_ProcessNumerical = false;
-            this.ExtraPlugins = "mathjax,oembed,tableresize,textselection,stylesheetparser,qrcodes,newsarticleslinks,codemirror,codesnippet,dnnpages,xmltemplates,wordcount";
+            this.ExtraPlugins = "autosave,mathjax,embed,tableresize,textselection,notification,stylesheetparser,qrcodes,notnewsarticleslinks,codemirror,codesnippet,dnnpages,xmltemplates,wordcount";
             this.FileBrowserWindowFeatures = "location=no,menubar=no,toolbar=no,dependent=yes,minimizable=no,modal=yes,alwaysRaised=yes,resizable=yes,scrollbars=yes";
             this.FileBrowserWindowHeight = "70%";
             this.FileBrowserWindowWidth = "80%";
@@ -95,6 +95,7 @@ namespace WatchersNET.CKEditor.Objects
             this.Magicline_HoldDistance = "0.5";
             this.Magicline_PutEverywhere = false;
             this.Magicline_TriggerOffset = 30;
+            this.MathJaxLib = "//cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML";
             this.Menu_SubMenuDelay = 400;
             this.Menu_Groups = "clipboard,tablecell,tablecellproperties,tablerow,tablecolumn,table,anchor,link,image,flash,checkbox,radio,textfield,hiddenfield,imagebutton,button,select,textarea,div";
             this.PasteFromWordCleanupFile = string.Empty;
@@ -1322,6 +1323,16 @@ namespace WatchersNET.CKEditor.Objects
         public string Menu_Groups { get; set; }
 
         /// <summary>
+        /// Gets or sets the path to the MathJax library. It can be both a local resource and a location different than the default CDN.
+        /// </summary>
+        /// <value>
+        /// The math jax library.
+        /// </value>
+        [XmlAttribute("mathJaxLib")]
+        [Description("Sets the path to the MathJax library. It can be both a local resource and a location different than the default CDN.")]
+        public string MathJaxLib { get; set; }
+
+        /// <summary>
         /// Gets or sets the menu_ sub menu delay.
         /// </summary>
         /// <value>
@@ -1340,27 +1351,6 @@ namespace WatchersNET.CKEditor.Objects
         [XmlAttribute("newpage_html")]
         [Description("The HTML to load in the editor when the 'new page' command is executed.")]
         public string Newpage_Html { get; set; }
-
-        /// <summary>
-        /// Gets or sets the oEmbed max Width Setting.
-        /// </summary>
-        [XmlAttribute("oembed_maxWidth")]
-        [Description("Maximum Width for the embeded Content.")]
-        public int Oembed_MaxWidth { get; set; }
-
-        /// <summary>
-        /// Gets or sets the oEmbed max Height Setting.
-        /// </summary>
-        [XmlAttribute("oembed_maxHeight")]
-        [Description("Maximum Height for the embeded Content.")]
-        public int Oembed_MaxHeight { get; set; }
-
-        /// <summary>
-        /// Gets or sets the oEmbed wrapper class Setting.
-        /// </summary>
-        [XmlAttribute("oembed_WrapperClass")]
-        [Description("Wrapper Css Class for the Div element around the embeded Content.")]
-        public string Oembed_WrapperClass { get; set; }
 
         /// <summary>
         /// Gets or sets the paste from word cleanup file.

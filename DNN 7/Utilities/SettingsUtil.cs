@@ -20,6 +20,7 @@ namespace WatchersNET.CKEditor.Utilities
     using System.IO;
     using System.Linq;
     using System.Reflection;
+    using System.Web;
     using System.Xml;
     using System.Xml.Serialization;
 
@@ -31,7 +32,6 @@ namespace WatchersNET.CKEditor.Utilities
 
     using WatchersNET.CKEditor.Constants;
     using WatchersNET.CKEditor.Objects;
-    using System.Web;
 
     #endregion
 
@@ -108,7 +108,7 @@ namespace WatchersNET.CKEditor.Utilities
             EditorProviderSettings currentSettings,
             List<EditorHostSetting> editorHostSettings,
             string key,
-            ArrayList portalRoles)
+            IList<RoleInfo> portalRoles)
         {
             var roleController = new RoleController();
 
@@ -392,7 +392,7 @@ namespace WatchersNET.CKEditor.Utilities
                     {
                         if (Utility.IsNumeric(sRoleName))
                         {
-                            RoleInfo roleInfo = roleController.GetRole(int.Parse(sRoleName), portalSettings.PortalId);
+                            RoleInfo roleInfo = roleController.GetRoleById(int.Parse(sRoleName), portalSettings.PortalId);
 
                             if (roleInfo != null)
                             {
@@ -784,7 +784,7 @@ namespace WatchersNET.CKEditor.Utilities
         /// <returns>
         /// Returns the filled Module Settings
         /// </returns>
-        internal static EditorProviderSettings LoadModuleSettings(PortalSettings portalSettings, EditorProviderSettings currentSettings, string key, int moduleId, ArrayList portalRoles)
+        internal static EditorProviderSettings LoadModuleSettings(PortalSettings portalSettings, EditorProviderSettings currentSettings, string key, int moduleId, IList<RoleInfo> portalRoles)
         {
             var hshModSet = new ModuleController().GetModuleSettings(moduleId);
 
@@ -1000,7 +1000,7 @@ namespace WatchersNET.CKEditor.Utilities
                 {
                     if (Utility.IsNumeric(sRoleName))
                     {
-                        RoleInfo roleInfo = roleController.GetRole(
+                        RoleInfo roleInfo = roleController.GetRoleById(
                             int.Parse(sRoleName), portalSettings.PortalId);
 
                         if (roleInfo != null)
@@ -1215,7 +1215,7 @@ namespace WatchersNET.CKEditor.Utilities
         /// <returns>
         /// Returns the Default Provider Settings
         /// </returns>
-        internal static EditorProviderSettings GetDefaultSettings(PortalSettings portalSettings, string homeDirPath, string alternateSubFolder, ArrayList portalRoles)
+        internal static EditorProviderSettings GetDefaultSettings(PortalSettings portalSettings, string homeDirPath, string alternateSubFolder, IList<RoleInfo> portalRoles)
         {
             var roles = new ArrayList();
 
@@ -1286,7 +1286,7 @@ namespace WatchersNET.CKEditor.Utilities
                     {
                         if (Utility.IsNumeric(sRoleName))
                         {
-                            RoleInfo roleInfo = roleController.GetRole(int.Parse(sRoleName), portalSettings.PortalId);
+                            RoleInfo roleInfo = roleController.GetRoleById(int.Parse(sRoleName), portalSettings.PortalId);
 
                             if (roleInfo != null)
                             {
@@ -1543,7 +1543,7 @@ namespace WatchersNET.CKEditor.Utilities
                 }
 
                 // Role
-                var role = roleController.GetRole(roleUploadSize.RoleId, portalSettings.PortalId);
+                var role = roleController.GetRoleById(roleUploadSize.RoleId, portalSettings.PortalId);
 
                 if (role == null)
                 {

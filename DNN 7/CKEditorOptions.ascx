@@ -1,7 +1,6 @@
 <%@ Control Language="c#" AutoEventWireup="True" Codebehind="CKEditorOptions.ascx.cs" Inherits="WatchersNET.CKEditor.CKEditorOptions" %>
 <%@ Register TagPrefix="asp" Namespace="System.Web.UI" Assembly="System.Web"%>
 <%@ Register TagPrefix="dnn" TagName="URL" Src="UrlControl.ascx" %>
-<%@ Register TagPrefix="dnn" Assembly="DotNetNuke.Web" Namespace="DotNetNuke.Web.UI.WebControls"  %>
 
 <div id="SettingsBox">
   <h1>CKEditor Provider <asp:Label id="lblSettings" runat="server">Settings</asp:Label></h1>
@@ -91,7 +90,7 @@
     <table id="tblMainSet">
       <tr>
 	    <td class="settingNameColumn"><asp:label id="lblBlanktext" runat="server">Blank Text:</asp:label></td>
-	    <td class="settingValueColumn"><dnn:DnnTextBox runat="server" id="txtBlanktext" Width="395px" /></td>
+	    <td class="settingValueColumn"><asp:TextBox runat="server" id="txtBlanktext" Width="395px" /></td>
       </tr>
       <tr>
 	    <td class="settingNameColumn"><asp:label id="lblSkin" runat="server">Skin:</asp:label></td>

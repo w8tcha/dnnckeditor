@@ -44,8 +44,6 @@ namespace WatchersNET.CKEditor.Browser
     using DotNetNuke.Services.Localization;
     using DotNetNuke.UI.Utilities;
 
-    using Telerik.Web.UI;
-
     using WatchersNET.CKEditor.Constants;
     using WatchersNET.CKEditor.Controls;
     using WatchersNET.CKEditor.Objects;
@@ -1670,12 +1668,11 @@ namespace WatchersNET.CKEditor.Browser
 
             DirectoryInfo dirInfo = new DirectoryInfo(currentFolderInfo.PhysicalPath);
 
-            RadTreeNode folderNode = new RadTreeNode
+            TreeNode folderNode = new TreeNode
             {
                 Text = dirInfo.Name,
                 Value = dirInfo.FullName,
-                ImageUrl = "Images/folder.gif",
-                ExpandedImageUrl = "Images/folderOpen.gif"
+                ImageUrl = "Images/folder.gif"
             };
 
             switch (this.GetStorageLocationType(currentFolderInfo.PhysicalPath))
@@ -1683,14 +1680,12 @@ namespace WatchersNET.CKEditor.Browser
                 case FolderController.StorageLocationTypes.SecureFileSystem:
                     {
                         folderNode.ImageUrl = "Images/folderLocked.gif";
-                        folderNode.ExpandedImageUrl = "Images/folderOpenLocked.gif";
                     }
 
                     break;
                 case FolderController.StorageLocationTypes.DatabaseSecure:
                     {
                         folderNode.ImageUrl = "Images/folderdb.gif";
-                        folderNode.ExpandedImageUrl = "Images/folderdb.gif";
                     }
 
                     break;
@@ -1700,7 +1695,7 @@ namespace WatchersNET.CKEditor.Browser
 
             var folders = FolderManager.Instance.GetFolders(currentFolderInfo);
 
-            foreach (RadTreeNode node in
+            foreach (TreeNode node in
                 folders.Cast<FolderInfo>().Select(this.RenderFolder).Where(node => node != null))
             {
                 switch (this.GetStorageLocationType(Convert.ToInt32(node.ToolTip)))
@@ -1708,20 +1703,18 @@ namespace WatchersNET.CKEditor.Browser
                     case FolderController.StorageLocationTypes.SecureFileSystem:
                         {
                             node.ImageUrl = "Images/folderLocked.gif";
-                            node.ExpandedImageUrl = "Images/folderOpenLocked.gif";
                         }
 
                         break;
                     case FolderController.StorageLocationTypes.DatabaseSecure:
                         {
                             node.ImageUrl = "Images/folderdb.gif";
-                            node.ExpandedImageUrl = "Images/folderdb.gif";
                         }
 
                         break;
                 }
 
-                folderNode.Nodes.Add(node);
+                folderNode.ChildNodes.Add(node);
             }
         }
 
@@ -1914,11 +1907,11 @@ namespace WatchersNET.CKEditor.Browser
             this.cmdCropNow.Click += this.CropNow_Click;
 
             this.BrowserMode.SelectedIndexChanged += this.BrowserMode_SelectedIndexChanged;
-            this.dnntreeTabs.NodeClick += this.TreeTabs_NodeClick;
+            this.dnntreeTabs.SelectedNodeChanged += this.TreeTabs_NodeClick;
             this.rblLinkType.SelectedIndexChanged += this.LinkType_SelectedIndexChanged;
 
             // this.FoldersTree.SelectedNodeChanged += new EventHandler(FoldersTree_SelectedNodeChanged);
-            this.FoldersTree.NodeClick += this.FoldersTree_NodeClick;
+            this.FoldersTree.SelectedNodeChanged += this.FoldersTree_NodeClick;
 
             this.FilesList.ItemCommand += this.FilesList_ItemCommand;
         }
@@ -1950,31 +1943,28 @@ namespace WatchersNET.CKEditor.Browser
         /// <returns>
         /// TreeNode List
         /// </returns>
-        private RadTreeNode RenderFolder(FolderInfo folderInfo)
+        private TreeNode RenderFolder(FolderInfo folderInfo)
         {
             if (!FolderPermissionController.CanViewFolder(folderInfo))
             {
                 return null;
             }
 
-            RadTreeNode tnFolder = new RadTreeNode
+            TreeNode tnFolder = new TreeNode
             {
                 Text = folderInfo.FolderName,
                 Value = folderInfo.PhysicalPath,
                 ImageUrl = "Images/folder.gif",
-                ExpandedImageUrl = "Images/folderOpen.gif",
                 ToolTip = folderInfo.FolderID.ToString()
             };
 
             if (folderInfo.StorageLocation.Equals((int)FolderController.StorageLocationTypes.SecureFileSystem))
             {
                 tnFolder.ImageUrl = "Images/folderLocked.gif";
-                tnFolder.ExpandedImageUrl = "Images/folderOpenLocked.gif";
             }
             else if (folderInfo.StorageLocation.Equals((int)FolderController.StorageLocationTypes.DatabaseSecure))
             {
                 tnFolder.ImageUrl = "Images/folderdb.gif";
-                tnFolder.ExpandedImageUrl = "Images/folderdb.gif";
             }
 
             var folders = FolderManager.Instance.GetFolders(folderInfo).ToList();
@@ -1984,7 +1974,7 @@ namespace WatchersNET.CKEditor.Browser
                 return tnFolder;
             }
 
-            foreach (RadTreeNode node in
+            foreach (TreeNode node in
                 folders.Cast<FolderInfo>().Select(this.RenderFolder).Where(node => node != null))
             {
                 switch (this.GetStorageLocationType(Convert.ToInt32(node.ToolTip)))
@@ -1992,20 +1982,18 @@ namespace WatchersNET.CKEditor.Browser
                     case FolderController.StorageLocationTypes.SecureFileSystem:
                         {
                             node.ImageUrl = "Images/folderLocked.gif";
-                            node.ExpandedImageUrl = "Images/folderOpenLocked.gif";
                         }
 
                         break;
                     case FolderController.StorageLocationTypes.DatabaseSecure:
                         {
                             node.ImageUrl = "Images/folderdb.gif";
-                            node.ExpandedImageUrl = "Images/folderdb.gif";
                         }
 
                         break;
                 }
 
-                tnFolder.Nodes.Add(node);
+                tnFolder.ChildNodes.Add(node);
             }
 
             return tnFolder;
@@ -2020,7 +2008,7 @@ namespace WatchersNET.CKEditor.Browser
         /// <param name="iParentTabId">
         /// Parent Tab ID
         /// </param>
-        private void RenderTabLevels(RadTreeNode nodeParent, int iParentTabId)
+        private void RenderTabLevels(TreeNode nodeParent, int iParentTabId)
         {
             foreach (TabInfo objTab in
                 TabController.GetPortalTabs(
@@ -2031,11 +2019,11 @@ namespace WatchersNET.CKEditor.Browser
                     continue;
                 }
 
-                RadTreeNode nodeTab = new RadTreeNode();
+                TreeNode nodeTab = new TreeNode();
 
                 if (nodeParent != null)
                 {
-                    nodeParent.Nodes.Add(nodeTab);
+                    nodeParent.ChildNodes.Add(nodeTab);
                 }
                 else
                 {
@@ -2164,12 +2152,12 @@ namespace WatchersNET.CKEditor.Browser
 
             var newDir = this.lblCurrentDir.Text;
 
-            RadTreeNode tnNewFolder = this.FoldersTree.FindNodeByValue(newDir);
+            TreeNode tnNewFolder = this.FoldersTree.FindNode(newDir);
 
             if (tnNewFolder != null)
             {
                 tnNewFolder.Selected = true;
-                tnNewFolder.ExpandParentNodes();
+                tnNewFolder.Expand();
                 tnNewFolder.Expanded = true;
             }
 
@@ -2849,12 +2837,12 @@ namespace WatchersNET.CKEditor.Browser
 
                     this.ShowFilesIn(newDirPath);
 
-                    RadTreeNode tnNewFolder = this.FoldersTree.FindNodeByText(this.tbFolderName.Text);
+                    TreeNode tnNewFolder = this.FoldersTree.FindNode(this.tbFolderName.Text);
 
                     if (tnNewFolder != null)
                     {
                         tnNewFolder.Selected = true;
-                        tnNewFolder.ExpandParentNodes();
+                        tnNewFolder.Expand();
                     }
                 }
             }
@@ -3207,8 +3195,8 @@ namespace WatchersNET.CKEditor.Browser
         /// Show Preview of the Page links
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="RadTreeNodeEventArgs"/> instance containing the event data.</param>
-        private void TreeTabs_NodeClick(object sender, RadTreeNodeEventArgs e)
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void TreeTabs_NodeClick(object sender, EventArgs e)
         {
             if (this.dnntreeTabs.SelectedNode == null)
             {
@@ -3449,8 +3437,8 @@ namespace WatchersNET.CKEditor.Browser
         /// Load Files of Selected Folder
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="RadTreeNodeEventArgs" /> instance containing the event data.</param>
-        private void FoldersTree_NodeClick(object sender, RadTreeNodeEventArgs e)
+        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
+        private void FoldersTree_NodeClick(object sender, EventArgs e)
         {
             var newDir = this.FoldersTree.SelectedNode.Value;
 

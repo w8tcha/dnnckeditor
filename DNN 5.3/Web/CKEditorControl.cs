@@ -414,11 +414,11 @@ namespace WatchersNET.CKEditor.Web
                     this._settings["extraPlugins"] = this._settings["extraPlugins"].Replace(",xmlstyles", string.Empty);
                 }
 
-                // fix oEmbed/oembed issue and other bad settings
+                // fix oembed/embed issue and other bad settings
                 if (!string.IsNullOrEmpty(this._settings["extraPlugins"])
-                    && this._settings["extraPlugins"].Contains("oEmbed"))
+                    && this._settings["extraPlugins"].Contains("oembed"))
                 {
-                    this._settings["extraPlugins"] = this._settings["extraPlugins"].Replace("oEmbed", "oembed");
+                    this._settings["extraPlugins"] = this._settings["extraPlugins"].Replace("oembed", "embed");
                 }
 
                 if (this._settings["PasteFromWordCleanupFile"] != null && this._settings["PasteFromWordCleanupFile"].Equals("default"))

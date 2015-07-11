@@ -6,7 +6,7 @@
   <owner>
     <name>Ingo Herbote</name>
     <organization>WatchersNET</organization>
-    <url>http://www.watchersnet.de</url>
+    <url>https://dnnckeditor.codeplex.com/</url>
     <email>thewatcher@watchersnet.de</email>
   </owner>
   <license src="CKLicense.html" />
@@ -107,13 +107,13 @@
     <component type="Cleanup" version="02.00.00" fileName="02.00.00.Cleanup.txt" />
   </components>
 </package>
-    <package name="CKEditor.EditorConfigManager" type="Module" version="02.01.01">
+    <package name="CKEditor.EditorConfigManager" type="Module" version="02.01.02">
       <friendlyName>CKEditor Config Manager</friendlyName>
       <description>Configuration Manager for the CKEditor Editor Provider</description>
       <owner>
         <name>Ingo Herbote</name>
         <organization>WatchersNET</organization>
-        <url>http://www.watchersnet.de</url>
+        <url>https://dnnckeditor.codeplex.com/</url>
         <email>thewatcher@watchersnet.de</email>
       </owner>
       <iconFile>CKEditorConfig.png</iconFile>

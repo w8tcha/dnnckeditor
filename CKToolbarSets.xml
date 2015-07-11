@@ -15,8 +15,8 @@
           <string>Link</string>
           <string>Unlink</string>
           <string>Image</string>
-		  <string>Mathjax</string>
-          <string>oembed</string>
+          <string>Mathjax</string>
+          <string>embed</string>
           <string>-</string>
           <string>About</string>
         </items>
@@ -52,8 +52,8 @@
       <ToolbarGroup>
         <items>
           <string>Image</string>
-		  <string>Mathjax</string>
-          <string>oembed</string>
+          <string>Mathjax</string>
+          <string>embed</string>
           <string>HorizontalRule</string>
         </items>
         <name>insert</name>
@@ -203,7 +203,7 @@
         <items>
           <string>Image</string>
           <string>Mathjax</string>
-          <string>oembed</string>
+          <string>embed</string>
           <string>CodeSnippet</string>
           <string>Table</string>
           <string>HorizontalRule</string>
@@ -211,7 +211,6 @@
           <string>SpecialChar</string>
           <string>PageBreak</string>
           <string>Iframe</string>
-          <string>qrcodes</string>
         </items>
         <name>insert</name>
       </ToolbarGroup>

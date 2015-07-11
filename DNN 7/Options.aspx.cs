@@ -190,7 +190,7 @@ namespace WatchersNET.CKEditor
 
                 if (iMid != -1 && iTid != -1)
                 {
-                    modInfo = db.GetModule(iMid, iTid);
+                    modInfo = db.GetModule(iMid, iTid, false);
                 }
                 else
                 {
@@ -259,7 +259,7 @@ namespace WatchersNET.CKEditor
 
                 string sPortalAlias = PortalAliasController.GetPortalAliasByPortal(iPortalId, sDomainName);
 
-                PortalAliasInfo objPortalAliasInfo = PortalAliasController.GetPortalAliasInfo(sPortalAlias);
+                PortalAliasInfo objPortalAliasInfo = PortalAliasController.Instance.GetPortalAlias(sPortalAlias);
 
                 portalSettings = new PortalSettings(iTabId, objPortalAliasInfo);
             }

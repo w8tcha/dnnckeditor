@@ -39,8 +39,12 @@ namespace WatchersNET.CKEditor.Utilities
         /// <summary>
         /// Loads the tool bar buttons.
         /// </summary>
-        /// <param name="homeDirPath">The home folder path.</param>
-        /// <returns>Returns the Toolbar Button List</returns>
+        /// <param name="homeDirPath">
+        /// The home folder path.
+        /// </param>
+        /// <returns>
+        /// Returns the Toolbar Button List
+        /// </returns>
         public static List<ToolbarButton> LoadToolBarButtons(string homeDirPath)
         {
             List<ToolbarButton> buttons;
@@ -51,9 +55,9 @@ namespace WatchersNET.CKEditor.Utilities
                 TextReader textReader =
                     new StreamReader(
                         new FileStream(
-                            Path.Combine(homeDirPath, SettingConstants.ToolbarButtonXmlFileName),
-                            FileMode.Open,
-                            FileAccess.Read,
+                            Path.Combine(homeDirPath, SettingConstants.ToolbarButtonXmlFileName), 
+                            FileMode.Open, 
+                            FileAccess.Read, 
                             FileShare.Read)))
             {
                 buttons = (List<ToolbarButton>)serializer.Deserialize(textReader);
@@ -61,9 +65,9 @@ namespace WatchersNET.CKEditor.Utilities
                 textReader.Close();
             }
 
-            foreach (var button in buttons.Where(button => button.ToolbarName.Equals("oEmbed")))
+            foreach (var button in buttons.Where(button => button.ToolbarName.Equals("oembed")))
             {
-                button.ToolbarName = "oembed";
+                button.ToolbarName = "embed";
             }
 
             return buttons;
@@ -72,8 +76,12 @@ namespace WatchersNET.CKEditor.Utilities
         /// <summary>
         /// Converts the string to toolbar set.
         /// </summary>
-        /// <param name="inputString">The input string.</param>
-        /// <returns>Returns the ToolbarSet</returns>
+        /// <param name="inputString">
+        /// The input string.
+        /// </param>
+        /// <returns>
+        /// Returns the ToolbarSet
+        /// </returns>
         public static ToolbarSet ConvertStringToToolbarSet(string inputString)
         {
             inputString = inputString.Replace(" ", string.Empty).Replace("\"", "'");
@@ -94,11 +102,11 @@ namespace WatchersNET.CKEditor.Utilities
 
                     var toolBarGroup = new ToolbarGroup
                                            {
-                                               items = new List<string>(),
+                                               items = new List<string>(), 
                                                name = string.Format("Group{0}", groupId)
                                            };
 
-                    foreach (string s in group)
+                    foreach (var s in group)
                     {
                         toolBarGroup.items.Add(s);
                     }
@@ -135,8 +143,12 @@ namespace WatchersNET.CKEditor.Utilities
         /// <summary>
         /// Converts the toolbar set to string.
         /// </summary>
-        /// <param name="toolbarSet">The toolbar set.</param>
-        /// <param name="convertRowBreak">if set to <c>true</c> [convert row break].</param>
+        /// <param name="toolbarSet">
+        /// The toolbar set.
+        /// </param>
+        /// <param name="convertRowBreak">
+        /// if set to <c>true</c> [convert row break].
+        /// </param>
         /// <returns>
         /// Returns the Toolbar set as string
         /// </returns>
@@ -144,7 +156,7 @@ namespace WatchersNET.CKEditor.Utilities
         {
             var stringBuilder = new StringBuilder();
 
-            for (int i = 0; i < toolbarSet.ToolbarGroups.Count; i++)
+            for (var i = 0; i < toolbarSet.ToolbarGroups.Count; i++)
             {
                 var t = toolbarSet.ToolbarGroups[i];
 
@@ -162,7 +174,7 @@ namespace WatchersNET.CKEditor.Utilities
 
                     var buttons = t.items;
 
-                    for (int index = 0; index < buttons.Count; index++)
+                    for (var index = 0; index < buttons.Count; index++)
                     {
                         var button = buttons[index];
 
@@ -186,327 +198,327 @@ namespace WatchersNET.CKEditor.Utilities
         /// </param>
         public static void CreateDefaultToolbarButtonXml(string savePath)
         {
-            List<ToolbarButton> items = new List<ToolbarButton>
+            var items = new List<ToolbarButton>
                                             {
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Source",
+                                                        ToolbarName = "Source", 
                                                         ToolbarIcon = "Source.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Save",
+                                                        ToolbarName = "Save", 
                                                         ToolbarIcon = "Save.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "NewPage",
+                                                        ToolbarName = "NewPage", 
                                                         ToolbarIcon = "NewPage.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Preview",
+                                                        ToolbarName = "Preview", 
                                                         ToolbarIcon = "Preview.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Print",
+                                                        ToolbarName = "Print", 
                                                         ToolbarIcon = "Print.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Templates",
+                                                        ToolbarName = "Templates", 
                                                         ToolbarIcon = "Templates.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Cut",
+                                                        ToolbarName = "Cut", 
                                                         ToolbarIcon = "Cut.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Copy",
+                                                        ToolbarName = "Copy", 
                                                         ToolbarIcon = "Copy.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Paste",
+                                                        ToolbarName = "Paste", 
                                                         ToolbarIcon = "Paste.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "PasteText",
+                                                        ToolbarName = "PasteText", 
                                                         ToolbarIcon = "PasteText.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "PasteFromWord",
+                                                        ToolbarName = "PasteFromWord", 
                                                         ToolbarIcon =
                                                             "PasteFromWord.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Undo",
+                                                        ToolbarName = "Undo", 
                                                         ToolbarIcon = "Undo.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Redo",
+                                                        ToolbarName = "Redo", 
                                                         ToolbarIcon = "Redo.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Find",
+                                                        ToolbarName = "Find", 
                                                         ToolbarIcon = "Find.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Replace",
+                                                        ToolbarName = "Replace", 
                                                         ToolbarIcon = "Replace.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "SelectAll",
+                                                        ToolbarName = "SelectAll", 
                                                         ToolbarIcon = "SelectAll.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "SpellChecker",
+                                                        ToolbarName = "SpellChecker", 
                                                         ToolbarIcon = "SpellChecker.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Scayt",
+                                                        ToolbarName = "Scayt", 
                                                         ToolbarIcon = "SpellChecker.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Bold",
+                                                        ToolbarName = "Bold", 
                                                         ToolbarIcon = "Bold.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Italic",
+                                                        ToolbarName = "Italic", 
                                                         ToolbarIcon = "Italic.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Underline",
+                                                        ToolbarName = "Underline", 
                                                         ToolbarIcon = "Underline.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Strike",
+                                                        ToolbarName = "Strike", 
                                                         ToolbarIcon = "Strike.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Subscript",
+                                                        ToolbarName = "Subscript", 
                                                         ToolbarIcon = "Subscript.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Superscript",
+                                                        ToolbarName = "Superscript", 
                                                         ToolbarIcon = "Superscript.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "RemoveFormat",
+                                                        ToolbarName = "RemoveFormat", 
                                                         ToolbarIcon = "RemoveFormat.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "NumberedList",
+                                                        ToolbarName = "NumberedList", 
                                                         ToolbarIcon = "NumberedList.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "BulletedList",
+                                                        ToolbarName = "BulletedList", 
                                                         ToolbarIcon = "BulletedList.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Outdent",
+                                                        ToolbarName = "Outdent", 
                                                         ToolbarIcon = "Outdent.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Indent",
+                                                        ToolbarName = "Indent", 
                                                         ToolbarIcon = "Indent.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Blockquote",
+                                                        ToolbarName = "Blockquote", 
                                                         ToolbarIcon = "Blockquote.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "CreateDiv",
+                                                        ToolbarName = "CreateDiv", 
                                                         ToolbarIcon = "CreateDiv.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "JustifyLeft",
+                                                        ToolbarName = "JustifyLeft", 
                                                         ToolbarIcon = "JustifyLeft.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "JustifyCenter",
+                                                        ToolbarName = "JustifyCenter", 
                                                         ToolbarIcon =
                                                             "JustifyCenter.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "JustifyRight",
+                                                        ToolbarName = "JustifyRight", 
                                                         ToolbarIcon = "JustifyRight.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "JustifyBlock",
+                                                        ToolbarName = "JustifyBlock", 
                                                         ToolbarIcon = "JustifyBlock.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "BidiLtr",
+                                                        ToolbarName = "BidiLtr", 
                                                         ToolbarIcon = "BidiLtr.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "BidiRtl",
+                                                        ToolbarName = "BidiRtl", 
                                                         ToolbarIcon = "BidiRtl.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Link",
+                                                        ToolbarName = "Link", 
                                                         ToolbarIcon = "Link.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Unlink",
+                                                        ToolbarName = "Unlink", 
                                                         ToolbarIcon = "Unlink.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Anchor",
+                                                        ToolbarName = "Anchor", 
                                                         ToolbarIcon = "Anchor.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Image",
+                                                        ToolbarName = "Image", 
                                                         ToolbarIcon = "Image.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Flash",
+                                                        ToolbarName = "Flash", 
                                                         ToolbarIcon = "Flash.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Table",
+                                                        ToolbarName = "Table", 
                                                         ToolbarIcon = "Table.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "HorizontalRule",
+                                                        ToolbarName = "HorizontalRule", 
                                                         ToolbarIcon =
                                                             "HorizontalRule.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Smiley",
+                                                        ToolbarName = "Smiley", 
                                                         ToolbarIcon = "Smiley.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "SpecialChar",
+                                                        ToolbarName = "SpecialChar", 
                                                         ToolbarIcon = "SpecialChar.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "PageBreak",
+                                                        ToolbarName = "PageBreak", 
                                                         ToolbarIcon = "PageBreak.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Styles",
+                                                        ToolbarName = "Styles", 
                                                         ToolbarIcon = "Styles.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Format",
+                                                        ToolbarName = "Format", 
                                                         ToolbarIcon = "Format.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Font",
+                                                        ToolbarName = "Font", 
                                                         ToolbarIcon = "Font.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "FontSize",
+                                                        ToolbarName = "FontSize", 
                                                         ToolbarIcon = "FontSize.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "TextColor",
+                                                        ToolbarName = "TextColor", 
                                                         ToolbarIcon = "TextColor.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "BGColor",
+                                                        ToolbarName = "BGColor", 
                                                         ToolbarIcon = "BGColor.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Maximize",
+                                                        ToolbarName = "Maximize", 
                                                         ToolbarIcon = "Maximize.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "ShowBlocks",
+                                                        ToolbarName = "ShowBlocks", 
                                                         ToolbarIcon = "ShowBlocks.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "About",
+                                                        ToolbarName = "About", 
                                                         ToolbarIcon = "About.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Iframe",
+                                                        ToolbarName = "Iframe", 
                                                         ToolbarIcon = "Iframe.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "Mathjax",
+                                                        ToolbarName = "Mathjax", 
                                                         ToolbarIcon = "mathjax.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "oembed",
+                                                        ToolbarName = "embed", 
                                                         ToolbarIcon = "oEmbed.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "CodeSnippet",
+                                                        ToolbarName = "CodeSnippet", 
                                                         ToolbarIcon =
                                                             "codesnippet.png"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "qrcodes",
+                                                        ToolbarName = "qrcodes", 
                                                         ToolbarIcon = "qrcodes.jpg"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
                                                         ToolbarName =
-                                                            "newsarticleslinks",
+                                                            "newsarticleslinks", 
                                                         ToolbarIcon =
                                                             "newsarticleslinks.gif"
-                                                    },
+                                                    }, 
                                                 new ToolbarButton
                                                     {
-                                                        ToolbarName = "-",
+                                                        ToolbarName = "-", 
                                                         ToolbarIcon = "separator.png"
                                                     }
                                             };
@@ -525,8 +537,12 @@ namespace WatchersNET.CKEditor.Utilities
         /// <summary>
         /// Gets the default toolbar.
         /// </summary>
-        /// <param name="toolbarName">Name of the toolbar.</param>
-        /// <returns>Gets the Default Toolbar Based on the toolbarName</returns>
+        /// <param name="toolbarName">
+        /// Name of the toolbar.
+        /// </param>
+        /// <returns>
+        /// Gets the Default Toolbar Based on the toolbarName
+        /// </returns>
         public static ToolbarSet GetDefaultToolbar(string toolbarName)
         {
             switch (toolbarName)
@@ -541,20 +557,20 @@ namespace WatchersNET.CKEditor.Utilities
                                                    items =
                                                        new List<string>
                                                            {
-                                                               "Bold",
-                                                               "Italic",
-                                                               "-",
-                                                               "NumberedList",
-                                                               "BulletedList",
-                                                               "-",
-                                                               "Link",
-                                                               "Unlink",
-                                                               "Image",
-                                                               "Mathjax",
-                                                               "oembed",
-                                                               "-",
+                                                               "Bold", 
+                                                               "Italic", 
+                                                               "-", 
+                                                               "NumberedList", 
+                                                               "BulletedList", 
+                                                               "-", 
+                                                               "Link", 
+                                                               "Unlink", 
+                                                               "Image", 
+                                                               "Mathjax", 
+                                                               "embed", 
+                                                               "-", 
                                                                "About"
-                                                           },
+                                                           }, 
                                                    name = "basicset"
                                                };
 
@@ -562,6 +578,7 @@ namespace WatchersNET.CKEditor.Utilities
 
                         return toolbarSetBasic;
                     }
+
                 case "Standard":
                     {
                         var toolbarSetStandard = new ToolbarSet("Standard", 15);
@@ -573,15 +590,15 @@ namespace WatchersNET.CKEditor.Utilities
                                     items =
                                         new List<string>
                                             {
-                                                "Cut",
-                                                "Copy",
-                                                "Paste",
-                                                "PasteText",
-                                                "PasteFromWord",
-                                                "-",
-                                                "Undo",
+                                                "Cut", 
+                                                "Copy", 
+                                                "Paste", 
+                                                "PasteText", 
+                                                "PasteFromWord", 
+                                                "-", 
+                                                "Undo", 
                                                 "Redo"
-                                            },
+                                            }, 
                                     name = "clipboard"
                                 });
 
@@ -592,7 +609,7 @@ namespace WatchersNET.CKEditor.Utilities
                             new ToolbarGroup
                                 {
                                     items =
-                                        new List<string> { "Image", "Mathjax", "oembed", "HorizontalRule" },
+                                        new List<string> { "Image", "Mathjax", "embed", "HorizontalRule" }, 
                                     name = "insert"
                                 });
 
@@ -608,7 +625,7 @@ namespace WatchersNET.CKEditor.Utilities
                         toolbarSetStandard.ToolbarGroups.Add(
                             new ToolbarGroup
                                 {
-                                    items = new List<string> { "Bold", "Italic", "Strike", "RemoveFormat" },
+                                    items = new List<string> { "Bold", "Italic", "Strike", "RemoveFormat" }, 
                                     name = "basicstyles"
                                 });
 
@@ -618,13 +635,13 @@ namespace WatchersNET.CKEditor.Utilities
                                     items =
                                         new List<string>
                                             {
-                                                "NumberedList",
-                                                "BulletedList",
-                                                "-",
-                                                "Outdent",
-                                                "Indent",
+                                                "NumberedList", 
+                                                "BulletedList", 
+                                                "-", 
+                                                "Outdent", 
+                                                "Indent", 
                                                 "Blockquote"
-                                            },
+                                            }, 
                                     name = "paragraph"
                                 });
 
@@ -639,6 +656,7 @@ namespace WatchersNET.CKEditor.Utilities
 
                         return toolbarSetStandard;
                     }
+
                 case "Full":
                     {
                         var toolbarSetFull = new ToolbarSet("Full", 20);
@@ -650,13 +668,13 @@ namespace WatchersNET.CKEditor.Utilities
                                     items =
                                         new List<string>
                                             {
-                                                "Source",
-                                                "-",
-                                                "Preview",
-                                                "Print",
-                                                "-",
+                                                "Source", 
+                                                "-", 
+                                                "Preview", 
+                                                "Print", 
+                                                "-", 
                                                 "Templates"
-                                            },
+                                            }, 
                                     name = "document"
                                 });
 
@@ -666,15 +684,15 @@ namespace WatchersNET.CKEditor.Utilities
                                     items =
                                         new List<string>
                                             {
-                                                "Cut",
-                                                "Copy",
-                                                "Paste",
-                                                "PasteText",
-                                                "PasteFromWord",
-                                                "-",
-                                                "Undo",
-                                                "Redo",
-                                            },
+                                                "Cut", 
+                                                "Copy", 
+                                                "Paste", 
+                                                "PasteText", 
+                                                "PasteFromWord", 
+                                                "-", 
+                                                "Undo", 
+                                                "Redo", 
+                                            }, 
                                     name = "clipboard"
                                 });
 
@@ -684,21 +702,21 @@ namespace WatchersNET.CKEditor.Utilities
                                     items =
                                         new List<string>
                                             {
-                                                "Find",
-                                                "Replace",
-                                                "-",
-                                                "SelectAll",
-                                                "-",
-                                                "SpellChecker",
+                                                "Find", 
+                                                "Replace", 
+                                                "-", 
+                                                "SelectAll", 
+                                                "-", 
+                                                "SpellChecker", 
                                                 "Scayt"
-                                            },
+                                            }, 
                                     name = "editing"
                                 });
 
                         toolbarSetFull.ToolbarGroups.Add(
                             new ToolbarGroup
                                 {
-                                    items = new List<string> { "Maximize", "ShowBlocks", "-", "About" },
+                                    items = new List<string> { "Maximize", "ShowBlocks", "-", "About" }, 
                                     name = "tools"
                                 });
 
@@ -711,22 +729,22 @@ namespace WatchersNET.CKEditor.Utilities
                                     items =
                                         new List<string>
                                             {
-                                                "NumberedList",
-                                                "BulletedList",
-                                                "-",
-                                                "Outdent",
-                                                "Indent",
-                                                "Blockquote",
-                                                "CreateDiv",
-                                                "-",
-                                                "JustifyLeft",
-                                                "JustifyCenter",
-                                                "JustifyRight",
-                                                "JustifyBlock",
-                                                "-",
-                                                "BidiLtr",
+                                                "NumberedList", 
+                                                "BulletedList", 
+                                                "-", 
+                                                "Outdent", 
+                                                "Indent", 
+                                                "Blockquote", 
+                                                "CreateDiv", 
+                                                "-", 
+                                                "JustifyLeft", 
+                                                "JustifyCenter", 
+                                                "JustifyRight", 
+                                                "JustifyBlock", 
+                                                "-", 
+                                                "BidiLtr", 
                                                 "BidiRtl"
-                                            },
+                                            }, 
                                     name = "paragraph"
                                 });
 
@@ -739,17 +757,17 @@ namespace WatchersNET.CKEditor.Utilities
                                     items =
                                         new List<string>
                                             {
-                                                "Image",
-                                                "Mathjax",
-                                                "oembed",
-                                                "CodeSnippet",
-                                                "Table",
-                                                "HorizontalRule",
-                                                "Smiley",
-                                                "SpecialChar",
-                                                "PageBreak",
-                                                "Iframe",
-                                            },
+                                                "Image", 
+                                                "Mathjax", 
+                                                "embed", 
+                                                "CodeSnippet", 
+                                                "Table", 
+                                                "HorizontalRule", 
+                                                "Smiley", 
+                                                "SpecialChar", 
+                                                "PageBreak", 
+                                                "Iframe", 
+                                            }, 
                                     name = "insert"
                                 });
 
@@ -762,28 +780,27 @@ namespace WatchersNET.CKEditor.Utilities
                                     items =
                                         new List<string>
                                             {
-                                                "Bold",
-                                                "Italic",
-                                                "Underline",
-                                                "Strike",
-                                                "Subscript",
-                                                "Superscript",
-                                                "-",
+                                                "Bold", 
+                                                "Italic", 
+                                                "Underline", 
+                                                "Strike", 
+                                                "Subscript", 
+                                                "Superscript", 
+                                                "-", 
                                                 "RemoveFormat"
-                                            },
+                                            }, 
                                     name = "basicstyles"
                                 });
 
                         toolbarSetFull.ToolbarGroups.Add(
                             new ToolbarGroup
                                 {
-                                    items = new List<string> { "Styles", "Format", "Font", "FontSize" },
+                                    items = new List<string> { "Styles", "Format", "Font", "FontSize" }, 
                                     name = "styles"
                                 });
 
                         toolbarSetFull.ToolbarGroups.Add(
                             new ToolbarGroup { items = new List<string> { "TextColor", "BGColor" }, name = "colors" });
-
 
                         return toolbarSetFull;
                     }
@@ -802,8 +819,8 @@ namespace WatchersNET.CKEditor.Utilities
         {
             var listToolbarsSets = new List<ToolbarSet>
                                        {
-                                           GetDefaultToolbar("Basic"),
-                                           GetDefaultToolbar("Standard"),
+                                           GetDefaultToolbar("Basic"), 
+                                           GetDefaultToolbar("Standard"), 
                                            GetDefaultToolbar("Full")
                                        };
 
@@ -864,7 +881,7 @@ namespace WatchersNET.CKEditor.Utilities
                 homeDirPath = alternatePath;
             }
 
-            bool createDefault = false;
+            var createDefault = false;
 
             // Import old ToolbarXmlFileName first if exist
             if (File.Exists(Path.Combine(homeDirPath, SettingConstants.ToolbarXmlFileName)))
@@ -881,7 +898,7 @@ namespace WatchersNET.CKEditor.Utilities
                 }
 
                 File.Copy(
-                    Path.Combine(Globals.HostMapPath, SettingConstants.ToolbarSetXmlFileName),
+                    Path.Combine(Globals.HostMapPath, SettingConstants.ToolbarSetXmlFileName), 
                     Path.Combine(homeDirPath, SettingConstants.ToolbarSetXmlFileName));
             }
 
@@ -894,7 +911,7 @@ namespace WatchersNET.CKEditor.Utilities
                 }
 
                 File.Copy(
-                    Path.Combine(Globals.HostMapPath, SettingConstants.ToolbarButtonXmlFileName),
+                    Path.Combine(Globals.HostMapPath, SettingConstants.ToolbarButtonXmlFileName), 
                     Path.Combine(homeDirPath, SettingConstants.ToolbarButtonXmlFileName));
             }
 
@@ -908,9 +925,9 @@ namespace WatchersNET.CKEditor.Utilities
                     var textReader =
                         new StreamReader(
                             new FileStream(
-                                Path.Combine(homeDirPath, SettingConstants.ToolbarSetXmlFileName),
-                                FileMode.Open,
-                                FileAccess.Read,
+                                Path.Combine(homeDirPath, SettingConstants.ToolbarSetXmlFileName), 
+                                FileMode.Open, 
+                                FileAccess.Read, 
                                 FileShare.Read)))
                 {
                     toolBarSets = (List<ToolbarSet>)serializer.Deserialize(textReader);
@@ -929,16 +946,16 @@ namespace WatchersNET.CKEditor.Utilities
                     }
 
                     File.Copy(
-                        Path.Combine(Globals.HostMapPath, SettingConstants.ToolbarSetXmlFileName),
+                        Path.Combine(Globals.HostMapPath, SettingConstants.ToolbarSetXmlFileName), 
                         Path.Combine(homeDirPath, SettingConstants.ToolbarSetXmlFileName));
 
                     using (
                         TextReader textReader =
                             new StreamReader(
                                 new FileStream(
-                                    Path.Combine(homeDirPath, SettingConstants.ToolbarSetXmlFileName),
-                                    FileMode.Open,
-                                    FileAccess.Read,
+                                    Path.Combine(homeDirPath, SettingConstants.ToolbarSetXmlFileName), 
+                                    FileMode.Open, 
+                                    FileAccess.Read, 
                                     FileShare.Read)))
                     {
                         toolBarSets = (List<ToolbarSet>)serializer.Deserialize(textReader);
@@ -950,11 +967,11 @@ namespace WatchersNET.CKEditor.Utilities
 
             foreach (var @group in toolBarSets.SelectMany(set => set.ToolbarGroups))
             {
-                for (int index = 0; index < @group.items.Count; index++)
+                for (var index = 0; index < @group.items.Count; index++)
                 {
-                    if (@group.items[index].Equals("oEmbed"))
+                    if (@group.items[index].Equals("oembed"))
                     {
-                        @group.items[index] = "oembed";
+                        @group.items[index] = "embed";
                     }
                 }
             }
@@ -965,8 +982,12 @@ namespace WatchersNET.CKEditor.Utilities
         /// <summary>
         /// Save Toolbar Set list as serialized Xml File
         /// </summary>
-        /// <param name="toolBarSets">The Toolbar Set list</param>
-        /// <param name="homeDirPath">The home directory path.</param>
+        /// <param name="toolBarSets">
+        /// The Toolbar Set list
+        /// </param>
+        /// <param name="homeDirPath">
+        /// The home directory path.
+        /// </param>
         internal static void SaveToolbarSets(List<ToolbarSet> toolBarSets, string homeDirPath)
         {
             var serializer = new XmlSerializer(typeof(List<ToolbarSet>));
@@ -975,9 +996,9 @@ namespace WatchersNET.CKEditor.Utilities
                 var textWriter =
                     new StreamWriter(
                         new FileStream(
-                            Path.Combine(homeDirPath, SettingConstants.ToolbarSetXmlFileName),
-                            FileMode.Truncate,
-                            FileAccess.Write,
+                            Path.Combine(homeDirPath, SettingConstants.ToolbarSetXmlFileName), 
+                            FileMode.Truncate, 
+                            FileAccess.Write, 
                             FileShare.Write)))
             {
                 serializer.Serialize(textWriter, toolBarSets);
@@ -989,7 +1010,9 @@ namespace WatchersNET.CKEditor.Utilities
         /// <summary>
         /// Imports the old toolbar XML.
         /// </summary>
-        /// <param name="homeDirPath">The home folder path.</param>
+        /// <param name="homeDirPath">
+        /// The home folder path.
+        /// </param>
         internal static void ImportOldToolbarXml(string homeDirPath)
         {
             // Delete old xml file in Host Path
@@ -1034,7 +1057,7 @@ namespace WatchersNET.CKEditor.Utilities
                         break;
                     default:
                         {
-                            toolbar.sToolbarSet = toolbar.sToolbarSet.Replace("oEmbed", "oembed");
+                            toolbar.sToolbarSet = toolbar.sToolbarSet.Replace("oembed", "embed");
                             toolbarSet = ConvertStringToToolbarSet(toolbar.sToolbarSet);
                         }
 

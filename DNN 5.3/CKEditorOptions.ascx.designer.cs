@@ -325,7 +325,7 @@ namespace WatchersNET.CKEditor {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::DotNetNuke.Web.UI.WebControls.DnnTextBox txtBlanktext;
+        protected global::System.Web.UI.WebControls.TextBox txtBlanktext;
         
         /// <summary>
         /// lblSkin control.

@@ -33,7 +33,7 @@ namespace WatchersNET.CKEditor.Web
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Entities.Portals;
-    using DotNetNuke.Framework;
+    using DotNetNuke.Framework.JavaScriptLibraries;
     using DotNetNuke.Framework.Providers;
     using DotNetNuke.Security;
     using DotNetNuke.Security.Roles;
@@ -416,11 +416,11 @@ namespace WatchersNET.CKEditor.Web
                     this._settings["extraPlugins"] = this._settings["extraPlugins"].Replace(",xmlstyles", string.Empty);
                 }
 
-                // fix oEmbed/oembed issue and other bad settings
+                // fix oembed/embed issue and other bad settings
                 if (!string.IsNullOrEmpty(this._settings["extraPlugins"])
-                    && this._settings["extraPlugins"].Contains("oEmbed"))
+                    && this._settings["extraPlugins"].Contains("oembed"))
                 {
-                    this._settings["extraPlugins"] = this._settings["extraPlugins"].Replace("oEmbed", "oembed");
+                    this._settings["extraPlugins"] = this._settings["extraPlugins"].Replace("oembed", "embed");
                 }
 
                 if (this._settings["PasteFromWordCleanupFile"] != null
@@ -734,7 +734,9 @@ namespace WatchersNET.CKEditor.Web
         /// </returns>
         public bool HasRenderedTextArea(Control control)
         {
-            if (control is CKEditorControl && ((CKEditorControl)control).IsRendered)
+            var editorControl = control as CKEditorControl;
+
+            if (editorControl != null && editorControl.IsRendered)
             {
                 return true;
             }
@@ -946,7 +948,8 @@ namespace WatchersNET.CKEditor.Web
                         this._portalSettings.ActiveTab.TabID,
                         this.ID,
                         this._portalSettings.PortalId,
-                        CultureInfo.CurrentCulture.Name), true);
+                        CultureInfo.CurrentCulture.Name),
+                    true);
 
                 outWriter.AddAttribute(HtmlTextWriterAttribute.Class, "CommandButton");
 
@@ -1051,7 +1054,7 @@ namespace WatchersNET.CKEditor.Web
         private void LoadAllSettings()
         {
             var settingsDictionary = Utility.GetEditorHostSettings();
-            var portalRoles = new RoleController().GetPortalRoles(this._portalSettings.PortalId);
+            var portalRoles = RoleController.Instance.GetRoles(this._portalSettings.PortalId);
 
             // Load Default Settings
             this.currentSettings = SettingsUtil.GetDefaultSettings(
@@ -1138,7 +1141,6 @@ namespace WatchersNET.CKEditor.Web
                 formattedUrl = this._portalSettings.HomeDirectory + inputUrl;
             }
             
-
             return formattedUrl;
         }
 
@@ -1211,7 +1213,7 @@ namespace WatchersNET.CKEditor.Web
             }
             else
             {
-                Page.ClientScript.RegisterOnSubmitStatement(type, key, script);
+                this.Page.ClientScript.RegisterOnSubmitStatement(type, key, script);
             }
         }
 
@@ -1253,7 +1255,7 @@ namespace WatchersNET.CKEditor.Web
                 }
 
                 // Role
-                var role = roleController.GetRole(roleToolbar.RoleId, this._portalSettings.PortalId);
+                var role = roleController.GetRoleById(roleToolbar.RoleId, this._portalSettings.PortalId);
 
                 if (role == null)
                 {
@@ -1312,7 +1314,7 @@ namespace WatchersNET.CKEditor.Web
             const string CsAdaptName = "CKAdaptScript";
             const string CsFindName = "CKFindScript";
 
-            jQuery.RequestRegistration();
+            JavaScript.RequestRegistration(CommonJs.jQuery);
 
             // Inject jQuery if editor is loaded in a RadWindow
             if (HttpContext.Current.Request.QueryString["rwndrnd"] != null)

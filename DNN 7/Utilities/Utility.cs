@@ -511,7 +511,7 @@ namespace WatchersNET.CKEditor.Utilities
         /// </returns>
         public static bool IsInRoles(string roles, PortalSettings settings)
         {
-            var objUserInfo = UserController.GetCurrentUserInfo();
+            var objUserInfo = UserController.Instance.GetCurrentUserInfo();
 
             var isInRoles = objUserInfo.IsSuperUser;
 

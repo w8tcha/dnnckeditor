@@ -22,7 +22,6 @@ namespace WatchersNET.CKEditor.Module
     using System.Web.UI.HtmlControls;
     using System.Web.UI.WebControls;
 
-    using DotNetNuke.Entities.Host;
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Entities.Portals;
     using DotNetNuke.Entities.Tabs;
@@ -114,7 +113,7 @@ namespace WatchersNET.CKEditor.Module
 
                 this.OptionsPlaceHolder.Controls.Add(this.EditorOptions);
 
-                if (Page.IsPostBack)
+                if (this.Page.IsPostBack)
                 {
                     return;
                 }
@@ -365,7 +364,7 @@ namespace WatchersNET.CKEditor.Module
             if (this.PortalOnly.Checked)
             {
                 this.RenderPortalNode(
-                    new PortalController().GetPortal(PortalSettings.PortalId), moduleController, settingsDictionary);
+                    new PortalController().GetPortal(this.PortalSettings.PortalId), moduleController, settingsDictionary);
             }
             else
             {

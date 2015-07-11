@@ -113,7 +113,7 @@ namespace WatchersNET.CKEditor.Module
 
                 this.OptionsPlaceHolder.Controls.Add(this.EditorOptions);
 
-                if (Page.IsPostBack)
+                if (this.Page.IsPostBack)
                 {
                     return;
                 }
@@ -369,7 +369,7 @@ namespace WatchersNET.CKEditor.Module
             if (this.PortalOnly.Checked)
             {
                 this.RenderPortalNode(
-                    new PortalController().GetPortal(PortalSettings.PortalId), moduleController, settingsDictionary);
+                    new PortalController().GetPortal(this.PortalSettings.PortalId), moduleController, settingsDictionary);
             }
             else
             {

@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfToolbarButton xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <ToolbarButton>
-    <ToolbarName>Mathjax</ToolbarName>
-    <ToolbarIcon>mathjax.png</ToolbarIcon>
-  </ToolbarButton>
-  <ToolbarButton>
     <ToolbarName>Source</ToolbarName>
     <ToolbarIcon>Source.png</ToolbarIcon>
   </ToolbarButton>
@@ -233,7 +229,11 @@
     <ToolbarIcon>Iframe.png</ToolbarIcon>
   </ToolbarButton>
   <ToolbarButton>
-    <ToolbarName>oembed</ToolbarName>
+    <ToolbarName>Mathjax</ToolbarName>
+    <ToolbarIcon>mathjax.png</ToolbarIcon>
+  </ToolbarButton>
+  <ToolbarButton>
+    <ToolbarName>embed</ToolbarName>
     <ToolbarIcon>oEmbed.png</ToolbarIcon>
   </ToolbarButton>
   <ToolbarButton>
