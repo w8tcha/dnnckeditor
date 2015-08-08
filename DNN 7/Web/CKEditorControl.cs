@@ -1054,7 +1054,7 @@ namespace WatchersNET.CKEditor.Web
         private void LoadAllSettings()
         {
             var settingsDictionary = Utility.GetEditorHostSettings();
-            var portalRoles = RoleController.Instance.GetRoles(this._portalSettings.PortalId);
+            var portalRoles = new RoleController().GetPortalRoles(this._portalSettings.PortalId);
 
             // Load Default Settings
             this.currentSettings = SettingsUtil.GetDefaultSettings(
@@ -1228,7 +1228,10 @@ namespace WatchersNET.CKEditor.Web
         /// </returns>
         private string SetUserToolbar(string alternateConfigSubFolder)
         {
-            string toolbarName = HttpContext.Current.Request.IsAuthenticated ? "Full" : "Basic";
+            var toolbarName = HttpContext.Current.Request.IsAuthenticated
+                                 && PortalSecurity.IsInRoles(this._portalSettings.AdministratorRoleName)
+                                     ? "Full"
+                                     : "Basic";
 
             var listToolbarSets = ToolbarUtil.GetToolbars(
                 this._portalSettings.HomeDirectoryMapPath, alternateConfigSubFolder);
@@ -1255,7 +1258,7 @@ namespace WatchersNET.CKEditor.Web
                 }
 
                 // Role
-                var role = roleController.GetRoleById(roleToolbar.RoleId, this._portalSettings.PortalId);
+                var role = roleController.GetRoleById(this._portalSettings.PortalId, roleToolbar.RoleId);
 
                 if (role == null)
                 {

@@ -136,7 +136,7 @@ CKEDITOR.plugins.add("wordcount", {
 
         function countCharacters(text, editorInstance) {
             if (config.countHTML) {
-                return (editorInstance.getSnapshot().length);
+                return (text.length);
             } else {
                 var normalizedText;
 
@@ -271,9 +271,8 @@ CKEDITOR.plugins.add("wordcount", {
                 (config.maxCharCount > -1 && charCount > config.maxCharCount && deltaChar > 0)) {
 
                 limitReached(editorInstance, limitReachedNotified);
-            } else if (!limitRestoredNotified &&
-                        (config.maxWordCount == -1 || wordCount < config.maxWordCount) &&
-                        (config.maxCharCount == -1 || charCount < config.maxCharCount)) {
+            } else if ((config.maxWordCount == -1 || wordCount < config.maxWordCount) &&
+            (config.maxCharCount == -1 || charCount < config.maxCharCount)) {
 
                 limitRestored(editorInstance);
             } else {
@@ -344,8 +343,8 @@ CKEDITOR.plugins.add("wordcount", {
             if (config.maxWordCount > 0 || config.maxCharCount > 0) {
 
                 // Check if pasted content is above the limits
-                var wordCount = 0,
-                    charCount = 0,
+                var wordCount = -1,
+                    charCount = -1,
                     text = event.editor.getData() + event.data.dataValue;
 
 

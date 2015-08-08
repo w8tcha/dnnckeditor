@@ -1224,7 +1224,7 @@ namespace WatchersNET.CKEditor.Web
         /// </returns>
         private string SetUserToolbar(string alternateConfigSubFolder)
         {
-            string toolbarName = HttpContext.Current.Request.IsAuthenticated ? "Full" : "Basic";
+            var toolbarName = HttpContext.Current.Request.IsAuthenticated ? "Full" : "Basic";
 
             var listToolbarSets = ToolbarUtil.GetToolbars(
                 this._portalSettings.HomeDirectoryMapPath, alternateConfigSubFolder);

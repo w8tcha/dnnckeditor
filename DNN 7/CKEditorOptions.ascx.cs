@@ -62,6 +62,11 @@ namespace WatchersNET.CKEditor
         private const string ProviderType = "htmlEditor";
 
         /// <summary>
+        ///   The role controller.
+        /// </summary>
+        private readonly RoleController objRoleController = new RoleController();
+
+        /// <summary>
         ///   The provider config.
         /// </summary>
         private readonly ProviderConfiguration provConfig = ProviderConfiguration.GetProviderConfiguration(ProviderType);
@@ -833,7 +838,7 @@ namespace WatchersNET.CKEditor
                 }
                 else
                 {
-                    RoleInfo objRole = RoleController.Instance.GetRoleById(
+                    RoleInfo objRole = this.objRoleController.GetRole(
                         objToolbRoles.RoleId, this._portalSettings.PortalId);
 
                     if (objRole == null)
@@ -887,7 +892,7 @@ namespace WatchersNET.CKEditor
                 }
                 else
                 {
-                    RoleInfo objRole = RoleController.Instance.GetRoleById(
+                    RoleInfo objRole = this.objRoleController.GetRole(
                         uploadSizeRole.RoleId, this._portalSettings.PortalId);
 
                     if (objRole == null)
@@ -987,7 +992,7 @@ namespace WatchersNET.CKEditor
             var lic = new ListItemCollection();
 
             foreach (var roleItem in
-                from RoleInfo objRole in RoleController.Instance.GetRoles(this._portalSettings.PortalId)
+                from RoleInfo objRole in this.objRoleController.GetPortalRoles(this._portalSettings.PortalId)
                 select new ListItem { Text = objRole.RoleName, Value = objRole.RoleID.ToString() })
             {
                 lic.Add(roleItem);
@@ -1081,7 +1086,7 @@ namespace WatchersNET.CKEditor
             moduleController.DeleteModuleSetting(
                 this.ModuleId, string.Format("{0}{1}", moduleKey, SettingConstants.RESIZEWIDTH));
 
-            foreach (RoleInfo objRole in RoleController.Instance.GetRoles(this._portalSettings.PortalId))
+            foreach (RoleInfo objRole in this.objRoleController.GetPortalRoles(this._portalSettings.PortalId))
             {
                 moduleController.DeleteModuleSetting(
                     this.ModuleId, string.Format("{0}{2}#{1}", moduleKey, objRole.RoleID, SettingConstants.TOOLB));
@@ -1181,7 +1186,7 @@ namespace WatchersNET.CKEditor
         {
             this.chblBrowsGr.Items.Clear();
 
-            foreach (RoleInfo objRole in RoleController.Instance.GetRoles(this._portalSettings.PortalId))
+            foreach (RoleInfo objRole in this.objRoleController.GetPortalRoles(this._portalSettings.PortalId))
             {
                 ListItem roleItem = new ListItem { Text = objRole.RoleName, Value = objRole.RoleID.ToString() };
 
@@ -1878,7 +1883,7 @@ namespace WatchersNET.CKEditor
             this.LoadDefaultSettings();
 
             var settingsDictionary = Utility.GetEditorHostSettings();
-            var portalRoles = RoleController.Instance.GetRoles(this._portalSettings.PortalId);
+            var portalRoles = this.objRoleController.GetPortalRoles(this._portalSettings.PortalId);
 
             var portalKey = string.Format("DNNCKP#{0}#", this._portalSettings.PortalId);
             var pageKey = string.Format("DNNCKT#{0}#", this.CurrentOrSelectedTabId);
@@ -2541,7 +2546,7 @@ namespace WatchersNET.CKEditor
                 }
                 else
                 {
-                    RoleInfo objRole = RoleController.Instance.GetRoleByName(this._portalSettings.PortalId, label.Text);
+                    RoleInfo objRole = this.objRoleController.GetRoleByName(this._portalSettings.PortalId, label.Text);
 
                     moduleController.UpdateModuleSetting(
                         this.ModuleId,
@@ -2571,7 +2576,7 @@ namespace WatchersNET.CKEditor
                 }
                 else
                 {
-                    RoleInfo objRole = RoleController.Instance.GetRoleByName(this._portalSettings.PortalId, label.Text);
+                    RoleInfo objRole = this.objRoleController.GetRoleByName(this._portalSettings.PortalId, label.Text);
 
                     moduleController.UpdateModuleSetting(
                         this.ModuleId,
@@ -2854,7 +2859,7 @@ namespace WatchersNET.CKEditor
                 }
                 else
                 {
-                    RoleInfo objRole = RoleController.Instance.GetRoleByName(this._portalSettings.PortalId, label.Text);
+                    RoleInfo objRole = this.objRoleController.GetRoleByName(this._portalSettings.PortalId, label.Text);
 
                     Utility.AddOrUpdateEditorHostSetting(
                         string.Format("{0}toolb#{1}", key, objRole.RoleID),
@@ -2882,7 +2887,7 @@ namespace WatchersNET.CKEditor
                 }
                 else
                 {
-                    RoleInfo objRole = RoleController.Instance.GetRoleByName(this._portalSettings.PortalId, label.Text);
+                    RoleInfo objRole = this.objRoleController.GetRoleByName(this._portalSettings.PortalId, label.Text);
 
                     Utility.AddOrUpdateEditorHostSetting(
                         string.Format("{0}{2}#{1}", key, objRole.RoleID, SettingConstants.UPLOADFILELIMITS),
@@ -3519,7 +3524,7 @@ namespace WatchersNET.CKEditor
                 }
                 else
                 {
-                    RoleInfo objRole = RoleController.Instance.GetRoleByName(this._portalSettings.PortalId, label.Text);
+                    RoleInfo objRole = this.objRoleController.GetRoleByName(this._portalSettings.PortalId, label.Text);
 
                     listToolbarRoles.Add(new ToolbarRoles { RoleId = objRole.RoleID, Toolbar = ddLToolB.SelectedValue });
                 }
@@ -3548,7 +3553,7 @@ namespace WatchersNET.CKEditor
                 }
                 else
                 {
-                    RoleInfo objRole = RoleController.Instance.GetRoleByName(this._portalSettings.PortalId, label.Text);
+                    RoleInfo objRole = this.objRoleController.GetRoleByName(this._portalSettings.PortalId, label.Text);
 
                     listUploadSizeRoles.Add(
                         new UploadSizeRoles

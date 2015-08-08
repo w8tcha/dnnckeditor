@@ -108,7 +108,7 @@ namespace WatchersNET.CKEditor.Utilities
             EditorProviderSettings currentSettings,
             List<EditorHostSetting> editorHostSettings,
             string key,
-            IList<RoleInfo> portalRoles)
+            ArrayList portalRoles)
         {
             var roleController = new RoleController();
 
@@ -392,7 +392,7 @@ namespace WatchersNET.CKEditor.Utilities
                     {
                         if (Utility.IsNumeric(sRoleName))
                         {
-                            RoleInfo roleInfo = roleController.GetRoleById(int.Parse(sRoleName), portalSettings.PortalId);
+                            RoleInfo roleInfo = roleController.GetRoleById(portalSettings.PortalId, int.Parse(sRoleName));
 
                             if (roleInfo != null)
                             {
@@ -784,7 +784,7 @@ namespace WatchersNET.CKEditor.Utilities
         /// <returns>
         /// Returns the filled Module Settings
         /// </returns>
-        internal static EditorProviderSettings LoadModuleSettings(PortalSettings portalSettings, EditorProviderSettings currentSettings, string key, int moduleId, IList<RoleInfo> portalRoles)
+        internal static EditorProviderSettings LoadModuleSettings(PortalSettings portalSettings, EditorProviderSettings currentSettings, string key, int moduleId, ArrayList portalRoles)
         {
             var hshModSet = new ModuleController().GetModuleSettings(moduleId);
 
@@ -1001,7 +1001,7 @@ namespace WatchersNET.CKEditor.Utilities
                     if (Utility.IsNumeric(sRoleName))
                     {
                         RoleInfo roleInfo = roleController.GetRoleById(
-                            int.Parse(sRoleName), portalSettings.PortalId);
+                            portalSettings.PortalId, int.Parse(sRoleName));
 
                         if (roleInfo != null)
                         {
@@ -1215,7 +1215,7 @@ namespace WatchersNET.CKEditor.Utilities
         /// <returns>
         /// Returns the Default Provider Settings
         /// </returns>
-        internal static EditorProviderSettings GetDefaultSettings(PortalSettings portalSettings, string homeDirPath, string alternateSubFolder, IList<RoleInfo> portalRoles)
+        internal static EditorProviderSettings GetDefaultSettings(PortalSettings portalSettings, string homeDirPath, string alternateSubFolder, ArrayList portalRoles)
         {
             var roles = new ArrayList();
 
@@ -1286,7 +1286,7 @@ namespace WatchersNET.CKEditor.Utilities
                     {
                         if (Utility.IsNumeric(sRoleName))
                         {
-                            RoleInfo roleInfo = roleController.GetRoleById(int.Parse(sRoleName), portalSettings.PortalId);
+                            RoleInfo roleInfo = roleController.GetRoleById(portalSettings.PortalId, int.Parse(sRoleName));
 
                             if (roleInfo != null)
                             {
@@ -1543,7 +1543,7 @@ namespace WatchersNET.CKEditor.Utilities
                 }
 
                 // Role
-                var role = roleController.GetRoleById(roleUploadSize.RoleId, portalSettings.PortalId);
+                var role = roleController.GetRoleById(portalSettings.PortalId, roleUploadSize.RoleId);
 
                 if (role == null)
                 {
