@@ -103,14 +103,17 @@
 
     <Copy SourceFiles="$(MSBuildProjectDirectory)\App_LocalResources\EditorConfigManager.ascx.de-DE.resx" DestinationFolder="$(MSBuildProjectDirectory)\ResourcesZip\Module\App_LocalResources"/>
     <Copy SourceFiles="$(MSBuildProjectDirectory)\App_LocalResources\EditorConfigManager.ascx.pl-PL.resx" DestinationFolder="$(MSBuildProjectDirectory)\ResourcesZip\Module\App_LocalResources"/>
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\App_LocalResources\EditorConfigManager.ascx.ru-RU.resx" DestinationFolder="$(MSBuildProjectDirectory)\ResourcesZip\Module\App_LocalResources"/>
     <Copy SourceFiles="$(MSBuildProjectDirectory)\App_LocalResources\EditorConfigManager.ascx.resx" DestinationFolder="$(MSBuildProjectDirectory)\ResourcesZip\Module\App_LocalResources"/>
 
     <Copy SourceFiles="$(MSBuildProjectDirectory)\App_LocalResources\Browser.aspx.de-DE.resx" DestinationFolder="$(MSBuildProjectDirectory)\ResourcesZip\Browser\App_LocalResources"/>
     <Copy SourceFiles="$(MSBuildProjectDirectory)\App_LocalResources\Browser.aspx.pl-PL.resx" DestinationFolder="$(MSBuildProjectDirectory)\ResourcesZip\Browser\App_LocalResources"/>
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\App_LocalResources\Browser.aspx.ru-RU.resx" DestinationFolder="$(MSBuildProjectDirectory)\ResourcesZip\Browser\App_LocalResources"/>
     <Copy SourceFiles="$(MSBuildProjectDirectory)\App_LocalResources\Browser.aspx.resx" DestinationFolder="$(MSBuildProjectDirectory)\ResourcesZip\Browser\App_LocalResources"/>
 
     <Copy SourceFiles="$(MSBuildProjectDirectory)\App_LocalResources\Options.aspx.de-DE.resx" DestinationFolder="$(MSBuildProjectDirectory)\ResourcesZip\App_LocalResources"/>
     <Copy SourceFiles="$(MSBuildProjectDirectory)\App_LocalResources\Options.aspx.pl-PL.resx" DestinationFolder="$(MSBuildProjectDirectory)\ResourcesZip\App_LocalResources"/>
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\App_LocalResources\Options.aspx.ru-RU.resx" DestinationFolder="$(MSBuildProjectDirectory)\ResourcesZip\App_LocalResources"/>
     <Copy SourceFiles="$(MSBuildProjectDirectory)\App_LocalResources\Options.aspx.resx" DestinationFolder="$(MSBuildProjectDirectory)\ResourcesZip\App_LocalResources"/>
 
     <!-- Minify JS and CSS Files -->
