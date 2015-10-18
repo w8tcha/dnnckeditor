@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @license Copyright (c) 2003-2015, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or http://ckeditor.com/license
  */
@@ -11,17 +11,16 @@
 
 ( function() {
 	CKEDITOR.plugins.add( 'mathjax', {
-		lang: 'af,ar,ca,cs,cy,da,de,el,en,en-gb,eo,es,fa,fi,fr,gl,he,hr,hu,it,ja,km,ku,lt,nb,nl,no,pl,pt,pt-br,ro,ru,sk,sl,sq,sv,tr,tt,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
+		lang: 'af,ar,bg,ca,cs,cy,da,de,el,en,en-gb,eo,es,fa,fi,fr,gl,he,hr,hu,it,ja,km,ko,ku,lt,nb,nl,no,pl,pt,pt-br,ro,ru,sk,sl,sq,sv,tr,tt,ug,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
 		requires: 'widget,dialog',
 		icons: 'mathjax',
 		hidpi: true, // %REMOVE_LINE_CORE%
 
 		init: function( editor ) {
-			var cls = editor.config.mathJaxClass || 'math-tex',
-				docsUrl = 'http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-mathJaxLib';
+			var cls = editor.config.mathJaxClass || 'math-tex';
 
-			if ( !editor.config.mathJaxLib && ( window.console && window.console.log ) ) {
-				window.console.log( 'Error: config.mathJaxLib property is not set. For more information visit: ', docsUrl );
+			if ( !editor.config.mathJaxLib ) {
+				CKEDITOR.error( 'mathjax-no-config' );
 			}
 
 			editor.widgets.add( 'mathjax', {

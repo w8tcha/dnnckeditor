@@ -1,14 +1,19 @@
 ﻿/* 
-Copyright (c) 2003-2009, CKSource - Frederico Knabben. All rights reserved. 
-For licensing, see LICENSE.html or http://ckeditor.com/license 
+ * @license Copyright (c) CKSource - Frederico Knabben. All rights reserved.
+ * For licensing, see LICENSE.html or http://ckeditor.com/license
 */
     /** 
      * Represent plain text selection range. 
      */
     CKEDITOR.plugins.add('textselection',
     {
-        version: 1.05,
+        version: 1.06,
         init: function (editor) {
+
+            if (editor.config.fullPage) {
+                return;
+            }
+
             // Corresponding text range of WYSIWYG bookmark.
             var wysiwygBookmark;
 
@@ -85,8 +90,7 @@ For licensing, see LICENSE.html or http://ckeditor.com/license
                                 startNode.remove();
                                 endNode.remove();
                             }
-                        } catch (excec)  {
-                            
+                        } catch (excec) {
                         }
                         
                     }
