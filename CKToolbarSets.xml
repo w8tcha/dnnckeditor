@@ -16,7 +16,7 @@
           <string>Unlink</string>
           <string>Image</string>
           <string>Mathjax</string>
-          <string>embed</string>
+          <string>Embed</string>
           <string>-</string>
           <string>About</string>
         </items>
@@ -53,7 +53,7 @@
         <items>
           <string>Image</string>
           <string>Mathjax</string>
-          <string>embed</string>
+          <string>Embed</string>
           <string>HorizontalRule</string>
         </items>
         <name>insert</name>
@@ -203,7 +203,7 @@
         <items>
           <string>Image</string>
           <string>Mathjax</string>
-          <string>embed</string>
+          <string>Embed</string>
           <string>CodeSnippet</string>
           <string>Table</string>
           <string>HorizontalRule</string>

@@ -233,7 +233,7 @@
     <ToolbarIcon>mathjax.png</ToolbarIcon>
   </ToolbarButton>
   <ToolbarButton>
-    <ToolbarName>embed</ToolbarName>
+    <ToolbarName>Embed</ToolbarName>
     <ToolbarIcon>oEmbed.png</ToolbarIcon>
   </ToolbarButton>
   <ToolbarButton>

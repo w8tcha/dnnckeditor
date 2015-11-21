@@ -63,7 +63,7 @@ namespace WatchersNET.CKEditor.Utilities
 
             foreach (var button in buttons.Where(button => button.ToolbarName.Equals("oembed")))
             {
-                button.ToolbarName = "embed";
+                button.ToolbarName = "Embed";
             }
 
             return buttons;
@@ -559,7 +559,7 @@ namespace WatchersNET.CKEditor.Utilities
                                                              },
                                                          new ToolbarButton
                                                              {
-                                                                 ToolbarName = "embed",
+                                                                 ToolbarName = "Embed",
                                                                  ToolbarIcon =
                                                                      "oEmbed.png"
                                                              },
@@ -631,7 +631,7 @@ namespace WatchersNET.CKEditor.Utilities
                                                                "Unlink",
                                                                "Image",
                                                                "Mathjax",
-                                                               "embed",
+                                                               "Embed",
                                                                "-",
                                                                "About"
                                                            },
@@ -672,7 +672,7 @@ namespace WatchersNET.CKEditor.Utilities
                             new ToolbarGroup
                                 {
                                     items =
-                                        new List<string> { "Image", "Mathjax", "embed", "HorizontalRule" },
+                                        new List<string> { "Image", "Mathjax", "Embed", "HorizontalRule" },
                                     name = "insert"
                                 });
 
@@ -821,7 +821,7 @@ namespace WatchersNET.CKEditor.Utilities
                                             {
                                                 "Image",
                                                 "Mathjax",
-                                                "embed",
+                                                "Embed",
                                                 "CodeSnippet",
                                                 "Table",
                                                 "HorizontalRule",
@@ -1034,7 +1034,7 @@ namespace WatchersNET.CKEditor.Utilities
                 {
                     if (@group.items[index].Equals("oembed"))
                     {
-                        @group.items[index] = "embed";
+                        @group.items[index] = "Embed";
                     }
                 }
             }
@@ -1114,7 +1114,7 @@ namespace WatchersNET.CKEditor.Utilities
                         break;
                     default:
                         {
-                            toolbar.sToolbarSet = toolbar.sToolbarSet.Replace("oembed", "embed");
+                            toolbar.sToolbarSet = toolbar.sToolbarSet.Replace("oembed", "Embed");
                             toolbarSet = ConvertStringToToolbarSet(toolbar.sToolbarSet);
                         }
 
