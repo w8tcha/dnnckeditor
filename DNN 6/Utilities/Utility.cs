@@ -624,7 +624,8 @@ namespace WatchersNET.CKEditor.Utilities
             }
             catch (Exception)
             {
-                result = 0;
+                // if not set in web.config us default
+                result = 4096;
             }
 
             return inkilobytes ? result : (result * 1024);

@@ -570,8 +570,12 @@ namespace WatchersNET.CKEditor.Browser
                             {
                                 fileName = friendlyUrl;
 
-                                fileName = Regex.Replace(
-                                    fileName, domainName, string.Format("{0}", domainName), RegexOptions.IgnoreCase);
+                                fileName = Globals.ResolveUrl(Regex.Replace(fileName, domainName, "~", RegexOptions.IgnoreCase));
+
+                                fileName = string.Format("{0}://{1}{2}",
+                                    HttpContext.Current.Request.Url.Scheme,
+                                    HttpContext.Current.Request.Url.Authority,
+                                    fileName);
                             }
                             else
                             {
@@ -3254,7 +3258,11 @@ namespace WatchersNET.CKEditor.Browser
                 this.rblLinkType.Items[1].Text = Regex.Replace(
                     this.rblLinkType.Items[1].Text,
                     "http://www.MyWebsite.com/Images/MyImage.jpg",
-                    Regex.Replace(fileName, sDomainName, string.Format("{0}", sDomainName), RegexOptions.IgnoreCase),
+                   string.Format(
+                "{0}://{1}{2}",
+                HttpContext.Current.Request.Url.Scheme,
+                HttpContext.Current.Request.Url.Authority,
+                fileName),
                     RegexOptions.IgnoreCase);
             }
             else
