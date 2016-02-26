@@ -10,9 +10,9 @@
     }
 
     CKEDITOR.plugins.add("autosave", {
-        lang: 'ca,cs,de,en,es,fr,ja,pl,pt-br,sv,zh,zh-cn', // %REMOVE_LINE_CORE%
+        lang: 'ca,cs,de,en,es,fr,ja,pl,pt-br,ru,sv,zh,zh-cn', // %REMOVE_LINE_CORE%
         requires: 'notification',
-        version: 0.12,
+        version: 0.13,
         init: function(editor) {
             CKEDITOR.document.appendStyleSheet(CKEDITOR.getUrl(CKEDITOR.plugins.getPath('autosave') + 'css/autosave.min.css'));
 
@@ -213,8 +213,10 @@
         var compressedJSON = LZString.compressToUTF16(JSON.stringify({ data: editorInstance.getSnapshot(), saveTime: new Date() }));
         localStorage.setItem(autoSaveKey, compressedJSON);
 
-        var notification = new CKEDITOR.plugins.notification( editorInstance, { message: editorInstance.lang.autosave.autoSaveMessage, type: 'success' } );
-        notification.show();
+        if (typeof editorInstance.config.autosave_disableNotifications === "undefined" || !editorInstance.config.autosave_disableNotifications) {
+            var notification = new CKEDITOR.plugins.notification(editorInstance, { message: editorInstance.lang.autosave.autoSaveMessage, type: 'success' });
+            notification.show();
+        }
     }
 
     function RemoveStorage(autoSaveKey) {
