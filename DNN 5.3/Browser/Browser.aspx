@@ -63,7 +63,7 @@
                     </td>
                     <td>
                       
-                      <asp:DropDownList ID="LanguageList" runat="server" CssClass="DefaultDropDown" CssClass="DefaultDropDown">
+                      <asp:DropDownList ID="LanguageList" runat="server" CssClass="DefaultDropDown">
                         <asp:ListItem Text="None"></asp:ListItem>
                       </asp:DropDownList>
                     </td>

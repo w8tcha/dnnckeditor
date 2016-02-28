@@ -3171,13 +3171,7 @@ namespace WatchersNET.CKEditor
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void CopyToAllChild_Click(object sender, EventArgs e)
         {
-            var childTabs = TabController.GetTabsByParent(this.CurrentOrSelectedTabId, this.CurrentOrSelectedPortalId);
-
-            foreach (var tab in childTabs)
-            {
-                // Sa Settings to tab
-                this.SavePortalOrPageSettings(string.Format("DNNCKT#{0}#", tab.TabID));
-            }
+            CopySettingsToChildTabs(TabController.GetTabsByParent(this.CurrentOrSelectedTabId, this.CurrentOrSelectedPortalId));
 
             // Finally Clear Cache
             DataCache.RemoveCache("CKEditorHost");
@@ -3185,6 +3179,24 @@ namespace WatchersNET.CKEditor
             this.ShowNotification(
                 Localization.GetString("lblInfoCopyAll.Text", this.ResXFile, this.LangCode),
                 "success");
+        }
+
+        /// <summary>
+        /// Copies the settings to child tabs.
+        /// </summary>
+        /// <param name="childTabs">The child tabs.</param>
+        private void CopySettingsToChildTabs(List<TabInfo> childTabs)
+        {
+            foreach (var tab in childTabs)
+            {
+                // Save Settings to tab
+                this.SavePortalOrPageSettings(string.Format("DNNCKT#{0}#", tab.TabID));
+
+                if (tab.HasChildren)
+                {
+                    CopySettingsToChildTabs(TabController.GetTabsByParent(tab.TabID, this.CurrentOrSelectedPortalId));
+                }
+            }
         }
 
         /// <summary>

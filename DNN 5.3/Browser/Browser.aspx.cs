@@ -1678,6 +1678,7 @@ namespace WatchersNET.CKEditor.Browser
         {
             this.FoldersTree.Nodes.Clear();
 
+
             DirectoryInfo dirInfo = new DirectoryInfo(currentFolderInfo.PhysicalPath);
 
             TreeNode folderNode = new TreeNode
@@ -1805,6 +1806,23 @@ namespace WatchersNET.CKEditor.Browser
                 if (rootFolder != null)
                 {
                     startingFolderInfo = rootFolder;
+                }
+                else
+                {
+                    throw new ApplicationException("hallo");
+                }
+            }
+            else
+            {
+                var rootFolder = folderController.GetFolder(this._portalSettings.PortalId, string.Empty);
+
+                if (rootFolder != null)
+                {
+                    startingFolderInfo = rootFolder;
+                }
+                else
+                {
+                    throw new ApplicationException("hallo2");
                 }
             }
 
