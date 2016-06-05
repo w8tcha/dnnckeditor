@@ -4,12 +4,9 @@
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\MicrosoftAjax\AjaxMin.tasks" />
 
   <Target Name="PackageModule" Condition=" '$(Configuration)|$(Platform)' == 'Deploy|AnyCPU' ">
-    <XmlRead Prefix="n"
-                    Namespace="http://schemas.microsoft.com/developer/msbuild/2003"
-                    XPath="dotnetnuke/packages/package[starts-with(@name,'DotNetNuke.CKHtmlEditorProvider')]/@version"
-                    XmlFileName="$(MSBuildProjectDirectory)\Install\$(DNNFileName).dnn">
-      <Output TaskParameter="Value" PropertyName="Version" />
-    </XmlRead>
+    <GetAssemblyIdentity AssemblyFiles="$(MSBuildProjectDirectory)\Install\bin\WatchersNET.CKEditor.dll">
+      <Output TaskParameter="Assemblies" ItemName="AssemblyIdentities"/>
+    </GetAssemblyIdentity>
     <ItemGroup>
       <DefaultExclude Include="**\.svn\**" />
       <DefaultExclude Include="**\bin\**" />
@@ -27,7 +24,7 @@
       <DefaultExclude Include="**\*.txt" />
       <DefaultExclude Include="**\*ReSharper.*\**" />
       <DefaultExclude Include="**\VRK.Controls\**" />
-      <DefaultExclude Include="**\packages\**" />
+      <DefaultExclude Include="**\deploy\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -35,24 +32,24 @@
     </ItemGroup>
 
     <ItemGroup>
-      <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.ashx" Exclude="$(MSBuildProjectDirectory)\..\**\packages\**;$(MSBuildProjectDirectory)\..\**\obj\**;$(MSBuildProjectDirectory)\..\**\_ReSharper*\**;" />
-      <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.ascx" Exclude="$(MSBuildProjectDirectory)\..\**\packages\**;$(MSBuildProjectDirectory)\..\**\obj\**;$(MSBuildProjectDirectory)\..\**\_ReSharper*\**;" />
-      <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.asmx" Exclude="$(MSBuildProjectDirectory)\..\**\packages\**;$(MSBuildProjectDirectory)\..\**\obj\**;$(MSBuildProjectDirectory)\..\**\_ReSharper*\**;" />
-      <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.css" Exclude="$(MSBuildProjectDirectory)\..\**\packages\**;$(MSBuildProjectDirectory)\..\**\obj\**;$(MSBuildProjectDirectory)\..\**\_ReSharper*\**;" />
+      <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.ashx" Exclude="$(MSBuildProjectDirectory)\..\**\deploy\**;$(MSBuildProjectDirectory)\..\**\obj\**;$(MSBuildProjectDirectory)\..\**\_ReSharper*\**;" />
+      <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.ascx" Exclude="$(MSBuildProjectDirectory)\..\**\deploy\**;$(MSBuildProjectDirectory)\..\**\obj\**;$(MSBuildProjectDirectory)\..\**\_ReSharper*\**;" />
+      <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.asmx" Exclude="$(MSBuildProjectDirectory)\..\**\deploy\**;$(MSBuildProjectDirectory)\..\**\obj\**;$(MSBuildProjectDirectory)\..\**\_ReSharper*\**;" />
+      <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.css" Exclude="$(MSBuildProjectDirectory)\..\**\deploy\**;$(MSBuildProjectDirectory)\..\**\obj\**;$(MSBuildProjectDirectory)\..\**\_ReSharper*\**;" />
       <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.xsl" />
-      <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.html" Exclude="$(MSBuildProjectDirectory)\..\**\packages\**;$(MSBuildProjectDirectory)\..\**\obj\**;$(MSBuildProjectDirectory)\..\**\_ReSharper*\**;" />
-      <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.htm" Exclude="$(MSBuildProjectDirectory)\..\**\packages\**;$(MSBuildProjectDirectory)\..\**\obj\**;$(MSBuildProjectDirectory)\..\**\_ReSharper*\**;" />
-      <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.resx" Exclude="$(MSBuildProjectDirectory)\..\**\packages\**;$(MSBuildProjectDirectory)\..\**\obj\**;$(MSBuildProjectDirectory)\..\**\_ReSharper*\**;" />
-      <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.xml" Exclude="$(MSBuildProjectDirectory)\..\**\packages\**;$(MSBuildProjectDirectory)\..\**\obj\**;$(MSBuildProjectDirectory)\..\**\_ReSharper*\**;" />
-      <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.aspx" Exclude="$(MSBuildProjectDirectory)\..\**\packages\**;$(MSBuildProjectDirectory)\..\**\obj\**;$(MSBuildProjectDirectory)\..\**\_ReSharper*\**;" />
-      <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.js" Exclude="$(MSBuildProjectDirectory)\..\**\packages\**;$(MSBuildProjectDirectory)\..\**\obj\**;$(MSBuildProjectDirectory)\..\**\_ReSharper*\**;" />
-      <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.txt" Exclude="$(MSBuildProjectDirectory)\..\**\packages\**;$(MSBuildProjectDirectory)\..\**\obj\**;$(MSBuildProjectDirectory)\..\**\_ReSharper*\**;" />
-      <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.jpg" Exclude="$(MSBuildProjectDirectory)\..\**\packages\**;$(MSBuildProjectDirectory)\..\**\obj\**;$(MSBuildProjectDirectory)\..\**\_ReSharper*\**;" />
-      <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.png" Exclude="$(MSBuildProjectDirectory)\..\**\packages\**;$(MSBuildProjectDirectory)\..\**\obj\**;$(MSBuildProjectDirectory)\..\**\_ReSharper*\**;" />
-      <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.swf" Exclude="$(MSBuildProjectDirectory)\..\**\packages\**;$(MSBuildProjectDirectory)\..\**\obj\**;$(MSBuildProjectDirectory)\..\**\_ReSharper*\**;" />
-      <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.jpeg" Exclude="$(MSBuildProjectDirectory)\..\**\packages\**;$(MSBuildProjectDirectory)\..\**\obj\**;$(MSBuildProjectDirectory)\..\**\_ReSharper*\**;" />
-      <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.gif" Exclude="$(MSBuildProjectDirectory)\..\**\packages\**;$(MSBuildProjectDirectory)\..\**\obj\**;$(MSBuildProjectDirectory)\..\**\_ReSharper*\**;" />
-      <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.cs" Exclude="$(MSBuildProjectDirectory)\..\**\packages\**;$(MSBuildProjectDirectory)\..\**\obj\**;$(MSBuildProjectDirectory)\..\**\_ReSharper*\**;" />
+      <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.html" Exclude="$(MSBuildProjectDirectory)\..\**\deploy\**;$(MSBuildProjectDirectory)\..\**\obj\**;$(MSBuildProjectDirectory)\..\**\_ReSharper*\**;" />
+      <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.htm" Exclude="$(MSBuildProjectDirectory)\..\**\deploy\**;$(MSBuildProjectDirectory)\..\**\obj\**;$(MSBuildProjectDirectory)\..\**\_ReSharper*\**;" />
+      <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.resx" Exclude="$(MSBuildProjectDirectory)\..\**\deploy\**;$(MSBuildProjectDirectory)\..\**\obj\**;$(MSBuildProjectDirectory)\..\**\_ReSharper*\**;" />
+      <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.xml" Exclude="$(MSBuildProjectDirectory)\..\**\deploy\**;$(MSBuildProjectDirectory)\..\**\obj\**;$(MSBuildProjectDirectory)\..\**\_ReSharper*\**;" />
+      <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.aspx" Exclude="$(MSBuildProjectDirectory)\..\**\deploy\**;$(MSBuildProjectDirectory)\..\**\obj\**;$(MSBuildProjectDirectory)\..\**\_ReSharper*\**;" />
+      <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.js" Exclude="$(MSBuildProjectDirectory)\..\**\deploy\**;$(MSBuildProjectDirectory)\..\**\obj\**;$(MSBuildProjectDirectory)\..\**\_ReSharper*\**;" />
+      <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.txt" Exclude="$(MSBuildProjectDirectory)\..\**\deploy\**;$(MSBuildProjectDirectory)\..\**\obj\**;$(MSBuildProjectDirectory)\..\**\_ReSharper*\**;" />
+      <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.jpg" Exclude="$(MSBuildProjectDirectory)\..\**\deploy\**;$(MSBuildProjectDirectory)\..\**\obj\**;$(MSBuildProjectDirectory)\..\**\_ReSharper*\**;" />
+      <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.png" Exclude="$(MSBuildProjectDirectory)\..\**\deploy\**;$(MSBuildProjectDirectory)\..\**\obj\**;$(MSBuildProjectDirectory)\..\**\_ReSharper*\**;" />
+      <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.swf" Exclude="$(MSBuildProjectDirectory)\..\**\deploy\**;$(MSBuildProjectDirectory)\..\**\obj\**;$(MSBuildProjectDirectory)\..\**\_ReSharper*\**;" />
+      <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.jpeg" Exclude="$(MSBuildProjectDirectory)\..\**\deploy\**;$(MSBuildProjectDirectory)\..\**\obj\**;$(MSBuildProjectDirectory)\..\**\_ReSharper*\**;" />
+      <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.gif" Exclude="$(MSBuildProjectDirectory)\..\**\deploy\**;$(MSBuildProjectDirectory)\..\**\obj\**;$(MSBuildProjectDirectory)\..\**\_ReSharper*\**;" />
+      <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.cs" Exclude="$(MSBuildProjectDirectory)\..\**\deploy\**;$(MSBuildProjectDirectory)\..\**\obj\**;$(MSBuildProjectDirectory)\..\**\_ReSharper*\**;" />
       <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.cs.designer" />
       <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.csproj" />
       <SourceInclude Include="$(MSBuildProjectDirectory)\..\**\*.targets" />
@@ -137,9 +134,9 @@
       <Output TaskParameter="Include" ItemName="OutputContent" />
     </CreateItem>
     <!-- Create the Install package -->    
-    <Zip Files="@(OutputContent)" WorkingDirectory="$(MSBuildProjectDirectory)\Package" ZipFileName="$(PackageName)_$(Version)_Install_DNN53.$(Extension)" />
-    <!-- Copy the Install package to the Packages folder -->
-    <Copy SourceFiles="$(MSBuildProjectDirectory)\$(PackageName)_$(Version)_Install_DNN53.$(Extension)" DestinationFolder="$(MSBuildProjectDirectory)/../packages/Install/DNN 5.3" />
+    <Zip Files="@(OutputContent)" WorkingDirectory="$(MSBuildProjectDirectory)\Package" ZipFileName="$(PackageName)_%(AssemblyIdentities.Version)_Install_DNN53.$(Extension)" />
+    <!-- Copy the Install package to the deploy folder -->
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\$(PackageName)_%(AssemblyIdentities.Version)_Install_DNN53.$(Extension)" DestinationFolder="$(MSBuildProjectDirectory)/../deploy/Install/DNN 5.3" />
     
     <RemoveDir Directories ="$(MSBuildProjectDirectory)\Package" />
 
@@ -156,25 +153,32 @@
       <Output TaskParameter="Include" ItemName="OutputSource" />
     </CreateItem>
 
-    <Zip Files="@(OutputSource)" WorkingDirectory="$(MSBuildProjectDirectory)\Package" ZipFileName="$(PackageName)_$(Version)_Source.$(Extension)" />
-    <Copy SourceFiles="$(MSBuildProjectDirectory)\$(PackageName)_$(Version)_Source.$(Extension)" DestinationFolder="$(MSBuildProjectDirectory)/../packages" />
+    <Zip Files="@(OutputSource)" WorkingDirectory="$(MSBuildProjectDirectory)\Package" ZipFileName="$(PackageName)_%(AssemblyIdentities.Version)_Source.$(Extension)" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\$(PackageName)_%(AssemblyIdentities.Version)_Source.$(Extension)" DestinationFolder="$(MSBuildProjectDirectory)/../deploy" />
 
-    <Delete Files="$(MSBuildProjectDirectory)\$(PackageName)_$(Version)_Install_DNN53.$(Extension)" />
-    <Delete Files="$(MSBuildProjectDirectory)\$(PackageName)_$(Version)_Source.$(Extension)" />
+    <Delete Files="$(MSBuildProjectDirectory)\$(PackageName)_%(AssemblyIdentities.Version)_Install_DNN53.$(Extension)" />
+    <Delete Files="$(MSBuildProjectDirectory)\$(PackageName)_%(AssemblyIdentities.Version)_Source.$(Extension)" />
 
     <RemoveDir Directories ="$(MSBuildProjectDirectory)\Package" />
 
-    <CreateItem Include="$(MSBuildProjectDirectory)\..\packages\Install\**\*.*">
+    <CreateItem Include="$(MSBuildProjectDirectory)\..\deploy\Install\**\*.*">
       <Output TaskParameter="Include" ItemName="InstallCompleteContent" />
     </CreateItem>
 
     <!-- Create the Install package -->
-    <Zip Files="@(InstallCompleteContent)" WorkingDirectory="$(MSBuildProjectDirectory)\..\packages\Install" ZipFileName="$(PackageName)_$(Version)-UNZIP_FIRST.$(Extension)" />
-    <Copy SourceFiles="$(MSBuildProjectDirectory)\$(PackageName)_$(Version)-UNZIP_FIRST.$(Extension)" DestinationFolder="$(MSBuildProjectDirectory)/../packages" />
+    <Copy SourceFiles="@(InstallCompleteContent)" DestinationFolder="$(MSBuildProjectDirectory)\Package\%(RecursiveDir)" />
+    
+    <CreateItem Include="$(MSBuildProjectDirectory)\Package\**\*.*">
+      <Output TaskParameter="Include" ItemName="OutputInstall" />
+    </CreateItem>
+    
+    <Zip Files="@(OutputInstall)" WorkingDirectory="$(MSBuildProjectDirectory)\Package" ZipFileName="$(PackageName)_%(AssemblyIdentities.Version)-UNZIP_FIRST.$(Extension)" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\$(PackageName)_%(AssemblyIdentities.Version)-UNZIP_FIRST.$(Extension)" DestinationFolder="$(MSBuildProjectDirectory)/../deploy" />
 
-    <Delete Files="$(MSBuildProjectDirectory)\$(PackageName)_$(Version)-UNZIP_FIRST.$(Extension)" />
+    <Delete Files="$(MSBuildProjectDirectory)\$(PackageName)_%(AssemblyIdentities.Version)-UNZIP_FIRST.$(Extension)" />
 
-    <RemoveDir Directories ="$(MSBuildProjectDirectory)\..\packages\Install" />
+    <RemoveDir Directories ="$(MSBuildProjectDirectory)\..\deploy\Install" />
+    <RemoveDir Directories ="$(MSBuildProjectDirectory)\Package" />
     
   </Target>
 </Project>

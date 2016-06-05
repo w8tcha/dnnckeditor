@@ -4,12 +4,9 @@
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\MicrosoftAjax\AjaxMin.tasks" />
   
   <Target Name="PackageModule" Condition=" '$(Configuration)|$(Platform)' == 'Deploy|AnyCPU' ">
-    <XmlRead Prefix="n"
-                    Namespace="http://schemas.microsoft.com/developer/msbuild/2003"
-                    XPath="dotnetnuke/packages/package[starts-with(@name,'DotNetNuke.CKHtmlEditorProvider')]/@version"
-                    XmlFileName="$(MSBuildProjectDirectory)\Install\$(DNNFileName).dnn">
-      <Output TaskParameter="Value" PropertyName="Version" />
-    </XmlRead>
+    <GetAssemblyIdentity AssemblyFiles="$(MSBuildProjectDirectory)\Install\bin\WatchersNET.CKEditor.dll">
+      <Output TaskParameter="Assemblies" ItemName="AssemblyIdentities"/>
+    </GetAssemblyIdentity>
     <ItemGroup>
       <DefaultExclude Include="**\.svn\**" />
       <DefaultExclude Include="**\bin\**" />
@@ -108,9 +105,9 @@
       <Output TaskParameter="Include" ItemName="OutputContent" />
     </CreateItem>
     <!-- Create the Install package -->    
-    <Zip Files="@(OutputContent)" WorkingDirectory="$(MSBuildProjectDirectory)\Package" ZipFileName="$(PackageName)_$(Version)_Install_DNN7.$(Extension)" />
-    <!-- Copy the Install package to the Packages folder -->
-    <Copy SourceFiles="$(MSBuildProjectDirectory)\$(PackageName)_$(Version)_Install_DNN7.$(Extension)" DestinationFolder="$(MSBuildProjectDirectory)/../packages/Install/DNN 7" />
+    <Zip Files="@(OutputContent)" WorkingDirectory="$(MSBuildProjectDirectory)\Package" ZipFileName="$(PackageName)_%(AssemblyIdentities.Version)_Install_DNN7.$(Extension)" />
+    <!-- Copy the Install package to the deploy folder -->
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\$(PackageName)_%(AssemblyIdentities.Version)_Install_DNN7.$(Extension)" DestinationFolder="$(MSBuildProjectDirectory)/../deploy/Install/DNN 7" />
     
     <RemoveDir Directories ="$(MSBuildProjectDirectory)\Package" />
  
@@ -118,7 +115,7 @@
     <RemoveDir Directories ="$(MSBuildProjectDirectory)\ResourcesZip" ContinueOnError="true" />
 
     <Delete Files="$(MSBuildProjectDirectory)\Resources.$(Extension)" />
-    <Delete Files="$(MSBuildProjectDirectory)\$(PackageName)_$(Version)_Install_DNN7.$(Extension)" />
+    <Delete Files="$(MSBuildProjectDirectory)\$(PackageName)_%(AssemblyIdentities.Version)_Install_DNN7.$(Extension)" />
     
   </Target>
 </Project>
