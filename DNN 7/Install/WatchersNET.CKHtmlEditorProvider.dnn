@@ -33,7 +33,7 @@
     </component>
     <component type="Script">
       <scripts>
-        <basePath>Providers/HtmlEditorProviders/CKEditor/</basePath>
+        <basePath>Providers\HtmlEditorProviders\CKEditor\</basePath>
         <script type="Install">
           <name>01.14.03.SqlDataProvider</name>
           <version>01.14.03</version>
