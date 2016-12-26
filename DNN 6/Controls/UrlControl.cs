@@ -70,7 +70,7 @@ namespace WatchersNET.CKEditor.Controls
                 this.ViewState["ReloadFiles"] = value;
             }
         }
-        
+
         /// <summary>
         /// Gets or sets the file filter.
         /// </summary>
@@ -251,12 +251,12 @@ namespace WatchersNET.CKEditor.Controls
             this.ReloadFiles = false;
 
             var _url = Convert.ToString(this.ViewState["Url"]);
-            
+
             if (string.IsNullOrEmpty(_url))
             {
                 return;
             }
-            
+
             var _urltype = DotNetNuke.Common.Globals.GetURLType(_url).ToString("g").Substring(0, 1);
 
             if (_urltype == "F")
@@ -286,7 +286,7 @@ namespace WatchersNET.CKEditor.Controls
                         if (this.Files.Items.FindByText(fileName) != null)
                         {
                             this.Files.ClearSelection();
-                            this.Files.Items.FindByText(fileName).Selected = true;
+                            Files.SelectedIndex = Files.Items.IndexOf(Files.Items.FindByText(fileName));
                         }
                     }
                 }

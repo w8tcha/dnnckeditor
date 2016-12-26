@@ -10,14 +10,32 @@
     }
 
     CKEDITOR.plugins.add("autosave", {
-        lang: 'ca,cs,de,en,es,fr,ja,nl,pl,pt-br,ru,sv,zh,zh-cn', // %REMOVE_LINE_CORE%
+        lang: 'ca,cs,de,en,es,fr,ja,nl,pl,pt-br,ru,sk,sv,zh,zh-cn', // %REMOVE_LINE_CORE%
         requires: 'notification',
-        version: 0.14,
-        init: function(editor) {
+        version: 0.16,
+        init: function (editor) {
+            // Default Config
+            var defaultConfig = {
+                delay: 10,
+                messageType: "notification",
+                saveDetectionSelectors: "a[href^='javascript:__doPostBack'][id*='Save'],a[id*='Cancel']",
+                saveOnDestroy: false,
+                NotOlderThen: 1440,
+                SaveKey: "autosaveKey",
+                diffType: "sideBySide"
+            };
+
+            // Get Config & Lang
+            var config = CKEDITOR.tools.extend(defaultConfig, editor.config.autosave || {}, true);
+
+            if (editor.plugins.textselection && config.messageType == "statusbar") {
+                config.messageType = "notification";
+            }
+
             CKEDITOR.document.appendStyleSheet(CKEDITOR.getUrl(CKEDITOR.plugins.getPath('autosave') + 'css/autosave.min.css'));
 
             editor.on('uiSpace', function(event) {
-                if (event.data.space == 'bottom' && event.editor.config.autosave_messageType != null && event.editor.config.autosave_messageType == "statusbar") {
+                if (event.data.space == 'bottom' && config.messageType != null && config.messageType == "statusbar") {
 
                     event.data.html += '<div class="autoSaveMessage" unselectable="on"><div unselectable="on" id="'
                         + autoSaveMessageId(event.editor)
@@ -31,28 +49,28 @@
                 if (typeof (jQuery) === 'undefined') {
                     CKEDITOR.scriptLoader.load('//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', function() {
                         jQuery.noConflict();
-                        
-                        loadPlugin(editor);
+
+                        loadPlugin(editor, config);
                     });
 
                 } else {
                     CKEDITOR.scriptLoader.load(CKEDITOR.getUrl(CKEDITOR.plugins.getPath('autosave') + 'js/extensions.min.js'), function() {
-                        loadPlugin(editor);
+                        loadPlugin(editor, config);
                     });
                 }
             }, editor, null, 100);
         }
     });
 
-    function loadPlugin(editorInstance) {
-        var autoSaveKey = editorInstance.config.autosave_SaveKey != null ? editorInstance.config.autosave_SaveKey : 'autosave_' + window.location + "_" + editorInstance.id;
-        var notOlderThen = editorInstance.config.autosave_NotOlderThen != null ? editorInstance.config.autosave_NotOlderThen : 1440;
-        var saveOnDestroy = editorInstance.config.autosave_saveOnDestroy != null ? editorInstance.config.autosave_saveOnDestroy : false;
+    function loadPlugin(editorInstance, config) {
+        var autoSaveKey = config.SaveKey != null ? config.SaveKey : 'autosave_' + window.location + "_" + editorInstance.id;
+        var notOlderThen = config.NotOlderThen != null ? config.NotOlderThen : 1440;
+        var saveOnDestroy = config.saveOnDestroy != null ? config.saveOnDestroy : false;
         var saveDetectionSelectors =
-            editorInstance.config.autosave_saveDetectionSelectors != null ? editorInstance.config.autosave_saveDetectionSelectors : "a[href^='javascript:__doPostBack'][id*='Save'],a[id*='Cancel']";
+            config.saveDetectionSelectors != null ? config.saveDetectionSelectors : "a[href^='javascript:__doPostBack'][id*='Save'],a[id*='Cancel']";
 
         CKEDITOR.scriptLoader.load(CKEDITOR.getUrl(CKEDITOR.plugins.getPath('autosave') + 'js/extensions.min.js'), function() {
-            GenerateAutoSaveDialog(editorInstance, autoSaveKey);
+            GenerateAutoSaveDialog(editorInstance, config, autoSaveKey);
 
             CheckForAutoSavedContent(editorInstance, autoSaveKey, notOlderThen);
         });
@@ -61,43 +79,42 @@
             RemoveStorage(autoSaveKey, editorInstance);
         });
 
-        editorInstance.on('change', startTimer);
+        editorInstance.on('change', function() {
+            startTimer(config, editorInstance);
+        });
 
         editorInstance.on('destroy', function() {
             if (saveOnDestroy) {
-                SaveData(autoSaveKey, editorInstance);
+                SaveData(autoSaveKey, editorInstance, config);
             }
         });
-        
-        editorInstance.config.autosave_timeOutId = 0;
     }
 
     function autoSaveMessageId(editorInstance) {
         return 'cke_autoSaveMessage_' + editorInstance.name;
     }
 
-    var savingActive = false;
-
-    var startTimer = function(event) {
-        if (event.editor.config.autosave_timeOutId) {
-        } else {
-            var delay = event.editor.config.autosave_delay != null ? event.editor.config.autosave_delay : 10;
-            event.editor.config.autosave_timeOutId = setTimeout(onTimer, delay * 1000, event);
+    var startTimer = function (configAutosave, editorInstance) {
+        if (editorInstance.config.autosave_timeOutId == null) {
+            var delay = configAutosave.delay != null ? configAutosave.delay : 10;
+            editorInstance.config.autosave_timeOutId = setTimeout(function() {
+                    onTimer(configAutosave, editorInstance);
+                },
+                delay * 1000);
         }
-
     };
-    var onTimer = function(event) {
-        if (savingActive) {
-            startTimer(event);
-        } else if (event.editor.checkDirty() || event.editor.plugins.bbcode) {
-            savingActive = true;
-            var editor = event.editor,
-                autoSaveKey = editor.config.autosave_SaveKey != null ? editor.config.autosave_SaveKey : 'autosave_' + window.location + "_" + editor.id;
+    function onTimer (configAutosave, editorInstance) {
+        if (editorInstance.checkDirty() || editorInstance.plugins.bbcode) {
+            var editor = editorInstance,
+                autoSaveKey = configAutosave.SaveKey != null
+                    ? configAutosave.SaveKey
+                    : 'autosave_' + window.location + "_" + editor.id;
 
-            SaveData(autoSaveKey, editor);
+            SaveData(autoSaveKey, editor, configAutosave);
 
-            event.editor.config.autosave_timeOutId = 0;
-            savingActive = false;
+            clearTimeout(editorInstance.config.autosave_timeOutId);
+
+            editorInstance.config.autosave_timeOutId = null;
         }
     };
 
@@ -115,7 +132,7 @@
         }
     }
 
-    function GenerateAutoSaveDialog(editorInstance, autoSaveKey) {
+    function GenerateAutoSaveDialog(editorInstance, config, autoSaveKey) {
         CKEDITOR.dialog.add('autosaveDialog', function() {
             return {
                 title: editorInstance.lang.autosave.title,
@@ -146,7 +163,7 @@
                                 id: 'diffType',
                                 label: editorInstance.lang.autosave.diffType,
                                 items: [[editorInstance.lang.autosave.sideBySide, 'sideBySide'], [editorInstance.lang.autosave.inline, 'inline']],
-                                'default': 'sideBySide',
+                                'default': config.diffType,
                                 onClick: function() {
                                     RenderDiff(this._.dialog, editorInstance, autoSaveKey);
                                 }
@@ -194,7 +211,7 @@
             var autoSavedContent = jsonSavedContent.data;
             var autoSavedContentDate = jsonSavedContent.saveTime;
 
-            var editorLoadedContent = editorInstance.getSnapshot();
+            var editorLoadedContent = editorInstance.getData();
 
             // check if the loaded editor content is the same as the autosaved content
             if (editorLoadedContent == autoSavedContent) {
@@ -224,25 +241,44 @@
         return JSON.parse(compressedJSON);
     }
 
-    function SaveData(autoSaveKey, editorInstance) {
-        var compressedJSON = LZString.compressToUTF16(JSON.stringify({ data: editorInstance.getSnapshot(), saveTime: new Date() }));
-        localStorage.setItem(autoSaveKey, compressedJSON);
+    function SaveData(autoSaveKey, editorInstance, config) {
+        var compressedJSON = LZString.compressToUTF16(JSON.stringify({ data: editorInstance.getData(), saveTime: new Date() }));
 
-        var messageType = editorInstance.config.autosave_messageType != null ? editorInstance.config.autosave_messageType : "notification";
-        
-        if (messageType == "statusbar") {
+        var quotaExceeded = false;
+
+        try {
+            localStorage.setItem(autoSaveKey, compressedJSON);
+        } catch (e) {
+            quotaExceeded = isQuotaExceeded(e);
+            if (quotaExceeded) {
+                console.log(editorInstance.lang.autosave.localStorageFull);
+            }
+        }
+
+        if (quotaExceeded) {
+            var notificationError = new CKEDITOR.plugins.notification(editorInstance, { message: editorInstance.lang.autosave.localStorageFull, type: 'warning' });
+            notificationError.show();
+        } else {
+            var messageType = config.messageType != null ? config.messageType : "notification";
+
+            if (editorInstance.plugins.textselection && messageType == "statusbar") {
+                messageType = "notification";
+            }
+
+            if (messageType == "statusbar") {
                 var autoSaveMessage = document.getElementById(autoSaveMessageId(editorInstance));
 
                 if (autoSaveMessage) {
                     autoSaveMessage.className = "show";
 
-                    setTimeout(function() {
+                    setTimeout(function () {
                         autoSaveMessage.className = "hidden";
                     }, 2000);
                 }
-        } else if (messageType == "notification") {
-            var notification = new CKEDITOR.plugins.notification(editorInstance, { message: editorInstance.lang.autosave.autoSaveMessage, type: 'success' });
-            notification.show();
+            } else if (messageType == "notification") {
+                var notification = new CKEDITOR.plugins.notification(editorInstance, { message: editorInstance.lang.autosave.autoSaveMessage, type: 'success' });
+                notification.show();
+            }
         }
     }
 
@@ -257,7 +293,7 @@
     function RenderDiff(dialog, editorInstance, autoSaveKey) {
         var jsonSavedContent = LoadData(autoSaveKey);
 
-        var base = difflib.stringAsLines(editorInstance.getSnapshot());
+        var base = difflib.stringAsLines(editorInstance.getData());
         var newtxt = difflib.stringAsLines(jsonSavedContent.data);
         var sm = new difflib.SequenceMatcher(base, newtxt);
         var opcodes = sm.get_opcodes();
@@ -271,5 +307,28 @@
             contextSize: 3,
             viewType: dialog.getContentElement('general', 'diffType').getValue() == "inline" ? 1 : 0
         }).outerHTML + '</div>');
+    }
+
+    function isQuotaExceeded(e) {
+        var quotaExceeded = false;
+        if (e) {
+            if (e.code) {
+                switch (e.code) {
+                    case 22:
+                        quotaExceeded = true;
+                        break;
+                    case 1014:
+                        // Firefox
+                        if (e.name === 'NS_ERROR_DOM_QUOTA_REACHED') {
+                            quotaExceeded = true;
+                        }
+                        break;
+                }
+            } else if (e.number === -2147024882) {
+                // Internet Explorer 8
+                quotaExceeded = true;
+            }
+        }
+        return quotaExceeded;
     }
 })();

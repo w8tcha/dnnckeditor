@@ -2,7 +2,7 @@
 <Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="MSBuild.Community.Tasks.Targets" />
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\MicrosoftAjax\AjaxMin.tasks" />
-  
+
   <Target Name="PackageModule" Condition=" '$(Configuration)|$(Platform)' == 'Deploy|AnyCPU' ">
     <GetAssemblyIdentity AssemblyFiles="$(MSBuildProjectDirectory)\Install\bin\WatchersNET.CKEditor.dll">
       <Output TaskParameter="Assemblies" ItemName="AssemblyIdentities"/>
@@ -46,7 +46,7 @@
     <Copy SourceFiles="@(PackageManifestFiles)" DestinationFolder="$(MSBuildProjectDirectory)\Package" />
     <Copy SourceFiles="@(PackageCleanupFiles)" DestinationFolder="$(MSBuildProjectDirectory)\Package" />
     <Copy SourceFiles="@(SqlDataProviderFiles)" DestinationFolder="$(MSBuildProjectDirectory)\Package" />
-    
+
     <Copy SourceFiles="$(MSBuildProjectDirectory)\Install\CKLicense.html" DestinationFolder="$(MSBuildProjectDirectory)\Package"/>
     <Copy SourceFiles="$(MSBuildProjectDirectory)\Install\CKReleaseNotes.html" DestinationFolder="$(MSBuildProjectDirectory)\Package"/>
     <Copy SourceFiles="$(MSBuildProjectDirectory)\Install\LogoCKEditor.png" DestinationFolder="$(MSBuildProjectDirectory)\Package"/>
@@ -90,32 +90,32 @@
       <JS Include="$(MSBuildProjectDirectory)\ResourcesZip\js\*.js" Exclude="**\*.min.js" />
     </ItemGroup>
     <ItemGroup>
-      <CSS Include="$(MSBuildProjectDirectory)\ResourcesZip\**\*.css" Exclude="**\*.min.css;$(MSBuildProjectDirectory)\ResourcesZip\skins\**\*.css;$(MSBuildProjectDirectory)\ResourcesZip\plugins\**\*.css;" />
+      <CSS Include="$(MSBuildProjectDirectory)\ResourcesZip\**\*.css" Exclude="**\*.min.css;$(MSBuildProjectDirectory)\ResourcesZip\Browser\**\*.css;$(MSBuildProjectDirectory)\ResourcesZip\skins\**\*.css;$(MSBuildProjectDirectory)\ResourcesZip\plugins\**\*.css;" />
     </ItemGroup>
     <AjaxMin JsSourceFiles="@(JS)" JsSourceExtensionPattern="\.js$" JsTargetExtension=".js" CssSourceFiles="@(CSS)" CssSourceExtensionPattern="\.css$" CssTargetExtension=".css"  />
 
     <CreateItem Include="$(MSBuildProjectDirectory)\ResourcesZip\**\*.*">
       <Output TaskParameter="Include" ItemName="ResourcesContent" />
     </CreateItem>
-    
+
     <Zip Files="@(ResourcesContent)" WorkingDirectory="$(MSBuildProjectDirectory)\ResourcesZip" ZipFileName="Resources.$(Extension)" />
     <Copy SourceFiles="$(MSBuildProjectDirectory)\Resources.$(Extension)" DestinationFolder="package/" />
 
     <CreateItem Include="$(MSBuildProjectDirectory)\Package\**\*.*">
       <Output TaskParameter="Include" ItemName="OutputContent" />
     </CreateItem>
-    <!-- Create the Install package -->    
+    <!-- Create the Install package -->
     <Zip Files="@(OutputContent)" WorkingDirectory="$(MSBuildProjectDirectory)\Package" ZipFileName="$(PackageName)_%(AssemblyIdentities.Version)_Install_DNN7.$(Extension)" />
     <!-- Copy the Install package to the deploy folder -->
     <Copy SourceFiles="$(MSBuildProjectDirectory)\$(PackageName)_%(AssemblyIdentities.Version)_Install_DNN7.$(Extension)" DestinationFolder="$(MSBuildProjectDirectory)/../deploy/Install/DNN 7" />
-    
+
     <RemoveDir Directories ="$(MSBuildProjectDirectory)\Package" />
- 
+
     <Delete Files="$(MSBuildProjectDirectory)\ResourcesZip\**\*" ContinueOnError="true"/>
     <RemoveDir Directories ="$(MSBuildProjectDirectory)\ResourcesZip" ContinueOnError="true" />
 
     <Delete Files="$(MSBuildProjectDirectory)\Resources.$(Extension)" />
     <Delete Files="$(MSBuildProjectDirectory)\$(PackageName)_%(AssemblyIdentities.Version)_Install_DNN7.$(Extension)" />
-    
+
   </Target>
 </Project>

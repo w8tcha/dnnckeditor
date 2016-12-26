@@ -1,0 +1,10 @@
+[
+  {
+    "outputFileName": "Browser/Browser.comb.css",
+    "inputFiles": [
+      "Browser/Browser.css",
+      "Browser/jquery.fileupload-ui.css",
+      "Browser/jquery.fileupload.css"
+    ]
+  }
+]

@@ -14,9 +14,9 @@
 
 	CKEDITOR.plugins.add( 'widget', {
 		// jscs:disable maximumLineLength
-		lang: 'af,ar,bg,ca,cs,cy,da,de,de-ch,el,en,en-gb,eo,es,eu,fa,fi,fr,gl,he,hr,hu,id,it,ja,km,ko,ku,lv,nb,nl,no,pl,pt,pt-br,ru,sk,sl,sq,sv,tr,tt,ug,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
+		lang: 'af,ar,bg,ca,cs,cy,da,de,de-ch,el,en,en-gb,eo,es,eu,fa,fi,fr,gl,he,hr,hu,id,it,ja,km,ko,ku,lv,nb,nl,no,oc,pl,pt,pt-br,ru,sk,sl,sq,sv,tr,tt,ug,uk,vi,zh,zh-cn', // %REMOVE_LINE_CORE%
 		// jscs:enable maximumLineLength
-		requires: 'lineutils,clipboard',
+		requires: 'lineutils,clipboard,widgetselection',
 		onLoad: function() {
 			CKEDITOR.addCss(
 				'.cke_widget_wrapper{' +
@@ -627,7 +627,9 @@
 				isInline;
 
 			if ( element instanceof CKEDITOR.dom.element ) {
-				widgetDef = this.registered[ widgetName || element.data( 'widget' ) ];
+				widgetName = widgetName || element.data( 'widget' );
+				widgetDef = this.registered[ widgetName ];
+
 				if ( !widgetDef )
 					return null;
 
@@ -639,13 +641,13 @@
 				// If attribute isn't already set (e.g. for pasted widget), set it.
 				if ( !element.hasAttribute( 'data-cke-widget-keep-attr' ) )
 					element.data( 'cke-widget-keep-attr', element.data( 'widget' ) ? 1 : 0 );
-				if ( widgetName )
-					element.data( 'widget', widgetName );
+
+				element.data( 'widget', widgetName );
 
 				isInline = isWidgetInline( widgetDef, element.getName() );
 
 				wrapper = new CKEDITOR.dom.element( isInline ? 'span' : 'div' );
-				wrapper.setAttributes( getWrapperAttributes( isInline ) );
+				wrapper.setAttributes( getWrapperAttributes( isInline, widgetName ) );
 
 				wrapper.data( 'cke-display-name', widgetDef.pathName ? widgetDef.pathName : element.getName() );
 
@@ -655,7 +657,9 @@
 				element.appendTo( wrapper );
 			}
 			else if ( element instanceof CKEDITOR.htmlParser.element ) {
-				widgetDef = this.registered[ widgetName || element.attributes[ 'data-widget' ] ];
+				widgetName = widgetName || element.attributes[ 'data-widget' ];
+				widgetDef = this.registered[ widgetName ];
+
 				if ( !widgetDef )
 					return null;
 
@@ -671,8 +675,7 @@
 
 				isInline = isWidgetInline( widgetDef, element.name );
 
-				wrapper = new CKEDITOR.htmlParser.element( isInline ? 'span' : 'div', getWrapperAttributes( isInline ) );
-
+				wrapper = new CKEDITOR.htmlParser.element( isInline ? 'span' : 'div', getWrapperAttributes( isInline, widgetName ) );
 				wrapper.attributes[ 'data-cke-display-name' ] = widgetDef.pathName ? widgetDef.pathName : element.name;
 
 				var parent = element.parent,
@@ -979,8 +982,11 @@
 	Widget.prototype = {
 		/**
 		 * Adds a class to the widget element. This method is used by
-		 * the {@link #applyStyle} method and should be overriden by widgets
+		 * the {@link #applyStyle} method and should be overridden by widgets
 		 * which should handle classes differently (e.g. add them to other elements).
+		 *
+		 * Since 4.6.0 this method also adds a corresponding class prefixed with {@link #WRAPPER_CLASS_PREFIX}
+		 * to the widget wrapper element.
 		 *
 		 * **Note**: This method should not be used directly. Use the {@link #setData} method to
 		 * set the `classes` property. Read more in the {@link #setData} documentation.
@@ -992,6 +998,7 @@
 		 */
 		addClass: function( className ) {
 			this.element.addClass( className );
+			this.wrapper.addClass( Widget.WRAPPER_CLASS_PREFIX + className );
 		},
 
 		/**
@@ -1332,6 +1339,7 @@
 		 */
 		removeClass: function( className ) {
 			this.element.removeClass( className );
+			this.wrapper.removeClass( Widget.WRAPPER_CLASS_PREFIX + className );
 		},
 
 		/**
@@ -1589,6 +1597,17 @@
 	Widget.isParserWidgetWrapper = function( node ) {
 		return node.type == CKEDITOR.NODE_ELEMENT && !!node.attributes[ 'data-cke-widget-wrapper' ];
 	};
+
+	/**
+	 * Prefix added to wrapper classes. Each class added to the widget element by the {@link #addClass}
+	 * method will also be added to the wrapper prefixed with it.
+	 *
+	 * @since 4.6.0
+	 * @static
+	 * @readonly
+	 * @property {String} [='cke_widget_wrapper_']
+	 */
+	Widget.WRAPPER_CLASS_PREFIX = 'cke_widget_wrapper_';
 
 	/**
 	 * An event fired when a widget is ready (fully initialized). This event is fired after:
@@ -2183,7 +2202,7 @@
 		return false;
 	}
 
-	function getWrapperAttributes( inlineWidget ) {
+	function getWrapperAttributes( inlineWidget, name ) {
 		return {
 			// tabindex="-1" means that it can receive focus by code.
 			tabindex: -1,
@@ -2192,7 +2211,8 @@
 			'data-cke-filter': 'off',
 			// Class cke_widget_new marks widgets which haven't been initialized yet.
 			'class': 'cke_widget_wrapper cke_widget_new cke_widget_' +
-				( inlineWidget ? 'inline' : 'block' )
+				( inlineWidget ? 'inline' : 'block' ) +
+				( name ? ' cke_widget_' + name : '' )
 		};
 	}
 
@@ -3112,6 +3132,29 @@
 		} );
 	}
 
+	// Add a listener to data event that will set/change widget's label (#14539).
+	function setupA11yListener( widget ) {
+		// Note, the function gets executed in a context of widget instance.
+		function getLabelDefault() {
+			return this.editor.lang.widget.label.replace( /%1/, this.pathName || this.element.getName() );
+		}
+
+		// Setting a listener on data is enough, there's no need to perform it on widget initialization, as
+		// setupWidgetData fires this event anyway.
+		widget.on( 'data', function() {
+			// In some cases widget might get destroyed in an earlier data listener. For instance, image2 plugin, does
+			// so when changing its internal state.
+			if ( !widget.wrapper ) {
+				return;
+			}
+
+			var label = this.getLabel ? this.getLabel() : getLabelDefault.call( this );
+
+			widget.wrapper.setAttribute( 'role', 'region' );
+			widget.wrapper.setAttribute( 'aria-label', label );
+		}, null, null, 9999 );
+	}
+
 	function setupDragHandler( widget ) {
 		if ( !widget.draggable )
 			return;
@@ -3139,7 +3182,8 @@
 				src: CKEDITOR.tools.transparentImageData,
 				width: DRAG_HANDLER_SIZE,
 				title: editor.lang.widget.move,
-				height: DRAG_HANDLER_SIZE
+				height: DRAG_HANDLER_SIZE,
+				role: 'presentation'
 			} );
 			widget.inline && img.setAttribute( 'draggable', 'true' );
 
@@ -3181,7 +3225,9 @@
 			editor = this.editor,
 			editable = editor.editable(),
 			listeners = [],
-			sorted = [];
+			sorted = [],
+			locations,
+			y;
 
 		// Mark dragged widget for repository#finder.
 		this.repository._.draggedWidget = this;
@@ -3200,9 +3246,7 @@
 					liner.placeLine( sorted[ 0 ] );
 					liner.cleanup();
 				}
-			} ),
-
-			locations, y;
+			} );
 
 		// Let's have the "dragging cursor" over entire editable.
 		editable.addClass( 'cke_widget_dragging' );
@@ -3331,6 +3375,7 @@
 		setupMask( widget );
 		setupDragHandler( widget );
 		setupDataClassesListener( widget );
+		setupA11yListener( widget );
 
 		// #11145: [IE8] Non-editable content of widget is draggable.
 		if ( CKEDITOR.env.ie && CKEDITOR.env.version < 9 ) {
@@ -3829,7 +3874,17 @@
  */
 
 /**
- * Widget name displayed in elements path.
+ * The function used to obtain an accessibility label for the widget. It might be used to make
+ * the widget labels as precise as possible, since it has access to the widget instance.
+ *
+ * If not specified, the default implementation will use the {@link #pathName} or the main
+ * {@link CKEDITOR.plugins.widget#element element} tag name.
+ *
+ * @property {Function} getLabel
+ */
+
+/**
+ * The widget name displayed in the elements path.
  *
  * @property {String} pathName
  */

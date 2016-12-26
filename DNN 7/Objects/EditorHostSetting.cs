@@ -12,9 +12,12 @@
 
 namespace WatchersNET.CKEditor.Objects
 {
+    using System;
+
     /// <summary>
     /// A Editor Host Setting Item
     /// </summary>
+    [Serializable]
     public class EditorHostSetting
     {
         #region Properties
@@ -45,7 +48,7 @@ namespace WatchersNET.CKEditor.Objects
         /// The setting value.
         /// </value>
         public string Value { get; set; }
-        
+
         #endregion
     }
 }

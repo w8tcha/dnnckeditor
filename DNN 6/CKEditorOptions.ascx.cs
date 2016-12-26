@@ -488,7 +488,7 @@ namespace WatchersNET.CKEditor
 
             this.upOptions.Update();
 
-            // RESET Dialog 
+            // RESET Dialog
             this.ImportFile.Url = null;
 
             int imageFileId = int.Parse(sXmlImport.Substring(7));
@@ -1633,6 +1633,7 @@ namespace WatchersNET.CKEditor
                 this.rBlSetMode.SelectedIndexChanged += this.SetMode_SelectedIndexChanged;
 
                 this.ToolbarGroupsRepeater.ItemDataBound += this.ToolbarGroupsRepeater_ItemDataBound;
+                this.gvToolbars.RowDataBound += this.gvToolbars_RowDataBound;
 
                 this.RenderEditorConfigSettings();
             }
@@ -1640,6 +1641,35 @@ namespace WatchersNET.CKEditor
             {
                 this.ShowNotification(ex.Message, "error");
             }
+        }
+
+        /// <summary>
+        /// Handles the RowDataBound event of the gvToolbars control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="GridViewRowEventArgs"/> instance containing the event data.</param>
+        void gvToolbars_RowDataBound(object sender, GridViewRowEventArgs e)
+        {
+            ListItemCollection licToolbars = new ListItemCollection();
+
+            foreach (
+                var toolbarItem in
+                this.listToolbars.Select(toolbarSet => new ListItem { Text = toolbarSet.Name, Value = toolbarSet.Name })
+            )
+            {
+                licToolbars.Add(toolbarItem);
+            }
+
+
+            DropDownList ddLToolB = (DropDownList)e.Row.FindControl("ddlToolbars");
+
+            if (ddLToolB == null)
+            {
+                return;
+            }
+
+            ddLToolB.DataSource = licToolbars;
+            ddLToolB.DataBind();
         }
 
         /// <summary>
@@ -1726,19 +1756,6 @@ namespace WatchersNET.CKEditor
             }
 
             this.HideAddToolbar();
-
-            for (int i = 0; i < this.gvToolbars.Rows.Count; i++)
-            {
-                DropDownList ddLToolB = (DropDownList)this.gvToolbars.Rows[i].Cells[1].FindControl("ddlToolbars");
-
-                if (ddLToolB == null)
-                {
-                    continue;
-                }
-
-                ddLToolB.DataSource = licToolbars;
-                ddLToolB.DataBind();
-            }
 
             this.dDlCustomToolbars.DataSource = licToolbars;
             this.dDlCustomToolbars.DataBind();
@@ -2060,7 +2077,7 @@ namespace WatchersNET.CKEditor
                 var description = info.GetCustomAttribute<DescriptionAttribute>(true);
 
                 var isSubSetting = info.Name == "CodeMirror" || info.Name == "WordCount";
-                
+
                 var settingNameContainer = new HtmlGenericControl("div");
                 settingNameContainer.Attributes.Add("class", "settingNameContainer");
 
@@ -3055,7 +3072,7 @@ namespace WatchersNET.CKEditor
 
             this.iBDelete.AlternateText = Localization.GetString("DeleteToolbar.Text", this.ResXFile, this.LangCode);
             this.iBDelete.ToolTip = Localization.GetString("DeleteToolbar.Text", this.ResXFile, this.LangCode);
-            
+
             this.lblExport.Text = Localization.GetString("lnkExport.Text", this.ResXFile, this.LangCode);
 
             this.ExportNow.Text = Localization.GetString("ExportNow.Text", this.ResXFile, this.LangCode);
@@ -3122,6 +3139,8 @@ namespace WatchersNET.CKEditor
             }
 
             this.ShowNotification(Localization.GetString("lblInfo.Text", this.ResXFile, this.LangCode), "success");
+
+            this.BindOptionsData(true);
         }
 
         /// <summary>

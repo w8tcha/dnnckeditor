@@ -1416,7 +1416,7 @@ namespace WatchersNET.CKEditor.Utilities
                             || oldDefaultSettings.sSkin.Equals("chris")
                             || oldDefaultSettings.sSkin.Equals("v2"))
             {
-                oldDefaultSettings.sSkin = "moono";
+                oldDefaultSettings.sSkin = "moono-lisa";
             }
 
             // Migrate Settings

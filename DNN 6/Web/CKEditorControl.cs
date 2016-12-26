@@ -331,7 +331,7 @@ namespace WatchersNET.CKEditor.Web
                         || this.currentSettings.Config.Skin.Equals("chris")
                         || this.currentSettings.Config.Skin.Equals("v2"))
                     {
-                        this._settings["skin"] = "moono";
+                        this._settings["skin"] = "moono-lisa";
                     }
                     else
                     {

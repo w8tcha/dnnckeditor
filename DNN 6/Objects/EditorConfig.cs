@@ -106,7 +106,7 @@ namespace WatchersNET.CKEditor.Objects
             this.PasteFromWordPromptCleanup = false;
             this.PasteFromWordRemoveFontStyles = true;
             this.PasteFromWordRemoveStyles = true;
-            this.ProtectedSource = @"[( /<i class[\s\S]*?>[\s\S]*?<\/i>/gi ),( /<span class[\s\S]*?>[\s\S]*?<\/span>/gi ),( /<em class[\s\S]*?>[\s\S]*?<\/em>/gi ),( /<button class[\s\S]*?>[\s\S]*?<\/button>/gi )]";
+            this.ProtectedSource = @"[( /<i class[\s\S]*?>[\s\S]*?<\/i>/gi ),( /<span class[\s\S]*?><\/span>/gi ),( /<em class[\s\S]*?>[\s\S]*?<\/em>/gi ),( /<button class[\s\S]*?>[\s\S]*?<\/button>/gi )]";
             this.ReadOnly = false;
             this.RemoveFormatAttributes = "class,style,lang,width,height,align,hspace,valign";
             this.RemoveFormatTags =
@@ -118,7 +118,7 @@ namespace WatchersNET.CKEditor.Objects
             this.Resize_MinHeight = 250;
             this.Resize_MinWidth = 750;
             this.ShiftEnterMode = EnterModus.BR;
-            this.Skin = "moono";
+            this.Skin = "moono-lisa";
             this.Smiley_columns = 8;
             this.SourceAreaTabSize = 20;
             this.StartupFocus = false;
@@ -297,7 +297,7 @@ namespace WatchersNET.CKEditor.Objects
         [XmlAttribute("clipboard_defaultContentType")]
         [Description("The default content type is used when pasted data cannot be clearly recognized as HTML or text.")]
         public string Clipboard_DefaultContentType { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the code mirror.
         /// </summary>
@@ -705,7 +705,7 @@ namespace WatchersNET.CKEditor.Objects
         [XmlAttribute("extraAllowedContent")]
         [Description("This option makes it possible to set additional allowed content rules for CKEDITOR.editor.filter.")]
         public string ExtraAllowedContent { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the extra plugins.
         /// </summary>
@@ -1295,7 +1295,7 @@ namespace WatchersNET.CKEditor.Objects
         [XmlAttribute("magicline_keystrokePrevious")]
         [Description("Defines default keystroke that access the closest unreachable focus space before the caret (start of the selection). If there's no any focus space, selection remains.")]
         public int Magicline_KeystrokePrevious { get; set; }
-        
+
         /// <summary>
         /// Gets or sets a value indicating whether [magic line put everywhere].
         /// </summary>

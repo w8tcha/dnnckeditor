@@ -47,7 +47,7 @@ namespace WatchersNET.CKEditor.Objects
             this.ShowUncommentButton = true;
             this.StyleActiveLine = true;
             this.Theme = "default";
-            this.UseBeautify = false;
+            this.useBeautifyOnStart = false;
         }
 
         /// <summary>
@@ -288,8 +288,8 @@ namespace WatchersNET.CKEditor.Objects
         /// <value>
         ///   <c>true</c> if [use beautify]; otherwise, <c>false</c>.
         /// </value>
-        [XmlAttribute("useBeautify")]
+        [XmlAttribute("useBeautifyOnStart")]
         [Description("Whether or not to use Beautify for auto formatting")]
-        public bool UseBeautify { get; set; }
+        public bool useBeautifyOnStart { get; set; }
     }
 }

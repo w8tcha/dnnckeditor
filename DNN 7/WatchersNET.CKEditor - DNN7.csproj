@@ -39,6 +39,7 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -221,15 +222,6 @@
     <Content Include="Browser\Browser.aspx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
-    <Content Include="Browser\Browser.comb.css">
-      <DependentUpon>Browser.comb.css.bundle</DependentUpon>
-    </Content>
-    <Content Include="Browser\Browser.comb.min.css">
-      <DependentUpon>Browser.comb.css</DependentUpon>
-    </Content>
-    <Content Include="Browser\Browser.css" />
-    <Content Include="Browser\jquery.fileupload-ui.css" />
-    <Content Include="Browser\jquery.fileupload.css" />
     <Content Include="CKEditorOptions.ascx">
       <SubType>ASPXCodeBehind</SubType>
     </Content>
@@ -287,15 +279,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Browser\FileUploader.ashx" />
-    <Content Include="Browser\Browser.comb.css.bundle">
-      <SubType>Designer</SubType>
-    </Content>
     <None Include="BuildScripts\ModulePackage.targets">
       <SubType>Designer</SubType>
     </None>
     <None Include="BuildScripts\MSBuild.Community.Tasks.Targets">
       <SubType>Designer</SubType>
     </None>
+    <None Include="bundleconfig.json" />
     <None Include="Install\01.14.03.SqlDataProvider" />
     <Content Include="Install\02.00.00.SqlDataProvider" />
     <Content Include="Install\02.00.09.SqlDataProvider" />
