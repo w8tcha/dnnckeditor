@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DNN 6", "DNN 6", "{DDE034B3-6ED8-48C6-B80A-5ACE6AF1B943}"
 EndProject
@@ -28,6 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CKEditor", "CKEditor", "{60
 		CKEditor\contents.css = CKEditor\contents.css
 		CKEditor\editor.css = CKEditor\editor.css
 		CKEditor\LICENSE.md = CKEditor\LICENSE.md
+		CKEditor\plugins\dnnpages\plugin.js = CKEditor\plugins\dnnpages\plugin.js
 		CKEditor\README.md = CKEditor\README.md
 		CKEditor\styles.js = CKEditor\styles.js
 	EndProjectSection
