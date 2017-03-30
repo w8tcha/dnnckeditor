@@ -19,7 +19,6 @@ namespace WatchersNET.CKEditor.Browser
     using System.Web;
     using System.Web.Script.Serialization;
 
-    using DotNetNuke.Entities.Portals;
     using DotNetNuke.Services.FileSystem;
 
     using WatchersNET.CKEditor.Objects;
@@ -38,13 +37,7 @@ namespace WatchersNET.CKEditor.Browser
         /// <summary>
         /// Gets a value indicating whether another request can use the <see cref="T:System.Web.IHttpHandler" /> instance.
         /// </summary>
-        public bool IsReusable
-        {
-            get
-            {
-                return false;
-            }
-        }
+        public bool IsReusable => false;
 
         /// <summary>
         /// Gets a value indicating whether [override files].
@@ -52,16 +45,10 @@ namespace WatchersNET.CKEditor.Browser
         /// <value>
         ///   <c>true</c> if [override files]; otherwise, <c>false</c>.
         /// </value>
-        private bool OverrideFiles
-        {
-            get
-            {
-                return HttpContext.Current.Request["overrideFiles"].Equals("1")
-                       || HttpContext.Current.Request["overrideFiles"].Equals(
-                           "true",
-                           StringComparison.InvariantCultureIgnoreCase);
-            }
-        }
+        private bool OverrideFiles => HttpContext.Current.Request["overrideFiles"].Equals("1")
+                                      || HttpContext.Current.Request["overrideFiles"].Equals(
+                                          "true",
+                                          StringComparison.InvariantCultureIgnoreCase);
 
         /// <summary>
         /// Gets the storage folder.
@@ -69,13 +56,7 @@ namespace WatchersNET.CKEditor.Browser
         /// <value>
         /// The storage folder.
         /// </value>
-        private IFolderInfo StorageFolder
-        {
-            get
-            {
-                return FolderManager.Instance.GetFolder(Convert.ToInt32(HttpContext.Current.Request["storageFolderID"]));
-            }
-        }
+        private IFolderInfo StorageFolder => FolderManager.Instance.GetFolder(Convert.ToInt32(HttpContext.Current.Request["storageFolderID"]));
 
         /*
         /// <summary>

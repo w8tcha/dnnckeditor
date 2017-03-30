@@ -382,26 +382,27 @@
     </form>
     <script type="text/javascript">
         $(function() {
-            var overrideFile = $('#<%= this.OverrideFile.ClientID %>').is(':checked');
             var maxFileSize = <%= this.MaxUploadSize %>;
 
             $('#fileupload').fileupload({
                 url: "FileUploader.ashx",
                 acceptFileTypes: new RegExp('(\.|\/)(' + '<%= this.AcceptFileTypes %>' + ')', 'i'),
                 maxFileSize: maxFileSize,
-                progressall: function (e, data) {
+                progressall: function(e, data) {
                     var progress = parseInt(data.loaded / data.total * 100, 10);
                     if (progress == 100) {
                         __doPostBack('cmdUploadNow', '');
                     }
                 },
-                formData: {
-                    storageFolderID: '<%= GetFolderInfoID %>',
-                    portalID: '<%= HttpContext.Current.Request.QueryString["PortalID"] %>',
-                    overrideFiles: overrideFile
-                },
                 dropZone: $('#dropzone')
-            });
+            }).bind('fileuploadsubmit',
+                function(e, data) {
+                    data.formData = {
+                        storageFolderID: '<%= GetFolderInfoID %>',
+                        portalID: '<%= HttpContext.Current.Request.QueryString["PortalID"] %>',
+                        overrideFiles: $('#<%= this.OverrideFile.ClientID %>').is(':checked')
+                    };
+                });
             $(document).bind('dragover', function (e) {
                 var dropZone = $('#dropzone'),
                     timeout = window.dropZoneTimeout;

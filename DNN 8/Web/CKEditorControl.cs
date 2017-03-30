@@ -73,7 +73,7 @@ namespace WatchersNET.CKEditor.Web
         private readonly PortalSettings _portalSettings = (PortalSettings)HttpContext.Current.Items["PortalSettings"];
 
         /// <summary>
-        /// Check if the Settings Collection 
+        /// Check if the Settings Collection
         /// is Merged with all Settings
         /// </summary>
         private bool isMerged;
@@ -118,7 +118,6 @@ namespace WatchersNET.CKEditor.Web
         }
 
         #endregion
-
         #region Properties
 
         /// <summary>
@@ -144,7 +143,7 @@ namespace WatchersNET.CKEditor.Web
                     this._settings[key] = this.Attributes[key];
                 }
 
-                // Inject all Editor Config 
+                // Inject all Editor Config
                 foreach (
                     PropertyInfo info in
                         SettingsUtil.GetEditorConfigProperties())
@@ -198,7 +197,7 @@ namespace WatchersNET.CKEditor.Web
                                     case "DIV":
                                         this._settings[xmlAttributeAttribute.AttributeName] = "3";
                                         break;
-                                } 
+                                }
 
                                 break;
                             case "ContentsLangDirection":
@@ -214,7 +213,7 @@ namespace WatchersNET.CKEditor.Web
                                         default:
                                             this._settings[xmlAttributeAttribute.AttributeName] = string.Empty;
                                             break;
-                                    } 
+                                    }
                                 }
 
                                 break;
@@ -236,7 +235,7 @@ namespace WatchersNET.CKEditor.Web
                                         {
                                             continue;
                                         }
-                                             
+
                                         switch (codeMirrorInfo.PropertyType.Name)
                                         {
                                             case "String":
@@ -515,7 +514,7 @@ namespace WatchersNET.CKEditor.Web
                             this._settings["filebrowserWindowWidth"] = "870";
                             this._settings["filebrowserWindowHeight"] = "800";
 
-                            // Set Browser Authorize 
+                            // Set Browser Authorize
                             const bool CKDNNIsAuthorized = true;
 
                             HttpContext.Current.Session["CKDNNIsAuthorized"] = CKDNNIsAuthorized;
@@ -572,7 +571,7 @@ namespace WatchersNET.CKEditor.Web
                             HttpContext.Current.Session["CKDNNRootDirId"] = this.currentSettings.BrowserRootDirId;
                             HttpContext.Current.Session["CKDNNUpDirId"] = this.currentSettings.UploadDirId;
 
-                            // Set Browser Authorize 
+                            // Set Browser Authorize
                             const bool CKDNNIsAuthorized = true;
 
                             HttpContext.Current.Session["CKDNNIsAuthorized"] = CKDNNIsAuthorized;
@@ -1123,7 +1122,7 @@ namespace WatchersNET.CKEditor.Web
             {
                 return formattedUrl;
             }
-           
+
             if (inputUrl.StartsWith("http://"))
             {
                 formattedUrl = inputUrl;
@@ -1140,7 +1139,7 @@ namespace WatchersNET.CKEditor.Web
             {
                 formattedUrl = this._portalSettings.HomeDirectory + inputUrl;
             }
-            
+
             return formattedUrl;
         }
 
@@ -1196,7 +1195,7 @@ namespace WatchersNET.CKEditor.Web
             else
             {
                 this.Page.ClientScript.RegisterStartupScript(this.GetType(), key, script, true);
-            } 
+            }
         }
 
         /// <summary>
@@ -1363,7 +1362,7 @@ namespace WatchersNET.CKEditor.Web
                 cs.RegisterClientScriptInclude(
                     csType,
                     "CKCustomJSFile",
-                    this.FormatUrl(this.currentSettings.CustomJsFile)); 
+                    this.FormatUrl(this.currentSettings.CustomJsFile));
             }
         }
 
@@ -1430,7 +1429,7 @@ namespace WatchersNET.CKEditor.Web
                     else if (value.Equals("False"))
                     {
                         value = "false";
-                    } 
+                    }
 
                     editorScript.AppendFormat("{0}:{1}", key, value);
 
@@ -1452,7 +1451,7 @@ namespace WatchersNET.CKEditor.Web
             editorScript.AppendFormat(
                 "if (CKEDITOR.instances.{0}){{return;}}",
                 editorFixedId);
-            
+
             // Check if we can use jQuery or $, and if both fail use ckeditor without the adapter
             editorScript.Append("if (jQuery().ckeditor) {");
 

@@ -1521,7 +1521,7 @@ namespace WatchersNET.CKEditor.Utilities
 
             var roleController = new RoleController();
 
-            if (settings.ToolBarRoles.Count <= 0)
+            if (settings.UploadSizeRoles.Count <= 0)
             {
                 return uploadFileLimitForPortal;
             }

@@ -38,6 +38,7 @@ namespace WatchersNET.CKEditor.Browser
     using DotNetNuke.Entities.Tabs;
     using DotNetNuke.Entities.Users;
     using DotNetNuke.Framework.Providers;
+    using DotNetNuke.Security;
     using DotNetNuke.Security.Permissions;
     using DotNetNuke.Security.Roles;
     using DotNetNuke.Services.FileSystem;
@@ -172,9 +173,9 @@ namespace WatchersNET.CKEditor.Browser
             get
             {
                 return this.currentSettings.UploadFileSizeLimit > 0
-                       && this.currentSettings.UploadFileSizeLimit <= Utility.GetMaxUploadSize()
-                           ? this.currentSettings.UploadFileSizeLimit
-                           : Utility.GetMaxUploadSize();
+                        && this.currentSettings.UploadFileSizeLimit <= Utility.GetMaxUploadSize()
+                            ? this.currentSettings.UploadFileSizeLimit
+                            : Utility.GetMaxUploadSize();
             }
         }
 
@@ -2299,7 +2300,7 @@ namespace WatchersNET.CKEditor.Browser
             this.MaximumUploadSizeInfo.Text =
                 string.Format(
                     Localization.GetString("FileSizeRestriction", this.ResXFile, this.LanguageCode),
-                    this.MaxUploadSize / (1024 * 1024),
+                     this.MaxUploadSize / (1024 * 1024),
                     this.AcceptFileTypes.Replace("|", ","));
 
             // RadioButtonList
