@@ -474,6 +474,20 @@ namespace WatchersNET.CKEditor.Utilities
 
             if (
                 editorHostSettings.Any(
+                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.ALLOWEDIMAGEEXTENSIONS))))
+            {
+                var settingValue =
+                    editorHostSettings.FirstOrDefault(
+                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.ALLOWEDIMAGEEXTENSIONS))).Value;
+
+                if (!string.IsNullOrEmpty(settingValue))
+                {
+                    currentSettings.AllowedImageExtensions = settingValue;
+                }
+            }
+
+            if (
+                editorHostSettings.Any(
                     setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.WIDTH))))
             {
                 var settingValue =
@@ -1059,6 +1073,11 @@ namespace WatchersNET.CKEditor.Utilities
                 {
                     currentSettings.InjectSyntaxJs = bResult;
                 }
+            }
+
+            if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.ALLOWEDIMAGEEXTENSIONS)]))
+            {
+                currentSettings.AllowedImageExtensions = (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.ALLOWEDIMAGEEXTENSIONS)];
             }
 
             if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.WIDTH)]))

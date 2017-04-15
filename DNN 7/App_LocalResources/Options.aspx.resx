@@ -506,4 +506,7 @@
   <data name="LoadingEditor.Text" xml:space="preserve">
     <value>CKEditor is loading, please wait...</value>
   </data>
+  <data name="AllowedImageExtensionLabel.Text" xml:space="preserve">
+    <value>File Browser Allowed Image Extensions List</value>
+  </data>
 </root>

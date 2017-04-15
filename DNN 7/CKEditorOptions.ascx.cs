@@ -735,6 +735,11 @@ namespace WatchersNET.CKEditor
                 this.ddlBrowser.SelectedValue = importedSettings.Browser;
             }
 
+            if (!string.IsNullOrEmpty(importedSettings.AllowedImageExtensions))
+            {
+                this.AllowedImageExtensions.Text = importedSettings.AllowedImageExtensions;
+            }
+
             this.FileListPageSize.Text = importedSettings.FileListPageSize.ToString();
 
             this.FileListViewMode.SelectedValue = importedSettings.FileListViewMode.ToString();
@@ -1064,6 +1069,8 @@ namespace WatchersNET.CKEditor
                 this.ModuleId, string.Format("{0}{1}", moduleKey, SettingConstants.UPLOADDIRID));
             moduleController.DeleteModuleSetting(
                 this.ModuleId, string.Format("{0}{1}", moduleKey, SettingConstants.INJECTJS));
+            moduleController.DeleteModuleSetting(
+                this.ModuleId, string.Format("{0}{1}", moduleKey, SettingConstants.ALLOWEDIMAGEEXTENSIONS));
             moduleController.DeleteModuleSetting(
                 this.ModuleId, string.Format("{0}{1}", moduleKey, SettingConstants.WIDTH));
             moduleController.DeleteModuleSetting(
@@ -2451,7 +2458,13 @@ namespace WatchersNET.CKEditor
                 string.Format("{0}{1}", key, SettingConstants.CODEMIRRORTHEME),
                 this.CodeMirrorTheme.SelectedValue);
             moduleController.UpdateModuleSetting(
-                this.ModuleId, string.Format("{0}{1}", key, SettingConstants.BROWSER), this.ddlBrowser.SelectedValue);
+                this.ModuleId,
+                string.Format("{0}{1}", key, SettingConstants.BROWSER),
+                this.ddlBrowser.SelectedValue);
+            moduleController.UpdateModuleSetting(
+                this.ModuleId,
+                string.Format("{0}{1}", key, SettingConstants.ALLOWEDIMAGEEXTENSIONS),
+                this.AllowedImageExtensions.Text);
             moduleController.UpdateModuleSetting(
                 this.ModuleId,
                 string.Format("{0}{1}", key, SettingConstants.FILELISTVIEWMODE),
@@ -2509,6 +2522,11 @@ namespace WatchersNET.CKEditor
                 this.ModuleId,
                 string.Format("{0}{1}", key, SettingConstants.INJECTJS),
                 this.InjectSyntaxJs.Checked.ToString());
+
+            moduleController.UpdateModuleSetting(
+                this.ModuleId,
+                string.Format("{0}{1}", key, SettingConstants.ALLOWEDIMAGEEXTENSIONS),
+                this.AllowedImageExtensions.Text);
 
             if (Utility.IsUnit(this.txtWidth.Text))
             {
@@ -2768,7 +2786,9 @@ namespace WatchersNET.CKEditor
             Utility.AddOrUpdateEditorHostSetting(
                 string.Format("{0}{1}", key, SettingConstants.BROWSER),
                 this.ddlBrowser.SelectedValue);
-
+            Utility.AddOrUpdateEditorHostSetting(
+                string.Format("{0}{1}", key, SettingConstants.ALLOWEDIMAGEEXTENSIONS),
+                this.AllowedImageExtensions.Text);
             Utility.AddOrUpdateEditorHostSetting(
                 string.Format("{0}{1}", key, SettingConstants.FILELISTVIEWMODE),
                 this.FileListViewMode.SelectedValue);
@@ -2984,6 +3004,7 @@ namespace WatchersNET.CKEditor
 
             this.lblBrowsSec.Text = Localization.GetString("lblBrowsSec.Text", this.ResXFile, this.LangCode);
             this.lblBrowAllow.Text = Localization.GetString("lblBrowAllow.Text", this.ResXFile, this.LangCode);
+            this.AllowedImageExtensionLabel.Text = Localization.GetString("AllowedImageExtensionLabel.Text", this.ResXFile, this.LangCode);
             this.BrowserRootFolder.Text = Localization.GetString("BrowserRootFolder.Text", this.ResXFile, this.LangCode);
             this.OverrideFileOnUploadLabel.Text = Localization.GetString("OverrideFileOnUploadLabel.Text", this.ResXFile, this.LangCode);
             this.lblBrowserDirs.Text = Localization.GetString("lblBrowserDirs.Text", this.ResXFile, this.LangCode);
@@ -3483,6 +3504,7 @@ namespace WatchersNET.CKEditor
             exportSettings.Config.Skin = this.ddlSkin.SelectedValue;
             exportSettings.Config.CodeMirror.Theme = this.CodeMirrorTheme.SelectedValue;
             exportSettings.Browser = this.ddlBrowser.SelectedValue;
+            exportSettings.AllowedImageExtensions = this.AllowedImageExtensions.Text;
             exportSettings.FileListViewMode =
                 (FileListView)Enum.Parse(typeof(FileListView), this.FileListViewMode.SelectedValue);
             exportSettings.DefaultLinkMode = (LinkMode)Enum.Parse(typeof(LinkMode), this.DefaultLinkMode.SelectedValue);

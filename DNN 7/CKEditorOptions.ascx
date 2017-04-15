@@ -202,6 +202,12 @@
         <td class="settingNameColumn"><asp:label id="lblBrowAllow" runat="server">File Browser Security</asp:label></td>
         <td class="settingValueColumn"><asp:CheckBoxList ID="chblBrowsGr" runat="server"></asp:CheckBoxList></td>
       </tr>
+        <tr>
+            <td class="settingNameColumn"><asp:label id="AllowedImageExtensionLabel" runat="server">File Browser Allowed Image Extensions List</asp:label></td>
+            <td class="settingValueColumn settingValueContainer">
+                <asp:TextBox ID="AllowedImageExtensions" runat="server" TextMode="MultiLine" CssClass="settingValueInput"></asp:TextBox>
+            </td>
+        </tr>
       <tr>
         <td class="settingNameColumn"><asp:label id="BrowserRootFolder" runat="server">Browser Root Folder</asp:label></td>
         <td class="settingValueColumn"><asp:DropDownList ID="BrowserRootDir" runat="server" CssClass="DefaultDropDown"></asp:DropDownList></td>

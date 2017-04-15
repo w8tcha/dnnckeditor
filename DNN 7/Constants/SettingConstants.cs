@@ -172,6 +172,11 @@ namespace WatchersNET.CKEditor.Constants
         /// </summary>
         public const string RESIZEHEIGHT = "resizeheight";
 
+        /// <summary>
+        /// The allowed image extensions setting name.
+        /// </summary>
+        public const string ALLOWEDIMAGEEXTENSIONS = "AllowedImageExtension";
+
         #endregion
     }
 }

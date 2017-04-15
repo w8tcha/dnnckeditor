@@ -77,7 +77,7 @@ namespace WatchersNET.CKEditor.Browser
         /// <summary>
         ///   The allowed image ext.
         /// </summary>
-        private readonly string[] allowedImageExt = { "bmp", "gif", "jpeg", "jpg", "png" };
+        private List<string> allowedImageExtensions = new List<string>();
 
         /// <summary>
         ///   The request.
@@ -116,15 +116,9 @@ namespace WatchersNET.CKEditor.Browser
         /// </value>
         public string AcceptFileTypes
         {
-            get
-            {
-                return this.ViewState["AcceptFileTypes"] != null ? this.ViewState["AcceptFileTypes"].ToString() : ".*";
-            }
+            get => this.ViewState["AcceptFileTypes"]?.ToString() ?? ".*";
 
-            set
-            {
-                this.ViewState["AcceptFileTypes"] = value;
-            }
+            set => this.ViewState["AcceptFileTypes"] = value;
         }
 
         /// <summary>
@@ -168,16 +162,10 @@ namespace WatchersNET.CKEditor.Browser
         /// <value>
         /// The maximum size of the upload.
         /// </value>
-        protected long MaxUploadSize
-        {
-            get
-            {
-                return this.currentSettings.UploadFileSizeLimit > 0
-                        && this.currentSettings.UploadFileSizeLimit <= Utility.GetMaxUploadSize()
-                            ? this.currentSettings.UploadFileSizeLimit
-                            : Utility.GetMaxUploadSize();
-            }
-        }
+        protected long MaxUploadSize => this.currentSettings.UploadFileSizeLimit > 0
+                                        && this.currentSettings.UploadFileSizeLimit <= Utility.GetMaxUploadSize()
+                                            ? this.currentSettings.UploadFileSizeLimit
+                                            : Utility.GetMaxUploadSize();
 
         /// <summary>
         /// Gets the get folder information identifier.
@@ -185,13 +173,7 @@ namespace WatchersNET.CKEditor.Browser
         /// <value>
         /// The get folder information identifier.
         /// </value>
-        protected int GetFolderInfoID
-        {
-            get
-            {
-                return Utility.ConvertFilePathToFolderInfo(this.lblCurrentDir.Text, this._portalSettings).FolderID;
-            }
-        }
+        protected int GetFolderInfoID => Utility.ConvertFilePathToFolderInfo(this.lblCurrentDir.Text, this._portalSettings).FolderID;
 
         /// <summary>
         /// Gets or sets the files table.
@@ -201,15 +183,9 @@ namespace WatchersNET.CKEditor.Browser
         /// </value>
         private DataTable FilesTable
         {
-            get
-            {
-                return this.ViewState["FilesTable"] as DataTable;
-            }
+            get => this.ViewState["FilesTable"] as DataTable;
 
-            set
-            {
-                this.ViewState["FilesTable"] = value;
-            }
+            set => this.ViewState["FilesTable"] = value;
         }
 
         /// <summary>
@@ -220,10 +196,7 @@ namespace WatchersNET.CKEditor.Browser
         /// </value>
         private bool SortFilesDescending
         {
-            get
-            {
-                return this.ViewState["SortFilesDescending"] != null && (bool)this.ViewState["SortFilesDescending"];
-            }
+            get => this.ViewState["SortFilesDescending"] != null && (bool)this.ViewState["SortFilesDescending"];
 
             set
             {
@@ -313,7 +286,7 @@ namespace WatchersNET.CKEditor.Browser
                     case "Image":
                         {
                             foreach (DataRow dr in
-                                from sAllowExt in this.allowedImageExt
+                                from sAllowExt in this.allowedImageExtensions
                                 where name.ToLower().EndsWith(sAllowExt)
                                 select filesTable.NewRow())
                             {
@@ -393,7 +366,7 @@ namespace WatchersNET.CKEditor.Browser
                                 dr["PictureURL"] = "images/types/unknown.png";
                             }
 
-                            if (this.allowedImageExt.Any(sAllowImgExt => name.ToLower().EndsWith(sAllowImgExt)))
+                            if (this.allowedImageExtensions.Any(sAllowImgExt => name.ToLower().EndsWith(sAllowImgExt)))
                             {
                                 if (isSecure || isDatabaseSecure)
                                 {
@@ -930,6 +903,17 @@ namespace WatchersNET.CKEditor.Browser
                 this._portalSettings,
                 HttpContext.Current.Request);
 
+            // Set image extensionslist
+            this.allowedImageExtensions.AddRange(this.currentSettings.AllowedImageExtensions.Split(','));
+
+            for (var i = 0; i < this.allowedImageExtensions.Count; i++)
+            {
+                if (!this.extensionWhiteList.Contains(this.allowedImageExtensions[i]))
+                {
+                    this.allowedImageExtensions.RemoveAt(i);
+                }
+            }
+
             if (this.currentSettings.BrowserMode.Equals(Constants.Browser.StandardBrowser)
                 && HttpContext.Current.Request.IsAuthenticated)
             {
@@ -1044,7 +1028,8 @@ namespace WatchersNET.CKEditor.Browser
 
                     if (uploadedFile != null)
                     {
-                        this.UploadFile(uploadedFile, command);
+                        // Upload QuickFile
+                        this.UploadQuickFile(uploadedFile, command);
                     }
                 }
                 else
@@ -1263,7 +1248,7 @@ namespace WatchersNET.CKEditor.Browser
             string sExtension = Path.GetExtension(sFilePath);
             sExtension = sExtension.TrimStart('.');
 
-            bool bEnable = this.allowedImageExt.Any(sAllowExt => sAllowExt.Equals(sExtension.ToLower()));
+            bool bEnable = this.allowedImageExtensions.Any(sAllowExt => sAllowExt.Equals(sExtension.ToLower()));
 
             if (!bEnable)
             {
@@ -2500,7 +2485,7 @@ namespace WatchersNET.CKEditor.Browser
                             extension = extension.TrimStart('.');
 
                             var isAllowedExtension =
-                                this.allowedImageExt.Any(sAllowExt => sAllowExt.Equals(extension.ToLower()));
+                                this.allowedImageExtensions.Any(sAllowExt => sAllowExt.Equals(extension.ToLower()));
 
                             this.cmdResizer.Enabled = isAllowedExtension;
                             this.cmdResizer.CssClass = isAllowedExtension ? "LinkNormal" : "LinkDisabled";
@@ -2627,7 +2612,7 @@ namespace WatchersNET.CKEditor.Browser
         /// <param name="command">
         /// The Upload Command Type
         /// </param>
-        private void UploadFile(HttpPostedFile file, string command)
+        private void UploadQuickFile(HttpPostedFile file, string command)
         {
             var fileName = Path.GetFileName(file.FileName).Trim();
 
@@ -2675,34 +2660,34 @@ namespace WatchersNET.CKEditor.Browser
             string sExtension = Path.GetExtension(file.FileName);
             sExtension = sExtension.TrimStart('.');
 
-            bool bAllowUpl = false;
+            var allowUpl = false;
 
             switch (command)
             {
                 case "FlashUpload":
                     if (this.allowedFlashExt.Any(sAllowExt => sAllowExt.Equals(sExtension.ToLower())))
                     {
-                        bAllowUpl = true;
+                        allowUpl = true;
                     }
 
                     break;
                 case "ImageUpload":
-                    if (this.allowedImageExt.Any(sAllowExt => sAllowExt.Equals(sExtension.ToLower())))
+                    if (this.allowedImageExtensions.Any(sAllowExt => sAllowExt.Equals(sExtension.ToLower())))
                     {
-                        bAllowUpl = true;
+                        allowUpl = true;
                     }
 
                     break;
                 case "FileUpload":
                     if (this.extensionWhiteList.Contains(sExtension.ToLower()))
                     {
-                        bAllowUpl = true;
+                        allowUpl = true;
                     }
 
                     break;
             }
 
-            if (bAllowUpl)
+            if (allowUpl)
             {
                 string sFileNameNoExt = Path.GetFileNameWithoutExtension(fileName);
 
@@ -3533,7 +3518,7 @@ namespace WatchersNET.CKEditor.Browser
 
                     break;
                 case "Image":
-                    this.AcceptFileTypes = string.Join("|", this.allowedImageExt);
+                    this.AcceptFileTypes = string.Join("|", this.allowedImageExtensions);
 
                     break;
                 default:

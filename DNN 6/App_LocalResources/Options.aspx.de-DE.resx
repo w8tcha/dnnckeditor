@@ -509,4 +509,7 @@
   <data name="LoadingEditor.Text" xml:space="preserve">
     <value>CKEditor wird geladen...</value>
   </data>
+  <data name="AllowedImageExtensionLabel.Text" xml:space="preserve">
+    <value>Datei Browser Erlaubte Bild Datetypen</value>
+  </data>
 </root>

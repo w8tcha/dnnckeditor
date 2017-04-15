@@ -42,6 +42,7 @@ namespace WatchersNET.CKEditor.Objects
             this.ResizeHeight = -1;
             this.ResizeWidth = -1;
             this.BrowserRoles = "0;Administrators;";
+            this.AllowedImageExtensions = "bmp,gif,jpeg,jpg,png,svg";
             this.Browser = "standard";
             this.ToolBarRoles = new List<ToolbarRoles> { new ToolbarRoles { RoleId = 0, Toolbar = "Full" } };
             this.UploadSizeRoles = new List<UploadSizeRoles>
@@ -196,6 +197,14 @@ namespace WatchersNET.CKEditor.Objects
         /// The height of the browser.
         /// </value>
         public string EditorHeight { get; set; }
+
+        /// <summary>
+        /// Gets or sets the allowed image extensions.
+        /// </summary>
+        /// <value>
+        /// The allowed image extensions.
+        /// </value>
+        public string AllowedImageExtensions { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether Current Setting Mode
