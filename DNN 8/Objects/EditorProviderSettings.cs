@@ -52,6 +52,7 @@ namespace WatchersNET.CKEditor.Objects
 
             this.Config = new EditorConfig();
         }
+
         #region Properties
 
         /// <summary>

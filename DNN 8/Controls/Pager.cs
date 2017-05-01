@@ -45,31 +45,19 @@ namespace WatchersNET.CKEditor.Controls
         /// </summary>
         public string LanguageCode
         {
-            get
-            {
-                return this.ViewState["LanguageCode"] != null ? (string)this.ViewState["LanguageCode"] : "en";
-            }
+            get => this.ViewState["LanguageCode"] != null ? (string)this.ViewState["LanguageCode"] : "en";
 
-            set
-            {
-                this.ViewState["LanguageCode"] = value;
-            }
+            set => this.ViewState["LanguageCode"] = value;
         }
 
         /// <summary>
-        ///   Gets or sets Ressource File
+        ///   Gets or sets Resource File
         /// </summary>
         public string RessourceFile
         {
-            get
-            {
-                return (string)this.ViewState["RessourceFile"];
-            }
+            get => (string)this.ViewState["RessourceFile"];
 
-            set
-            {
-                this.ViewState["RessourceFile"] = value;
-            }
+            set => this.ViewState["RessourceFile"] = value;
         }
 
         /// <summary>
@@ -77,15 +65,9 @@ namespace WatchersNET.CKEditor.Controls
         /// </summary>
         public int PageCount
         {
-            get
-            {
-                return this.ViewState["PageCount"] != null ? (int)this.ViewState["PageCount"] : 0;
-            }
+            get => (int?)this.ViewState["PageCount"] ?? 0;
 
-            set
-            {
-                this.ViewState["PageCount"] = value;
-            }
+            set => this.ViewState["PageCount"] = value;
         }
 
         /// <summary>
@@ -93,15 +75,9 @@ namespace WatchersNET.CKEditor.Controls
         /// </summary>
         public int CurrentPageIndex
         {
-            get
-            {
-                return (int)(this.ViewState["CurrentPageIndex"] ?? 0);
-            }
+            get => (int)(this.ViewState["CurrentPageIndex"] ?? 0);
 
-            set
-            {
-                this.ViewState["CurrentPageIndex"] = value;
-            }
+            set => this.ViewState["CurrentPageIndex"] = value;
         }
 
         #endregion
@@ -126,10 +102,7 @@ namespace WatchersNET.CKEditor.Controls
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         protected void OnPageChanged(EventArgs e)
         {
-            if (this.PageChanged != null)
-            {
-                this.PageChanged(this, e);
-            }
+            this.PageChanged?.Invoke(this, e);
         }
 
         /// <summary>
@@ -273,7 +246,7 @@ namespace WatchersNET.CKEditor.Controls
                     Text = string.Format("{0} &gt;", Localization.GetString("NextPage.Text", this.RessourceFile, this.LanguageCode)),
                     NavigateUrl =
                         this.Page.ClientScript.GetPostBackClientHyperlink(
-                            this, string.Format("Page_{0}", (this.CurrentPageIndex + 2 - 1)), false)
+                            this, string.Format("Page_{0}", this.CurrentPageIndex + 2 - 1), false)
                 };
 
                 liNextElement.Controls.Add(lastNextLink);
@@ -301,7 +274,7 @@ namespace WatchersNET.CKEditor.Controls
                             Localization.GetString("LastPage.Text", this.RessourceFile, this.LanguageCode)),
                     NavigateUrl =
                         this.Page.ClientScript.GetPostBackClientHyperlink(
-                            this, string.Format("Page_{0}", (this.PageCount - 1)), false)
+                            this, string.Format("Page_{0}", this.PageCount - 1), false)
                 };
 
                 liLastElement.Controls.Add(lastPageLink);

@@ -149,6 +149,7 @@ namespace WatchersNET.CKEditor.Utilities
             return numeric;
         }
         
+
         /// <summary>
         /// Validates the <paramref name="path"/>.
         /// </summary>

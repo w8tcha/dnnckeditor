@@ -34,14 +34,8 @@ namespace WatchersNET.CKEditor
         /// Gets a value indicating whether another request can use the <see cref="T:System.Web.IHttpHandler"/> instance.
         /// </summary>
         /// <returns>true if the <see cref="T:System.Web.IHttpHandler"/> instance is reusable; otherwise, false.</returns>
-        public bool IsReusable
-        {
-            get
-            {
-                return false;
-            }
-        }
-        
+        public bool IsReusable => false;
+
         /// <summary>
         /// Enables processing of HTTP Web requests by a custom HttpHandler that implements the <see cref="T:System.Web.IHttpHandler"/> interface.
         /// </summary>
@@ -68,7 +62,6 @@ namespace WatchersNET.CKEditor
                                         tab,
                                         string.Format("{0}&language={1}", Globals.ApplicationURL(tab.TabID), tab.CultureCode))
                                     : Globals.FriendlyUrl(tab, Globals.ApplicationURL(tab.TabID));
-
 
                 tabUrl = Globals.ResolveUrl(Regex.Replace(tabUrl, domainName, "~", RegexOptions.IgnoreCase));
                 

@@ -642,6 +642,7 @@ namespace WatchersNET.CKEditor.Utilities
 
                         return toolbarSetBasic;
                     }
+
                 case "Standard":
                     {
                         var toolbarSetStandard = new ToolbarSet("Standard", 15);
@@ -719,6 +720,7 @@ namespace WatchersNET.CKEditor.Utilities
 
                         return toolbarSetStandard;
                     }
+
                 case "Full":
                     {
                         var toolbarSetFull = new ToolbarSet("Full", 20);
@@ -863,7 +865,6 @@ namespace WatchersNET.CKEditor.Utilities
 
                         toolbarSetFull.ToolbarGroups.Add(
                             new ToolbarGroup { items = new List<string> { "TextColor", "BGColor" }, name = "colors" });
-
 
                         return toolbarSetFull;
                     }

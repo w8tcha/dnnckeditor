@@ -19,6 +19,7 @@ namespace WatchersNET.CKEditor.Browser
     using System.Web;
     using System.Web.Script.Serialization;
 
+    using DotNetNuke.Entities.Users;
     using DotNetNuke.Services.FileSystem;
 
     using WatchersNET.CKEditor.Objects;
@@ -113,7 +114,6 @@ namespace WatchersNET.CKEditor.Browser
                     {
                         ListCurrentFiles(context);
                     }*/
-
                     break;
 
                 case "POST":
@@ -200,7 +200,11 @@ namespace WatchersNET.CKEditor.Browser
                     }
                 }
 
-                FileManager.Instance.AddFile(this.StorageFolder, fileName, file.InputStream, this.OverrideFiles);
+                var fileManager = FileManager.Instance;
+                var contentType = FileContentTypeManager.Instance.GetContentType(Path.GetExtension(fileName));
+                var userId = UserController.Instance.GetCurrentUserInfo().UserID;
+
+                fileManager.AddFile(this.StorageFolder, fileName, file.InputStream, this.OverrideFiles, true, contentType, userId);
 
                 var fullName = Path.GetFileName(fileName);
                 statuses.Add(new FilesUploadStatus(fullName, file.ContentLength));

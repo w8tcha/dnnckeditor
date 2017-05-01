@@ -3531,7 +3531,7 @@ namespace WatchersNET.CKEditor.Browser
 
                     break;
                 case "Image":
-                    this.AcceptFileTypes = string.Join("|", this.allowedImageExtensions);
+                    this.AcceptFileTypes = string.Join("|", this.allowedImageExtensions.ToArray());
 
                     break;
                 default:

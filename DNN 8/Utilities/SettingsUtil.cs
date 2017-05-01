@@ -126,7 +126,6 @@ namespace WatchersNET.CKEditor.Utilities
                 {
                     continue;
                 }*/
-
                 var settingValue =
                     editorHostSettings.FirstOrDefault(
                         setting => setting.Name.Equals(string.Format("{0}{1}", key, info.Name))).Value;
@@ -245,7 +244,6 @@ namespace WatchersNET.CKEditor.Utilities
             }
 
             /////////////////
-
             if (
                 editorHostSettings.Any(
                     setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.SKIN))))
@@ -808,12 +806,10 @@ namespace WatchersNET.CKEditor.Utilities
 
             // Import all Editor config settings
             foreach (
-                PropertyInfo info in
-                    GetEditorConfigProperties()
-                        .Where(
-                            info =>
-                            !string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, info.Name)])
-                            /*|| info.Name.Equals("CodeMirror") || info.Name.Equals("WordCount")*/))
+                PropertyInfo info in GetEditorConfigProperties()
+                    .Where(
+                        info => !string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, info.Name)])
+                        /*|| info.Name.Equals("CodeMirror") || info.Name.Equals("WordCount")*/))
             {
                 switch (info.PropertyType.Name)
                 {
@@ -939,7 +935,6 @@ namespace WatchersNET.CKEditor.Utilities
             }
 
             /////////////////
-
             if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.SKIN)]))
             {
                 currentSettings.Config.Skin = (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.SKIN)];

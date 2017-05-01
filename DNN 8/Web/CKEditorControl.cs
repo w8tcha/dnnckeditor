@@ -925,7 +925,6 @@ namespace WatchersNET.CKEditor.Web
             this.IsRendered = true;
 
             /////////////////
-
             if (!this.HasRenderedTextArea(this.Page))
             {
                 return;
@@ -1074,7 +1073,6 @@ namespace WatchersNET.CKEditor.Web
             {
                /* throw new ApplicationException(settingsDictionary.FirstOrDefault(
                             setting => setting.Name.Equals(string.Format("{0}{1}", portalKey, "StartupMode"))).Value);*/
-
                 this.currentSettings = SettingsUtil.LoadPortalOrPageSettings(
                     this._portalSettings, this.currentSettings, settingsDictionary, portalKey, portalRoles);
 

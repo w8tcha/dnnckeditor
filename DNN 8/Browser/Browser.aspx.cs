@@ -124,15 +124,9 @@ namespace WatchersNET.CKEditor.Browser
         /// <summary>
         ///   Gets Current Language from Url
         /// </summary>
-        protected string LanguageCode
-        {
-            get
-            {
-                return !string.IsNullOrEmpty(this.request.QueryString["lang"])
-                           ? this.request.QueryString["lang"]
-                           : "en-US";
-            }
-        }
+        protected string LanguageCode => !string.IsNullOrEmpty(this.request.QueryString["lang"])
+                                             ? this.request.QueryString["lang"]
+                                             : "en-US";
 
         /// <summary>
         /// Gets the Name for the Current Resource file name
@@ -269,7 +263,6 @@ namespace WatchersNET.CKEditor.Browser
                 {
                     continue;
                 }*/
-
                 var item = fileItem;
 
                 var name = fileItem.FileName;
@@ -1050,7 +1043,6 @@ namespace WatchersNET.CKEditor.Browser
                             this.lblCurrentDir.Visible = false;
                             this.lblCurrent.Visible = false;
                         }*/
-
                         this.FillFolderTree(startFolder);
 
                         var folderSelected = false;
@@ -1979,7 +1971,6 @@ namespace WatchersNET.CKEditor.Browser
 
             /*ArrayList folders = FileSystemUtils.GetFoldersByParentFolder(
                 this._portalSettings.PortalId, folderInfo.FolderPath);*/
-
             var folders = FolderManager.Instance.GetFolders(folderInfo).ToList();
 
             if (!folders.Any())
@@ -2153,7 +2144,7 @@ namespace WatchersNET.CKEditor.Browser
                 return false;
             }
 
-            var selectedDir = MapPath(fileUrl).Replace(fileName, string.Empty);
+            var selectedDir = this.MapPath(fileUrl).Replace(fileName, string.Empty);
 
             if (!Directory.Exists(selectedDir))
             {
@@ -2496,8 +2487,8 @@ namespace WatchersNET.CKEditor.Browser
 
                 this.rblLinkType.Items[0].Enabled = !isSecureFolder;
                 this.rblLinkType.Items[1].Enabled = !isSecureFolder;
-                //////
 
+                //////
                 this.FileId.Text = fileInfo.FileId.ToString();
                 this.lblFileName.Text = fileName;
 
@@ -2530,12 +2521,13 @@ namespace WatchersNET.CKEditor.Browser
                 // LinkClick Url
                 var link = string.Format("fileID={0}", fileInfo.FileId);
 
-                var secureLink = Globals.LinkClick(link, int.Parse(this.request.QueryString["tabid"]), Null.NullInteger);
+                var secureLink = Globals.LinkClick(
+                    link,
+                    int.Parse(this.request.QueryString["tabid"]),
+                    Null.NullInteger);
 
-                this.rblLinkType.Items[2].Text =
-                    this.rblLinkType.Items[2].Text.Replace(
-                        @"/LinkClick.aspx?fileticket=xyz",
-                        secureLink);
+                this.rblLinkType.Items[2].Text = this.rblLinkType.Items[2]
+                    .Text.Replace(@"/LinkClick.aspx?fileticket=xyz", secureLink);
 
                 absoluteUrl = string.Format(
                     "{0}://{1}{2}",
@@ -2543,10 +2535,9 @@ namespace WatchersNET.CKEditor.Browser
                     HttpContext.Current.Request.Url.Authority,
                     secureLink);
 
-                this.rblLinkType.Items[3].Text =
-                    this.rblLinkType.Items[3].Text.Replace(
-                        @"http://www.MyWebsite.com/LinkClick.aspx?fileticket=xyz",
-                        absoluteUrl);
+                this.rblLinkType.Items[3].Text = this.rblLinkType.Items[3]
+                    .Text.Replace(@"http://www.MyWebsite.com/LinkClick.aspx?fileticket=xyz", absoluteUrl);
+
                 ////////
             }
             catch (Exception)
@@ -2657,29 +2648,29 @@ namespace WatchersNET.CKEditor.Browser
                 fileName = fileName.Substring(fileName.Length - 220);
             }
 
-            string sExtension = Path.GetExtension(file.FileName);
-            sExtension = sExtension.TrimStart('.');
+            var extension = Path.GetExtension(file.FileName);
+            extension = extension.TrimStart('.');
 
             var allowUpl = false;
 
             switch (command)
             {
                 case "FlashUpload":
-                    if (this.allowedFlashExt.Any(sAllowExt => sAllowExt.Equals(sExtension.ToLower())))
+                    if (this.allowedFlashExt.Any(sAllowExt => sAllowExt.Equals(extension.ToLower())))
                     {
                         allowUpl = true;
                     }
 
                     break;
                 case "ImageUpload":
-                    if (this.allowedImageExtensions.Any(sAllowExt => sAllowExt.Equals(sExtension.ToLower())))
+                    if (this.allowedImageExtensions.Any(sAllowExt => sAllowExt.Equals(extension.ToLower())))
                     {
                         allowUpl = true;
                     }
 
                     break;
                 case "FileUpload":
-                    if (this.extensionWhiteList.Contains(sExtension.ToLower()))
+                    if (this.extensionWhiteList.Contains(extension.ToLower()))
                     {
                         allowUpl = true;
                     }
@@ -3274,7 +3265,6 @@ namespace WatchersNET.CKEditor.Browser
             }
 
             /////
-
             var secureLink = Globals.LinkClick(
                selectTab.TabID.ToString(), int.Parse(this.request.QueryString["tabid"]), Null.NullInteger);
 

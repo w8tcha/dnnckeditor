@@ -47,28 +47,15 @@ namespace WatchersNET.CKEditor.Module
         /// <summary>
         ///   Gets Current Language from Url
         /// </summary>
-        protected string LangCode
-        {
-            get
-            {
-                return CultureInfo.CurrentCulture.Name;
-            }
-        }
+        protected string LangCode => CultureInfo.CurrentCulture.Name;
 
         /// <summary>
         ///   Gets the Name for the Current Resource file name
         /// </summary>
-        protected string ResXFile
-        {
-            get
-            {
-                return
-                    this.ResolveUrl(
-                        string.Format(
-                            "~/Providers/HtmlEditorProviders/CKEditor/{0}/Options.aspx.resx",
-                            Localization.LocalResourceDirectory));
-            }
-        }
+        protected string ResXFile => this.ResolveUrl(
+            string.Format(
+                "~/Providers/HtmlEditorProviders/CKEditor/{0}/Options.aspx.resx",
+                Localization.LocalResourceDirectory));
 
         /// <summary>
         /// Gets or sets the editor options control

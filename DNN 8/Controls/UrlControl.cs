@@ -94,21 +94,15 @@ namespace WatchersNET.CKEditor.Controls
         /// </summary>
         public string LocalResourceFile
         {
-            get
-            {
-                return string.IsNullOrEmpty(this._localResourceFile)
-                           ? string.Format(
-                               "{0}/{1}/URLControl.ascx.resx",
-                               this.TemplateSourceDirectory.Replace(
-                                   "Providers/HtmlEditorProviders/CKEditor", "controls"),
-                               Localization.LocalResourceDirectory)
-                           : this._localResourceFile;
-            }
+            get => string.IsNullOrEmpty(this._localResourceFile)
+                       ? string.Format(
+                           "{0}/{1}/URLControl.ascx.resx",
+                           this.TemplateSourceDirectory.Replace(
+                               "Providers/HtmlEditorProviders/CKEditor", "controls"),
+                           Localization.LocalResourceDirectory)
+                       : this._localResourceFile;
 
-            set
-            {
-                this._localResourceFile = value;
-            }
+            set => this._localResourceFile = value;
         }
 
         /// <summary>
@@ -116,10 +110,7 @@ namespace WatchersNET.CKEditor.Controls
         /// </summary>
         public string Width
         {
-            get
-            {
-                return Convert.ToString(this.ViewState["SkinControlWidth"]);
-            }
+            get => Convert.ToString(this.ViewState["SkinControlWidth"]);
 
             set
             {
@@ -139,15 +130,9 @@ namespace WatchersNET.CKEditor.Controls
         /// </summary>
         public int PortalId
         {
-            get
-            {
-                return Convert.ToInt32(this.ViewState["PortalId"]);
-            }
+            get => Convert.ToInt32(this.ViewState["PortalId"]);
 
-            set
-            {
-                this.ViewState["PortalId"] = value;
-            }
+            set => this.ViewState["PortalId"] = value;
         }
 
         /// <summary>
@@ -170,10 +155,7 @@ namespace WatchersNET.CKEditor.Controls
                 return url;
             }
 
-            set
-            {
-                this.ViewState["Url"] = value;
-            }
+            set => this.ViewState["Url"] = value;
         }
 
         #endregion
@@ -213,10 +195,7 @@ namespace WatchersNET.CKEditor.Controls
         /// </summary>
         protected DropDownList Folders
         {
-            get
-            {
-                return this.folders;
-            }
+            get => this.folders;
 
             set
             {
@@ -291,7 +270,7 @@ namespace WatchersNET.CKEditor.Controls
                         if (this.Files.Items.FindByText(fileName) != null)
                         {
                             this.Files.ClearSelection();
-                            Files.SelectedIndex = Files.Items.IndexOf(Files.Items.FindByText(fileName));
+                            this.Files.SelectedIndex = this.Files.Items.IndexOf(this.Files.Items.FindByText(fileName));
                         }
                     }
                 }

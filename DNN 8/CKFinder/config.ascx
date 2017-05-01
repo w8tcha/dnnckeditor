@@ -27,10 +27,10 @@
     {
         if (Session["CKDNNSubDirs"] != null)
         {
-            bUseSubDirs = (bool)Session["CKDNNSubDirs"];
+            this.bUseSubDirs = (bool)Session["CKDNNSubDirs"];
         }
-        
-        _portalSettings = GetPortalSettings();
+
+        this._portalSettings = this.GetPortalSettings();
 
         // Paste your license name and key here. If left blank, CKFinder will
         // be fully functional, in Demo Mode.
@@ -42,22 +42,22 @@
 
         if (PortalSecurity.IsInRole("Administrators"))
         {
-            sStartDir = _portalSettings.HomeDirectory;
-            sStartDirMapPath = _portalSettings.HomeDirectoryMapPath;
+            sStartDir = this._portalSettings.HomeDirectory;
+            sStartDirMapPath = this._portalSettings.HomeDirectoryMapPath;
         }
         else
         {
-            if (bUseSubDirs)
+            if (this.bUseSubDirs)
             {
-                sStartDir = Path.Combine(_portalSettings.HomeDirectory,
-                                         string.Format("userfiles/{0}/", _portalSettings.UserInfo.Username));
-                sStartDirMapPath = Path.Combine(_portalSettings.HomeDirectoryMapPath,
-                                                string.Format("userfiles/{0}/", _portalSettings.UserInfo.Username));
+                sStartDir = Path.Combine(this._portalSettings.HomeDirectory,
+                                         string.Format("userfiles/{0}/", this._portalSettings.UserInfo.Username));
+                sStartDirMapPath = Path.Combine(this._portalSettings.HomeDirectoryMapPath,
+                                                string.Format("userfiles/{0}/", this._portalSettings.UserInfo.Username));
             }
             else
             {
-                sStartDir = _portalSettings.HomeDirectory;
-                sStartDirMapPath = _portalSettings.HomeDirectoryMapPath;
+                sStartDir = this._portalSettings.HomeDirectory;
+                sStartDirMapPath = this._portalSettings.HomeDirectoryMapPath;
             }
 
             if (!Directory.Exists(sStartDirMapPath))
@@ -199,14 +199,14 @@
 
         try
         {
-            if (request.QueryString["tabid"] != null)
+            if (this.request.QueryString["tabid"] != null)
             {
-                iTabId = int.Parse(request.QueryString["tabid"]);
+                iTabId = int.Parse(this.request.QueryString["tabid"]);
             }
 
-            if (request.QueryString["PortalID"] != null)
+            if (this.request.QueryString["PortalID"] != null)
             {
-                iPortalId = int.Parse(request.QueryString["PortalID"]);
+                iPortalId = int.Parse(this.request.QueryString["PortalID"]);
             }
 
             if (HttpContext.Current.Session["CKDNNtabid"] != null)

@@ -92,7 +92,7 @@ namespace WatchersNET.CKEditor.Module
                 ModuleDefinitionController.GetModuleDefinitionByFriendlyName(
                     "CKEditor Config Manager", editorDesktopModule.DesktopModuleID);
 
-            return editorModuleDefinition == null ? -1 : editorModuleDefinition.ModuleDefID;
+            return editorModuleDefinition?.ModuleDefID ?? -1;
         }
     }
 }
