@@ -128,8 +128,8 @@ namespace WatchersNET.CKEditor.Controls
 
             var previousColumn = new TableCell { CssClass = "PagerFirstColumn" };
 
-            int iStart = this.CurrentPageIndex - 2;
-            int iEnd = this.CurrentPageIndex + 3;
+            var iStart = this.CurrentPageIndex - 2;
+            var iEnd = this.CurrentPageIndex + 3;
 
             if (iStart < 0)
             {
@@ -199,7 +199,7 @@ namespace WatchersNET.CKEditor.Controls
 
             ulSecondElement.Attributes.Add("class", "FilesPager");
 
-            for (int i = iStart; i < iEnd; i++)
+            for (var i = iStart; i < iEnd; i++)
             {
                 var liElement = new HtmlGenericControl("li");
 

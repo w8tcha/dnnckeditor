@@ -98,7 +98,7 @@ namespace WatchersNET.CKEditor.Utilities
                                                name = string.Format("Group{0}", groupId)
                                            };
 
-                    foreach (string s in group)
+                    foreach (var s in group)
                     {
                         toolBarGroup.items.Add(s);
                     }
@@ -144,7 +144,7 @@ namespace WatchersNET.CKEditor.Utilities
         {
             var stringBuilder = new StringBuilder();
 
-            for (int i = 0; i < toolbarSet.ToolbarGroups.Count; i++)
+            for (var i = 0; i < toolbarSet.ToolbarGroups.Count; i++)
             {
                 var t = toolbarSet.ToolbarGroups[i];
 
@@ -186,7 +186,7 @@ namespace WatchersNET.CKEditor.Utilities
         /// </param>
         public static void CreateDefaultToolbarButtonXml(string savePath)
         {
-            List<ToolbarButton> toolbarButtons = new List<ToolbarButton>
+            var toolbarButtons = new List<ToolbarButton>
                                                      {
                                                          new ToolbarButton
                                                              {
@@ -644,6 +644,7 @@ namespace WatchersNET.CKEditor.Utilities
 
                         return toolbarSetBasic;
                     }
+
                 case "Standard":
                     {
                         var toolbarSetStandard = new ToolbarSet("Standard", 15);
@@ -721,6 +722,7 @@ namespace WatchersNET.CKEditor.Utilities
 
                         return toolbarSetStandard;
                     }
+
                 case "Full":
                     {
                         var toolbarSetFull = new ToolbarSet("Full", 20);
@@ -946,7 +948,7 @@ namespace WatchersNET.CKEditor.Utilities
                 homeDirPath = alternatePath;
             }
 
-            bool createDefault = false;
+            var createDefault = false;
 
             // Import old ToolbarXmlFileName first if exist
             if (File.Exists(Path.Combine(homeDirPath, SettingConstants.ToolbarXmlFileName)))
@@ -1032,7 +1034,7 @@ namespace WatchersNET.CKEditor.Utilities
 
             foreach (var @group in toolBarSets.SelectMany(set => set.ToolbarGroups))
             {
-                for (int index = 0; index < @group.items.Count; index++)
+                for (var index = 0; index < @group.items.Count; index++)
                 {
                     if (@group.items[index].Equals("oembed"))
                     {

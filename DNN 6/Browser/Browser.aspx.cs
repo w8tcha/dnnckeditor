@@ -2723,19 +2723,33 @@ namespace WatchersNET.CKEditor.Browser
 
                 string sFilePath = Path.Combine(uploadPhysicalPath, fileName);
 
+                var imageResizer = new ImageResizer
+                                       {
+                                           ImageQuality = this.currentSettings.Config.ResizeImageQuality,
+                                           MaxHeight = this.currentSettings.Config.Resize_MaxHeight,
+                                           MaxWidth = this.currentSettings.Config.Resize_MaxWidth
+                                       };
+
+
+                // Automatically Resize Image on Upload
+                var fileStream =
+                    this.currentSettings.Config.ResizeImageOnQuickUpload && Utility.IsImageFile(file.FileName)
+                        ? imageResizer.Resize(file)
+                        : file.InputStream;
+
                 if (File.Exists(sFilePath))
                 {
                     iCounter++;
                     fileName = string.Format("{0}_{1}{2}", sFileNameNoExt, iCounter, Path.GetExtension(file.FileName));
 
-                    FileManager.Instance.AddFile(currentFolderInfo, fileName, file.InputStream);
+                    FileManager.Instance.AddFile(currentFolderInfo, fileName, fileStream);
                 }
                 else
                 {
                     FileManager.Instance.AddFile(
                         currentFolderInfo,
                         fileName,
-                        file.InputStream);
+                        fileStream);
                 }
 
                 this.Response.Write("<script type=\"text/javascript\">");

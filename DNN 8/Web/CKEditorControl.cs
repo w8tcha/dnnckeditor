@@ -145,7 +145,7 @@ namespace WatchersNET.CKEditor.Web
 
                 // Inject all Editor Config
                 foreach (
-                    PropertyInfo info in
+                    var info in
                         SettingsUtil.GetEditorConfigProperties())
                 {
                     XmlAttributeAttribute xmlAttributeAttribute = null;
@@ -613,7 +613,7 @@ namespace WatchersNET.CKEditor.Web
         {
             get
             {
-                object o = this.ViewState["Value"];
+                var o = this.ViewState["Value"];
 
                 return o == null ? string.Empty : Convert.ToString(o);
             }
@@ -640,7 +640,7 @@ namespace WatchersNET.CKEditor.Web
 
                 var appAssemblies = AppDomain.CurrentDomain.GetAssemblies();
 
-                foreach (Assembly asm in
+                foreach (var asm in
                     appAssemblies.Where(asm => asm.ManifestModule.Name == "System.Web.Extensions.dll"))
                 {
                     try
@@ -690,7 +690,7 @@ namespace WatchersNET.CKEditor.Web
         /// </returns>
         public static Control FindModuleInstance(Control editorControl)
         {
-            Control ctl = editorControl.Parent;
+            var ctl = editorControl.Parent;
             Control selectedCtl = null;
             Control possibleCtl = null;
 
@@ -765,8 +765,8 @@ namespace WatchersNET.CKEditor.Web
         {
             try
             {
-                string currentValue = this.Value;
-                string postedValue = postCollection[postDataKey];
+                var currentValue = this.Value;
+                var postedValue = postCollection[postDataKey];
 
                 if (currentValue == null | !postedValue.Equals(currentValue))
                 {
@@ -983,7 +983,7 @@ namespace WatchersNET.CKEditor.Web
             if (this.myParModule == null || this.myParModule.ModuleId == -1)
             {
                 // Get Parent ModuleID From this ClientID
-                string sClientId = this.ClientID.Substring(this.ClientID.IndexOf("ctr") + 3);
+                var sClientId = this.ClientID.Substring(this.ClientID.IndexOf("ctr") + 3);
 
                 sClientId = sClientId.Remove(this.ClientID.IndexOf("_"));
 
@@ -994,8 +994,8 @@ namespace WatchersNET.CKEditor.Web
                 catch (Exception)
                 {
                     // The is no real module, then use the "User Accounts" module (Profile editor)
-                    ModuleController db = new ModuleController();
-                    ModuleInfo objm = db.GetModuleByDefinition(this._portalSettings.PortalId, "User Accounts");
+                    var db = new ModuleController();
+                    var objm = db.GetModuleByDefinition(this._portalSettings.PortalId, "User Accounts");
 
                     this.parentModulId = objm.TabModuleID;
                 }
@@ -1024,8 +1024,8 @@ namespace WatchersNET.CKEditor.Web
         /// </summary>
         private void CheckFileBrowser()
         {
-            ProviderConfiguration providerConfiguration = ProviderConfiguration.GetProviderConfiguration(ProviderType);
-            Provider objProvider = (Provider)providerConfiguration.Providers[providerConfiguration.DefaultProvider];
+            var providerConfiguration = ProviderConfiguration.GetProviderConfiguration(ProviderType);
+            var objProvider = (Provider)providerConfiguration.Providers[providerConfiguration.DefaultProvider];
 
             if (objProvider == null || string.IsNullOrEmpty(objProvider.Attributes["ck_browser"]))
             {
@@ -1163,7 +1163,7 @@ namespace WatchersNET.CKEditor.Web
                     continue;
                 }
 
-                string sAdjustedKey = key.Substring(3, key.Length - 3).ToLower();
+                var sAdjustedKey = key.Substring(3, key.Length - 3).ToLower();
 
                 if (sAdjustedKey != string.Empty)
                 {
@@ -1292,7 +1292,7 @@ namespace WatchersNET.CKEditor.Web
             }
 
             // Compare The User Toolbars if the User is more then One Role, and apply the Toolbar with the Highest Priority
-            int iHighestPrio = listUserToolbarSets.Max(toolb => toolb.Priority);
+            var iHighestPrio = listUserToolbarSets.Max(toolb => toolb.Priority);
 
             return ToolbarUtil.FindHighestToolbar(listUserToolbarSets, iHighestPrio).Name;
         }
@@ -1306,9 +1306,9 @@ namespace WatchersNET.CKEditor.Web
                 this.Page,
                 Globals.ResolveUrl("~/Providers/HtmlEditorProviders/CKEditor/editor.css"));
 
-            ClientScriptManager cs = this.Page.ClientScript;
+            var cs = this.Page.ClientScript;
 
-            Type csType = this.GetType();
+            var csType = this.GetType();
 
             const string CsName = "CKEdScript";
             const string CsAdaptName = "CKAdaptScript";

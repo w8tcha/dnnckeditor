@@ -138,9 +138,9 @@ namespace WatchersNET.CKEditor.Browser
         {
             get
             {
-                string[] page = this.Request.ServerVariables["SCRIPT_NAME"].Split('/');
+                var page = this.Request.ServerVariables["SCRIPT_NAME"].Split('/');
 
-                string fileRoot = string.Format(
+                var fileRoot = string.Format(
                     "{0}/{1}/{2}.resx",
                     this.TemplateSourceDirectory,
                     Localization.LocalResourceDirectory,
@@ -231,7 +231,7 @@ namespace WatchersNET.CKEditor.Browser
             filesTable.Columns.Add(new DataColumn("Info", typeof(string)));
             filesTable.Columns.Add(new DataColumn("FileId", typeof(int)));
 
-            HttpRequest httpRequest = HttpContext.Current.Request;
+            var httpRequest = HttpContext.Current.Request;
 
             var type = "Link";
 
@@ -278,7 +278,7 @@ namespace WatchersNET.CKEditor.Browser
                 {
                     case "Image":
                         {
-                            foreach (DataRow dr in
+                            foreach (var dr in
                                 from sAllowExt in this.allowedImageExtensions
                                 where name.ToLower().EndsWith(sAllowExt)
                                 select filesTable.NewRow())
@@ -311,7 +311,7 @@ namespace WatchersNET.CKEditor.Browser
                         break;
                     case "Flash":
                         {
-                            foreach (DataRow dr in
+                            foreach (var dr in
                                 from sAllowExt in this.allowedFlashExt
                                 where name.ToLower().EndsWith(sAllowExt)
                                 select filesTable.NewRow())
@@ -346,7 +346,7 @@ namespace WatchersNET.CKEditor.Browser
                                 continue;
                             }
 
-                            DataRow dr = filesTable.NewRow();
+                            var dr = filesTable.NewRow();
 
                             var imageExtension = string.Format("images/types/{0}.png", extension);
 
@@ -715,12 +715,12 @@ namespace WatchersNET.CKEditor.Browser
                 }
             }
 
-            HttpRequest httpRequest = HttpContext.Current.Request;
+            var httpRequest = HttpContext.Current.Request;
 
             // string _CKEditorName = httpRequest.QueryString["CKEditor"];
-            string funcNum = httpRequest.QueryString["CKEditorFuncNum"];
+            var funcNum = httpRequest.QueryString["CKEditorFuncNum"];
 
-            string errorMsg = string.Empty;
+            var errorMsg = string.Empty;
 
             funcNum = Regex.Replace(funcNum, @"[^0-9]", string.Empty, RegexOptions.None);
 
@@ -847,8 +847,8 @@ namespace WatchersNET.CKEditor.Browser
                     (SettingsMode)Enum.Parse(typeof(SettingsMode), this.request.QueryString["mode"]);
             }
 
-            ProviderConfiguration providerConfiguration = ProviderConfiguration.GetProviderConfiguration("htmlEditor");
-            Provider objProvider = (Provider)providerConfiguration.Providers[providerConfiguration.DefaultProvider];
+            var providerConfiguration = ProviderConfiguration.GetProviderConfiguration("htmlEditor");
+            var objProvider = (Provider)providerConfiguration.Providers[providerConfiguration.DefaultProvider];
 
             var settingsDictionary = Utility.GetEditorHostSettings();
             var portalRoles = new RoleController().GetPortalRoles(this._portalSettings.PortalId);
@@ -1231,39 +1231,39 @@ namespace WatchersNET.CKEditor.Browser
             this.lblCropInfo.Visible = false;
 
             ////
-            string sFilePath = Path.Combine(this.lblCurrentDir.Text, this.lblFileName.Text);
+            var sFilePath = Path.Combine(this.lblCurrentDir.Text, this.lblFileName.Text);
 
-            string sFileNameNoExt = Path.GetFileNameWithoutExtension(sFilePath);
+            var sFileNameNoExt = Path.GetFileNameWithoutExtension(sFilePath);
 
             this.txtThumbName.Text = string.Format("{0}_resized", sFileNameNoExt);
 
-            string sExtension = Path.GetExtension(sFilePath);
+            var sExtension = Path.GetExtension(sFilePath);
             sExtension = sExtension.TrimStart('.');
 
-            bool bEnable = this.allowedImageExtensions.Any(sAllowExt => sAllowExt.Equals(sExtension.ToLower()));
+            var bEnable = this.allowedImageExtensions.Any(sAllowExt => sAllowExt.Equals(sExtension.ToLower()));
 
             if (!bEnable)
             {
                 return;
             }
 
-            FileStream fs = new FileStream(sFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+            var fs = new FileStream(sFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
 
-            Image image = Image.FromStream(fs);
+            var image = Image.FromStream(fs);
 
-            StringBuilder sbScript1 = new StringBuilder();
+            var sbScript1 = new StringBuilder();
 
             // Show Preview Images
             this.imgOriginal.ImageUrl = MapUrl(sFilePath);
             this.imgResized.ImageUrl = MapUrl(sFilePath);
 
-            int w = image.Width;
-            int h = image.Height;
+            var w = image.Width;
+            var h = image.Height;
 
-            int longestDimension = (w > h) ? w : h;
-            int shortestDimension = (w < h) ? w : h;
+            var longestDimension = (w > h) ? w : h;
+            var shortestDimension = (w < h) ? w : h;
 
-            float factor = ((float)longestDimension) / shortestDimension;
+            var factor = ((float)longestDimension) / shortestDimension;
 
             double newWidth = 400;
             double newHeight = 300 / factor;
@@ -1391,9 +1391,9 @@ namespace WatchersNET.CKEditor.Browser
         /// </returns>
         private static string MapUrl(string sPath)
         {
-            string sAppPath = HttpContext.Current.Server.MapPath("~");
+            var sAppPath = HttpContext.Current.Server.MapPath("~");
 
-            string sUrl = string.Format(
+            var sUrl = string.Format(
                 "{0}",
                 HttpContext.Current.Request.ApplicationPath + sPath.Replace(sAppPath, string.Empty).Replace("\\", "/"));
 
@@ -1421,7 +1421,7 @@ namespace WatchersNET.CKEditor.Browser
         /// </returns>
         private static ImageCodecInfo GetEncoder(ImageFormat format)
         {
-            ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
+            var codecs = ImageCodecInfo.GetImageDecoders();
 
             return codecs.FirstOrDefault(codec => codec.FormatID == format.Guid);
         }
@@ -1667,9 +1667,9 @@ namespace WatchersNET.CKEditor.Browser
         {
             this.FoldersTree.Nodes.Clear();
 
-            DirectoryInfo dirInfo = new DirectoryInfo(currentFolderInfo.PhysicalPath);
+            var dirInfo = new DirectoryInfo(currentFolderInfo.PhysicalPath);
 
-            TreeNode folderNode = new TreeNode
+            var folderNode = new TreeNode
             {
                 Text = dirInfo.Name,
                 Value = dirInfo.FullName,
@@ -1696,7 +1696,7 @@ namespace WatchersNET.CKEditor.Browser
 
             var folders = FolderManager.Instance.GetFolders(currentFolderInfo);
 
-            foreach (TreeNode node in
+            foreach (var node in
                 folders.Cast<FolderInfo>().Select(this.RenderFolder).Where(node => node != null))
             {
                 switch (this.GetStorageLocationType(Convert.ToInt32(node.ToolTip)))
@@ -1724,7 +1724,7 @@ namespace WatchersNET.CKEditor.Browser
         /// </summary>
         private void FillQualityPrecentages()
         {
-            for (int i = 00; i < 101; i++)
+            for (var i = 00; i < 101; i++)
             {
                 this.dDlQuality.Items.Add(new ListItem { Text = i.ToString(), Value = i.ToString() });
             }
@@ -1756,11 +1756,11 @@ namespace WatchersNET.CKEditor.Browser
                     iPortalId = int.Parse(this.request.QueryString["PortalID"]);
                 }
 
-                string sDomainName = Globals.GetDomainName(this.Request, true);
+                var sDomainName = Globals.GetDomainName(this.Request, true);
 
-                string sPortalAlias = PortalAliasController.GetPortalAliasByPortal(iPortalId, sDomainName);
+                var sPortalAlias = PortalAliasController.GetPortalAliasByPortal(iPortalId, sDomainName);
 
-                PortalAliasInfo objPortalAliasInfo = PortalAliasController.Instance.GetPortalAlias(sPortalAlias);
+                var objPortalAliasInfo = PortalAliasController.Instance.GetPortalAlias(sPortalAlias);
 
                 portalSettings = new PortalSettings(iTabId, objPortalAliasInfo);
             }
@@ -1952,7 +1952,7 @@ namespace WatchersNET.CKEditor.Browser
                 return null;
             }
 
-            TreeNode tnFolder = new TreeNode
+            var tnFolder = new TreeNode
             {
                 Text = folderInfo.FolderName,
                 Value = folderInfo.PhysicalPath,
@@ -1978,7 +1978,7 @@ namespace WatchersNET.CKEditor.Browser
                 return tnFolder;
             }
 
-            foreach (TreeNode node in
+            foreach (var node in
                 folders.Cast<FolderInfo>().Select(this.RenderFolder).Where(node => node != null))
             {
                 switch (this.GetStorageLocationType(Convert.ToInt32(node.ToolTip)))
@@ -2014,7 +2014,7 @@ namespace WatchersNET.CKEditor.Browser
         /// </param>
         private void RenderTabLevels(TreeNode nodeParent, int iParentTabId)
         {
-            foreach (TabInfo objTab in
+            foreach (var objTab in
                 TabController.GetPortalTabs(
                     this._portalSettings.PortalId, -1, false, null, true, false, true, true, false))
             {
@@ -2023,7 +2023,7 @@ namespace WatchersNET.CKEditor.Browser
                     continue;
                 }
 
-                TreeNode nodeTab = new TreeNode();
+                var nodeTab = new TreeNode();
 
                 if (nodeParent != null)
                 {
@@ -2114,7 +2114,7 @@ namespace WatchersNET.CKEditor.Browser
         /// </param>
         private void ScrollToSelectedFile(string elementId)
         {
-            StringBuilder sbScript1 = new StringBuilder();
+            var sbScript1 = new StringBuilder();
 
             sbScript1.AppendFormat("document.getElementById('{0}').scrollIntoView();", elementId);
 
@@ -2156,7 +2156,7 @@ namespace WatchersNET.CKEditor.Browser
 
             var newDir = this.lblCurrentDir.Text;
 
-            TreeNode tnNewFolder = this.FoldersTree.FindNode(newDir);
+            var tnNewFolder = this.FoldersTree.FindNode(newDir);
 
             if (tnNewFolder != null)
             {
@@ -2381,7 +2381,7 @@ namespace WatchersNET.CKEditor.Browser
             // Find the File inside the Repeater
             foreach (RepeaterItem item in this.FilesList.Items)
             {
-                HtmlGenericControl listRow = (HtmlGenericControl)item.FindControl("ListRow");
+                var listRow = (HtmlGenericControl)item.FindControl("ListRow");
 
                 switch (item.ItemType)
                 {
@@ -2400,14 +2400,14 @@ namespace WatchersNET.CKEditor.Browser
 
                 listRow.Attributes["class"] += " Selected";
 
-                LinkButton fileListItem = (LinkButton)item.FindControl("FileListItem");
+                var fileListItem = (LinkButton)item.FindControl("FileListItem");
 
                 if (fileListItem == null)
                 {
                     return;
                 }
 
-                int fileId = Convert.ToInt32(fileListItem.CommandArgument);
+                var fileId = Convert.ToInt32(fileListItem.CommandArgument);
 
                 var fileInfo = FileManager.Instance.GetFile(fileId);
 
@@ -2680,9 +2680,9 @@ namespace WatchersNET.CKEditor.Browser
 
             if (allowUpl)
             {
-                string sFileNameNoExt = Path.GetFileNameWithoutExtension(fileName);
+                var sFileNameNoExt = Path.GetFileNameWithoutExtension(fileName);
 
-                int iCounter = 0;
+                var iCounter = 0;
 
                 var uploadPhysicalPath = this.StartingDir().PhysicalPath;
 
@@ -2702,18 +2702,32 @@ namespace WatchersNET.CKEditor.Browser
                     }
                 }
 
-                string sFilePath = Path.Combine(uploadPhysicalPath, fileName);
+                var sFilePath = Path.Combine(uploadPhysicalPath, fileName);
+
+                var imageResizer = new ImageResizer
+                                       {
+                                           ImageQuality = this.currentSettings.Config.ResizeImageQuality,
+                                           MaxHeight = this.currentSettings.Config.Resize_MaxHeight,
+                                           MaxWidth = this.currentSettings.Config.Resize_MaxWidth
+                                       };
+
+
+                // Automatically Resize Image on Upload
+                var fileStream =
+                    this.currentSettings.Config.ResizeImageOnQuickUpload && Utility.IsImageFile(file.FileName)
+                        ? imageResizer.Resize(file)
+                        : file.InputStream;
 
                 if (File.Exists(sFilePath))
                 {
                     iCounter++;
                     fileName = string.Format("{0}_{1}{2}", sFileNameNoExt, iCounter, Path.GetExtension(file.FileName));
 
-                    FileManager.Instance.AddFile(currentFolderInfo, fileName, file.InputStream);
+                    FileManager.Instance.AddFile(currentFolderInfo, fileName, fileStream);
                 }
                 else
                 {
-                    FileManager.Instance.AddFile(currentFolderInfo, fileName, file.InputStream);
+                    FileManager.Instance.AddFile(currentFolderInfo, fileName, fileStream);
                 }
 
                 this.Response.Write("<script type=\"text/javascript\">");
@@ -2785,11 +2799,11 @@ namespace WatchersNET.CKEditor.Browser
 
                 try
                 {
-                    string sFolder = newDirPath;
+                    var sFolder = newDirPath;
 
                     sFolder = sFolder.Substring(this._portalSettings.HomeDirectoryMapPath.Length).Replace("\\", "/");
 
-                    FolderController folderController = new FolderController();
+                    var folderController = new FolderController();
 
                     var storageLocation = (int)FolderController.StorageLocationTypes.InsecureFileSystem;
 
@@ -2834,7 +2848,7 @@ namespace WatchersNET.CKEditor.Browser
 
                     this.ShowFilesIn(newDirPath);
 
-                    TreeNode tnNewFolder = this.FoldersTree.FindNode(this.tbFolderName.Text);
+                    var tnNewFolder = this.FoldersTree.FindNode(this.tbFolderName.Text);
 
                     if (tnNewFolder != null)
                     {
@@ -2879,7 +2893,7 @@ namespace WatchersNET.CKEditor.Browser
 
             this.ShowFilesIn(this.lblCurrentDir.Text);
 
-            string sExtension = Path.GetExtension(this.lblFileName.Text);
+            var sExtension = Path.GetExtension(this.lblFileName.Text);
 
             this.GoToSelectedFile(string.Format("{0}{1}", this.txtCropImageName.Text, sExtension));
         }
@@ -2988,16 +3002,16 @@ namespace WatchersNET.CKEditor.Browser
             // Add Compression to Jpeg Images
             if (oldImage.RawFormat.Equals(ImageFormat.Jpeg))
             {
-                ImageCodecInfo jgpEncoder = GetEncoder(oldImage.RawFormat);
+                var jgpEncoder = GetEncoder(oldImage.RawFormat);
 
-                Encoder myEncoder = Encoder.Quality;
-                EncoderParameters encodParams = new EncoderParameters(1);
-                EncoderParameter encodParam = new EncoderParameter(myEncoder, long.Parse(this.dDlQuality.SelectedValue));
+                var myEncoder = Encoder.Quality;
+                var encodParams = new EncoderParameters(1);
+                var encodParam = new EncoderParameter(myEncoder, long.Parse(this.dDlQuality.SelectedValue));
                 encodParams.Param[0] = encodParam;
 
-                using (Bitmap dst = new Bitmap(newWidth, newHeight))
+                using (var dst = new Bitmap(newWidth, newHeight))
                 {
-                    using (Graphics g = Graphics.FromImage(dst))
+                    using (var g = Graphics.FromImage(dst))
                     {
                         g.SmoothingMode = SmoothingMode.AntiAlias;
                         g.InterpolationMode = InterpolationMode.HighQualityBicubic;
@@ -3010,7 +3024,7 @@ namespace WatchersNET.CKEditor.Browser
             else
             {
                 // Finally Create a new Resized Image
-                Image newImage = oldImage.GetThumbnailImage(newWidth, newHeight, null, IntPtr.Zero);
+                var newImage = oldImage.GetThumbnailImage(newWidth, newHeight, null, IntPtr.Zero);
                 oldImage.Dispose();
 
                 newImage.Save(imageFullPath);
@@ -3078,17 +3092,17 @@ namespace WatchersNET.CKEditor.Browser
             this.lblResizeHeader.Text = Localization.GetString("lblResizeHeader2.Text", this.ResXFile, this.LanguageCode);
             this.title.InnerText = string.Format("{0} - WatchersNET.FileBrowser", this.lblResizeHeader.Text);
 
-            string sFilePath = Path.Combine(this.lblCurrentDir.Text, this.lblFileName.Text);
+            var sFilePath = Path.Combine(this.lblCurrentDir.Text, this.lblFileName.Text);
 
-            string sFileNameNoExt = Path.GetFileNameWithoutExtension(sFilePath);
+            var sFileNameNoExt = Path.GetFileNameWithoutExtension(sFilePath);
 
             this.txtCropImageName.Text = string.Format("{0}_Crop", sFileNameNoExt);
 
-            FileStream fs = new FileStream(sFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+            var fs = new FileStream(sFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
 
-            Image image = Image.FromStream(fs);
+            var image = Image.FromStream(fs);
 
-            StringBuilder sbCropZoom = new StringBuilder();
+            var sbCropZoom = new StringBuilder();
 
             sbCropZoom.Append("jQuery(document).ready(function () {");
 
@@ -3207,7 +3221,7 @@ namespace WatchersNET.CKEditor.Browser
             var selectTab = tabController.GetTab(
                 int.Parse(this.dnntreeTabs.SelectedValue), this._portalSettings.PortalId, true);
 
-            string sDomainName = string.Format("http://{0}", Globals.GetDomainName(this.Request, true));
+            var sDomainName = string.Format("http://{0}", Globals.GetDomainName(this.Request, true));
 
             // Add Language Parameter ?!
             var localeSelected = this.LanguageRow.Visible && this.LanguageList.SelectedIndex > 0;
@@ -3247,7 +3261,7 @@ namespace WatchersNET.CKEditor.Browser
             }
             else
             {
-                string locale = localeSelected ? string.Format("language/{0}/", this.LanguageList.SelectedValue) : string.Empty;
+                var locale = localeSelected ? string.Format("language/{0}/", this.LanguageList.SelectedValue) : string.Empty;
 
                 // Relative Url
                 this.rblLinkType.Items[0].Text = Regex.Replace(
@@ -3328,7 +3342,7 @@ namespace WatchersNET.CKEditor.Browser
 
                 var page = wc.DownloadString(tabUrl);
 
-                foreach (LinkItem i in AnchorFinder.ListAll(page).Where(i => !string.IsNullOrEmpty(i.Anchor)))
+                foreach (var i in AnchorFinder.ListAll(page).Where(i => !string.IsNullOrEmpty(i.Anchor)))
                 {
                     this.AnchorList.Items.Add(i.Anchor);
                 }
@@ -3375,7 +3389,7 @@ namespace WatchersNET.CKEditor.Browser
                 return;
             }
 
-            int fileId = Convert.ToInt32(fileListItem.CommandArgument);
+            var fileId = Convert.ToInt32(fileListItem.CommandArgument);
 
             var currentFile = FileManager.Instance.GetFile(fileId);
 
@@ -3527,6 +3541,6 @@ namespace WatchersNET.CKEditor.Browser
             FolderManager.Instance.Synchronize(this._portalSettings.PortalId, currentFolderInfo.FolderPath, false, true);
         }
 
-        #endregion
+#endregion
     }
 }

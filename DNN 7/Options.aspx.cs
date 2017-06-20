@@ -68,9 +68,9 @@ namespace WatchersNET.CKEditor
         {
             get
             {
-                string[] page = this.Request.ServerVariables["SCRIPT_NAME"].Split('/');
+                var page = this.Request.ServerVariables["SCRIPT_NAME"].Split('/');
 
-                string fileRoot = string.Format(
+                var fileRoot = string.Format(
                     "{0}/{1}/{2}.resx",
                     this.TemplateSourceDirectory,
                     Localization.LocalResourceDirectory,
@@ -168,11 +168,11 @@ namespace WatchersNET.CKEditor
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            int iMid = -1;
-            int iTid = -1;
+            var iMid = -1;
+            var iTid = -1;
 
             ModuleInfo modInfo = null;
-            ModuleController db = new ModuleController();
+            var db = new ModuleController();
 
             try
             {
@@ -255,11 +255,11 @@ namespace WatchersNET.CKEditor
                     iPortalId = int.Parse(this.request.QueryString["PortalID"]);
                 }
 
-                string sDomainName = Globals.GetDomainName(this.Request, true);
+                var sDomainName = Globals.GetDomainName(this.Request, true);
 
-                string sPortalAlias = PortalAliasController.GetPortalAliasByPortal(iPortalId, sDomainName);
+                var sPortalAlias = PortalAliasController.GetPortalAliasByPortal(iPortalId, sDomainName);
 
-                PortalAliasInfo objPortalAliasInfo = PortalAliasController.Instance.GetPortalAlias(sPortalAlias);
+                var objPortalAliasInfo = PortalAliasController.Instance.GetPortalAlias(sPortalAlias);
 
                 portalSettings = new PortalSettings(iTabId, objPortalAliasInfo);
             }

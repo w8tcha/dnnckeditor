@@ -185,6 +185,7 @@
     <Compile Include="Constants\SettingsMode.cs" />
     <Compile Include="Objects\Toolbar.cs" />
     <Compile Include="Objects\ToolbarRoles.cs" />
+    <Compile Include="Utilities\ImageResizer.cs" />
     <Compile Include="Utilities\SettingsUtil.cs" />
     <Compile Include="Utilities\ToolbarUtil.cs" />
     <Compile Include="Utilities\Utility.cs" />

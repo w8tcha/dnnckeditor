@@ -152,7 +152,7 @@ namespace WatchersNET.CKEditor.Browser
         /// <param name="statuses">The statuses.</param>
         private void UploadWholeFile(HttpContext context, List<FilesUploadStatus> statuses)
         {
-            for (int i = 0; i < context.Request.Files.Count; i++)
+            for (var i = 0; i < context.Request.Files.Count; i++)
             {
                 var file = context.Request.Files[i];
 

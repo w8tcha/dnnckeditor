@@ -31,7 +31,7 @@ namespace WatchersNET.CKEditor.Extensions
         /// </returns>
         public static T GetCustomAttribute<T>(this PropertyInfo propertyInfo, bool inherit) where T : Attribute
         {
-            object[] attributes = propertyInfo.GetCustomAttributes(typeof(T), inherit);
+            var attributes = propertyInfo.GetCustomAttributes(typeof(T), inherit);
 
             return attributes.Length == 0 ? null : attributes[0] as T;
         }

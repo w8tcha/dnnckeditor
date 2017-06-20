@@ -113,6 +113,7 @@ namespace WatchersNET.CKEditor.Objects
             this.Resize_MaxWidth = 3000;
             this.Resize_MinHeight = 250;
             this.Resize_MinWidth = 750;
+            this.ResizeImageQuality = 80;
             this.ShiftEnterMode = EnterModus.BR;
             this.Skin = "moono-lisa";
             this.Smiley_columns = 8;
@@ -1940,5 +1941,25 @@ namespace WatchersNET.CKEditor.Objects
         /// The word count.
         /// </value>
         public WordCountConfig WordCount { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [resize image on quick upload].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [resize image on quick upload]; otherwise, <c>false</c>.
+        /// </value>
+        [XmlAttribute("ResizeImageOnQuickUpload")]
+        [Description("Allows to automatically Resize Images on a quick upload")]
+        public bool ResizeImageOnQuickUpload { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [resize image quality].
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if [resize image quality]; otherwise, <c>false</c>.
+        /// </value>
+        [XmlAttribute("ResizeImageQuality")]
+        [Description("The Quick Upload Resized Image Quality")]
+        public int ResizeImageQuality { get; set; }
     }
 }

@@ -97,7 +97,7 @@ namespace WatchersNET.CKEditor.Utilities
         /// </returns>
         public static bool IsUnit(object valueToCheck)
         {
-            string sInputValue = Convert.ToString(valueToCheck);
+            var sInputValue = Convert.ToString(valueToCheck);
 
             string sNewValue;
 
@@ -142,13 +142,14 @@ namespace WatchersNET.CKEditor.Utilities
         public static bool IsNumeric(object valueToCheck)
         {
             double dummy;
-            string inputValue = Convert.ToString(valueToCheck);
+            var inputValue = Convert.ToString(valueToCheck);
 
-            bool numeric = double.TryParse(inputValue, NumberStyles.Any, null, out dummy);
+            var numeric = double.TryParse(inputValue, NumberStyles.Any, null, out dummy);
 
             return numeric;
         }
         
+
         /// <summary>
         /// Validates the <paramref name="path"/>.
         /// </summary>
@@ -212,29 +213,29 @@ namespace WatchersNET.CKEditor.Utilities
         /// <returns>The ASCII equivalent output</returns>
         public static string ConvertUnicodeChars(string input)
         {
-            Regex regA = new Regex("[ã|à|â|ä|á|å]");
-            Regex regAA = new Regex("[Ã|À|Â|Ä|Á|Å]");
-            Regex regE = new Regex("[é|è|ê|ë]");
-            Regex regEE = new Regex("[É|È|Ê|Ë]");
-            Regex regI = new Regex("[í|ì|î|ï]");
-            Regex regII = new Regex("[Í|Ì|Î|Ï]");
-            Regex regO = new Regex("[õ|ò|ó|ô|ö]");
-            Regex regOO = new Regex("[Õ|Ó|Ò|Ô|Ö]");
-            Regex regU = new Regex("[ù|ú|û|ü|µ]");
-            Regex regUU = new Regex("[Ü|Ú|Ù|Û]");
-            Regex regY = new Regex("[ý|ÿ]");
-            Regex regYY = new Regex("[Ý]");
-            Regex regAE = new Regex("[æ]");
-            Regex regAEAE = new Regex("[Æ]");
-            Regex regOE = new Regex("[œ]");
-            Regex regOEOE = new Regex("[Œ]");
-            Regex regC = new Regex("[ç]");
-            Regex regCC = new Regex("[Ç]");
-            Regex regDD = new Regex("[Ð]");
-            Regex regN = new Regex("[ñ]");
-            Regex regNN = new Regex("[Ñ]");
-            Regex regS = new Regex("[š]");
-            Regex regSS = new Regex("[Š]");
+            var regA = new Regex("[ã|à|â|ä|á|å]");
+            var regAA = new Regex("[Ã|À|Â|Ä|Á|Å]");
+            var regE = new Regex("[é|è|ê|ë]");
+            var regEE = new Regex("[É|È|Ê|Ë]");
+            var regI = new Regex("[í|ì|î|ï]");
+            var regII = new Regex("[Í|Ì|Î|Ï]");
+            var regO = new Regex("[õ|ò|ó|ô|ö]");
+            var regOO = new Regex("[Õ|Ó|Ò|Ô|Ö]");
+            var regU = new Regex("[ù|ú|û|ü|µ]");
+            var regUU = new Regex("[Ü|Ú|Ù|Û]");
+            var regY = new Regex("[ý|ÿ]");
+            var regYY = new Regex("[Ý]");
+            var regAE = new Regex("[æ]");
+            var regAEAE = new Regex("[Æ]");
+            var regOE = new Regex("[œ]");
+            var regOEOE = new Regex("[Œ]");
+            var regC = new Regex("[ç]");
+            var regCC = new Regex("[Ç]");
+            var regDD = new Regex("[Ð]");
+            var regN = new Regex("[ñ]");
+            var regNN = new Regex("[Ñ]");
+            var regS = new Regex("[š]");
+            var regSS = new Regex("[Š]");
             input = regA.Replace(input, "a");
             input = regAA.Replace(input, "A");
             input = regE.Replace(input, "e");
@@ -569,15 +570,15 @@ namespace WatchersNET.CKEditor.Utilities
         public static T FindControl<T>(Control startingControl, string id) where T : Control
         {
             // this is null by default
-            T found = default(T);
+            var found = default(T);
 
-            int controlCount = startingControl.Controls.Count;
+            var controlCount = startingControl.Controls.Count;
 
             if (controlCount > 0)
             {
-                for (int i = 0; i < controlCount; i++)
+                for (var i = 0; i < controlCount; i++)
                 {
-                    Control activeControl = startingControl.Controls[i];
+                    var activeControl = startingControl.Controls[i];
 
                     if (activeControl is T)
                     {
@@ -629,7 +630,24 @@ namespace WatchersNET.CKEditor.Utilities
                 result = 4096;
             }
 
-            return inkilobytes ? result : (result * 1024);
+            return inkilobytes ? result : result * 1024;
+        }
+
+        /// <summary>
+        /// Determines whether [is image file] [the specified file path].
+        /// </summary>
+        /// <param name="filePath">The file path.</param>
+        /// <returns>
+        ///   <c>true</c> if [is image file] [the specified file path]; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsImageFile(string filePath)
+        {
+            string[] imageExtensions = { ".bmp", ".gif", ".jpeg", ".jpg", ".png", ".svg" };
+
+            return imageExtensions.Any(
+                allowExtension => allowExtension.Equals(
+                    Path.GetExtension(filePath),
+                    StringComparison.InvariantCultureIgnoreCase));
         }
     }
 }

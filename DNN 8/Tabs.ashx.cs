@@ -53,7 +53,7 @@ namespace WatchersNET.CKEditor
 
             var domainName = string.Format("http://{0}", Globals.GetDomainName(context.Request, true));
 
-            foreach (TabInfo tab in TabController.GetPortalTabs(
+            foreach (var tab in TabController.GetPortalTabs(
                     portalId, -1, false, null, true, false, true, true, true))
             {
                 var tabUrl = PortalController.GetPortalSettingAsBoolean("ContentLocalizationEnabled", portalId, false)
@@ -75,7 +75,7 @@ namespace WatchersNET.CKEditor
                 {
                     var separator = new StringBuilder();
 
-                    for (int index = 0; index < tab.Level; index++)
+                    for (var index = 0; index < tab.Level; index++)
                     {
                         separator.Append("--");
                     }

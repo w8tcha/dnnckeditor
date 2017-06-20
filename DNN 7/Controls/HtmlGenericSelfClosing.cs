@@ -108,7 +108,7 @@ namespace WatchersNET.CKEditor.Controls
         /// </param>
         protected override void Render(HtmlTextWriter writer)
         {
-            ICollection keys = this.Attributes.Keys;
+            var keys = this.Attributes.Keys;
 
             writer.WriteBeginTag(this.TagName);
 

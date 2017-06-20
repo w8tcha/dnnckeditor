@@ -32,6 +32,7 @@ namespace WatchersNET.CKEditor.Constants
         /// </summary>
         RelativeSecuredURL = 2,
         
+
         /// <summary>
         /// Absolute Secured URL
         /// </summary>

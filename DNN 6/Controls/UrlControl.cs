@@ -157,7 +157,7 @@ namespace WatchersNET.CKEditor.Controls
         {
             get
             {
-                string url = string.Empty;
+                var url = string.Empty;
                 if (this.Files.SelectedItem == null)
                 {
                     return url;
@@ -319,7 +319,7 @@ namespace WatchersNET.CKEditor.Controls
 
             var foldersList = FolderManager.Instance.GetFolders(this.PortalId);
 
-            foreach (ListItem folderItem in from FolderInfo folder in foldersList
+            foreach (var folderItem in from FolderInfo folder in foldersList
                                             select
                                                 new ListItem
                                                     {

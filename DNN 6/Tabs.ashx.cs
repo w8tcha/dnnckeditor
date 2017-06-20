@@ -42,6 +42,7 @@ namespace WatchersNET.CKEditor
             }
         }
         
+
         /// <summary>
         /// Enables processing of HTTP Web requests by a custom HttpHandler that implements the <see cref="T:System.Web.IHttpHandler"/> interface.
         /// </summary>
@@ -61,7 +62,7 @@ namespace WatchersNET.CKEditor
 
             PortalController.GetPortalSettingAsBoolean("ContentLocalizationEnabled", portalId, false);
 
-            foreach (TabInfo tab in TabController.GetPortalTabs(
+            foreach (var tab in TabController.GetPortalTabs(
                     portalId, -1, false, null, true, false, true, true, true))
             {
                 var tabUrl = PortalController.GetPortalSettingAsBoolean("ContentLocalizationEnabled", portalId, false)
@@ -83,7 +84,7 @@ namespace WatchersNET.CKEditor
                 {
                     var separator = new StringBuilder();
 
-                    for (int index = 0; index < tab.Level; index++)
+                    for (var index = 0; index < tab.Level; index++)
                     {
                         separator.Append("--");
                     }

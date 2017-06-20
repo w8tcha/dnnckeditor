@@ -453,14 +453,14 @@ namespace WatchersNET.CKEditor
                 return;
             }
 
-            string sXmlImport = this.ImportFile.Url;
+            var sXmlImport = this.ImportFile.Url;
 
             this.upOptions.Update();
 
             // RESET Dialog
             this.ImportFile.Url = null;
 
-            int imageFileId = int.Parse(sXmlImport.Substring(7));
+            var imageFileId = int.Parse(sXmlImport.Substring(7));
 
             // FileInfo objFileInfo = objFileController.GetFileById(imageFileId, this._portalSettings.PortalId);
             var objFileInfo = FileManager.Instance.GetFile(imageFileId);
@@ -560,9 +560,7 @@ namespace WatchersNET.CKEditor
         private void FillSettings(EditorProviderSettings importedSettings, bool changeMode = true)
         {
             // Editor config settings
-            foreach (
-                PropertyInfo info in
-                    SettingsUtil.GetEditorConfigProperties())
+            foreach (var info in SettingsUtil.GetEditorConfigProperties())
             {
                 object value = null;
 
@@ -627,10 +625,8 @@ namespace WatchersNET.CKEditor
                         break;
                     case "CodeMirror":
                         {
-                            foreach (
-                           var codeMirrorInfo in
-                               typeof(CodeMirror).GetProperties()
-                                                 .Where(codeMirrorInfo => !codeMirrorInfo.Name.Equals("Theme")))
+                            foreach (var codeMirrorInfo in typeof(CodeMirror).GetProperties()
+                                .Where(codeMirrorInfo => !codeMirrorInfo.Name.Equals("Theme")))
                             {
                                 value = codeMirrorInfo.GetValue(importedSettings.Config.CodeMirror, null);
 
@@ -643,7 +639,9 @@ namespace WatchersNET.CKEditor
                                 {
                                     case "String":
                                         {
-                                            var textBox = Utility.FindControl<TextBox>(this.EditorConfigHolder, codeMirrorInfo.Name);
+                                            var textBox = Utility.FindControl<TextBox>(
+                                                this.EditorConfigHolder,
+                                                codeMirrorInfo.Name);
 
                                             if (textBox != null)
                                             {
@@ -655,7 +653,9 @@ namespace WatchersNET.CKEditor
 
                                     case "Boolean":
                                         {
-                                            var checkBox = Utility.FindControl<CheckBox>(this.EditorConfigHolder, codeMirrorInfo.Name);
+                                            var checkBox = Utility.FindControl<CheckBox>(
+                                                this.EditorConfigHolder,
+                                                codeMirrorInfo.Name);
 
                                             if (checkBox != null)
                                             {
@@ -671,49 +671,53 @@ namespace WatchersNET.CKEditor
                         break;
                     case "WordCount":
                         {
-                             foreach (var wordCountInfo in typeof(WordCountConfig).GetProperties())
-                             {
-                                 value = wordCountInfo.GetValue(importedSettings.Config.WordCount, null);
+                            foreach (var wordCountInfo in typeof(WordCountConfig).GetProperties())
+                            {
+                                value = wordCountInfo.GetValue(importedSettings.Config.WordCount, null);
 
-                                 if (value == null)
-                                 {
-                                     continue;
-                                 }
+                                if (value == null)
+                                {
+                                    continue;
+                                }
 
-                                 switch (wordCountInfo.PropertyType.Name)
-                                 {
-                                     case "String":
-                                         {
-                                             var textBox = Utility.FindControl<TextBox>(this.EditorConfigHolder, wordCountInfo.Name);
+                                switch (wordCountInfo.PropertyType.Name)
+                                {
+                                    case "String":
+                                        {
+                                            var textBox = Utility.FindControl<TextBox>(
+                                                this.EditorConfigHolder,
+                                                wordCountInfo.Name);
 
-                                             if (textBox != null)
-                                             {
-                                                 textBox.Text = value.ToString();
-                                             }
-                                         }
+                                            if (textBox != null)
+                                            {
+                                                textBox.Text = value.ToString();
+                                            }
+                                        }
 
-                                         break;
+                                        break;
 
-                                     case "Boolean":
-                                         {
-                                             var checkBox = Utility.FindControl<CheckBox>(this.EditorConfigHolder, wordCountInfo.Name);
+                                    case "Boolean":
+                                        {
+                                            var checkBox = Utility.FindControl<CheckBox>(
+                                                this.EditorConfigHolder,
+                                                wordCountInfo.Name);
 
-                                             if (checkBox != null)
-                                             {
-                                                 checkBox.Checked = (bool)value;
-                                             }
-                                         }
+                                            if (checkBox != null)
+                                            {
+                                                checkBox.Checked = (bool)value;
+                                            }
+                                        }
 
-                                         break;
-                                 }
-                             }
+                                        break;
+                                }
+                            }
                         }
 
                         break;
                 }
             }
-            ///////////////////
 
+            ///////////////////
             if (!string.IsNullOrEmpty(importedSettings.Config.Skin)
                 && this.ddlSkin.Items.FindByValue(importedSettings.Config.Skin) != null)
             {
@@ -752,28 +756,26 @@ namespace WatchersNET.CKEditor
             this.OverrideFileOnUpload.Checked = importedSettings.OverrideFileOnUpload;
 
             this.BrowserRootDir.SelectedValue =
-                 this.BrowserRootDir.Items.FindByValue(importedSettings.BrowserRootDirId.ToString()) != null
-                     ? importedSettings.BrowserRootDirId.ToString()
-                     : "-1";
+                this.BrowserRootDir.Items.FindByValue(importedSettings.BrowserRootDirId.ToString()) != null
+                    ? importedSettings.BrowserRootDirId.ToString()
+                    : "-1";
 
-            this.UploadDir.SelectedValue = this.UploadDir.Items.FindByValue(importedSettings.UploadDirId.ToString())
-                                           != null
-                                               ? importedSettings.UploadDirId.ToString()
-                                               : "-1";
+            this.UploadDir.SelectedValue =
+                this.UploadDir.Items.FindByValue(importedSettings.UploadDirId.ToString()) != null
+                    ? importedSettings.UploadDirId.ToString()
+                    : "-1";
 
-            var configFolderInfo =
-                Utility.ConvertFilePathToFolderInfo(
-                    !string.IsNullOrEmpty(this.configFolder)
-                        ? Path.Combine(this._portalSettings.HomeDirectoryMapPath, this.configFolder)
-                        : this._portalSettings.HomeDirectoryMapPath,
-                    this._portalSettings);
+            var configFolderInfo = Utility.ConvertFilePathToFolderInfo(
+                !string.IsNullOrEmpty(this.configFolder)
+                    ? Path.Combine(this._portalSettings.HomeDirectoryMapPath, this.configFolder)
+                    : this._portalSettings.HomeDirectoryMapPath,
+                this._portalSettings);
 
-            this.ExportDir.SelectedValue = configFolderInfo != null
-                                           &&
-                                           this.ExportDir.Items.FindByValue(configFolderInfo.FolderID.ToString())
-                                           != null
-                                               ? configFolderInfo.FolderID.ToString()
-                                               : "-1";
+            this.ExportDir.SelectedValue =
+                configFolderInfo != null && this.ExportDir.Items.FindByValue(configFolderInfo.FolderID.ToString())
+                != null
+                    ? configFolderInfo.FolderID.ToString()
+                    : "-1";
 
             this.ExportFileName.Text = string.Format("CKEditorSettings-{0}.xml", importedSettings.SettingMode);
 
@@ -781,15 +783,21 @@ namespace WatchersNET.CKEditor
             {
                 case SettingsMode.Portal:
                     this.ExportFileName.Text = string.Format(
-                        "CKEditorSettings-{0}-{1}.xml", importedSettings.SettingMode, this._portalSettings.PortalId);
+                        "CKEditorSettings-{0}-{1}.xml",
+                        importedSettings.SettingMode,
+                        this._portalSettings.PortalId);
                     break;
                 case SettingsMode.Page:
                     this.ExportFileName.Text = string.Format(
-                        "CKEditorSettings-{0}-{1}.xml", importedSettings.SettingMode, this.CurrentOrSelectedTabId);
+                        "CKEditorSettings-{0}-{1}.xml",
+                        importedSettings.SettingMode,
+                        this.CurrentOrSelectedTabId);
                     break;
                 case SettingsMode.ModuleInstance:
                     this.ExportFileName.Text = string.Format(
-                        "CKEditorSettings-{0}-{1}.xml", importedSettings.SettingMode, this.ModuleId);
+                        "CKEditorSettings-{0}-{1}.xml",
+                        importedSettings.SettingMode,
+                        this.ModuleId);
                     break;
             }
 
@@ -814,24 +822,23 @@ namespace WatchersNET.CKEditor
                 this.txtBlanktext.Text = importedSettings.BlankText;
             }
 
-            List<ToolbarRoles> imporToolbarRoles = importedSettings.ToolBarRoles;
+            var imporToolbarRoles = importedSettings.ToolBarRoles;
 
             // Load Toolbar Setting for Each Portal Role
-            foreach (ToolbarRoles objToolbRoles in imporToolbarRoles)
+            foreach (var objToolbRoles in imporToolbarRoles)
             {
                 if (objToolbRoles.RoleId.Equals(-1))
                 {
-                    for (int i = 0; i < this.gvToolbars.Rows.Count; i++)
+                    for (var i = 0; i < this.gvToolbars.Rows.Count; i++)
                     {
-                        Label label = (Label)this.gvToolbars.Rows[i].Cells[0].FindControl("lblRoleName");
+                        var label = (Label)this.gvToolbars.Rows[i].Cells[0].FindControl("lblRoleName");
 
                         if (label == null || !label.Text.Equals("Unauthenticated Users"))
                         {
                             continue;
                         }
 
-                        DropDownList ddLToolB =
-                            (DropDownList)this.gvToolbars.Rows[i].Cells[1].FindControl("ddlToolbars");
+                        var ddLToolB = (DropDownList)this.gvToolbars.Rows[i].Cells[1].FindControl("ddlToolbars");
 
                         ddLToolB.ClearSelection();
 
@@ -843,25 +850,23 @@ namespace WatchersNET.CKEditor
                 }
                 else
                 {
-                    RoleInfo objRole = this.objRoleController.GetRole(
-                        objToolbRoles.RoleId, this._portalSettings.PortalId);
+                    var objRole = this.objRoleController.GetRole(objToolbRoles.RoleId, this._portalSettings.PortalId);
 
                     if (objRole == null)
                     {
                         continue;
                     }
 
-                    for (int i = 0; i < this.gvToolbars.Rows.Count; i++)
+                    for (var i = 0; i < this.gvToolbars.Rows.Count; i++)
                     {
-                        Label label = (Label)this.gvToolbars.Rows[i].Cells[0].FindControl("lblRoleName");
+                        var label = (Label)this.gvToolbars.Rows[i].Cells[0].FindControl("lblRoleName");
 
                         if (label == null || !label.Text.Equals(objRole.RoleName))
                         {
                             continue;
                         }
 
-                        DropDownList ddLToolB =
-                            (DropDownList)this.gvToolbars.Rows[i].Cells[1].FindControl("ddlToolbars");
+                        var ddLToolB = (DropDownList)this.gvToolbars.Rows[i].Cells[1].FindControl("ddlToolbars");
 
                         ddLToolB.ClearSelection();
 
@@ -880,42 +885,39 @@ namespace WatchersNET.CKEditor
             {
                 if (uploadSizeRole.RoleId.Equals(-1))
                 {
-                    for (int i = 0; i < this.UploadFileLimits.Rows.Count; i++)
+                    for (var i = 0; i < this.UploadFileLimits.Rows.Count; i++)
                     {
-                        Label label = (Label)this.UploadFileLimits.Rows[i].Cells[0].FindControl("lblRoleName");
+                        var label = (Label)this.UploadFileLimits.Rows[i].Cells[0].FindControl("lblRoleName");
 
                         if (label == null || !label.Text.Equals("Unauthenticated Users"))
                         {
                             continue;
                         }
 
-                        var sizeLimit =
-                            (TextBox)this.UploadFileLimits.Rows[i].Cells[1].FindControl("SizeLimit");
+                        var sizeLimit = (TextBox)this.UploadFileLimits.Rows[i].Cells[1].FindControl("SizeLimit");
 
                         sizeLimit.Text = uploadSizeRole.UploadFileLimit.ToString();
                     }
                 }
                 else
                 {
-                    RoleInfo objRole = this.objRoleController.GetRole(
-                        uploadSizeRole.RoleId, this._portalSettings.PortalId);
+                    var objRole = this.objRoleController.GetRole(uploadSizeRole.RoleId, this._portalSettings.PortalId);
 
                     if (objRole == null)
                     {
                         continue;
                     }
 
-                    for (int i = 0; i < this.UploadFileLimits.Rows.Count; i++)
+                    for (var i = 0; i < this.UploadFileLimits.Rows.Count; i++)
                     {
-                        Label label = (Label)this.UploadFileLimits.Rows[i].Cells[0].FindControl("lblRoleName");
+                        var label = (Label)this.UploadFileLimits.Rows[i].Cells[0].FindControl("lblRoleName");
 
                         if (label == null || !label.Text.Equals(objRole.RoleName))
                         {
                             continue;
                         }
 
-                        var sizeLimit =
-                            (TextBox)this.UploadFileLimits.Rows[i].Cells[1].FindControl("SizeLimit");
+                        var sizeLimit = (TextBox)this.UploadFileLimits.Rows[i].Cells[1].FindControl("SizeLimit");
 
                         sizeLimit.Text = uploadSizeRole.UploadFileLimit.ToString();
                     }
@@ -944,13 +946,13 @@ namespace WatchersNET.CKEditor
 
             if (!string.IsNullOrEmpty(importedSettings.BrowserRoles))
             {
-                string sRoles = importedSettings.BrowserRoles;
+                var sRoles = importedSettings.BrowserRoles;
 
                 if (sRoles.Length >= 1 && sRoles.Contains(";"))
                 {
-                    string[] roles = sRoles.Split(';');
+                    var roles = sRoles.Split(';');
 
-                    foreach (string sRoleName in roles)
+                    foreach (var sRoleName in roles)
                     {
                         if (Utility.IsNumeric(sRoleName))
                         {
@@ -1033,11 +1035,11 @@ namespace WatchersNET.CKEditor
         private void DelModuleSettings()
         {
             this.moduleInstanceName = this.request.QueryString["minc"];
-            string moduleKey = string.Format("DNNCKMI#{0}#INS#{1}#", this.ModuleId, this.moduleInstanceName);
+            var moduleKey = string.Format("DNNCKMI#{0}#INS#{1}#", this.ModuleId, this.moduleInstanceName);
 
             var moduleController = new ModuleController();
 
-            foreach (PropertyInfo info in
+            foreach (var info in
                 SettingsUtil.GetEditorConfigProperties())
             {
                 moduleController.DeleteModuleSetting(this.ModuleId, string.Format("{0}{1}", moduleKey, info.Name));
@@ -1195,7 +1197,7 @@ namespace WatchersNET.CKEditor
 
             foreach (RoleInfo objRole in this.objRoleController.GetPortalRoles(this._portalSettings.PortalId))
             {
-                ListItem roleItem = new ListItem { Text = objRole.RoleName, Value = objRole.RoleID.ToString() };
+                var roleItem = new ListItem { Text = objRole.RoleName, Value = objRole.RoleID.ToString() };
 
                 if (objRole.RoleName.Equals(this.PortalSettings.AdministratorRoleName))
                 {
@@ -1216,10 +1218,10 @@ namespace WatchersNET.CKEditor
         {
             this.ddlSkin.Items.Clear();
 
-            DirectoryInfo objDir =
+            var objDir =
                 new DirectoryInfo(this.MapPath(this.ResolveUrl("~/Providers/HtmlEditorProviders/CKEditor/skins")));
 
-            foreach (ListItem skinItem in
+            foreach (var skinItem in
                 objDir.GetDirectories().Select(
                     objSubFolder => new ListItem { Text = objSubFolder.Name, Value = objSubFolder.Name }))
             {
@@ -1333,7 +1335,7 @@ namespace WatchersNET.CKEditor
         /// </summary>
         private void HideAddToolbar()
         {
-            bool bHideAll = !this.dDlToolbarPrio.Items.Cast<ListItem>().Any(item => item.Enabled);
+            var bHideAll = !this.dDlToolbarPrio.Items.Cast<ListItem>().Any(item => item.Enabled);
 
             if (bHideAll)
             {
@@ -1623,7 +1625,7 @@ namespace WatchersNET.CKEditor
         /// <param name="e">The <see cref="GridViewRowEventArgs"/> instance containing the event data.</param>
         void gvToolbars_RowDataBound(object sender, GridViewRowEventArgs e)
         {
-            ListItemCollection licToolbars = new ListItemCollection();
+            var licToolbars = new ListItemCollection();
 
             foreach (
                 var toolbarItem in
@@ -1634,7 +1636,7 @@ namespace WatchersNET.CKEditor
             }
 
 
-            DropDownList ddLToolB = (DropDownList)e.Row.FindControl("ddlToolbars");
+            var ddLToolB = (DropDownList)e.Row.FindControl("ddlToolbars");
 
             if (ddLToolB == null)
             {
@@ -1713,7 +1715,7 @@ namespace WatchersNET.CKEditor
         /// </summary>
         private void InsertToolbars()
         {
-            ListItemCollection licToolbars = new ListItemCollection();
+            var licToolbars = new ListItemCollection();
 
             foreach (var toolbarSet in this.listToolbars)
             {
@@ -2043,7 +2045,7 @@ namespace WatchersNET.CKEditor
         /// </summary>
         private void RenderEditorConfigSettings()
         {
-            foreach (PropertyInfo info in SettingsUtil.GetEditorConfigProperties())
+            foreach (var info in SettingsUtil.GetEditorConfigProperties())
             {
                 var description = info.GetCustomAttribute<DescriptionAttribute>(true);
 
@@ -2309,13 +2311,12 @@ namespace WatchersNET.CKEditor
         private void SaveModuleSettings()
         {
             this.moduleInstanceName = this.request.QueryString["minc"];
-            string key = string.Format("DNNCKMI#{0}#INS#{1}#", this.ModuleId, this.moduleInstanceName);
+            var key = string.Format("DNNCKMI#{0}#INS#{1}#", this.ModuleId, this.moduleInstanceName);
 
             var moduleController = new ModuleController();
 
             // Editor config settings
-            foreach (PropertyInfo info in
-                SettingsUtil.GetEditorConfigProperties())
+            foreach (var info in SettingsUtil.GetEditorConfigProperties())
             {
                 switch (info.PropertyType.Name)
                 {
@@ -2328,7 +2329,9 @@ namespace WatchersNET.CKEditor
                             if (textBox != null)
                             {
                                 moduleController.UpdateModuleSetting(
-                                    this.ModuleId, string.Format("{0}{1}", key, info.Name), textBox.Text);
+                                    this.ModuleId,
+                                    string.Format("{0}{1}", key, info.Name),
+                                    textBox.Text);
                             }
                         }
 
@@ -2340,7 +2343,9 @@ namespace WatchersNET.CKEditor
                             if (checkBox != null)
                             {
                                 moduleController.UpdateModuleSetting(
-                                    this.ModuleId, string.Format("{0}{1}", key, info.Name), checkBox.Checked.ToString());
+                                    this.ModuleId,
+                                    string.Format("{0}{1}", key, info.Name),
+                                    checkBox.Checked.ToString());
                             }
                         }
 
@@ -2362,7 +2367,9 @@ namespace WatchersNET.CKEditor
                                 if (dropDownList.SelectedItem != null)
                                 {
                                     moduleController.UpdateModuleSetting(
-                                        this.ModuleId, string.Format("{0}{1}", key, info.Name), dropDownList.SelectedValue);
+                                        this.ModuleId,
+                                        string.Format("{0}{1}", key, info.Name),
+                                        dropDownList.SelectedValue);
                                 }
                             }
                         }
@@ -2370,21 +2377,23 @@ namespace WatchersNET.CKEditor
                         break;
                     case "CodeMirror":
                         {
-                            foreach (
-                           var codeMirrorInfo in
-                               typeof(CodeMirror).GetProperties()
-                                                 .Where(codeMirrorInfo => !codeMirrorInfo.Name.Equals("Theme")))
+                            foreach (var codeMirrorInfo in typeof(CodeMirror).GetProperties()
+                                .Where(codeMirrorInfo => !codeMirrorInfo.Name.Equals("Theme")))
                             {
                                 switch (codeMirrorInfo.PropertyType.Name)
                                 {
                                     case "String":
                                         {
-                                            var textBox = Utility.FindControl<TextBox>(this.EditorConfigHolder, codeMirrorInfo.Name);
+                                            var textBox = Utility.FindControl<TextBox>(
+                                                this.EditorConfigHolder,
+                                                codeMirrorInfo.Name);
 
                                             if (textBox != null)
                                             {
                                                 moduleController.UpdateModuleSetting(
-                                                    this.ModuleId, string.Format("{0}{1}", key, codeMirrorInfo.Name), textBox.Text);
+                                                    this.ModuleId,
+                                                    string.Format("{0}{1}", key, codeMirrorInfo.Name),
+                                                    textBox.Text);
                                             }
                                         }
 
@@ -2392,7 +2401,9 @@ namespace WatchersNET.CKEditor
 
                                     case "Boolean":
                                         {
-                                            var checkBox = Utility.FindControl<CheckBox>(this.EditorConfigHolder, codeMirrorInfo.Name);
+                                            var checkBox = Utility.FindControl<CheckBox>(
+                                                this.EditorConfigHolder,
+                                                codeMirrorInfo.Name);
 
                                             if (checkBox != null)
                                             {
@@ -2417,12 +2428,16 @@ namespace WatchersNET.CKEditor
                                 {
                                     case "String":
                                         {
-                                            var textBox = Utility.FindControl<TextBox>(this.EditorConfigHolder, wordCountInfo.Name);
+                                            var textBox = Utility.FindControl<TextBox>(
+                                                this.EditorConfigHolder,
+                                                wordCountInfo.Name);
 
                                             if (textBox != null)
                                             {
                                                 moduleController.UpdateModuleSetting(
-                                                    this.ModuleId, string.Format("{0}{1}", key, wordCountInfo.Name), textBox.Text);
+                                                    this.ModuleId,
+                                                    string.Format("{0}{1}", key, wordCountInfo.Name),
+                                                    textBox.Text);
                                             }
                                         }
 
@@ -2430,7 +2445,9 @@ namespace WatchersNET.CKEditor
 
                                     case "Boolean":
                                         {
-                                            var checkBox = Utility.FindControl<CheckBox>(this.EditorConfigHolder, wordCountInfo.Name);
+                                            var checkBox = Utility.FindControl<CheckBox>(
+                                                this.EditorConfigHolder,
+                                                wordCountInfo.Name);
 
                                             if (checkBox != null)
                                             {
@@ -2449,10 +2466,12 @@ namespace WatchersNET.CKEditor
                         break;
                 }
             }
-            ///////////////////
 
+            ///////////////////
             moduleController.UpdateModuleSetting(
-                this.ModuleId, string.Format("{0}{1}", key, SettingConstants.SKIN), this.ddlSkin.SelectedValue);
+                this.ModuleId,
+                string.Format("{0}{1}", key, SettingConstants.SKIN),
+                this.ddlSkin.SelectedValue);
             moduleController.UpdateModuleSetting(
                 this.ModuleId,
                 string.Format("{0}{1}", key, SettingConstants.CODEMIRRORTHEME),
@@ -2494,7 +2513,9 @@ namespace WatchersNET.CKEditor
                 string.Format("{0}{1}", key, SettingConstants.BROWSERROOTDIRID),
                 this.BrowserRootDir.SelectedValue);
             moduleController.UpdateModuleSetting(
-                this.ModuleId, string.Format("{0}{1}", key, SettingConstants.UPLOADDIRID), this.UploadDir.SelectedValue);
+                this.ModuleId,
+                string.Format("{0}{1}", key, SettingConstants.UPLOADDIRID),
+                this.UploadDir.SelectedValue);
 
             if (Utility.IsNumeric(this.FileListPageSize.Text))
             {
@@ -2507,7 +2528,9 @@ namespace WatchersNET.CKEditor
             if (Utility.IsNumeric(this.txtResizeWidth.Text))
             {
                 moduleController.UpdateModuleSetting(
-                    this.ModuleId, string.Format("{0}{1}", key, SettingConstants.RESIZEWIDTH), this.txtResizeWidth.Text);
+                    this.ModuleId,
+                    string.Format("{0}{1}", key, SettingConstants.RESIZEWIDTH),
+                    this.txtResizeWidth.Text);
             }
 
             if (Utility.IsNumeric(this.txtResizeHeight.Text))
@@ -2531,41 +2554,58 @@ namespace WatchersNET.CKEditor
             if (Utility.IsUnit(this.txtWidth.Text))
             {
                 moduleController.UpdateModuleSetting(
-                    this.ModuleId, string.Format("{0}{1}", key, SettingConstants.WIDTH), this.txtWidth.Text);
+                    this.ModuleId,
+                    string.Format("{0}{1}", key, SettingConstants.WIDTH),
+                    this.txtWidth.Text);
             }
 
             if (Utility.IsUnit(this.txtHeight.Text))
             {
                 moduleController.UpdateModuleSetting(
-                    this.ModuleId, string.Format("{0}{1}", key, SettingConstants.HEIGHT), this.txtWidth.Text);
+                    this.ModuleId,
+                    string.Format("{0}{1}", key, SettingConstants.HEIGHT),
+                    this.txtWidth.Text);
             }
 
             moduleController.UpdateModuleSetting(
-                this.ModuleId, string.Format("{0}{1}", key, SettingConstants.BLANKTEXT), this.txtBlanktext.Text);
+                this.ModuleId,
+                string.Format("{0}{1}", key, SettingConstants.BLANKTEXT),
+                this.txtBlanktext.Text);
             moduleController.UpdateModuleSetting(
-                this.ModuleId, string.Format("{0}{1}", key, SettingConstants.CSS), this.CssUrl.Url);
+                this.ModuleId,
+                string.Format("{0}{1}", key, SettingConstants.CSS),
+                this.CssUrl.Url);
             moduleController.UpdateModuleSetting(
-                this.ModuleId, string.Format("{0}{1}", key, SettingConstants.TEMPLATEFILES), this.TemplUrl.Url);
+                this.ModuleId,
+                string.Format("{0}{1}", key, SettingConstants.TEMPLATEFILES),
+                this.TemplUrl.Url);
             moduleController.UpdateModuleSetting(
-                this.ModuleId, string.Format("{0}{1}", key, SettingConstants.CUSTOMJSFILE), this.CustomJsFile.Url);
+                this.ModuleId,
+                string.Format("{0}{1}", key, SettingConstants.CUSTOMJSFILE),
+                this.CustomJsFile.Url);
             moduleController.UpdateModuleSetting(
-                this.ModuleId, string.Format("{0}{1}", key, SettingConstants.CONFIG), this.ConfigUrl.Url);
+                this.ModuleId,
+                string.Format("{0}{1}", key, SettingConstants.CONFIG),
+                this.ConfigUrl.Url);
 
-            string sRoles = this.chblBrowsGr.Items.Cast<ListItem>().Where(item => item.Selected).Aggregate(
-                string.Empty, (current, item) => current + (item.Value + ";"));
+            var sRoles = this.chblBrowsGr.Items.Cast<ListItem>()
+                .Where(item => item.Selected)
+                .Aggregate(string.Empty, (current, item) => current + (item.Value + ";"));
 
             if (sRoles != string.Empty)
             {
                 moduleController.UpdateModuleSetting(
-                    this.ModuleId, string.Format("{0}{1}", key, SettingConstants.ROLES), sRoles);
+                    this.ModuleId,
+                    string.Format("{0}{1}", key, SettingConstants.ROLES),
+                    sRoles);
             }
 
             // Save Toolbar Setting for every Role
-            for (int i = 0; i < this.gvToolbars.Rows.Count; i++)
+            for (var i = 0; i < this.gvToolbars.Rows.Count; i++)
             {
-                Label label = (Label)this.gvToolbars.Rows[i].Cells[0].FindControl("lblRoleName");
+                var label = (Label)this.gvToolbars.Rows[i].Cells[0].FindControl("lblRoleName");
 
-                DropDownList ddLToolB = (DropDownList)this.gvToolbars.Rows[i].Cells[1].FindControl("ddlToolbars");
+                var ddLToolB = (DropDownList)this.gvToolbars.Rows[i].Cells[1].FindControl("ddlToolbars");
 
                 if (label == null || ddLToolB == null)
                 {
@@ -2581,7 +2621,7 @@ namespace WatchersNET.CKEditor
                 }
                 else
                 {
-                    RoleInfo objRole = this.objRoleController.GetRoleByName(this._portalSettings.PortalId, label.Text);
+                    var objRole = this.objRoleController.GetRoleByName(this._portalSettings.PortalId, label.Text);
 
                     moduleController.UpdateModuleSetting(
                         this.ModuleId,
@@ -2591,9 +2631,9 @@ namespace WatchersNET.CKEditor
             }
 
             // Save Upload File Limit Setting for every Role
-            for (int i = 0; i < this.UploadFileLimits.Rows.Count; i++)
+            for (var i = 0; i < this.UploadFileLimits.Rows.Count; i++)
             {
-                Label label = (Label)this.UploadFileLimits.Rows[i].Cells[0].FindControl("lblRoleName");
+                var label = (Label)this.UploadFileLimits.Rows[i].Cells[0].FindControl("lblRoleName");
 
                 var sizeLimit = (TextBox)this.UploadFileLimits.Rows[i].Cells[1].FindControl("SizeLimit");
 
@@ -2611,7 +2651,7 @@ namespace WatchersNET.CKEditor
                 }
                 else
                 {
-                    RoleInfo objRole = this.objRoleController.GetRoleByName(this._portalSettings.PortalId, label.Text);
+                    var objRole = this.objRoleController.GetRoleByName(this._portalSettings.PortalId, label.Text);
 
                     moduleController.UpdateModuleSetting(
                         this.ModuleId,
@@ -2630,8 +2670,7 @@ namespace WatchersNET.CKEditor
         private void SavePortalOrPageSettings(string key)
         {
             // Editor config settings
-            foreach (PropertyInfo info in
-                SettingsUtil.GetEditorConfigProperties())
+            foreach (var info in SettingsUtil.GetEditorConfigProperties())
             {
                 switch (info.PropertyType.Name)
                 {
@@ -2689,9 +2728,8 @@ namespace WatchersNET.CKEditor
                         break;
                     case "CodeMirror":
                         {
-                            foreach (var codeMirrorInfo in
-                                typeof(CodeMirror).GetProperties()
-                                    .Where(codeMirrorInfo => !codeMirrorInfo.Name.Equals("Theme")))
+                            foreach (var codeMirrorInfo in typeof(CodeMirror).GetProperties()
+                                .Where(codeMirrorInfo => !codeMirrorInfo.Name.Equals("Theme")))
                             {
                                 switch (codeMirrorInfo.PropertyType.Name)
                                 {
@@ -2775,8 +2813,8 @@ namespace WatchersNET.CKEditor
                         break;
                 }
             }
-            ///////////////////
 
+            ///////////////////
             Utility.AddOrUpdateEditorHostSetting(
                 string.Format("{0}{1}", key, SettingConstants.SKIN),
                 this.ddlSkin.SelectedValue);
@@ -2867,7 +2905,7 @@ namespace WatchersNET.CKEditor
                 string.Format("{0}{1}", key, SettingConstants.CONFIG),
                 this.ConfigUrl.Url);
 
-            string sRoles = this.chblBrowsGr.Items.Cast<ListItem>()
+            var sRoles = this.chblBrowsGr.Items.Cast<ListItem>()
                 .Where(item => item.Selected)
                 .Aggregate(string.Empty, (current, item) => current + (item.Value + ";"));
 
@@ -2877,11 +2915,11 @@ namespace WatchersNET.CKEditor
             }
 
             // Save Toolbar Setting for every Role
-            for (int i = 0; i < this.gvToolbars.Rows.Count; i++)
+            for (var i = 0; i < this.gvToolbars.Rows.Count; i++)
             {
-                Label label = (Label)this.gvToolbars.Rows[i].Cells[0].FindControl("lblRoleName");
+                var label = (Label)this.gvToolbars.Rows[i].Cells[0].FindControl("lblRoleName");
 
-                DropDownList ddLToolB = (DropDownList)this.gvToolbars.Rows[i].Cells[1].FindControl("ddlToolbars");
+                var ddLToolB = (DropDownList)this.gvToolbars.Rows[i].Cells[1].FindControl("ddlToolbars");
 
                 if (label == null || ddLToolB == null)
                 {
@@ -2896,7 +2934,7 @@ namespace WatchersNET.CKEditor
                 }
                 else
                 {
-                    RoleInfo objRole = this.objRoleController.GetRoleByName(this._portalSettings.PortalId, label.Text);
+                    var objRole = this.objRoleController.GetRoleByName(this._portalSettings.PortalId, label.Text);
 
                     Utility.AddOrUpdateEditorHostSetting(
                         string.Format("{0}toolb#{1}", key, objRole.RoleID),
@@ -2905,7 +2943,7 @@ namespace WatchersNET.CKEditor
             }
 
             // Save Upload File Limit Setting for every Role
-            for (int i = 0; i < this.UploadFileLimits.Rows.Count; i++)
+            for (var i = 0; i < this.UploadFileLimits.Rows.Count; i++)
             {
                 var label = (Label)this.UploadFileLimits.Rows[i].Cells[0].FindControl("lblRoleName");
 
@@ -2924,7 +2962,7 @@ namespace WatchersNET.CKEditor
                 }
                 else
                 {
-                    RoleInfo objRole = this.objRoleController.GetRoleByName(this._portalSettings.PortalId, label.Text);
+                    var objRole = this.objRoleController.GetRoleByName(this._portalSettings.PortalId, label.Text);
 
                     Utility.AddOrUpdateEditorHostSetting(
                         string.Format("{0}{2}#{1}", key, objRole.RoleID, SettingConstants.UPLOADFILELIMITS),
@@ -2939,8 +2977,8 @@ namespace WatchersNET.CKEditor
         private void SaveSettings()
         {
             ModuleDefinitionInfo objm;
-            ModuleController db = new ModuleController();
-            ModuleInfo moduleInfo = db.GetModuleByDefinition(this._portalSettings.PortalId, "User Accounts");
+            var db = new ModuleController();
+            var moduleInfo = db.GetModuleByDefinition(this._portalSettings.PortalId, "User Accounts");
 
             try
             {
@@ -3306,8 +3344,7 @@ namespace WatchersNET.CKEditor
             exportSettings.SettingMode = this.CurrentSettingsMode;
 
             // Export all Editor config settings
-            foreach (PropertyInfo info in
-                SettingsUtil.GetEditorConfigProperties())
+            foreach (var info in SettingsUtil.GetEditorConfigProperties())
             {
                 switch (info.PropertyType.Name)
                 {
@@ -3407,7 +3444,9 @@ namespace WatchersNET.CKEditor
                             {
                                 info.SetValue(
                                     exportSettings.Config,
-                                    (LanguageDirection)Enum.Parse(typeof(LanguageDirection), dropDownList.SelectedValue),
+                                    (LanguageDirection)Enum.Parse(
+                                        typeof(LanguageDirection),
+                                        dropDownList.SelectedValue),
                                     null);
                             }
                         }
@@ -3415,9 +3454,8 @@ namespace WatchersNET.CKEditor
                         break;
                     case "CodeMirror":
                         {
-                            foreach (var codeMirrorInfo in
-                                typeof(CodeMirror).GetProperties()
-                                    .Where(codeMirrorInfo => !codeMirrorInfo.Name.Equals("Theme")))
+                            foreach (var codeMirrorInfo in typeof(CodeMirror).GetProperties()
+                                .Where(codeMirrorInfo => !codeMirrorInfo.Name.Equals("Theme")))
                             {
                                 switch (codeMirrorInfo.PropertyType.Name)
                                 {
@@ -3499,14 +3537,15 @@ namespace WatchersNET.CKEditor
                         break;
                 }
             }
-            ///////////////////
 
+            ///////////////////
             exportSettings.Config.Skin = this.ddlSkin.SelectedValue;
             exportSettings.Config.CodeMirror.Theme = this.CodeMirrorTheme.SelectedValue;
             exportSettings.Browser = this.ddlBrowser.SelectedValue;
             exportSettings.AllowedImageExtensions = this.AllowedImageExtensions.Text;
-            exportSettings.FileListViewMode =
-                (FileListView)Enum.Parse(typeof(FileListView), this.FileListViewMode.SelectedValue);
+            exportSettings.FileListViewMode = (FileListView)Enum.Parse(
+                typeof(FileListView),
+                this.FileListViewMode.SelectedValue);
             exportSettings.DefaultLinkMode = (LinkMode)Enum.Parse(typeof(LinkMode), this.DefaultLinkMode.SelectedValue);
             exportSettings.UseAnchorSelector = this.UseAnchorSelector.Checked;
             exportSettings.ShowPageLinksTabFirst = this.ShowPageLinksTabFirst.Checked;
@@ -3548,7 +3587,7 @@ namespace WatchersNET.CKEditor
             exportSettings.CustomJsFile = this.CustomJsFile.Url;
             exportSettings.Config.CustomConfig = this.ConfigUrl.Url;
 
-            string sRoles = this.chblBrowsGr.Items.Cast<ListItem>()
+            var sRoles = this.chblBrowsGr.Items.Cast<ListItem>()
                 .Where(item => item.Selected)
                 .Aggregate(string.Empty, (current, item) => current + (item.Value + ";"));
 
@@ -3560,11 +3599,11 @@ namespace WatchersNET.CKEditor
             var listToolbarRoles = new List<ToolbarRoles>();
 
             // Save Toolbar Setting for every Role
-            for (int i = 0; i < this.gvToolbars.Rows.Count; i++)
+            for (var i = 0; i < this.gvToolbars.Rows.Count; i++)
             {
-                Label label = (Label)this.gvToolbars.Rows[i].Cells[0].FindControl("lblRoleName");
+                var label = (Label)this.gvToolbars.Rows[i].Cells[0].FindControl("lblRoleName");
 
-                DropDownList ddLToolB = (DropDownList)this.gvToolbars.Rows[i].Cells[1].FindControl("ddlToolbars");
+                var ddLToolB = (DropDownList)this.gvToolbars.Rows[i].Cells[1].FindControl("ddlToolbars");
 
                 if (label == null || ddLToolB == null)
                 {
@@ -3577,9 +3616,10 @@ namespace WatchersNET.CKEditor
                 }
                 else
                 {
-                    RoleInfo objRole = this.objRoleController.GetRoleByName(this._portalSettings.PortalId, label.Text);
+                    var objRole = this.objRoleController.GetRoleByName(this._portalSettings.PortalId, label.Text);
 
-                    listToolbarRoles.Add(new ToolbarRoles { RoleId = objRole.RoleID, Toolbar = ddLToolB.SelectedValue });
+                    listToolbarRoles.Add(
+                        new ToolbarRoles { RoleId = objRole.RoleID, Toolbar = ddLToolB.SelectedValue });
                 }
             }
 
@@ -3588,7 +3628,7 @@ namespace WatchersNET.CKEditor
             var listUploadSizeRoles = new List<UploadSizeRoles>();
 
             // Save Upload File Limit Setting for every Role
-            for (int i = 0; i < this.UploadFileLimits.Rows.Count; i++)
+            for (var i = 0; i < this.UploadFileLimits.Rows.Count; i++)
             {
                 var label = (Label)this.UploadFileLimits.Rows[i].Cells[0].FindControl("lblRoleName");
 
@@ -3606,7 +3646,7 @@ namespace WatchersNET.CKEditor
                 }
                 else
                 {
-                    RoleInfo objRole = this.objRoleController.GetRoleByName(this._portalSettings.PortalId, label.Text);
+                    var objRole = this.objRoleController.GetRoleByName(this._portalSettings.PortalId, label.Text);
 
                     listUploadSizeRoles.Add(
                         new UploadSizeRoles

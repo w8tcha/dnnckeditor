@@ -220,11 +220,11 @@
             }
 
 
-            string sDomainName = DotNetNuke.Common.Globals.GetDomainName(Request, true);
+            var sDomainName = DotNetNuke.Common.Globals.GetDomainName(Request, true);
 
-            string sPortalAlias = PortalAliasController.GetPortalAliasByPortal(iPortalId, sDomainName);
+            var sPortalAlias = PortalAliasController.GetPortalAliasByPortal(iPortalId, sDomainName);
 
-            PortalAliasInfo objPortalAliasInfo = PortalAliasController.GetPortalAliasInfo(sPortalAlias);
+            var objPortalAliasInfo = PortalAliasController.GetPortalAliasInfo(sPortalAlias);
 
             portalSettings = new PortalSettings(iTabId, objPortalAliasInfo);
         }

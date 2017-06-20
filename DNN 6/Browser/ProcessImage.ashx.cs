@@ -71,18 +71,18 @@ namespace WatchersNET.CKEditor.Browser
         /// </param>
         public void ProcessRequest(HttpContext context)
         {
-            float imageH = float.Parse(context.Request["imageH"]);
-            float imageW = float.Parse(context.Request["imageW"]);
-            float angle = float.Parse(context.Request["imageRotate"]);
-            string imgSource = context.Request["imageSource"];
-            float imageX = float.Parse(context.Request["imageX"]);
-            float imageY = float.Parse(context.Request["imageY"]);
-            float selectorH = float.Parse(context.Request["selectorH"]);
-            float selectorW = float.Parse(context.Request["selectorW"]);
-            float selectorX = float.Parse(context.Request["selectorX"]);
-            float selectorY = float.Parse(context.Request["selectorY"]);
-            float viewPortH = float.Parse(context.Request["viewPortH"]);
-            float viewPortW = float.Parse(context.Request["viewPortW"]);
+            var imageH = float.Parse(context.Request["imageH"]);
+            var imageW = float.Parse(context.Request["imageW"]);
+            var angle = float.Parse(context.Request["imageRotate"]);
+            var imgSource = context.Request["imageSource"];
+            var imageX = float.Parse(context.Request["imageX"]);
+            var imageY = float.Parse(context.Request["imageY"]);
+            var selectorH = float.Parse(context.Request["selectorH"]);
+            var selectorW = float.Parse(context.Request["selectorW"]);
+            var selectorX = float.Parse(context.Request["selectorX"]);
+            var selectorY = float.Parse(context.Request["selectorY"]);
+            var viewPortH = float.Parse(context.Request["viewPortH"]);
+            var viewPortW = float.Parse(context.Request["viewPortW"]);
 
             bool bSaveFile;
 
@@ -102,13 +102,13 @@ namespace WatchersNET.CKEditor.Browser
                 sNewFileName = context.Request["newFileName"];
             }
 
-            float pWidth = imageW;
-            float pHeight = imageH;
+            var pWidth = imageW;
+            var pHeight = imageH;
 
-            Bitmap img = (Bitmap)Image.FromFile(context.Server.MapPath(imgSource));
+            var img = (Bitmap)Image.FromFile(context.Server.MapPath(imgSource));
 
             // Resize
-            Bitmap imageP = this.ResizeImage(img, Convert.ToInt32(pWidth), Convert.ToInt32(pHeight));
+            var imageP = this.ResizeImage(img, Convert.ToInt32(pWidth), Convert.ToInt32(pHeight));
 
             // Rotate if angle is not 0.00 or 360
             if (angle > 0.0F && angle < 360.00F)
@@ -188,24 +188,24 @@ namespace WatchersNET.CKEditor.Browser
         /// </returns>
         private static string GenerateName(string sNewFileName, string sSourceFullPath)
         {
-            string sSourcePath = sSourceFullPath.Remove(sSourceFullPath.LastIndexOf("\\"));
+            var sSourcePath = sSourceFullPath.Remove(sSourceFullPath.LastIndexOf("\\"));
 
-            string sExtension = Path.GetExtension(sSourceFullPath);
+            var sExtension = Path.GetExtension(sSourceFullPath);
 
-            string sNewFilePath = !string.IsNullOrEmpty(sNewFileName)
+            var sNewFilePath = !string.IsNullOrEmpty(sNewFileName)
                                       ? Path.Combine(sSourcePath, sNewFileName + sExtension)
                                       : Path.Combine(
                                           sSourcePath, 
                                           string.Format(
                                               "{0}_crop{1}", Path.GetFileNameWithoutExtension(sSourceFullPath), sExtension));
 
-            int iCounter = 0;
+            var iCounter = 0;
 
             while (File.Exists(sNewFilePath))
             {
                 iCounter++;
 
-                string sFileNameNoExt = Path.GetFileNameWithoutExtension(sNewFilePath);
+                var sFileNameNoExt = Path.GetFileNameWithoutExtension(sNewFilePath);
 
                 sNewFilePath = Path.Combine(
                     sSourcePath, string.Format("{0}_{1}{2}", sFileNameNoExt, iCounter, sExtension));
@@ -245,10 +245,10 @@ namespace WatchersNET.CKEditor.Browser
             Image srcBitmap, float dstX, float dstY, float srcX, float srcY, float dstWidth, float dstHeight)
         {
             // Create the new bitmap and associated graphics object
-            RectangleF sourceRec = new RectangleF(srcX, srcY, dstWidth, dstHeight);
-            RectangleF destRec = new RectangleF(dstX, dstY, dstWidth, dstHeight);
-            Bitmap bmp = new Bitmap(Convert.ToInt32(dstWidth), Convert.ToInt32(dstHeight));
-            Graphics g = Graphics.FromImage(bmp);
+            var sourceRec = new RectangleF(srcX, srcY, dstWidth, dstHeight);
+            var destRec = new RectangleF(dstX, dstY, dstWidth, dstHeight);
+            var bmp = new Bitmap(Convert.ToInt32(dstWidth), Convert.ToInt32(dstHeight));
+            var g = Graphics.FromImage(bmp);
 
             g.DrawImage(srcBitmap, destRec, sourceRec, GraphicsUnit.Pixel);
             g.Dispose();
@@ -272,9 +272,9 @@ namespace WatchersNET.CKEditor.Browser
         /// </returns>
         private static Image RotateImage(Image img, double rotationAngle)
         {
-            Bitmap returnBitmap = new Bitmap(img.Width, img.Height + 1);
+            var returnBitmap = new Bitmap(img.Width, img.Height + 1);
 
-            Graphics g = Graphics.FromImage(returnBitmap);
+            var g = Graphics.FromImage(returnBitmap);
 
             g.TranslateTransform((float)img.Width / 2, (float)img.Height / 2);
             g.RotateTransform((float)rotationAngle);

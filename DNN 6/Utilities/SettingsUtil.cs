@@ -115,7 +115,7 @@ namespace WatchersNET.CKEditor.Utilities
             var roles = new ArrayList();
 
             // Import all Editor config settings
-            foreach (PropertyInfo info in GetEditorConfigProperties())
+            foreach (var info in GetEditorConfigProperties())
             {
                 if (!editorHostSettings.Any(s => s.Name.Equals(string.Format("{0}{1}", key, info.Name))))
                 {
@@ -126,7 +126,6 @@ namespace WatchersNET.CKEditor.Utilities
                 {
                     continue;
                 }*/
-
                 var settingValue =
                     editorHostSettings.FirstOrDefault(
                         setting => setting.Name.Equals(string.Format("{0}{1}", key, info.Name))).Value;
@@ -245,7 +244,6 @@ namespace WatchersNET.CKEditor.Utilities
             }
 
             /////////////////
-
             if (
                 editorHostSettings.Any(
                     setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.SKIN))))
@@ -274,7 +272,7 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            List<ToolbarRoles> listToolbarRoles = (from RoleInfo objRole in portalRoles
+            var listToolbarRoles = (from RoleInfo objRole in portalRoles
                                                    where
                                                        editorHostSettings.Any(
                                                            setting =>
@@ -380,17 +378,17 @@ namespace WatchersNET.CKEditor.Utilities
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
-                    string sRoles = settingValue;
+                    var sRoles = settingValue;
 
                     currentSettings.BrowserRoles = sRoles;
 
-                    string[] rolesA = sRoles.Split(';');
+                    var rolesA = sRoles.Split(';');
 
-                    foreach (string sRoleName in rolesA)
+                    foreach (var sRoleName in rolesA)
                     {
                         if (Utility.IsNumeric(sRoleName))
                         {
-                            RoleInfo roleInfo = roleController.GetRole(int.Parse(sRoleName), portalSettings.PortalId);
+                            var roleInfo = roleController.GetRole(int.Parse(sRoleName), portalSettings.PortalId);
 
                             if (roleInfo != null)
                             {
@@ -805,12 +803,10 @@ namespace WatchersNET.CKEditor.Utilities
             var roles = new ArrayList();
 
             // Import all Editor config settings
-            foreach (PropertyInfo info in
-                GetEditorConfigProperties()
-                    .Where(
-                        info =>
-                        !string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, info.Name)])
-                        /*|| info.Name.Equals("CodeMirror") || info.Name.Equals("WordCount")*/))
+            foreach (var info in GetEditorConfigProperties()
+                .Where(
+                    info => !string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, info.Name)])
+                    /*|| info.Name.Equals("CodeMirror") || info.Name.Equals("WordCount")*/))
             {
                 switch (info.PropertyType.Name)
                 {
@@ -936,7 +932,6 @@ namespace WatchersNET.CKEditor.Utilities
             }
 
             /////////////////
-
             if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.SKIN)]))
             {
                 currentSettings.Config.Skin = (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.SKIN)];
@@ -947,7 +942,7 @@ namespace WatchersNET.CKEditor.Utilities
                 currentSettings.Config.CodeMirror.Theme = (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.CODEMIRRORTHEME)];
             }
 
-            List<ToolbarRoles> listToolbarRoles = (from RoleInfo objRole in portalRoles
+            var listToolbarRoles = (from RoleInfo objRole in portalRoles
                                                    where
                                                        !string.IsNullOrEmpty(
                                                            (string)
@@ -961,7 +956,7 @@ namespace WatchersNET.CKEditor.Utilities
 
             if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{2}#{1}", key, "-1", SettingConstants.TOOLB)]))
             {
-                string sToolbar = (string)hshModSet[string.Format("{0}{2}#{1}", key, "-1", SettingConstants.TOOLB)];
+                var sToolbar = (string)hshModSet[string.Format("{0}{2}#{1}", key, "-1", SettingConstants.TOOLB)];
 
                 listToolbarRoles.Add(new ToolbarRoles { RoleId = -1, Toolbar = sToolbar });
             }
@@ -1001,17 +996,17 @@ namespace WatchersNET.CKEditor.Utilities
 
             if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.ROLES)]))
             {
-                string sRoles = (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.ROLES)];
+                var sRoles = (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.ROLES)];
 
                 currentSettings.BrowserRoles = sRoles;
 
-                string[] rolesA = sRoles.Split(';');
+                var rolesA = sRoles.Split(';');
 
-                foreach (string sRoleName in rolesA)
+                foreach (var sRoleName in rolesA)
                 {
                     if (Utility.IsNumeric(sRoleName))
                     {
-                        RoleInfo roleInfo = roleController.GetRole(
+                        var roleInfo = roleController.GetRole(
                             int.Parse(sRoleName), portalSettings.PortalId);
 
                         if (roleInfo != null)
@@ -1296,13 +1291,13 @@ namespace WatchersNET.CKEditor.Utilities
 
                 if (rolesString.Length >= 1 && rolesString.Contains(";"))
                 {
-                    string[] rolesA = rolesString.Split(';');
+                    var rolesA = rolesString.Split(';');
 
-                    foreach (string sRoleName in rolesA)
+                    foreach (var sRoleName in rolesA)
                     {
                         if (Utility.IsNumeric(sRoleName))
                         {
-                            RoleInfo roleInfo = roleController.GetRole(int.Parse(sRoleName), portalSettings.PortalId);
+                            var roleInfo = roleController.GetRole(int.Parse(sRoleName), portalSettings.PortalId);
 
                             if (roleInfo != null)
                             {
@@ -1495,6 +1490,7 @@ namespace WatchersNET.CKEditor.Utilities
                     Resize_MaxWidth = 3000,
                     Resize_MinHeight = 250,
                     Resize_MinWidth = 750,
+                    ResizeImageQuality = 80,
                     Scayt_MaxSuggestions = 5,
                     Smiley_columns = 8,
                     SourceAreaTabSize = 20,
@@ -1583,7 +1579,7 @@ namespace WatchersNET.CKEditor.Utilities
             }
 
             // Compare The User Toolbars if the User is more then One Role, and apply the Toolbar with the Highest Priority
-            int iHighestPrio = listUserUploadFileSizes.Max(toolb => toolb.Priority);
+            var iHighestPrio = listUserUploadFileSizes.Max(toolb => toolb.Priority);
 
             return listUserUploadFileSizes.Find(toolbarSel => toolbarSel.Priority.Equals(iHighestPrio)).Priority;
         }

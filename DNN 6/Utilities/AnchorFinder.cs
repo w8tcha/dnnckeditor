@@ -41,21 +41,21 @@ namespace WatchersNET.CKEditor.Utilities
         {
             var anchorList = new List<LinkItem>();
 
-            MatchCollection m1 = Regex.Matches(file, @"(<a.*?>.*?</a>)", RegexOptions.IgnoreCase);
+            var m1 = Regex.Matches(file, @"(<a.*?>.*?</a>)", RegexOptions.IgnoreCase);
 
             foreach (Match m in m1)
             {
-                string value = m.Groups[1].Value;
-                LinkItem item = new LinkItem();
+                var value = m.Groups[1].Value;
+                var item = new LinkItem();
 
-                Match m2 = Regex.Match(value, @"href=\""(.*?)\""", RegexOptions.Singleline);
+                var m2 = Regex.Match(value, @"href=\""(.*?)\""", RegexOptions.Singleline);
 
                 if (m2.Success)
                 {
                     item.Href = m2.Groups[1].Value;
                 }
 
-                Match m3 = Regex.Match(value, @"name=\""(.*?)\""", RegexOptions.Singleline);
+                var m3 = Regex.Match(value, @"name=\""(.*?)\""", RegexOptions.Singleline);
 
                 if (m3.Success)
                 {
