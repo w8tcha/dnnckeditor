@@ -12,7 +12,7 @@
     CKEDITOR.plugins.add("autosave", {
         lang: 'ca,cs,de,en,es,fr,it,ja,nl,pl,pt-br,ru,sk,sv,zh,zh-cn', // %REMOVE_LINE_CORE%
         requires: 'notification',
-        version: "0.17.1",
+        version: "0.18.0",
         init: function (editor) {
             // Default Config
             var defaultConfig = {
@@ -21,8 +21,9 @@
                 saveDetectionSelectors: "a[href^='javascript:__doPostBack'][id*='Save'],a[id*='Cancel']",
                 saveOnDestroy: false,
                 NotOlderThen: 1440,
-                SaveKey: 'autosave_' + window.location + "_" + editor.id,
-                diffType: "sideBySide"
+                SaveKey: 'autosave_' + window.location + "_" + $('#' + editor.name).attr('name'),
+                diffType: "sideBySide",
+                autoLoad: false
             };
 
             // Get Config & Lang
@@ -63,7 +64,7 @@
     });
 
     function loadPlugin(editorInstance, config) {
-        var autoSaveKey = config.SaveKey != null ? config.SaveKey : 'autosave_' + window.location + "_" + editorInstance.id;
+        var autoSaveKey = config.SaveKey != null ? config.SaveKey : 'autosave_' + window.location + "_" + $('#' + editorInstance.name).attr('name');
         var notOlderThen = config.NotOlderThen != null ? config.NotOlderThen : 1440;
         var saveOnDestroy = config.saveOnDestroy != null ? config.saveOnDestroy : false;
         var saveDetectionSelectors =
@@ -72,7 +73,7 @@
         CKEDITOR.scriptLoader.load(CKEDITOR.getUrl(CKEDITOR.plugins.getPath('autosave') + 'js/extensions.min.js'), function() {
             GenerateAutoSaveDialog(editorInstance, config, autoSaveKey);
 
-            CheckForAutoSavedContent(editorInstance, autoSaveKey, notOlderThen);
+            CheckForAutoSavedContent(editorInstance, config, autoSaveKey, notOlderThen);
         });
 
         jQuery(saveDetectionSelectors).click(function() {
@@ -108,7 +109,7 @@
             var editor = editorInstance,
                 autoSaveKey = configAutosave.SaveKey != null
                     ? configAutosave.SaveKey
-                    : 'autosave_' + window.location + "_" + editor.id;
+                    : 'autosave_' + window.location + "_" + $('#' + editor.name).attr('name');
 
             SaveData(autoSaveKey, editor, configAutosave);
 
@@ -203,7 +204,7 @@
         });
     }
 
-    function CheckForAutoSavedContent(editorInstance, autoSaveKey, notOlderThen) {
+    function CheckForAutoSavedContent(editorInstance, config, autoSaveKey, notOlderThen) {
         // Checks If there is data available and load it
         if (localStorage.getItem(autoSaveKey)) {
             var jsonSavedContent = LoadData(autoSaveKey);
@@ -226,12 +227,24 @@
                 return;
             }
 
-            var confirmMessage = editorInstance.lang.autosave.loadSavedContent.replace("{0}", moment(autoSavedContentDate).locale(editorInstance.config.language).format(editorInstance.lang.autosave.dateFormat));
-            if (confirm(confirmMessage)) {
-                // Open DIFF Dialog
-                editorInstance.openDialog('autosaveDialog');
+            if (config.autoLoad) {
+                if (localStorage.getItem(autoSaveKey)) {
+                    var jsonSavedContent = LoadData(autoSaveKey);
+                    editorInstance.setData(jsonSavedContent.data);
+
+                    RemoveStorage(autoSaveKey, editorInstance);
+                }
             } else {
-                RemoveStorage(autoSaveKey, editorInstance);
+                var confirmMessage = editorInstance.lang.autosave.loadSavedContent.replace("{0}",
+                    moment(autoSavedContentDate).locale(editorInstance.config.language)
+                    .format(editorInstance.lang.autosave.dateFormat));
+
+                if (confirm(confirmMessage)) {
+                    // Open DIFF Dialog
+                    editorInstance.openDialog('autosaveDialog');
+                } else {
+                    RemoveStorage(autoSaveKey, editorInstance);
+                }
             }
         }
     }
