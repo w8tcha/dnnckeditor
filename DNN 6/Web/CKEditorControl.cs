@@ -901,6 +901,7 @@ namespace WatchersNET.CKEditor.Web
             outWriter.AddAttribute(HtmlTextWriterAttribute.Rows, "10");
 
             outWriter.AddAttribute(HtmlTextWriterAttribute.Class, "editor");
+            outWriter.AddAttribute("aria-label", "editor");
 
             outWriter.AddAttribute(HtmlTextWriterAttribute.Style, "visibility: hidden; display: none;");
 
@@ -1208,7 +1209,7 @@ namespace WatchersNET.CKEditor.Web
             }
             else
             {
-                Page.ClientScript.RegisterOnSubmitStatement(type, key, script);
+                this.Page.ClientScript.RegisterOnSubmitStatement(type, key, script);
             }
         }
 

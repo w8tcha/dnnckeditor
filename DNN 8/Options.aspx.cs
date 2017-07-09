@@ -53,13 +53,7 @@ namespace WatchersNET.CKEditor
         /// <summary>
         ///   Gets Current Language from Url
         /// </summary>
-        protected string LangCode
-        {
-            get
-            {
-                return this.request.QueryString["langCode"];
-            }
-        }
+        protected string LangCode => this.request.QueryString["langCode"];
 
         /// <summary>
         ///   Gets the Name for the Current Resource file name

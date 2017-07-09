@@ -903,6 +903,8 @@ namespace WatchersNET.CKEditor.Web
 
             outWriter.AddAttribute(HtmlTextWriterAttribute.Class, "editor");
 
+            outWriter.AddAttribute("aria-label", "editor");
+
             outWriter.AddAttribute(HtmlTextWriterAttribute.Style, "visibility: hidden; display: none;");
 
             outWriter.RenderBeginTag(HtmlTextWriterTag.Textarea);

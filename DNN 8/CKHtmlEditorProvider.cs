@@ -61,27 +61,15 @@ namespace WatchersNET.CKEditor
         /// </summary>
         public override Unit Height
         {
-            get
-            {
-                return this.htmlEditorControl.Height;
-            }
+            get => this.htmlEditorControl.Height;
 
-            set
-            {
-                this.htmlEditorControl.Height = value;
-            }
+            set => this.htmlEditorControl.Height = value;
         }
 
         /// <summary>
         /// Gets HtmlEditorControl.
         /// </summary>
-        public override Control HtmlEditorControl
-        {
-            get
-            {
-                return this.htmlEditorControl;
-            }
-        }
+        public override Control HtmlEditorControl => this.htmlEditorControl;
 
         /// <summary>
         /// Gets or sets RootImageDirectory.
@@ -101,10 +89,7 @@ namespace WatchersNET.CKEditor
                 return this.rootImageDirectory;
             }
 
-            set
-            {
-                this.rootImageDirectory = value;
-            }
+            set => this.rootImageDirectory = value;
         }
 
         /// <summary>
@@ -112,15 +97,9 @@ namespace WatchersNET.CKEditor
         /// </summary>
         public override string Text
         {
-            get
-            {
-                return this.htmlEditorControl.Value;
-            }
+            get => this.htmlEditorControl.Value;
 
-            set
-            {
-                this.htmlEditorControl.Value = value;
-            }
+            set => this.htmlEditorControl.Value = value;
         }
 
         /// <summary>
@@ -128,15 +107,9 @@ namespace WatchersNET.CKEditor
         /// </summary>
         public override Unit Width
         {
-            get
-            {
-                return this.htmlEditorControl.Width;
-            }
+            get => this.htmlEditorControl.Width;
 
-            set
-            {
-                this.htmlEditorControl.Width = value;
-            }
+            set => this.htmlEditorControl.Width = value;
         }
 
         #endregion

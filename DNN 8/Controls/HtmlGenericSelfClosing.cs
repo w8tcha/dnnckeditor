@@ -68,10 +68,7 @@ namespace WatchersNET.CKEditor.Controls
         /// <exception cref="Exception">A self closing tag cannot have child controls and/or content</exception>
         public override string InnerHtml
         {
-            get
-            {
-                return null;
-            }
+            get => null;
 
             set
             {
@@ -85,10 +82,7 @@ namespace WatchersNET.CKEditor.Controls
         /// <exception cref="Exception">A self closing tag cannot have child controls and/or content</exception>
         public override string InnerText
         {
-            get
-            {
-                return null;
-            }
+            get => null;
 
             set
             {

@@ -20,6 +20,11 @@ namespace WatchersNET.CKEditor.Browser
     using System.IO;
     using System.Web;
 
+    using DotNetNuke.Common.Utilities;
+    using DotNetNuke.Entities.Portals;
+    using DotNetNuke.Security.Permissions;
+    using DotNetNuke.Services.Exceptions;
+
     #endregion
 
     /// <summary>
@@ -154,6 +159,15 @@ namespace WatchersNET.CKEditor.Browser
             {
                 context.Response.ContentType = "text/plain";
 
+                var sourceFilePath = context.Server.MapPath(imgSource);
+                var sourceFolder = sourceFilePath.Remove(sourceFilePath.LastIndexOf("\\"));
+
+                if (PortalSettings.Current != null && !this.HasWritePermission(
+                        PathUtils.Instance.GetRelativePath(PortalSettings.Current.PortalId, sourceFolder)))
+                {
+                    throw new SecurityException("You don't have write permission to save files under this folder.");
+                }
+
                 imageP.Save(GenerateName(sNewFileName, context.Server.MapPath(imgSource)));
             }
             else
@@ -166,25 +180,38 @@ namespace WatchersNET.CKEditor.Browser
             img.Dispose();
         }
 
-        #endregion
-
-        #endregion
-
-        #region Methods
-
         /// <summary>
-        /// Generats the New File Path
+        /// Determines whether [has write permission] [the specified relative path].
         /// </summary>
-        /// <param name="sNewFileName">
-        /// New File Name for the Image
-        /// </param>
-        /// <param name="sSourceFullPath">
-        /// The Full Path of the Original Image
-        /// </param>
+        /// <param name="relativePath">The relative path.</param>
         /// <returns>
-        /// The generate name.
+        ///   <c>true</c> if [has write permission] [the specified relative path]; otherwise, <c>false</c>.
         /// </returns>
-        private static string GenerateName(string sNewFileName, string sSourceFullPath)
+        private bool HasWritePermission(string relativePath)
+        {
+            var portalId = PortalSettings.Current.PortalId;
+            return FolderPermissionController.HasFolderPermission(portalId, relativePath, "WRITE");
+        }
+
+        #endregion
+
+    #endregion
+
+    #region Methods
+
+    /// <summary>
+    /// Generats the New File Path
+    /// </summary>
+    /// <param name="sNewFileName">
+    /// New File Name for the Image
+    /// </param>
+    /// <param name="sSourceFullPath">
+    /// The Full Path of the Original Image
+    /// </param>
+    /// <returns>
+    /// The generate name.
+    /// </returns>
+    private static string GenerateName(string sNewFileName, string sSourceFullPath)
         {
             var sSourcePath = sSourceFullPath.Remove(sSourceFullPath.LastIndexOf("\\"));
 

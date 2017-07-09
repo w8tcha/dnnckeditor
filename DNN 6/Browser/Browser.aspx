@@ -397,7 +397,7 @@
             }).bind('fileuploadsubmit',
                 function(e, data) {
                     data.formData = {
-                        storageFolderID: '<%= GetFolderInfoID %>',
+                        storageFolderID: '<%= this.GetFolderInfoID %>',
                         portalID: '<%= HttpContext.Current.Request.QueryString["PortalID"] %>',
                         overrideFiles: $('#<%= this.OverrideFile.ClientID %>').is(':checked')
                     };

@@ -29,3 +29,4 @@ Thumbs.db
 # Folder config file
 Desktop.ini
 DNN 6/Install/bin/WatchersNET.CKEditor.dll
+*.dll

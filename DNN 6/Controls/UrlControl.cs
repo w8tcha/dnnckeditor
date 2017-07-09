@@ -286,7 +286,7 @@ namespace WatchersNET.CKEditor.Controls
                         if (this.Files.Items.FindByText(fileName) != null)
                         {
                             this.Files.ClearSelection();
-                            Files.SelectedIndex = Files.Items.IndexOf(Files.Items.FindByText(fileName));
+                            this.Files.SelectedIndex = this.Files.Items.IndexOf(this.Files.Items.FindByText(fileName));
                         }
                     }
                 }

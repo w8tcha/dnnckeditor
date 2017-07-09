@@ -21,7 +21,6 @@ namespace WatchersNET.CKEditor.Web
     using System.Globalization;
     using System.IO;
     using System.Linq;
-    using System.Reflection;
     using System.Text;
     using System.Threading;
     using System.Web;
@@ -45,8 +44,6 @@ namespace WatchersNET.CKEditor.Web
     using WatchersNET.CKEditor.Extensions;
     using WatchersNET.CKEditor.Objects;
     using WatchersNET.CKEditor.Utilities;
-
-    using Assembly = System.Reflection.Assembly;
 
     #endregion
 
@@ -594,15 +591,9 @@ namespace WatchersNET.CKEditor.Web
         public string ToolBarName
         {
             // EL 20101006
-            get
-            {
-                return this.toolBarNameOverride;
-            }
+            get => this.toolBarNameOverride;
 
-            set
-            {
-                this.toolBarNameOverride = value;
-            }
+            set => this.toolBarNameOverride = value;
         }
 
         /// <summary>
@@ -618,10 +609,7 @@ namespace WatchersNET.CKEditor.Web
                 return o == null ? string.Empty : Convert.ToString(o);
             }
 
-            set
-            {
-                this.ViewState["Value"] = value;
-            }
+            set => this.ViewState["Value"] = value;
         }
 
         /// <summary>
@@ -667,15 +655,8 @@ namespace WatchersNET.CKEditor.Web
         /// <summary>
         ///   Gets Name for the Current Resource file name
         /// </summary>
-        private static string SResXFile
-        {
-            get
-            {
-                return
-                    Globals.ResolveUrl(
-                        string.Format("~/Providers/HtmlEditorProviders/CKEditor/{0}/Options.aspx.resx", Localization.LocalResourceDirectory));
-            }
-        }
+        private static string SResXFile => Globals.ResolveUrl(
+            string.Format("~/Providers/HtmlEditorProviders/CKEditor/{0}/Options.aspx.resx", Localization.LocalResourceDirectory));
 
         #endregion
 
@@ -901,6 +882,7 @@ namespace WatchersNET.CKEditor.Web
             outWriter.AddAttribute(HtmlTextWriterAttribute.Rows, "10");
 
             outWriter.AddAttribute(HtmlTextWriterAttribute.Class, "editor");
+            outWriter.AddAttribute("aria-label", "editor");
 
             outWriter.AddAttribute(HtmlTextWriterAttribute.Style, "visibility: hidden; display: none;");
 

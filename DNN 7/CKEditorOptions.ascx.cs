@@ -28,6 +28,7 @@ namespace WatchersNET.CKEditor
     using System.Web.UI.WebControls;
     using System.Xml.Serialization;
 
+    using DotNetNuke.Collections;
     using DotNetNuke.Common;
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Entities.Modules;
@@ -311,7 +312,7 @@ namespace WatchersNET.CKEditor
             // Check if Options Window is in Host Page
             if (this.IsHostMode)
             {
-                if (!Page.IsPostBack)
+                if (!this.Page.IsPostBack)
                 {
                     this.LastTabId.Value = "0";
                 }
@@ -3249,7 +3250,7 @@ namespace WatchersNET.CKEditor
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void CopyToAllChild_Click(object sender, EventArgs e)
         {
-            CopySettingsToChildTabs(TabController.GetTabsByParent(this.CurrentOrSelectedTabId, this.CurrentOrSelectedPortalId));
+            this.CopySettingsToChildTabs(TabController.GetTabsByParent(this.CurrentOrSelectedTabId, this.CurrentOrSelectedPortalId));
 
             // Finally Clear Cache
             DataCache.RemoveCache("CKEditorHost");
@@ -3272,7 +3273,7 @@ namespace WatchersNET.CKEditor
 
                 if (tab.HasChildren)
                 {
-                    CopySettingsToChildTabs(TabController.GetTabsByParent(tab.TabID, this.CurrentOrSelectedPortalId));
+                    this.CopySettingsToChildTabs(TabController.GetTabsByParent(tab.TabID, this.CurrentOrSelectedPortalId));
                 }
             }
         }

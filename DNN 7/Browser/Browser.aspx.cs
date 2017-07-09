@@ -2177,7 +2177,7 @@ namespace WatchersNET.CKEditor.Browser
                 return false;
             }
 
-            var selectedDir = MapPath(fileUrl).Replace(fileName, string.Empty);
+            var selectedDir = this.MapPath(fileUrl).Replace(fileName, string.Empty);
 
             if (!Directory.Exists(selectedDir))
             {

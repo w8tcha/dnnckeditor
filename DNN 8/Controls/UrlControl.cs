@@ -60,15 +60,9 @@ namespace WatchersNET.CKEditor.Controls
         /// </value>
         public bool ReloadFiles
         {
-            get
-            {
-                return this.ViewState["ReloadFiles"] == null || Convert.ToBoolean(this.ViewState["ReloadFiles"]);
-            }
+            get => this.ViewState["ReloadFiles"] == null || Convert.ToBoolean(this.ViewState["ReloadFiles"]);
 
-            set
-            {
-                this.ViewState["ReloadFiles"] = value;
-            }
+            set => this.ViewState["ReloadFiles"] = value;
         }
 
         /// <summary>
@@ -76,17 +70,11 @@ namespace WatchersNET.CKEditor.Controls
         /// </summary>
         public string FileFilter
         {
-            get
-            {
-                return this.ViewState["FileFilter"] != null
-                           ? Convert.ToString(this.ViewState["FileFilter"])
-                           : string.Empty;
-            }
+            get => this.ViewState["FileFilter"] != null
+                       ? Convert.ToString(this.ViewState["FileFilter"])
+                       : string.Empty;
 
-            set
-            {
-                this.ViewState["FileFilter"] = value;
-            }
+            set => this.ViewState["FileFilter"] = value;
         }
 
         /// <summary>

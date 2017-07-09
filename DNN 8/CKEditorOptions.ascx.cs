@@ -28,6 +28,7 @@ namespace WatchersNET.CKEditor
     using System.Web.UI.WebControls;
     using System.Xml.Serialization;
 
+    using DotNetNuke.Collections;
     using DotNetNuke.Common;
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Entities.Modules;
@@ -118,15 +119,9 @@ namespace WatchersNET.CKEditor
         /// </value>
         public bool IsHostMode
         {
-            get
-            {
-                return this.ViewState["IsHostMode"] != null && (bool)this.ViewState["IsHostMode"];
-            }
+            get => this.ViewState["IsHostMode"] != null && (bool)this.ViewState["IsHostMode"];
 
-            set
-            {
-                this.ViewState["IsHostMode"] = value;
-            }
+            set => this.ViewState["IsHostMode"] = value;
         }
 
         /// <summary>
@@ -137,15 +132,9 @@ namespace WatchersNET.CKEditor
         /// </value>
         public bool CurrentPortalOnly
         {
-            get
-            {
-                return this.ViewState["CurrentPortalOnly"] != null && (bool)this.ViewState["CurrentPortalOnly"];
-            }
+            get => this.ViewState["CurrentPortalOnly"] != null && (bool)this.ViewState["CurrentPortalOnly"];
 
-            set
-            {
-                this.ViewState["CurrentPortalOnly"] = value;
-            }
+            set => this.ViewState["CurrentPortalOnly"] = value;
         }
 
         /// <summary>
@@ -153,15 +142,9 @@ namespace WatchersNET.CKEditor
         /// </summary>
         public int CurrentOrSelectedTabId
         {
-            get
-            {
-                return (int)this.ViewState["CurrentTabId"];
-            }
+            get => (int)this.ViewState["CurrentTabId"];
 
-            set
-            {
-                this.ViewState["CurrentTabId"] = value;
-            }
+            set => this.ViewState["CurrentTabId"] = value;
         }
 
         /// <summary>
@@ -169,15 +152,9 @@ namespace WatchersNET.CKEditor
         /// </summary>
         public int CurrentOrSelectedPortalId
         {
-            get
-            {
-                return this.ViewState["CurrentPortalId"] != null ? (int)this.ViewState["CurrentPortalId"] : 0;
-            }
+            get => (int?)this.ViewState["CurrentPortalId"] ?? 0;
 
-            set
-            {
-                this.ViewState["CurrentPortalId"] = value;
-            }
+            set => this.ViewState["CurrentPortalId"] = value;
         }
 
         /// <summary>
@@ -188,115 +165,60 @@ namespace WatchersNET.CKEditor
         /// </value>
         public int DefaultHostLoadMode
         {
-            get
-            {
-                return this.ViewState["DefaultHostLoadMode"] != null ? (int)this.ViewState["DefaultHostLoadMode"] : 0;
-            }
+            get => (int?)this.ViewState["DefaultHostLoadMode"] ?? 0;
 
-            set
-            {
-                this.ViewState["DefaultHostLoadMode"] = value;
-            }
+            set => this.ViewState["DefaultHostLoadMode"] = value;
         }
 
         /// <summary>
         ///   Gets Current Language from Url
         /// </summary>
-        protected string LangCode
-        {
-            get
-            {
-               return !string.IsNullOrEmpty(this.request.QueryString["langCode"])
-                           ? this.request.QueryString["langCode"]
-                           : CultureInfo.CurrentCulture.Name;
-            }
-        }
+        protected string LangCode => !string.IsNullOrEmpty(this.request.QueryString["langCode"])
+                                         ? this.request.QueryString["langCode"]
+                                         : CultureInfo.CurrentCulture.Name;
 
         /// <summary>
         ///   Gets the Name for the Current Resource file name
         /// </summary>
-        protected string ResXFile
-        {
-            get
-            {
-                return
-                    this.ResolveUrl(
-                        string.Format(
-                            "~/Providers/HtmlEditorProviders/CKEditor/{0}/Options.aspx.resx",
-                            Localization.LocalResourceDirectory));
-            }
-        }
+        protected string ResXFile => this.ResolveUrl(
+            string.Format(
+                "~/Providers/HtmlEditorProviders/CKEditor/{0}/Options.aspx.resx",
+                Localization.LocalResourceDirectory));
 
         /// <summary>
         /// Gets or sets the current settings mode
         /// </summary>
         private SettingsMode CurrentSettingsMode
         {
-            get
-            {
-                return (SettingsMode)this.ViewState["CurrentSettingsMode"];
-            }
+            get => (SettingsMode)this.ViewState["CurrentSettingsMode"];
 
-            set
-            {
-                this.ViewState["CurrentSettingsMode"] = value;
-            }
+            set => this.ViewState["CurrentSettingsMode"] = value;
         }
 
         /// <summary>
         ///   Gets the Config Url Control.
         /// </summary>
-        private UrlControl ConfigUrl
-        {
-            get
-            {
-                return this.ctlConfigUrl;
-            }
-        }
+        private UrlControl ConfigUrl => this.ctlConfigUrl;
 
         /// <summary>
         ///   Gets the CSS Url Control.
         /// </summary>
-        private UrlControl CssUrl
-        {
-            get
-            {
-                return this.ctlCssurl;
-            }
-        }
+        private UrlControl CssUrl => this.ctlCssurl;
 
         /// <summary>
         ///   Gets the Import File Url Control.
         /// </summary>
-        private UrlControl ImportFile
-        {
-            get
-            {
-                return this.ctlImportFile;
-            }
-        }
+        private UrlControl ImportFile => this.ctlImportFile;
 
         /// <summary>
         ///   Gets the Template Url Control.
         /// </summary>
-        private UrlControl TemplUrl
-        {
-            get
-            {
-                return this.ctlTemplUrl;
-            }
-        }
+        private UrlControl TemplUrl => this.ctlTemplUrl;
 
         /// <summary>
         ///   Gets the Custom JS File Url Control.
         /// </summary>
-        private UrlControl CustomJsFile
-        {
-            get
-            {
-                return this.ctlCustomJsFile;
-            }
-        }
+        private UrlControl CustomJsFile => this.ctlCustomJsFile;
 
         #endregion
 
@@ -386,6 +308,13 @@ namespace WatchersNET.CKEditor
             // CODEGEN: This call is required by the ASP.NET Web Form Designer.
             this.InitializeComponent();
             base.OnInit(e);
+
+            var moduleId = this.Request.QueryString.GetValueOrDefault("ModuleId", Null.NullInteger);
+
+            if (moduleId != Null.NullInteger && this.ModuleId == Null.NullInteger)
+            {
+                this.ModuleId = moduleId;
+            }
         }
 
         /// <summary>
