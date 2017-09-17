@@ -628,6 +628,16 @@ namespace WatchersNET.CKEditor.Objects
         public string EmailProtection { get; set; }
 
         /// <summary>
+        /// Gets or sets the embed provider.
+        /// </summary>
+        /// <value>
+        /// The embed provider.
+        /// </value>
+        [XmlAttribute("embed_provider")]
+        [Description("A template for the URL of the provider endpoint. This URL will be queried for each resource to be embedded.")]
+        public string EmbedProvider { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether [enable tab key tools].
         /// </summary>
         /// <value>
