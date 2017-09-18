@@ -1,6 +1,6 @@
 ﻿/* CKEditor Html Editor Provider for DotNetNuke
  * ========
- * http://dnnckeditor.codeplex.com/
+ * https://github.com/w8tcha/dnnckeditor
  * Copyright (C) Ingo Herbote
  *
  * The software, this file and its contents are subject to the CKEditor Provider

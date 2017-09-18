@@ -1,7 +1,7 @@
 ﻿/*
  * CKEditor Html Editor Provider for DotNetNuke
  * ========
- * http://dnnckeditor.codeplex.com/
+ * https://github.com/w8tcha/dnnckeditor
  * Copyright (C) Ingo Herbote
  *
  * The software, this file and its contents are subject to the CKEditor Provider
@@ -26,5 +26,5 @@ using System.Runtime.InteropServices;
 
 [assembly: ComVisible(false)]
 
-[assembly: AssemblyVersion("2.01.08")]
-[assembly: AssemblyFileVersion("2.01.0.8")]
+[assembly: AssemblyVersion("2.01.09")]
+[assembly: AssemblyFileVersion("2.01.0.9")]
