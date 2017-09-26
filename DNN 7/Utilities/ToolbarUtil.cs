@@ -547,12 +547,6 @@ namespace WatchersNET.CKEditor.Utilities
                                                              },
                                                          new ToolbarButton
                                                              {
-                                                                 ToolbarName = "Iframe",
-                                                                 ToolbarIcon =
-                                                                     "Iframe.png"
-                                                             },
-                                                         new ToolbarButton
-                                                             {
                                                                  ToolbarName = "Mathjax",
                                                                  ToolbarIcon =
                                                                      "mathjax.png"
@@ -830,7 +824,6 @@ namespace WatchersNET.CKEditor.Utilities
                                                 "Smiley",
                                                 "SpecialChar",
                                                 "PageBreak",
-                                                "Iframe",
                                             },
                                     name = "insert"
                                 });
