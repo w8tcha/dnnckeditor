@@ -225,10 +225,6 @@
     <ToolbarIcon>About.png</ToolbarIcon>
   </ToolbarButton>
   <ToolbarButton>
-    <ToolbarName>Iframe</ToolbarName>
-    <ToolbarIcon>Iframe.png</ToolbarIcon>
-  </ToolbarButton>
-  <ToolbarButton>
     <ToolbarName>Mathjax</ToolbarName>
     <ToolbarIcon>mathjax.png</ToolbarIcon>
   </ToolbarButton>

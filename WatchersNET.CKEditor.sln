@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.3
+VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DNN 6", "DNN 6", "{DDE034B3-6ED8-48C6-B80A-5ACE6AF1B943}"
 EndProject
@@ -91,5 +91,8 @@ Global
 		{99F2558C-4775-47EB-8305-494FD6377F7B} = {60E6AFFA-BD7F-488B-A565-4EA5D1B1F5DF}
 		{3C355F50-802D-431C-8077-B8CE4C6A92B4} = {60E6AFFA-BD7F-488B-A565-4EA5D1B1F5DF}
 		{01E029F0-B43A-4B61-883A-DC932D42E9C6} = {940329D4-02D2-4998-BA24-1F48F4D7C9F4}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EE97A8CF-DC4E-46F4-BF8B-1068F737EEE5}
 	EndGlobalSection
 EndGlobal

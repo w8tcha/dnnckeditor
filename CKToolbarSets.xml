@@ -210,7 +210,6 @@
           <string>Smiley</string>
           <string>SpecialChar</string>
           <string>PageBreak</string>
-          <string>Iframe</string>
         </items>
         <name>insert</name>
       </ToolbarGroup>
