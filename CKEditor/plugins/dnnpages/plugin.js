@@ -47,7 +47,7 @@
                 required = 'a[href]';
 
             if (CKEDITOR.dialog.isTabEnabled(editor, 'link', 'advanced'))
-                allowed = allowed.replace(']', ',accesskey,charset,dir,id,lang,name,rel,tabindex,title,type]{*}(*)');
+                allowed = allowed.replace(']', ',accesskey,charset,dir,id,lang,name,rel,tabindex,title,type,download]{*}(*)');
             if (CKEDITOR.dialog.isTabEnabled(editor, 'link', 'target'))
                 allowed = allowed.replace(']', ',target,onclick]');
 
@@ -87,9 +87,12 @@
             CKEDITOR.dialog.add('anchor', this.path + 'dialogs/anchor.js');
 
             editor.on('doubleclick', function(evt) {
-                var element = CKEDITOR.plugins.link.getSelectedLink(editor) || evt.data.element;
+                // If the link has descendants and the last part of it is also a part of a word partially
+                // unlinked, clicked element may be a descendant of the link, not the link itself (http://dev.ckeditor.com/ticket/11956).
+                // The evt.data.element.getAscendant( 'img', 1 ) condition allows opening anchor dialog if the anchor is empty (#501).
+                var element = evt.data.element.getAscendant({ a: 1, img: 1 }, true);
 
-                if (!element.isReadOnly()) {
+                if (element && !element.isReadOnly()) {
                     if (element.is('a')) {
                         evt.data.dialog = (element.getAttribute('name') && (!element.getAttribute('href') || !element.getChildCount())) ? 'anchor' : 'link';
 
@@ -103,7 +106,7 @@
 
             // If event was cancelled, link passed in event data will not be selected.
             editor.on('doubleclick', function(evt) {
-                // Make sure both links and anchors are selected (#11822).
+                // Make sure both links and anchors are selected (http://dev.ckeditor.com/ticket/11822).
                 if (evt.data.dialog in { link: 1, anchor: 1 } && evt.data.link)
                     editor.getSelection().selectElement(evt.data.link);
             }, null, null, 20);
@@ -141,6 +144,29 @@
                 });
             }
 
+            // If the "contextmenu" plugin is loaded, register the listeners.
+            if (editor.contextMenu) {
+                editor.contextMenu.addListener(function (element) {
+                    if (!element || element.isReadOnly())
+                        return null;
+
+                    var anchor = CKEDITOR.plugins.link.tryRestoreFakeAnchor(editor, element);
+
+                    if (!anchor && !(anchor = CKEDITOR.plugins.link.getSelectedLink(editor)))
+                        return null;
+
+                    var menu = {};
+
+                    if (anchor.getAttribute('href') && anchor.getChildCount())
+                        menu = { link: CKEDITOR.TRISTATE_OFF, unlink: CKEDITOR.TRISTATE_OFF };
+
+                    if (anchor && anchor.hasAttribute('name'))
+                        menu.anchor = menu.removeAnchor = CKEDITOR.TRISTATE_OFF;
+
+                    return menu;
+                });
+            }
+
             this.compiledProtectionFunction = getCompiledProtectionFunction(editor);
         },
 
@@ -175,8 +201,8 @@
     // Loads the parameters in a selected link to the link dialog fields.
     var javascriptProtocolRegex = /^javascript:/,
         emailRegex = /^mailto:([^?]+)(?:\?(.+))?$/,
-        emailSubjectRegex = /subject=([^;?:@&=$,\/]*)/,
-        emailBodyRegex = /body=([^;?:@&=$,\/]*)/,
+        emailSubjectRegex = /subject=([^;?:@&=$,\/]*)/i,
+        emailBodyRegex = /body=([^;?:@&=$,\/]*)/i,
         anchorRegex = /^#(.*)$/,
         urlRegex = /^((?:http|https|ftp|news):\/\/)?(.*)$/,
         selectableTargets = /^(_(?:self|top|parent|blank))$/,
@@ -226,9 +252,7 @@
         var plugin = editor.plugins.link,
             name = plugin.compiledProtectionFunction.name,
             params = plugin.compiledProtectionFunction.params,
-            paramName,
-            paramValue,
-            retval;
+            paramName, paramValue, retval;
 
         retval = [name, '('];
         for (var i = 0; i < params.length; i++) {
@@ -286,19 +310,34 @@
 		 * @since 3.2.1
 		 * @param {CKEDITOR.editor} editor
 		 */
-        getSelectedLink: function(editor) {
-            var selection = editor.getSelection();
-            var selectedElement = selection.getSelectedElement();
-            if (selectedElement && selectedElement.is('a'))
+        getSelectedLink: function (editor, returnMultiple) {
+            var selection = editor.getSelection(),
+                selectedElement = selection.getSelectedElement(),
+                ranges = selection.getRanges(),
+                links = [],
+                link,
+                range,
+                i;
+
+            if (!returnMultiple && selectedElement && selectedElement.is('a')) {
                 return selectedElement;
-
-            var range = selection.getRanges()[0];
-
-            if (range) {
-                range.shrink(CKEDITOR.SHRINK_TEXT);
-                return editor.elementPath(range.getCommonAncestor()).contains('a', 1);
             }
-            return null;
+
+            for (i = 0; i < ranges.length; i++) {
+                range = selection.getRanges()[i];
+
+                // Skip bogus to cover cases of multiple selection inside tables (#tp2245).
+                range.shrink(CKEDITOR.SHRINK_TEXT, false, { skipBogus: true });
+                link = editor.elementPath(range.getCommonAncestor()).contains('a', 1);
+
+                if (link && returnMultiple) {
+                    links.push(link);
+                } else if (link) {
+                    return link;
+                }
+            }
+
+            return returnMultiple ? links : null;
         },
 
         /**
@@ -314,7 +353,7 @@
             var editable = editor.editable(),
 
                 // The scope of search for anchors is the entire document for inline editors
-                // and editor's editable for classic editor/divarea (#11359).
+                // and editor's editable for classic editor/divarea (http://dev.ckeditor.com/ticket/11359).
                 scope = (editable.isInline() && !editor.plugins.divarea) ? editor.document : editable,
 
                 links = scope.getElementsByTag('a'),
@@ -358,7 +397,7 @@
         fakeAnchor: true,
 
         /**
-		 * For browsers that do not support CSS3 `a[name]:empty()`. Note that IE9 is included because of #7783.
+		 * For browsers that do not support CSS3 `a[name]:empty()`. Note that IE9 is included because of http://dev.ckeditor.com/ticket/7783.
 		 *
 		 * @readonly
 		 * @deprecated 4.3.3 It is set to `false` in every browser.
@@ -391,8 +430,11 @@
 
         /**
 		 * Parses attributes of the link element and returns an object representing
-		 * the current state (data) of the link. This data format is accepted e.g. by
-		 * the Link dialog window and {@link #getLinkAttributes}.
+		 * the current state (data) of the link. This data format is a plain object accepted
+		 * e.g. by the Link dialog window and {@link #getLinkAttributes}.
+		 *
+		 * **Note:** Data model format produced by the parser must be compatible with the Link
+		 * plugin dialog because it is passed directly to {@link CKEDITOR.dialog#setupContent}.
 		 *
 		 * @since 4.4
 		 * @param {CKEDITOR.editor} editor
@@ -403,10 +445,7 @@
             var href = (element && (element.data('cke-saved-href') || element.getAttribute('href'))) || '',
                 compiledProtectionFunction = editor.plugins.link.compiledProtectionFunction,
                 emailProtection = editor.config.emailProtection,
-                javascriptMatch,
-                emailMatch,
-                anchorMatch,
-                urlMatch,
+                javascriptMatch, emailMatch, anchorMatch, urlMatch,
                 retval = {};
 
             if ((javascriptMatch = href.match(javascriptProtocolRegex))) {
@@ -414,7 +453,7 @@
                     href = href.replace(encodedEmailLinkRegex, function(match, protectedAddress, rest) {
                         return 'mailto:' +
                             String.fromCharCode.apply(String, protectedAddress.split(',')) +
-                            (rest && unescapeSingleQuote(rest));
+                            unescapeSingleQuote(rest);
                     });
                 }
                 // Protected email link as function call.
@@ -428,8 +467,7 @@
                                 paramQuoteRegex = /(^')|('$)/g,
                                 paramsMatch = funcArgs.match(paramRegex),
                                 paramsMatchLength = paramsMatch.length,
-                                paramName,
-                                paramVal;
+                                paramName, paramVal;
 
                             for (var i = 0; i < paramsMatchLength; i++) {
                                 paramVal = decodeURIComponent(unescapeSingleQuote(paramsMatch[i].replace(paramQuoteRegex, '')));
@@ -500,7 +538,7 @@
 
                         var featureMatch;
                         while ((featureMatch = popupFeaturesRegex.exec(onclickMatch[2]))) {
-                            // Some values should remain numbers (#7300)
+                            // Some values should remain numbers (http://dev.ckeditor.com/ticket/7300)
                             if ((featureMatch[2] == 'yes' || featureMatch[2] == '1') && !(featureMatch[1] in { height: 1, width: 1, top: 1, left: 1 }))
                                 retval.target[featureMatch[1]] = true;
                             else if (isFinite(featureMatch[2]))
@@ -512,6 +550,11 @@
                         type: target.match(selectableTargets) ? target : 'frame',
                         name: target
                     };
+                }
+
+                var download = element.getAttribute('download');
+                if (download !== null) {
+                    retval.download = true;
                 }
 
                 var advanced = {};
@@ -536,9 +579,9 @@
         },
 
         /**
-		 * Converts link data into an object which consists of attributes to be set
-		 * (with their values) and an array of attributes to be removed. This method
-		 * can be used to synthesise or to update any link element with the given data.
+		 * Converts link data produced by {@link #parseLinkAttributes} into an object which consists
+		 * of attributes to be set (with their values) and an array of attributes to be removed.
+		 * This method can be used to compose or to update any link element with the given data.
 		 *
 		 * @since 4.4
 		 * @param {CKEDITOR.editor} editor
@@ -655,6 +698,11 @@
                 }
             }
 
+            // Force download attribute.
+            if (data.download) {
+                set.download = '';
+            }
+
             // Advanced attributes.
             if (data.advanced) {
                 for (var a in advAttrNames) {
@@ -668,16 +716,17 @@
                     set['data-cke-saved-name'] = set.name;
             }
 
-            // Browser need the "href" fro copy/paste link to work. (#6641)
+            // Browser need the "href" fro copy/paste link to work. (http://dev.ckeditor.com/ticket/6641)
             if (set['data-cke-saved-href'])
                 set.href = set['data-cke-saved-href'];
 
-            var removed = CKEDITOR.tools.extend({
+            var removed = {
                 target: 1,
                 onclick: 1,
                 'data-cke-pa-onclick': 1,
-                'data-cke-saved-name': 1
-            }, advAttrNames);
+                'data-cke-saved-name': 1,
+                'download': 1
+            };
 
             // Remove all attributes which are not currently set.
             for (var s in set)
@@ -707,10 +756,15 @@
                 input: 1,
                 select: 1,
                 textarea: 1
-            };
+            },
+                selection = editor.getSelection();
 
             // Widget duck typing, we don't want to show display text for widgets.
             if (editor.widgets && editor.widgets.focused) {
+                return false;
+            }
+
+            if (selection && selection.getRanges().length > 1) {
                 return false;
             }
 
@@ -725,8 +779,29 @@
     CKEDITOR.unlinkCommand = function() {};
     CKEDITOR.unlinkCommand.prototype = {
         exec: function(editor) {
+            // IE/Edge removes link from selection while executing "unlink" command when cursor
+            // is right before/after link's text. Therefore whole link must be selected and the
+            // position of cursor must be restored to its initial state after unlinking. (http://dev.ckeditor.com/ticket/13062)
+            if (CKEDITOR.env.ie) {
+                var range = editor.getSelection().getRanges()[0],
+                    link = (range.getPreviousEditableNode() && range.getPreviousEditableNode().getAscendant('a', true)) ||
+                        (range.getNextEditableNode() && range.getNextEditableNode().getAscendant('a', true)),
+                    bookmark;
+
+                if (range.collapsed && link) {
+                    bookmark = range.createBookmark();
+                    range.selectNodeContents(link);
+                    range.select();
+                }
+            }
+
             var style = new CKEDITOR.style({ element: 'a', type: CKEDITOR.STYLE_INLINE, alwaysRemoveElement: 1 });
             editor.removeStyle(style);
+
+            if (bookmark) {
+                range.moveToBookmark(bookmark);
+                range.select();
+            }
         },
 
         refresh: function(editor, path) {
@@ -743,7 +818,8 @@
 
         contextSensitive: 1,
         startDisabled: 1,
-        requiredContent: 'a[href]'
+        requiredContent: 'a[href]',
+        editorFocus: 1
     };
 
     CKEDITOR.removeAnchorCommand = function() {};
@@ -777,7 +853,10 @@
 
         if (dialogName == 'link') {
             if (typeof (dnnpagesSelectBox) === 'undefined') {
+                console.log('yes');
                 return;
+            } else {
+                console.log('no');
             }
 
             for (var i = 0; i < dnnpagesSelectBox.length; i++) {
