@@ -1,7 +1,7 @@
 ﻿/*
- * CKEditor Html Editor Provider for DotNetNuke
+ * CKEditor Html Editor Provider for DNN
  * ========
- * http://dnnckeditor.codeplex.com/
+ * https://github.com/w8tcha/dnnckeditor
  * Copyright (C) Ingo Herbote
  *
  * The software, this file and its contents are subject to the CKEditor Provider
@@ -14,7 +14,7 @@ namespace WatchersNET.CKEditor
 {
     using System;
     using System.Collections.Generic;
-	using System.Globalization;
+    using System.Globalization;
     using System.Linq;
     using System.Web.UI;
     using System.Web.UI.WebControls;
@@ -24,7 +24,7 @@ namespace WatchersNET.CKEditor
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Entities.Portals;
     using DotNetNuke.Entities.Tabs;
-	using DotNetNuke.Services.Localization;
+    using DotNetNuke.Services.Localization;
 
     using Ventrian.NewsArticles;
 
@@ -33,7 +33,7 @@ namespace WatchersNET.CKEditor
     /// </summary>
     public partial class NewsArticlesLinks : Page
     {
-		/// <summary>
+        /// <summary>
         ///   Gets Current Language from Url
         /// </summary>
         protected string LangCode
@@ -58,7 +58,7 @@ namespace WatchersNET.CKEditor
                             Localization.LocalResourceDirectory));
             }
         }
-		
+
         /// <summary>
         /// Handles the Load event of the Page control.
         /// </summary>
@@ -73,14 +73,14 @@ namespace WatchersNET.CKEditor
 
             ArticlesList.Items.Clear();
 
-            ArticleController articleController = new ArticleController();
+            var articleController = new ArticleController();
 
-            int newsArticlesModuleId = 0;
-            int newsArcticlesTabId = 0;
+            var newsArticlesModuleId = 0;
+            var newsArcticlesTabId = 0;
 
             if (ModuleListDropDown.Items.Count > 0)
             {
-                string[] values = ModuleListDropDown.SelectedValue.Split(Convert.ToChar("-"));
+                var values = ModuleListDropDown.SelectedValue.Split(Convert.ToChar("-"));
 
                 if (values.Length == 2)
                 {
@@ -98,7 +98,11 @@ namespace WatchersNET.CKEditor
                     string.Empty,
                     string.Format("articletype=ArticleView&articleId={0}", article.ArticleID));
 
-                ArticlesList.Items.Add(new ListItem { Text = article.Title, Value = articleUrl });
+                ArticlesList.Items.Add(new ListItem
+                {
+                    Text = article.Title,
+                    Value = articleUrl
+                });
             }
         }
 
@@ -107,28 +111,22 @@ namespace WatchersNET.CKEditor
         /// </summary>
         private void FillModuleList()
         {
-            PortalSettings portalSettings = PortalController.GetCurrentPortalSettings();
+            PortalSettings portalSettings = PortalController.Instance.GetCurrentPortalSettings();
 
             List<TabInfo> objTabs = TabController.GetPortalTabs(portalSettings.PortalId, -1, true, true);
 
             var objTabController = new TabController();
 
-            var objDesktopModuleController = new DesktopModuleController();
-            var objDesktopModuleInfo = objDesktopModuleController.GetDesktopModuleByModuleName("DnnForge - NewsArticles");
+            var objDesktopModuleInfo = DesktopModuleController.GetDesktopModuleByModuleName("DnnForge - NewsArticles", portalSettings.PortalId);
 
             if (objDesktopModuleInfo == null)
             {
-                objDesktopModuleInfo = objDesktopModuleController.GetDesktopModuleByName("DnnForge - NewsArticles");
-
-                if (objDesktopModuleInfo == null)
-                {
-                    return;
-                }
+                return;
             }
 
-            foreach (TabInfo objTab in objTabs.Where(tab => !tab.IsDeleted))
+            foreach (var objTab in objTabs.Where(tab => !tab.IsDeleted))
             {
-                ModuleController objModules = new ModuleController();
+                var objModules = new ModuleController();
 
                 foreach (KeyValuePair<int, ModuleInfo> pair in objModules.GetTabModules(objTab.TabID))
                 {
@@ -161,7 +159,7 @@ namespace WatchersNET.CKEditor
                     var objListItem = new ListItem
                     {
                         Value = string.Format("{0}-{1}", objModule.TabID, objModule.ModuleID),
-                        Text = string.Format("{2}: {0} -> {3}: {1}", strPath, objModule.ModuleTitle, Localization.GetString("Page.Text", this.ResXFile, this.LangCode),Localization.GetString("ModuleInstance.Text", this.ResXFile, this.LangCode))
+                        Text = string.Format("{2}: {0} -> {3}: {1}", strPath, objModule.ModuleTitle, Localization.GetString("Page.Text", this.ResXFile, this.LangCode), Localization.GetString("ModuleInstance.Text", this.ResXFile, this.LangCode))
                     };
 
                     ModuleListDropDown.Items.Add(objListItem);
