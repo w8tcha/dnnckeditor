@@ -147,39 +147,5 @@
     <Delete Files="$(MSBuildProjectDirectory)\Resources.$(Extension)" />
     <Delete Files="$(MSBuildProjectDirectory)\$(PackageName)_%(AssemblyIdentities.Version)_Install_DNN8.$(Extension)" />
 
-    <!-- create the SOURCE RESOURCES.ZIP file -->
-    <Copy SourceFiles="@(SourceInclude)" DestinationFolder="$(MSBuildProjectDirectory)\Package\%(RecursiveDir)" />
-
-    <CreateItem Include="$(MSBuildProjectDirectory)\Package\**\*.*">
-      <Output TaskParameter="Include" ItemName="OutputSource" />
-    </CreateItem>
-
-    <Zip Files="@(OutputSource)" WorkingDirectory="$(MSBuildProjectDirectory)\Package" ZipFileName="$(PackageName)_%(AssemblyIdentities.Version)_Source.$(Extension)" />
-    <Copy SourceFiles="$(MSBuildProjectDirectory)\$(PackageName)_%(AssemblyIdentities.Version)_Source.$(Extension)" DestinationFolder="$(MSBuildProjectDirectory)/../deploy" />
-
-    <Delete Files="$(MSBuildProjectDirectory)\$(PackageName)_%(AssemblyIdentities.Version)_Source.$(Extension)" />
-
-    <RemoveDir Directories ="$(MSBuildProjectDirectory)\Package" />
-
-    <CreateItem Include="$(MSBuildProjectDirectory)\..\deploy\Install\**\*.*">
-      <Output TaskParameter="Include" ItemName="InstallCompleteContent" />
-    </CreateItem>
-
-    <!-- Create the Install package -->
-    <Copy SourceFiles="@(InstallCompleteContent)" DestinationFolder="$(MSBuildProjectDirectory)\Package\%(RecursiveDir)" />
-
-    <CreateItem Include="$(MSBuildProjectDirectory)\Package\**\*.*">
-      <Output TaskParameter="Include" ItemName="OutputInstall" />
-    </CreateItem>
-
-    <Zip Files="@(OutputInstall)" WorkingDirectory="$(MSBuildProjectDirectory)\Package" ZipFileName="$(PackageName)_%(AssemblyIdentities.Version)-UNZIP_FIRST.$(Extension)" />
-    <Copy SourceFiles="$(MSBuildProjectDirectory)\$(PackageName)_%(AssemblyIdentities.Version)-UNZIP_FIRST.$(Extension)" DestinationFolder="$(MSBuildProjectDirectory)/../deploy" />
-
-    <Delete Files="$(MSBuildProjectDirectory)\$(PackageName)_%(AssemblyIdentities.Version)-UNZIP_FIRST.$(Extension)" />
-
-    <RemoveDir Directories ="$(MSBuildProjectDirectory)\..\deploy\Install" />
-    <RemoveDir Directories ="$(MSBuildProjectDirectory)\Package" />
-
-
   </Target>
 </Project>

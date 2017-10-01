@@ -1,4 +1,4 @@
-﻿/* CKEditor Html Editor Provider for DotNetNuke
+﻿/* CKEditor Html Editor Provider for DNN
  * ========
  * https://github.com/w8tcha/dnnckeditor
  * Copyright (C) Ingo Herbote

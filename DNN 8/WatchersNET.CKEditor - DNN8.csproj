@@ -40,6 +40,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <UseGlobalApplicationHostFile />
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -79,28 +80,24 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DotNetNuke, Version=8.0.0.809, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dnn.Platform.8.0.0\lib\net40\DotNetNuke.dll</HintPath>
+    <Reference Include="DotNetNuke, Version=8.0.4.226, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetNuke.Core.8.0.4.226\lib\net40\DotNetNuke.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="DotNetNuke.Web, Version=8.0.0.809, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dnn.Platform.8.0.0\lib\net40\DotNetNuke.Web.dll</HintPath>
+    <Reference Include="DotNetNuke.Web, Version=8.0.4.226, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetNuke.Web.8.0.4.226\lib\net40\DotNetNuke.Web.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="DotNetNuke.Web.Client, Version=8.0.0.809, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dnn.Platform.8.0.0\lib\net40\DotNetNuke.Web.Client.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="DotNetNuke.Web.Razor, Version=8.0.0.809, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dnn.Platform.8.0.0\lib\net40\DotNetNuke.Web.Razor.dll</HintPath>
+    <Reference Include="DotNetNuke.Web.Client, Version=8.0.4.226, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetNuke.Web.Client.8.0.4.226\lib\net40\DotNetNuke.Web.Client.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="DotNetNuke.WebUtility, Version=4.2.1.783, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dnn.Platform.8.0.0\lib\net40\DotNetNuke.WebUtility.dll</HintPath>
+      <HintPath>..\packages\DotNetNuke.Web.8.0.4.226\lib\net40\DotNetNuke.WebUtility.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.ApplicationBlocks.Data, Version=2.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Dnn.Platform.8.0.0\lib\net40\Microsoft.ApplicationBlocks.Data.dll</HintPath>
+      <HintPath>..\packages\DotNetNuke.Core.8.0.4.226\lib\net40\Microsoft.ApplicationBlocks.Data.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="Microsoft.JScript" />
@@ -316,7 +313,7 @@
       <SubType>Designer</SubType>
     </None>
     <Content Include="Tabs.ashx" />
-    <Content Include="packages.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

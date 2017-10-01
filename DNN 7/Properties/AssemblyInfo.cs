@@ -1,5 +1,5 @@
 ﻿/*
- * CKEditor Html Editor Provider for DotNetNuke
+ * CKEditor Html Editor Provider for DNN
  * ========
  * https://github.com/w8tcha/dnnckeditor
  * Copyright (C) Ingo Herbote
@@ -12,4 +12,4 @@
 
 using System.Reflection;
 
-[assembly: AssemblyDescription("CKEditor HTML Editor Provider for DotNetNuke 7.x")]
+[assembly: AssemblyDescription("CKEditor HTML Editor Provider for DNN 7.x")]
