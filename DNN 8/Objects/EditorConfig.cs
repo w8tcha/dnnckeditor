@@ -56,6 +56,7 @@ namespace WatchersNET.CKEditor.Objects
             this.DisableReadonlyStyling = false;
             this.Div_WrapTable = false;
             this.DocType = "<!DOCTYPE html>";
+            this.EmbedProvider = "//ckeditor.iframe.ly/api/oembed?url={url}&callback={callback}";
             this.EnableTabKeyTools = true;
             this.EnterMode = EnterModus.P;
             this.Entities = true;
