@@ -36,28 +36,15 @@ namespace WatchersNET.CKEditor
         /// <summary>
         ///   Gets Current Language from Url
         /// </summary>
-        protected string LangCode
-        {
-            get
-            {
-                return CultureInfo.CurrentCulture.Name;
-            }
-        }
+        protected string LangCode => CultureInfo.CurrentCulture.Name;
 
         /// <summary>
         ///   Gets the Name for the Current Resource file name
         /// </summary>
-        protected string ResXFile
-        {
-            get
-            {
-                return
-                    this.ResolveUrl(
-                        string.Format(
-                            "~/Providers/HtmlEditorProviders/CKEditor/{0}/Options.aspx.resx",
-                            Localization.LocalResourceDirectory));
-            }
-        }
+        protected string ResXFile => this.ResolveUrl(
+            string.Format(
+                "~/Providers/HtmlEditorProviders/CKEditor/{0}/Options.aspx.resx",
+                Localization.LocalResourceDirectory));
 
         /// <summary>
         /// Handles the Load event of the Page control.
@@ -94,15 +81,11 @@ namespace WatchersNET.CKEditor
             foreach (var article in articleList)
             {
                 var articleUrl = Globals.NavigateURL(
-                     newsArcticlesTabId,
+                    newsArcticlesTabId,
                     string.Empty,
                     string.Format("articletype=ArticleView&articleId={0}", article.ArticleID));
 
-                ArticlesList.Items.Add(new ListItem
-                {
-                    Text = article.Title,
-                    Value = articleUrl
-                });
+                ArticlesList.Items.Add(new ListItem { Text = article.Title, Value = articleUrl });
             }
         }
 
@@ -117,7 +100,9 @@ namespace WatchersNET.CKEditor
 
             var objTabController = new TabController();
 
-            var objDesktopModuleInfo = DesktopModuleController.GetDesktopModuleByModuleName("DnnForge - NewsArticles", portalSettings.PortalId);
+            var objDesktopModuleInfo = DesktopModuleController.GetDesktopModuleByModuleName(
+                "DnnForge - NewsArticles",
+                portalSettings.PortalId);
 
             if (objDesktopModuleInfo == null)
             {
@@ -157,10 +142,25 @@ namespace WatchersNET.CKEditor
                     }
 
                     var objListItem = new ListItem
-                    {
-                        Value = string.Format("{0}-{1}", objModule.TabID, objModule.ModuleID),
-                        Text = string.Format("{2}: {0} -> {3}: {1}", strPath, objModule.ModuleTitle, Localization.GetString("Page.Text", this.ResXFile, this.LangCode), Localization.GetString("ModuleInstance.Text", this.ResXFile, this.LangCode))
-                    };
+                                          {
+                                              Value =
+                                                  string.Format(
+                                                      "{0}-{1}",
+                                                      objModule.TabID,
+                                                      objModule.ModuleID),
+                                              Text = string.Format(
+                                                  "{2}: {0} -> {3}: {1}",
+                                                  strPath,
+                                                  objModule.ModuleTitle,
+                                                  Localization.GetString(
+                                                      "Page.Text",
+                                                      this.ResXFile,
+                                                      this.LangCode),
+                                                  Localization.GetString(
+                                                      "ModuleInstance.Text",
+                                                      this.ResXFile,
+                                                      this.LangCode))
+                                          };
 
                     ModuleListDropDown.Items.Add(objListItem);
                 }
