@@ -96,7 +96,7 @@ namespace WatchersNET.CKEditor.Objects
             this.Magicline_HoldDistance = "0.5";
             this.Magicline_PutEverywhere = false;
             this.Magicline_TriggerOffset = 30;
-            this.MathJaxLib = "//cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML";
+            this.MathJaxLib = "//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_HTML";
             this.Menu_SubMenuDelay = 400;
             this.Menu_Groups = "clipboard,tablecell,tablecellproperties,tablerow,tablecolumn,table,anchor,link,image,flash,checkbox,radio,textfield,hiddenfield,imagebutton,button,select,textarea,div";
             this.PasteFromWordCleanupFile = string.Empty;

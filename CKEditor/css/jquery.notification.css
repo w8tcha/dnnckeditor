@@ -48,7 +48,6 @@ body{
 	border: 1px solid black;
 	
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
-	-webkit-filter: alpha(opacity=95);
 	-moz-filter: alpha(opacity=95);
 	-o-filter: alpha(opacity=95);
 	filter: alpha(opacity=95);

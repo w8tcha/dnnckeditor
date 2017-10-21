@@ -788,7 +788,7 @@ namespace WatchersNET.CKEditor.Web
                             // Add MathJax Plugin
                             postedValue =
                                 string.Format(
-                                    "<!-- Injected MathJax Code --><script type=\"text/javascript\" src=\"//cdn.mathjax.org/mathjax/2.3-latest/MathJax.js?config=TeX-AMS_HTML\"></script>{0}",
+                                    "<!-- Injected MathJax Code --><script type=\"text/javascript\" src=\"//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.2/MathJax.js?config=TeX-AMS_HTML\"></script>{0}",
                                     postedValue);
                         }
                     }

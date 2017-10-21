@@ -6,7 +6,7 @@
 <script runat="server">
 
     readonly HttpRequest request = HttpContext.Current.Request;
-    private PortalSettings _portalSettings;
+    private PortalSettings portalSettings;
     private bool bUseSubDirs;
 
     /// <summary>
@@ -16,7 +16,7 @@
     /// <returns></returns>
     public override bool CheckAuthentication()
     {
-        return (Session["CKDNNIsAuthorized"] != null && (bool)Session["CKDNNIsAuthorized"] &&
+        return (this.Session["CKDNNIsAuthorized"] != null && (bool)this.Session["CKDNNIsAuthorized"] &&
                 HttpContext.Current.Request.IsAuthenticated);
     }
 
@@ -25,39 +25,39 @@
     /// </summary>
     public override void SetConfig()
     {
-        if (Session["CKDNNSubDirs"] != null)
+        if (this.Session["CKDNNSubDirs"] != null)
         {
-            this.bUseSubDirs = (bool)Session["CKDNNSubDirs"];
+            this.bUseSubDirs = (bool)this.Session["CKDNNSubDirs"];
         }
 
-        this._portalSettings = this.GetPortalSettings();
+        this.portalSettings = this.GetPortalSettings();
 
         // Paste your license name and key here. If left blank, CKFinder will
         // be fully functional, in Demo Mode.
-        LicenseName = string.Empty;
-        LicenseKey = string.Empty;
+        this.LicenseName = string.Empty;
+        this.LicenseKey = string.Empty;
 
         string sStartDir;
         string sStartDirMapPath;
 
         if (PortalSecurity.IsInRole("Administrators"))
         {
-            sStartDir = this._portalSettings.HomeDirectory;
-            sStartDirMapPath = this._portalSettings.HomeDirectoryMapPath;
+            sStartDir = this.portalSettings.HomeDirectory;
+            sStartDirMapPath = this.portalSettings.HomeDirectoryMapPath;
         }
         else
         {
             if (this.bUseSubDirs)
             {
-                sStartDir = Path.Combine(this._portalSettings.HomeDirectory,
-                                         string.Format("userfiles/{0}/", this._portalSettings.UserInfo.Username));
-                sStartDirMapPath = Path.Combine(this._portalSettings.HomeDirectoryMapPath,
-                                                string.Format("userfiles/{0}/", this._portalSettings.UserInfo.Username));
+                sStartDir = Path.Combine(this.portalSettings.HomeDirectory,
+                                         string.Format("userfiles/{0}/", this.portalSettings.UserInfo.Username));
+                sStartDirMapPath = Path.Combine(this.portalSettings.HomeDirectoryMapPath,
+                                                string.Format("userfiles/{0}/", this.portalSettings.UserInfo.Username));
             }
             else
             {
-                sStartDir = this._portalSettings.HomeDirectory;
-                sStartDirMapPath = this._portalSettings.HomeDirectoryMapPath;
+                sStartDir = this.portalSettings.HomeDirectory;
+                sStartDirMapPath = this.portalSettings.HomeDirectoryMapPath;
             }
 
             if (!Directory.Exists(sStartDirMapPath))
@@ -67,70 +67,70 @@
         }
 
         // The base URL used to reach files in CKFinder through the browser.
-        BaseUrl = sStartDir;
+        this.BaseUrl = sStartDir;
 
         // The phisical directory in the server where the file will end up. If
         // blank, CKFinder attempts to resolve BaseUrl.
-        BaseDir = sStartDirMapPath;
+        this.BaseDir = sStartDirMapPath;
 
                 // Optional: enable extra plugins (remember to copy .dll files first).
-		Plugins = new string[] {
+        this.Plugins = new string[] {
 			// "CKFinder.Plugins.FileEditor, CKFinder_FileEditor",
 			// "CKFinder.Plugins.ImageResize, CKFinder_ImageResize"
 		};
 		// Settings for extra plugins.
-		PluginSettings = new Hashtable();
-		PluginSettings.Add("ImageResize_smallThumb", "90x90" );
-		PluginSettings.Add("ImageResize_mediumThumb", "120x120" );
-		PluginSettings.Add("ImageResize_largeThumb", "180x180" );
+        this.PluginSettings = new Hashtable();
+        this.PluginSettings.Add("ImageResize_smallThumb", "90x90" );
+        this.PluginSettings.Add("ImageResize_mediumThumb", "120x120" );
+        this.PluginSettings.Add("ImageResize_largeThumb", "180x180" );
         
 		// Thumbnail settings.
 		// "Url" is used to reach the thumbnails with the browser, while "Dir"
 		// points to the physical location of the thumbnail files in the server.
-        Thumbnails.Url = string.Format("{0}_thumbs/", BaseUrl);
-        Thumbnails.Dir = string.Format("{0}_thumbs/", BaseDir);
-		Thumbnails.Enabled = true;
-		Thumbnails.DirectAccess = false;
-		Thumbnails.MaxWidth = 100;
-		Thumbnails.MaxHeight = 100;
-		Thumbnails.Quality = 80;
+        this.Thumbnails.Url = string.Format("{0}_thumbs/", this.BaseUrl);
+        this.Thumbnails.Dir = string.Format("{0}_thumbs/", this.BaseDir);
+        this.Thumbnails.Enabled = true;
+        this.Thumbnails.DirectAccess = false;
+        this.Thumbnails.MaxWidth = 100;
+        this.Thumbnails.MaxHeight = 100;
+        this.Thumbnails.Quality = 80;
 
 		// Set the maximum size of uploaded images. If an uploaded image is
 		// larger, it gets scaled down proportionally. Set to 0 to disable this
 		// feature.
-		Images.MaxWidth = 1600;
-		Images.MaxHeight = 1200;
-		Images.Quality = 80;
+        this.Images.MaxWidth = 1600;
+        this.Images.MaxHeight = 1200;
+        this.Images.Quality = 80;
 
 		// Indicates that the file size (MaxSize) for images must be checked only
 		// after scaling them. Otherwise, it is checked right after uploading.
-		CheckSizeAfterScaling = true;
+        this.CheckSizeAfterScaling = true;
 
 		// Due to security issues with Apache modules, it is recommended to leave the
 		// following setting enabled. It can be safely disabled on IIS.
-		ForceSingleExtension = true;
+        this.ForceSingleExtension = true;
 
 		// For security, HTML is allowed in the first Kb of data for files having the
 		// following extensions only.
-		HtmlExtensions = new[] { "html", "htm", "xml", "js" };
+        this.HtmlExtensions = new[] { "html", "htm", "xml", "js" };
 
 		// Folders to not display in CKFinder, no matter their location. No
 		// paths are accepted, only the folder name.
 		// The * and ? wildcards are accepted.
-		HideFolders = new[] { ".svn", "CVS" };
+        this.HideFolders = new[] { ".svn", "CVS" };
 
 		// Files to not display in CKFinder, no matter their location. No
 		// paths are accepted, only the file name, including extension.
 		// The * and ? wildcards are accepted.
-		HideFiles = new[] { ".*" };
+        this.HideFiles = new[] { ".*" };
 
 		// Perform additional checks for image files.
-		SecureImageUploads = true;
+        this.SecureImageUploads = true;
 
 		// The session variable name that CKFinder must use to retrieve the
 		// "role" of the current user. The "role" is optional and can be used
 		// in the "AccessControl" settings (bellow in this file).
-		RoleSessionVar = "CKFinder_UserRole";
+        this.RoleSessionVar = "CKFinder_UserRole";
 
 		// ACL (Access Control) settings. Used to restrict access or features
 		// to specific folders.
@@ -143,7 +143,7 @@
 		//	  "everybody".
 		//	- The "ResourceType" attribute accepts the special value "*", which
 		//	  means "all resource types".
-		AccessControl acl = AccessControl.Add();
+		AccessControl acl = this.AccessControl.Add();
 		acl.Role = "*";
 		acl.ResourceType = "*";
 		acl.Folder = "/";
@@ -168,29 +168,30 @@
 		// resource type names separated by a comma). If left empty, all types
 		// are loaded.
 
-		DefaultResourceTypes = string.Empty;
+        this.DefaultResourceTypes = string.Empty;
 
-        ResourceType type = ResourceType.Add( "Files" );
-		type.Url = BaseUrl + "files/";
-		type.Dir = BaseDir == string.Empty ? string.Empty : BaseDir + "files/";
+        ResourceType type = this.ResourceType.Add( "Files" );
+		type.Url = this.BaseUrl + "files/";
+		type.Dir = this.BaseDir == string.Empty ? string.Empty : this.BaseDir + "files/";
 		type.MaxSize = 0;
 		type.AllowedExtensions = new[] { "7z", "aiff", "asf", "avi", "bmp", "csv", "doc", "fla", "flv", "gif", "gz", "gzip", "jpeg", "jpg", "mid", "mov", "mp3", "mp4", "mpc", "mpeg", "mpg", "ods", "odt", "pdf", "png", "ppt", "pxd", "qt", "ram", "rar", "rm", "rmi", "rmvb", "rtf", "sdc", "sitd", "swf", "sxc", "sxw", "tar", "tgz", "tif", "tiff", "txt", "vsd", "wav", "wma", "wmv", "xls", "zip" };
 		type.DeniedExtensions = new string[] { };
 
-		type = ResourceType.Add( "Images" );
-		type.Url = BaseUrl + "images/";
-		type.Dir = BaseDir == "" ? "" : BaseDir + "images/";
+		type = this.ResourceType.Add( "Images" );
+		type.Url = this.BaseUrl + "images/";
+		type.Dir = this.BaseDir == "" ? "" : this.BaseDir + "images/";
 		type.MaxSize = 0;
 		type.AllowedExtensions = new[] { "bmp", "gif", "jpeg", "jpg", "png" };
 		type.DeniedExtensions = new string[] { };
 
-		type = ResourceType.Add( "Flash" );
-		type.Url = BaseUrl + "flash/";
-        type.Dir = BaseDir == string.Empty ? string.Empty : BaseDir + "flash/";
+		type = this.ResourceType.Add( "Flash" );
+		type.Url = this.BaseUrl + "flash/";
+        type.Dir = this.BaseDir == string.Empty ? string.Empty : this.BaseDir + "flash/";
 		type.MaxSize = 0;
 		type.AllowedExtensions = new[] { "swf", "flv" };
 		type.DeniedExtensions = new string[] { };
 	}
+
     private PortalSettings GetPortalSettings()
     {
         int iTabId = 0, iPortalId = 0;
@@ -220,7 +221,7 @@
             }
 
 
-            var sDomainName = DotNetNuke.Common.Globals.GetDomainName(Request, true);
+            var sDomainName = DotNetNuke.Common.Globals.GetDomainName(this.Request, true);
 
             var sPortalAlias = PortalAliasController.GetPortalAliasByPortal(iPortalId, sDomainName);
 
