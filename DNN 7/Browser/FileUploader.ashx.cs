@@ -19,7 +19,6 @@ namespace WatchersNET.CKEditor.Browser
     using System.Web;
     using System.Web.Script.Serialization;
 
-    using DotNetNuke.Entities.Portals;
     using DotNetNuke.Services.FileSystem;
 
     using WatchersNET.CKEditor.Objects;

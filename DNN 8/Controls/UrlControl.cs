@@ -29,9 +29,9 @@ namespace WatchersNET.CKEditor.Controls
     public abstract class UrlControl : UserControl
     {
         /// <summary>
-        /// The _local resource file.
+        /// The local resource file.
         /// </summary>
-        private string _localResourceFile;
+        private string localResourceFile;
 
         /// <summary>
         /// The with events field folders.
@@ -82,15 +82,15 @@ namespace WatchersNET.CKEditor.Controls
         /// </summary>
         public string LocalResourceFile
         {
-            get => string.IsNullOrEmpty(this._localResourceFile)
+            get => string.IsNullOrEmpty(this.localResourceFile)
                        ? string.Format(
                            "{0}/{1}/URLControl.ascx.resx",
                            this.TemplateSourceDirectory.Replace(
                                "Providers/HtmlEditorProviders/CKEditor", "controls"),
                            Localization.LocalResourceDirectory)
-                       : this._localResourceFile;
+                       : this.localResourceFile;
 
-            set => this._localResourceFile = value;
+            set => this.localResourceFile = value;
         }
 
         /// <summary>
@@ -189,13 +189,13 @@ namespace WatchersNET.CKEditor.Controls
             {
                 if (this.folders != null)
                 {
-                    this.folders.SelectedIndexChanged -= this.Folders_SelectedIndexChanged;
+                    this.folders.SelectedIndexChanged -= this.FoldersSelectedIndexChanged;
                 }
 
                 this.folders = value;
                 if (this.folders != null)
                 {
-                    this.folders.SelectedIndexChanged += this.Folders_SelectedIndexChanged;
+                    this.folders.SelectedIndexChanged += this.FoldersSelectedIndexChanged;
                 }
             }
         }
@@ -217,27 +217,27 @@ namespace WatchersNET.CKEditor.Controls
 
             this.ReloadFiles = false;
 
-            var _url = Convert.ToString(this.ViewState["Url"]);
+            var url = Convert.ToString(this.ViewState["Url"]);
 
-            if (string.IsNullOrEmpty(_url))
+            if (string.IsNullOrEmpty(url))
             {
                 return;
             }
 
-            var _urltype = DotNetNuke.Common.Globals.GetURLType(_url).ToString("g").Substring(0, 1);
+            var urltype = DotNetNuke.Common.Globals.GetURLType(url).ToString("g").Substring(0, 1);
 
-            if (_urltype == "F")
+            if (urltype == "F")
             {
-                if (_url.ToLower().StartsWith("fileid="))
+                if (url.ToLower().StartsWith("fileid="))
                 {
-                    var objFile = FileManager.Instance.GetFile(int.Parse(_url.Substring(7)));
+                    var objFile = FileManager.Instance.GetFile(int.Parse(url.Substring(7)));
                     
                     if (objFile != null)
                     {
-                        _url = objFile.Folder + objFile.FileName;
+                        url = objFile.Folder + objFile.FileName;
 
-                        var fileName = _url.Substring(_url.LastIndexOf("/", StringComparison.Ordinal) + 1);
-                        var folderPath = _url.Replace(fileName, string.Empty);
+                        var fileName = url.Substring(url.LastIndexOf("/", StringComparison.Ordinal) + 1);
+                        var folderPath = url.Replace(fileName, string.Empty);
 
                         if (this.Folders.Items.FindByValue(folderPath) != null)
                         {
@@ -264,7 +264,7 @@ namespace WatchersNET.CKEditor.Controls
                 }
             }
 
-            this.ViewState["Url"] = _url;
+            this.ViewState["Url"] = url;
         }
 
         /// <summary>
@@ -333,7 +333,7 @@ namespace WatchersNET.CKEditor.Controls
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        private void Folders_SelectedIndexChanged(object sender, EventArgs e)
+        private void FoldersSelectedIndexChanged(object sender, EventArgs e)
         {
             this.Files.Items.Clear();
             this.Files.DataSource = this.GetFileList(true);

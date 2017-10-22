@@ -1,22 +1,4 @@
 <%@ Control Language="c#" AutoEventWireup="false" Inherits="WatchersNET.CKEditor.Controls.UrlControl" %>
-<%@ Import Namespace="System.Web.DynamicData" %>
-<%@ Import Namespace="System.Web.DynamicData" %>
-<%@ Import Namespace="System.Web.DynamicData" %>
-<%@ Import Namespace="System.Web.UI" %>
-<%@ Import Namespace="System.Web.UI" %>
-<%@ Import Namespace="System.Web.UI" %>
-<%@ Import Namespace="System.Web.UI.WebControls" %>
-<%@ Import Namespace="System.Web.UI.WebControls" %>
-<%@ Import Namespace="System.Web.UI.WebControls" %>
-<%@ Import Namespace="System.Web.UI.WebControls" %>
-<%@ Import Namespace="System.Web.UI.WebControls" %>
-<%@ Import Namespace="System.Web.UI.WebControls" %>
-<%@ Import Namespace="System.Web.UI.WebControls.Expressions" %>
-<%@ Import Namespace="System.Web.UI.WebControls.Expressions" %>
-<%@ Import Namespace="System.Web.UI.WebControls.Expressions" %>
-<%@ Import Namespace="System.Web.UI.WebControls.WebParts" %>
-<%@ Import Namespace="System.Web.UI.WebControls.WebParts" %>
-<%@ Import Namespace="System.Web.UI.WebControls.WebParts" %>
 
 <div>
     <asp:Label ID="FolderLabel" runat="server" EnableViewState="False" resourcekey="Folder" CssClass="NormalBold" />

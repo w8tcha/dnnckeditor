@@ -55,6 +55,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DNN 9", "DNN 9", "{15FAB77E
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchersNET.CKEditor - DNN9", "DNN 9\WatchersNET.CKEditor - DNN9.csproj", "{C6FD76D7-A04A-4EA5-8E5C-6B62201B5F61}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "plugins", "plugins", "{0B74DC04-7B76-4530-9EE5-246B9FA6F962}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "newsarticleslinks", "newsarticleslinks", "{EBAC1765-5BF2-4943-A79A-9CC27AAE09A1}"
+	ProjectSection(SolutionItems) = preProject
+		CKEditor\plugins\newsarticleslinks\plugin.js = CKEditor\plugins\newsarticleslinks\plugin.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dialogs", "dialogs", "{04279854-1379-4C7A-B74F-DA70BE21B2B8}"
+	ProjectSection(SolutionItems) = preProject
+		CKEditor\plugins\newsarticleslinks\dialogs\newsarticleslinks.aspx = CKEditor\plugins\newsarticleslinks\dialogs\newsarticleslinks.aspx
+		CKEditor\plugins\newsarticleslinks\dialogs\newsarticleslinks.aspx.cs = CKEditor\plugins\newsarticleslinks\dialogs\newsarticleslinks.aspx.cs
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,6 +104,9 @@ Global
 		{3C355F50-802D-431C-8077-B8CE4C6A92B4} = {60E6AFFA-BD7F-488B-A565-4EA5D1B1F5DF}
 		{01E029F0-B43A-4B61-883A-DC932D42E9C6} = {940329D4-02D2-4998-BA24-1F48F4D7C9F4}
 		{C6FD76D7-A04A-4EA5-8E5C-6B62201B5F61} = {15FAB77E-8717-4C34-AE4E-0BC400E9D2C2}
+		{0B74DC04-7B76-4530-9EE5-246B9FA6F962} = {60E6AFFA-BD7F-488B-A565-4EA5D1B1F5DF}
+		{EBAC1765-5BF2-4943-A79A-9CC27AAE09A1} = {0B74DC04-7B76-4530-9EE5-246B9FA6F962}
+		{04279854-1379-4C7A-B74F-DA70BE21B2B8} = {EBAC1765-5BF2-4943-A79A-9CC27AAE09A1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EE97A8CF-DC4E-46F4-BF8B-1068F737EEE5}

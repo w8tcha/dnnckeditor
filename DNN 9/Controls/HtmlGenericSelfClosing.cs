@@ -15,7 +15,6 @@ namespace WatchersNET.CKEditor.Controls
     #region
 
     using System;
-    using System.Collections;
     using System.Web.UI;
     using System.Web.UI.HtmlControls;
 
@@ -38,11 +37,11 @@ namespace WatchersNET.CKEditor.Controls
         /// <summary>
         /// Initializes a new instance of the <see cref="HtmlGenericSelfClosing"/> class.
         /// </summary>
-        /// <param name="sTag">
+        /// <param name="tag">
         /// The s tag.
         /// </param>
-        public HtmlGenericSelfClosing(string sTag)
-            : base(sTag)
+        public HtmlGenericSelfClosing(string tag)
+            : base(tag)
         {
         }
 
@@ -54,13 +53,7 @@ namespace WatchersNET.CKEditor.Controls
         /// Gets Controls.
         /// </summary>
         /// <exception cref="Exception">A self closing tag cannot have child controls and/or content</exception>
-        public override ControlCollection Controls
-        {
-            get
-            {
-                throw new Exception("A self closing tag cannot have child controls and/or content");
-            }
-        }
+        public override ControlCollection Controls => throw new Exception("A self closing tag cannot have child controls and/or content");
 
         /// <summary>
         /// Gets or sets InnerHtml.
@@ -70,10 +63,7 @@ namespace WatchersNET.CKEditor.Controls
         {
             get => null;
 
-            set
-            {
-                throw new Exception("A self closing tag cannot have child controls and/or content");
-            }
+            set => throw new Exception("A self closing tag cannot have child controls and/or content");
         }
 
         /// <summary>
@@ -84,10 +74,7 @@ namespace WatchersNET.CKEditor.Controls
         {
             get => null;
 
-            set
-            {
-                throw new Exception("A self closing tag cannot have child controls and/or content");
-            }
+            set => throw new Exception("A self closing tag cannot have child controls and/or content");
         }
 
         #endregion

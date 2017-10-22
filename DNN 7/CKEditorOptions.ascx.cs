@@ -21,14 +21,12 @@ namespace WatchersNET.CKEditor
     using System.Globalization;
     using System.IO;
     using System.Linq;
-    using System.Reflection;
     using System.Web;
     using System.Web.UI;
     using System.Web.UI.HtmlControls;
     using System.Web.UI.WebControls;
     using System.Xml.Serialization;
 
-    using DotNetNuke.Collections;
     using DotNetNuke.Common;
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Entities.Modules;

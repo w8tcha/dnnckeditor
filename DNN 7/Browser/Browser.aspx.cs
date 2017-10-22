@@ -41,7 +41,6 @@ namespace WatchersNET.CKEditor.Browser
     using DotNetNuke.Security.Permissions;
     using DotNetNuke.Security.Roles;
     using DotNetNuke.Services.FileSystem;
-    using DotNetNuke.Services.Installer.Log;
     using DotNetNuke.Services.Localization;
     using DotNetNuke.UI.Utilities;
 

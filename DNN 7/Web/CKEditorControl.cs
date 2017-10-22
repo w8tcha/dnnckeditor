@@ -21,7 +21,6 @@ namespace WatchersNET.CKEditor.Web
     using System.Globalization;
     using System.IO;
     using System.Linq;
-    using System.Reflection;
     using System.Text;
     using System.Threading;
     using System.Web;
@@ -45,8 +44,6 @@ namespace WatchersNET.CKEditor.Web
     using WatchersNET.CKEditor.Extensions;
     using WatchersNET.CKEditor.Objects;
     using WatchersNET.CKEditor.Utilities;
-
-    using Assembly = System.Reflection.Assembly;
 
     #endregion
 
