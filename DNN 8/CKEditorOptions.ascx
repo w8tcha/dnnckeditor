@@ -129,11 +129,6 @@
           </asp:GridView>
         </td>
       </tr>
-       <tr>
-        <td class="settingNameColumn"><asp:label id="lblCustomConfig" runat="server">Custom Config File</asp:label></td>
-        <td class="settingValueColumn"><dnn:url id="ctlConfigUrl" runat="server" width="400" showtabs="False" Required="False" filefilter="js" showupload="False" showfiles="True" showUrls="True"
-					urltype="F" showlog="False" shownewwindow="False" showtrack="False"></dnn:url></td>
-      </tr>
       <tr>
         <td class="settingNameColumn">
           <asp:label id="lblWidth" runat="server">Editor Width:</asp:label>

@@ -311,15 +311,6 @@ namespace WatchersNET.CKEditor.Web
                     this._settings["language"] = "en";
                 }
 
-                if (!string.IsNullOrEmpty(this.currentSettings.Config.CustomConfig))
-                {
-                    this._settings["customConfig"] = this.FormatUrl(this.currentSettings.Config.CustomConfig);
-                }
-                else
-                {
-                    this._settings["customConfig"] = string.Empty;
-                }
-
                 if (!string.IsNullOrEmpty(this.currentSettings.Config.Skin))
                 {
                     if (this.currentSettings.Config.Skin.Equals("office2003")

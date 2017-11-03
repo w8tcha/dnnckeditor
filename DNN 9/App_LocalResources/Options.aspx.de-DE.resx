@@ -215,9 +215,6 @@
   <data name="lblTemplFiles.Text" xml:space="preserve">
     <value>Editor Vorlagen Datei:</value>
   </data>
-  <data name="lblCustomConfig.Text" xml:space="preserve">
-    <value>Eigene Config Datei:</value>
-  </data>
   <data name="AddToolbar.Text" xml:space="preserve">
     <value>Neue Toolbar Set hinzufügen</value>
   </data>

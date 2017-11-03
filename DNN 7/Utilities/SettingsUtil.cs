@@ -1455,7 +1455,6 @@ namespace WatchersNET.CKEditor.Utilities
                 Browser = oldDefaultSettings.sBrowser,
                 Config =
                 {
-                    CustomConfig = oldDefaultSettings.sConfig,
                     ContentsCss = oldDefaultSettings.sCss,
                     Skin = oldDefaultSettings.sSkin,
                     Templates_Files = oldDefaultSettings.sTemplates,

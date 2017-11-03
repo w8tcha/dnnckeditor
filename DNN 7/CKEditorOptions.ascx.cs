@@ -243,17 +243,6 @@ namespace WatchersNET.CKEditor
         }
 
         /// <summary>
-        ///   Gets the Config Url Control.
-        /// </summary>
-        private UrlControl ConfigUrl
-        {
-            get
-            {
-                return this.ctlConfigUrl;
-            }
-        }
-
-        /// <summary>
         ///   Gets the CSS Url Control.
         /// </summary>
         private UrlControl CssUrl
@@ -936,11 +925,6 @@ namespace WatchersNET.CKEditor
             if (!string.IsNullOrEmpty(importedSettings.CustomJsFile))
             {
                 this.CustomJsFile.Url = this.ReFormatURL(importedSettings.CustomJsFile);
-            }
-
-            if (!string.IsNullOrEmpty(importedSettings.Config.CustomConfig))
-            {
-                this.ConfigUrl.Url = this.ReFormatURL(importedSettings.Config.CustomConfig);
             }
 
             if (!string.IsNullOrEmpty(importedSettings.BrowserRoles))
@@ -1860,11 +1844,6 @@ namespace WatchersNET.CKEditor
                 this.TemplUrl.Url = ckeditorProvider.Attributes["ck_templates_files"];
             }
 
-            if (ckeditorProvider.Attributes["ck_customConfig"] != string.Empty)
-            {
-                this.ConfigUrl.Url = ckeditorProvider.Attributes["ck_customConfig"];
-            }
-
             /*var configPathComplete = !string.IsNullOrEmpty(this.configFolder)
                                          ? Path.Combine(this._portalSettings.HomeDirectoryMapPath, this.configFolder)
                                          : this._portalSettings.HomeDirectoryMapPath;
@@ -2582,10 +2561,6 @@ namespace WatchersNET.CKEditor
                 this.ModuleId,
                 string.Format("{0}{1}", key, SettingConstants.CUSTOMJSFILE),
                 this.CustomJsFile.Url);
-            moduleController.UpdateModuleSetting(
-                this.ModuleId,
-                string.Format("{0}{1}", key, SettingConstants.CONFIG),
-                this.ConfigUrl.Url);
 
             var sRoles = this.chblBrowsGr.Items.Cast<ListItem>()
                 .Where(item => item.Selected)
@@ -2900,9 +2875,6 @@ namespace WatchersNET.CKEditor
             Utility.AddOrUpdateEditorHostSetting(
                 string.Format("{0}{1}", key, SettingConstants.CUSTOMJSFILE),
                 this.CustomJsFile.Url);
-            Utility.AddOrUpdateEditorHostSetting(
-                string.Format("{0}{1}", key, SettingConstants.CONFIG),
-                this.ConfigUrl.Url);
 
             var sRoles = this.chblBrowsGr.Items.Cast<ListItem>()
                 .Where(item => item.Selected)
@@ -3046,7 +3018,6 @@ namespace WatchersNET.CKEditor
             this.OverrideFileOnUploadLabel.Text = Localization.GetString("OverrideFileOnUploadLabel.Text", this.ResXFile, this.LangCode);
             this.lblBrowserDirs.Text = Localization.GetString("lblBrowserDirs.Text", this.ResXFile, this.LangCode);
             this.UploadFolderLabel.Text = Localization.GetString("UploadFolderLabel.Text", this.ResXFile, this.LangCode);
-            this.lblCustomConfig.Text = Localization.GetString("lblCustomConfig.Text", this.ResXFile, this.LangCode);
             this.lblInjectSyntaxJs.Text = Localization.GetString("lblInjectSyntaxJs.Text", this.ResXFile, this.LangCode);
             this.lblWidth.Text = Localization.GetString("lblWidth.Text", this.ResXFile, this.LangCode);
             this.lblHeight.Text = Localization.GetString("lblHeight.Text", this.ResXFile, this.LangCode);
@@ -3314,7 +3285,6 @@ namespace WatchersNET.CKEditor
         private void RenderUrlControls(bool reloadControls = false)
         {
             // Assign Url Controls on the Page the Correct Portal Id
-            this.ConfigUrl.PortalId = this._portalSettings.PortalId;
             this.TemplUrl.PortalId = this._portalSettings.PortalId;
             this.CustomJsFile.PortalId = this._portalSettings.PortalId;
             this.CssUrl.PortalId = this._portalSettings.PortalId;
@@ -3326,7 +3296,6 @@ namespace WatchersNET.CKEditor
             }
 
             this.TemplUrl.ReloadFiles = true;
-            this.ConfigUrl.ReloadFiles = true;
             this.CustomJsFile.ReloadFiles = true;
             this.CssUrl.ReloadFiles = true;
             this.ImportFile.ReloadFiles = true;
@@ -3584,7 +3553,6 @@ namespace WatchersNET.CKEditor
             exportSettings.Config.ContentsCss = this.CssUrl.Url;
             exportSettings.Config.Templates_Files = this.TemplUrl.Url;
             exportSettings.CustomJsFile = this.CustomJsFile.Url;
-            exportSettings.Config.CustomConfig = this.ConfigUrl.Url;
 
             var sRoles = this.chblBrowsGr.Items.Cast<ListItem>()
                 .Where(item => item.Selected)

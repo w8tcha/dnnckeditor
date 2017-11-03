@@ -8,15 +8,10 @@
 //------------------------------------------------------------------------------
 
 namespace WatchersNET.CKEditor {
-    using System.Web.UI;
-    using System.Web.UI.HtmlControls;
-    using System.Web.UI.WebControls;
-
-    using WatchersNET.CKEditor.Controls;
-
+    
+    
     public partial class CKEditorOptions {
         
-
         /// <summary>
         /// lblSettings-Steuerelement
         /// </summary>
@@ -24,9 +19,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label lblSettings;
+        protected global::System.Web.UI.WebControls.Label lblSettings;
         
-
         /// <summary>
         /// lblSetFor-Steuerelement
         /// </summary>
@@ -34,9 +28,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label lblSetFor;
+        protected global::System.Web.UI.WebControls.Label lblSetFor;
         
-
         /// <summary>
         /// rBlSetMode-Steuerelement
         /// </summary>
@@ -44,9 +37,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected RadioButtonList rBlSetMode;
+        protected global::System.Web.UI.WebControls.RadioButtonList rBlSetMode;
         
-
         /// <summary>
         /// CopyToAllChild-Steuerelement
         /// </summary>
@@ -54,9 +46,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected LinkButton CopyToAllChild;
+        protected global::System.Web.UI.WebControls.LinkButton CopyToAllChild;
         
-
         /// <summary>
         /// lnkRemoveAll-Steuerelement
         /// </summary>
@@ -64,9 +55,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected LinkButton lnkRemoveAll;
+        protected global::System.Web.UI.WebControls.LinkButton lnkRemoveAll;
         
-
         /// <summary>
         /// lnkRemoveChild-Steuerelement
         /// </summary>
@@ -74,9 +64,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected LinkButton lnkRemoveChild;
+        protected global::System.Web.UI.WebControls.LinkButton lnkRemoveChild;
         
-
         /// <summary>
         /// lnkRemove-Steuerelement
         /// </summary>
@@ -84,9 +73,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected LinkButton lnkRemove;
+        protected global::System.Web.UI.WebControls.LinkButton lnkRemove;
         
-
         /// <summary>
         /// lblImport-Steuerelement
         /// </summary>
@@ -94,9 +82,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label lblImport;
+        protected global::System.Web.UI.WebControls.Label lblImport;
         
-
         /// <summary>
         /// lblExport-Steuerelement
         /// </summary>
@@ -104,9 +91,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label lblExport;
+        protected global::System.Web.UI.WebControls.Label lblExport;
         
-
         /// <summary>
         /// ExportDialogUpdatePanel-Steuerelement
         /// </summary>
@@ -114,9 +100,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected UpdatePanel ExportDialogUpdatePanel;
+        protected global::System.Web.UI.UpdatePanel ExportDialogUpdatePanel;
         
-
         /// <summary>
         /// ExportDir-Steuerelement
         /// </summary>
@@ -124,9 +109,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected DropDownList ExportDir;
+        protected global::System.Web.UI.WebControls.DropDownList ExportDir;
         
-
         /// <summary>
         /// ExportFileName-Steuerelement
         /// </summary>
@@ -134,9 +118,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected TextBox ExportFileName;
+        protected global::System.Web.UI.WebControls.TextBox ExportFileName;
         
-
         /// <summary>
         /// ExportNow-Steuerelement
         /// </summary>
@@ -144,9 +127,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected LinkButton ExportNow;
+        protected global::System.Web.UI.WebControls.LinkButton ExportNow;
         
-
         /// <summary>
         /// HiddenMessage-Steuerelement
         /// </summary>
@@ -154,9 +136,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected HiddenField HiddenMessage;
+        protected global::System.Web.UI.WebControls.HiddenField HiddenMessage;
         
-
         /// <summary>
         /// upNewUpdatePanel-Steuerelement
         /// </summary>
@@ -164,9 +145,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected UpdatePanel upNewUpdatePanel;
+        protected global::System.Web.UI.UpdatePanel upNewUpdatePanel;
         
-
         /// <summary>
         /// ctlImportFile-Steuerelement
         /// </summary>
@@ -174,9 +154,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected UrlControl ctlImportFile;
+        protected global::WatchersNET.CKEditor.Controls.UrlControl ctlImportFile;
         
-
         /// <summary>
         /// lnkImportNow-Steuerelement
         /// </summary>
@@ -184,9 +163,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected LinkButton lnkImportNow;
+        protected global::System.Web.UI.WebControls.LinkButton lnkImportNow;
         
-
         /// <summary>
         /// upOptions-Steuerelement
         /// </summary>
@@ -194,9 +172,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected UpdatePanel upOptions;
+        protected global::System.Web.UI.UpdatePanel upOptions;
         
-
         /// <summary>
         /// LastTabId-Steuerelement
         /// </summary>
@@ -204,9 +181,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected HiddenField LastTabId;
+        protected global::System.Web.UI.WebControls.HiddenField LastTabId;
         
-
         /// <summary>
         /// InfoTabLi-Steuerelement
         /// </summary>
@@ -214,9 +190,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected HtmlGenericControl InfoTabLi;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl InfoTabLi;
         
-
         /// <summary>
         /// lblHeader-Steuerelement
         /// </summary>
@@ -224,9 +199,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label lblHeader;
+        protected global::System.Web.UI.WebControls.Label lblHeader;
         
-
         /// <summary>
         /// lblMainSet-Steuerelement
         /// </summary>
@@ -234,9 +208,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label lblMainSet;
+        protected global::System.Web.UI.WebControls.Label lblMainSet;
         
-
         /// <summary>
         /// lblEditorConfig-Steuerelement
         /// </summary>
@@ -244,9 +217,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label lblEditorConfig;
+        protected global::System.Web.UI.WebControls.Label lblEditorConfig;
         
-
         /// <summary>
         /// lblBrowsSec-Steuerelement
         /// </summary>
@@ -254,9 +226,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label lblBrowsSec;
+        protected global::System.Web.UI.WebControls.Label lblBrowsSec;
         
-
         /// <summary>
         /// lblCustomToolbars-Steuerelement
         /// </summary>
@@ -264,9 +235,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label lblCustomToolbars;
+        protected global::System.Web.UI.WebControls.Label lblCustomToolbars;
         
-
         /// <summary>
         /// InfoTabHolder-Steuerelement
         /// </summary>
@@ -274,9 +244,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected PlaceHolder InfoTabHolder;
+        protected global::System.Web.UI.WebControls.PlaceHolder InfoTabHolder;
         
-
         /// <summary>
         /// ProviderVersion-Steuerelement
         /// </summary>
@@ -284,9 +253,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label ProviderVersion;
+        protected global::System.Web.UI.WebControls.Label ProviderVersion;
         
-
         /// <summary>
         /// lblPortal-Steuerelement
         /// </summary>
@@ -294,9 +262,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label lblPortal;
+        protected global::System.Web.UI.WebControls.Label lblPortal;
         
-
         /// <summary>
         /// lblPage-Steuerelement
         /// </summary>
@@ -304,9 +271,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label lblPage;
+        protected global::System.Web.UI.WebControls.Label lblPage;
         
-
         /// <summary>
         /// lblModType-Steuerelement
         /// </summary>
@@ -314,9 +280,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label lblModType;
+        protected global::System.Web.UI.WebControls.Label lblModType;
         
-
         /// <summary>
         /// lblModName-Steuerelement
         /// </summary>
@@ -324,9 +289,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label lblModName;
+        protected global::System.Web.UI.WebControls.Label lblModName;
         
-
         /// <summary>
         /// lblModInst-Steuerelement
         /// </summary>
@@ -334,9 +298,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label lblModInst;
+        protected global::System.Web.UI.WebControls.Label lblModInst;
         
-
         /// <summary>
         /// lblUName-Steuerelement
         /// </summary>
@@ -344,9 +307,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label lblUName;
+        protected global::System.Web.UI.WebControls.Label lblUName;
         
-
         /// <summary>
         /// lblBlanktext-Steuerelement
         /// </summary>
@@ -354,9 +316,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label lblBlanktext;
+        protected global::System.Web.UI.WebControls.Label lblBlanktext;
         
-
         /// <summary>
         /// txtBlanktext-Steuerelement
         /// </summary>
@@ -364,9 +325,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected TextBox txtBlanktext;
+        protected global::System.Web.UI.WebControls.TextBox txtBlanktext;
         
-
         /// <summary>
         /// lblSkin-Steuerelement
         /// </summary>
@@ -374,9 +334,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label lblSkin;
+        protected global::System.Web.UI.WebControls.Label lblSkin;
         
-
         /// <summary>
         /// ddlSkin-Steuerelement
         /// </summary>
@@ -384,9 +343,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected DropDownList ddlSkin;
+        protected global::System.Web.UI.WebControls.DropDownList ddlSkin;
         
-
         /// <summary>
         /// CodeMirrorLabel-Steuerelement
         /// </summary>
@@ -394,9 +352,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label CodeMirrorLabel;
+        protected global::System.Web.UI.WebControls.Label CodeMirrorLabel;
         
-
         /// <summary>
         /// CodeMirrorTheme-Steuerelement
         /// </summary>
@@ -404,9 +361,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected DropDownList CodeMirrorTheme;
+        protected global::System.Web.UI.WebControls.DropDownList CodeMirrorTheme;
         
-
         /// <summary>
         /// lblToolbars-Steuerelement
         /// </summary>
@@ -414,9 +370,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label lblToolbars;
+        protected global::System.Web.UI.WebControls.Label lblToolbars;
         
-
         /// <summary>
         /// gvToolbars-Steuerelement
         /// </summary>
@@ -424,29 +379,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected GridView gvToolbars;
+        protected global::System.Web.UI.WebControls.GridView gvToolbars;
         
-
-        /// <summary>
-        /// lblCustomConfig-Steuerelement
-        /// </summary>
-        /// <remarks>
-        /// Automatisch generiertes Feld
-        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
-        /// </remarks>
-        protected Label lblCustomConfig;
-        
-
-        /// <summary>
-        /// ctlConfigUrl-Steuerelement
-        /// </summary>
-        /// <remarks>
-        /// Automatisch generiertes Feld
-        /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
-        /// </remarks>
-        protected UrlControl ctlConfigUrl;
-        
-
         /// <summary>
         /// lblWidth-Steuerelement
         /// </summary>
@@ -454,9 +388,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label lblWidth;
+        protected global::System.Web.UI.WebControls.Label lblWidth;
         
-
         /// <summary>
         /// txtWidth-Steuerelement
         /// </summary>
@@ -464,9 +397,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected TextBox txtWidth;
+        protected global::System.Web.UI.WebControls.TextBox txtWidth;
         
-
         /// <summary>
         /// lblHeight-Steuerelement
         /// </summary>
@@ -474,9 +406,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label lblHeight;
+        protected global::System.Web.UI.WebControls.Label lblHeight;
         
-
         /// <summary>
         /// txtHeight-Steuerelement
         /// </summary>
@@ -484,9 +415,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected TextBox txtHeight;
+        protected global::System.Web.UI.WebControls.TextBox txtHeight;
         
-
         /// <summary>
         /// lblInjectSyntaxJs-Steuerelement
         /// </summary>
@@ -494,9 +424,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label lblInjectSyntaxJs;
+        protected global::System.Web.UI.WebControls.Label lblInjectSyntaxJs;
         
-
         /// <summary>
         /// InjectSyntaxJs-Steuerelement
         /// </summary>
@@ -504,9 +433,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected CheckBox InjectSyntaxJs;
+        protected global::System.Web.UI.WebControls.CheckBox InjectSyntaxJs;
         
-
         /// <summary>
         /// lblCssurl-Steuerelement
         /// </summary>
@@ -514,9 +442,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label lblCssurl;
+        protected global::System.Web.UI.WebControls.Label lblCssurl;
         
-
         /// <summary>
         /// ctlCssurl-Steuerelement
         /// </summary>
@@ -524,9 +451,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected UrlControl ctlCssurl;
+        protected global::WatchersNET.CKEditor.Controls.UrlControl ctlCssurl;
         
-
         /// <summary>
         /// lblTemplFiles-Steuerelement
         /// </summary>
@@ -534,9 +460,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label lblTemplFiles;
+        protected global::System.Web.UI.WebControls.Label lblTemplFiles;
         
-
         /// <summary>
         /// ctlTemplUrl-Steuerelement
         /// </summary>
@@ -544,9 +469,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected UrlControl ctlTemplUrl;
+        protected global::WatchersNET.CKEditor.Controls.UrlControl ctlTemplUrl;
         
-
         /// <summary>
         /// CustomJsFileLabel-Steuerelement
         /// </summary>
@@ -554,9 +478,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label CustomJsFileLabel;
+        protected global::System.Web.UI.WebControls.Label CustomJsFileLabel;
         
-
         /// <summary>
         /// ctlCustomJsFile-Steuerelement
         /// </summary>
@@ -564,9 +487,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected UrlControl ctlCustomJsFile;
+        protected global::WatchersNET.CKEditor.Controls.UrlControl ctlCustomJsFile;
         
-
         /// <summary>
         /// lblBrowser-Steuerelement
         /// </summary>
@@ -574,9 +496,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label lblBrowser;
+        protected global::System.Web.UI.WebControls.Label lblBrowser;
         
-
         /// <summary>
         /// ddlBrowser-Steuerelement
         /// </summary>
@@ -584,9 +505,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected DropDownList ddlBrowser;
+        protected global::System.Web.UI.WebControls.DropDownList ddlBrowser;
         
-
         /// <summary>
         /// lblBrowAllow-Steuerelement
         /// </summary>
@@ -594,9 +514,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label lblBrowAllow;
+        protected global::System.Web.UI.WebControls.Label lblBrowAllow;
         
-
         /// <summary>
         /// chblBrowsGr-Steuerelement
         /// </summary>
@@ -604,9 +523,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected CheckBoxList chblBrowsGr;
+        protected global::System.Web.UI.WebControls.CheckBoxList chblBrowsGr;
         
-
         /// <summary>
         /// AllowedImageExtensionLabel-Steuerelement
         /// </summary>
@@ -614,9 +532,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label AllowedImageExtensionLabel;
+        protected global::System.Web.UI.WebControls.Label AllowedImageExtensionLabel;
         
-
         /// <summary>
         /// AllowedImageExtensions-Steuerelement
         /// </summary>
@@ -624,9 +541,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected TextBox AllowedImageExtensions;
+        protected global::System.Web.UI.WebControls.TextBox AllowedImageExtensions;
         
-
         /// <summary>
         /// BrowserRootFolder-Steuerelement
         /// </summary>
@@ -634,9 +550,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label BrowserRootFolder;
+        protected global::System.Web.UI.WebControls.Label BrowserRootFolder;
         
-
         /// <summary>
         /// BrowserRootDir-Steuerelement
         /// </summary>
@@ -644,9 +559,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected DropDownList BrowserRootDir;
+        protected global::System.Web.UI.WebControls.DropDownList BrowserRootDir;
         
-
         /// <summary>
         /// lblBrowserDirs-Steuerelement
         /// </summary>
@@ -654,9 +568,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label lblBrowserDirs;
+        protected global::System.Web.UI.WebControls.Label lblBrowserDirs;
         
-
         /// <summary>
         /// cbBrowserDirs-Steuerelement
         /// </summary>
@@ -664,9 +577,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected CheckBox cbBrowserDirs;
+        protected global::System.Web.UI.WebControls.CheckBox cbBrowserDirs;
         
-
         /// <summary>
         /// UploadFolderLabel-Steuerelement
         /// </summary>
@@ -674,9 +586,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label UploadFolderLabel;
+        protected global::System.Web.UI.WebControls.Label UploadFolderLabel;
         
-
         /// <summary>
         /// UploadDir-Steuerelement
         /// </summary>
@@ -684,9 +595,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected DropDownList UploadDir;
+        protected global::System.Web.UI.WebControls.DropDownList UploadDir;
         
-
         /// <summary>
         /// OverrideFileOnUploadLabel-Steuerelement
         /// </summary>
@@ -694,9 +604,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label OverrideFileOnUploadLabel;
+        protected global::System.Web.UI.WebControls.Label OverrideFileOnUploadLabel;
         
-
         /// <summary>
         /// OverrideFileOnUpload-Steuerelement
         /// </summary>
@@ -704,9 +613,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected CheckBox OverrideFileOnUpload;
+        protected global::System.Web.UI.WebControls.CheckBox OverrideFileOnUpload;
         
-
         /// <summary>
         /// UploadFileLimitLabel-Steuerelement
         /// </summary>
@@ -714,9 +622,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label UploadFileLimitLabel;
+        protected global::System.Web.UI.WebControls.Label UploadFileLimitLabel;
         
-
         /// <summary>
         /// UploadFileLimits-Steuerelement
         /// </summary>
@@ -724,9 +631,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected GridView UploadFileLimits;
+        protected global::System.Web.UI.WebControls.GridView UploadFileLimits;
         
-
         /// <summary>
         /// lblResizeWidth-Steuerelement
         /// </summary>
@@ -734,9 +640,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label lblResizeWidth;
+        protected global::System.Web.UI.WebControls.Label lblResizeWidth;
         
-
         /// <summary>
         /// txtResizeWidth-Steuerelement
         /// </summary>
@@ -744,9 +649,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected TextBox txtResizeWidth;
+        protected global::System.Web.UI.WebControls.TextBox txtResizeWidth;
         
-
         /// <summary>
         /// lblResizeHeight-Steuerelement
         /// </summary>
@@ -754,9 +658,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label lblResizeHeight;
+        protected global::System.Web.UI.WebControls.Label lblResizeHeight;
         
-
         /// <summary>
         /// txtResizeHeight-Steuerelement
         /// </summary>
@@ -764,9 +667,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected TextBox txtResizeHeight;
+        protected global::System.Web.UI.WebControls.TextBox txtResizeHeight;
         
-
         /// <summary>
         /// lblUseAnchorSelector-Steuerelement
         /// </summary>
@@ -774,9 +676,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label lblUseAnchorSelector;
+        protected global::System.Web.UI.WebControls.Label lblUseAnchorSelector;
         
-
         /// <summary>
         /// UseAnchorSelector-Steuerelement
         /// </summary>
@@ -784,9 +685,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected CheckBox UseAnchorSelector;
+        protected global::System.Web.UI.WebControls.CheckBox UseAnchorSelector;
         
-
         /// <summary>
         /// lblShowPageLinksTabFirst-Steuerelement
         /// </summary>
@@ -794,9 +694,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label lblShowPageLinksTabFirst;
+        protected global::System.Web.UI.WebControls.Label lblShowPageLinksTabFirst;
         
-
         /// <summary>
         /// ShowPageLinksTabFirst-Steuerelement
         /// </summary>
@@ -804,9 +703,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected CheckBox ShowPageLinksTabFirst;
+        protected global::System.Web.UI.WebControls.CheckBox ShowPageLinksTabFirst;
         
-
         /// <summary>
         /// FileListViewModeLabel-Steuerelement
         /// </summary>
@@ -814,9 +712,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label FileListViewModeLabel;
+        protected global::System.Web.UI.WebControls.Label FileListViewModeLabel;
         
-
         /// <summary>
         /// FileListViewMode-Steuerelement
         /// </summary>
@@ -824,9 +721,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected DropDownList FileListViewMode;
+        protected global::System.Web.UI.WebControls.DropDownList FileListViewMode;
         
-
         /// <summary>
         /// FileListPageSizeLabel-Steuerelement
         /// </summary>
@@ -834,9 +730,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label FileListPageSizeLabel;
+        protected global::System.Web.UI.WebControls.Label FileListPageSizeLabel;
         
-
         /// <summary>
         /// FileListPageSize-Steuerelement
         /// </summary>
@@ -844,9 +739,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected TextBox FileListPageSize;
+        protected global::System.Web.UI.WebControls.TextBox FileListPageSize;
         
-
         /// <summary>
         /// DefaultLinkModeLabel-Steuerelement
         /// </summary>
@@ -854,9 +748,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label DefaultLinkModeLabel;
+        protected global::System.Web.UI.WebControls.Label DefaultLinkModeLabel;
         
-
         /// <summary>
         /// DefaultLinkMode-Steuerelement
         /// </summary>
@@ -864,9 +757,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected DropDownList DefaultLinkMode;
+        protected global::System.Web.UI.WebControls.DropDownList DefaultLinkMode;
         
-
         /// <summary>
         /// EditorConfigWarning-Steuerelement
         /// </summary>
@@ -874,9 +766,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label EditorConfigWarning;
+        protected global::System.Web.UI.WebControls.Label EditorConfigWarning;
         
-
         /// <summary>
         /// EditorConfigHolder-Steuerelement
         /// </summary>
@@ -884,9 +775,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Panel EditorConfigHolder;
+        protected global::System.Web.UI.WebControls.Panel EditorConfigHolder;
         
-
         /// <summary>
         /// lblToolbarList-Steuerelement
         /// </summary>
@@ -894,9 +784,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label lblToolbarList;
+        protected global::System.Web.UI.WebControls.Label lblToolbarList;
         
-
         /// <summary>
         /// dDlCustomToolbars-Steuerelement
         /// </summary>
@@ -904,9 +793,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected DropDownList dDlCustomToolbars;
+        protected global::System.Web.UI.WebControls.DropDownList dDlCustomToolbars;
         
-
         /// <summary>
         /// iBEdit-Steuerelement
         /// </summary>
@@ -914,9 +802,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected ImageButton iBEdit;
+        protected global::System.Web.UI.WebControls.ImageButton iBEdit;
         
-
         /// <summary>
         /// iBDelete-Steuerelement
         /// </summary>
@@ -924,9 +811,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected ImageButton iBDelete;
+        protected global::System.Web.UI.WebControls.ImageButton iBDelete;
         
-
         /// <summary>
         /// lblToolbName-Steuerelement
         /// </summary>
@@ -934,9 +820,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label lblToolbName;
+        protected global::System.Web.UI.WebControls.Label lblToolbName;
         
-
         /// <summary>
         /// dnnTxtToolBName-Steuerelement
         /// </summary>
@@ -944,9 +829,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected TextBox dnnTxtToolBName;
+        protected global::System.Web.UI.WebControls.TextBox dnnTxtToolBName;
         
-
         /// <summary>
         /// iBAdd-Steuerelement
         /// </summary>
@@ -954,9 +838,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected ImageButton iBAdd;
+        protected global::System.Web.UI.WebControls.ImageButton iBAdd;
         
-
         /// <summary>
         /// iBCancel-Steuerelement
         /// </summary>
@@ -964,9 +847,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected ImageButton iBCancel;
+        protected global::System.Web.UI.WebControls.ImageButton iBCancel;
         
-
         /// <summary>
         /// lblToolbSet-Steuerelement
         /// </summary>
@@ -974,9 +856,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label lblToolbSet;
+        protected global::System.Web.UI.WebControls.Label lblToolbSet;
         
-
         /// <summary>
         /// AvailableToolbarButtons-Steuerelement
         /// </summary>
@@ -984,9 +865,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Repeater AvailableToolbarButtons;
+        protected global::System.Web.UI.WebControls.Repeater AvailableToolbarButtons;
         
-
         /// <summary>
         /// ToolbarGroupsLabel-Steuerelement
         /// </summary>
@@ -994,9 +874,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label ToolbarGroupsLabel;
+        protected global::System.Web.UI.WebControls.Label ToolbarGroupsLabel;
         
-
         /// <summary>
         /// ToolbarSet-Steuerelement
         /// </summary>
@@ -1004,9 +883,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected HiddenField ToolbarSet;
+        protected global::System.Web.UI.WebControls.HiddenField ToolbarSet;
         
-
         /// <summary>
         /// ToolbarGroupsRepeater-Steuerelement
         /// </summary>
@@ -1014,9 +892,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Repeater ToolbarGroupsRepeater;
+        protected global::System.Web.UI.WebControls.Repeater ToolbarGroupsRepeater;
         
-
         /// <summary>
         /// CreateGroupLabel-Steuerelement
         /// </summary>
@@ -1024,9 +901,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label CreateGroupLabel;
+        protected global::System.Web.UI.WebControls.Label CreateGroupLabel;
         
-
         /// <summary>
         /// AddRowBreakLabel-Steuerelement
         /// </summary>
@@ -1034,9 +910,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label AddRowBreakLabel;
+        protected global::System.Web.UI.WebControls.Label AddRowBreakLabel;
         
-
         /// <summary>
         /// lblToolbarPriority-Steuerelement
         /// </summary>
@@ -1044,9 +919,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label lblToolbarPriority;
+        protected global::System.Web.UI.WebControls.Label lblToolbarPriority;
         
-
         /// <summary>
         /// dDlToolbarPrio-Steuerelement
         /// </summary>
@@ -1054,9 +928,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected DropDownList dDlToolbarPrio;
+        protected global::System.Web.UI.WebControls.DropDownList dDlToolbarPrio;
         
-
         /// <summary>
         /// btnOk-Steuerelement
         /// </summary>
@@ -1064,9 +937,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Button btnOk;
+        protected global::System.Web.UI.WebControls.Button btnOk;
         
-
         /// <summary>
         /// btnCancel-Steuerelement
         /// </summary>
@@ -1074,9 +946,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Button btnCancel;
+        protected global::System.Web.UI.WebControls.Button btnCancel;
         
-
         /// <summary>
         /// panelLoading-Steuerelement
         /// </summary>
@@ -1084,9 +955,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Panel panelLoading;
+        protected global::System.Web.UI.WebControls.Panel panelLoading;
         
-
         /// <summary>
         /// Wait-Steuerelement
         /// </summary>
@@ -1094,9 +964,8 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label Wait;
+        protected global::System.Web.UI.WebControls.Label Wait;
         
-
         /// <summary>
         /// WaitMessage-Steuerelement
         /// </summary>
@@ -1104,6 +973,6 @@ namespace WatchersNET.CKEditor {
         /// Automatisch generiertes Feld
         /// Zum Ändern Felddeklaration aus der Designerdatei in eine Code-Behind-Datei verschieben.
         /// </remarks>
-        protected Label WaitMessage;
+        protected global::System.Web.UI.WebControls.Label WaitMessage;
     }
 }

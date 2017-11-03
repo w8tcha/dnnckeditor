@@ -237,9 +237,6 @@
   <data name="lblCSSURL.Text" xml:space="preserve">
     <value>CSS edytora:</value>
   </data>
-  <data name="lblCustomConfig.Text" xml:space="preserve">
-    <value>Własny plik konfiguracji</value>
-  </data>
   <data name="lblCustomToolbars.Text" xml:space="preserve">
     <value>Własne paski narzędziowe</value>
   </data>
