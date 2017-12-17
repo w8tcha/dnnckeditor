@@ -9,85 +9,137 @@ function ShowNotificationBar(text,notificationType,imagePath) {
 }
 
 function pageLoad() {
-	
-jQuery('.panelLoading').show();
-jQuery(".copyButton").button({ icons: { primary: "ui-icon-copy" } });
-jQuery(".removeButton").button({icons: {primary: "ui-icon-trash"}});
-jQuery(".importButton").button({icons: {primary: "ui-icon-arrowreturnthick-1-s"}});
-jQuery(".exportButton").button({icons: {primary: "ui-icon-disk"}});
-jQuery(".DefaultButton").button();
 
-jQuery(".Toolbar").buttonset();
+    jQuery('.panelLoading').show();
+    jQuery(".copyButton").button({ icons: { primary: "ui-icon-copy" } });
+    jQuery(".removeButton").button({ icons: { primary: "ui-icon-trash" } });
+    jQuery(".importButton").button({ icons: { primary: "ui-icon-arrowreturnthick-1-s" } });
+    jQuery(".exportButton").button({ icons: { primary: "ui-icon-disk" } });
+    jQuery(".DefaultButton").button();
 
-EnableSorting();
-
-jQuery("#createGroup").click(function () {
-    jQuery(".groups").append('<li class="groupItem">' +
-		         '<span class="ui-icon ui-icon-cancel" title="' + deleteGroup + '"></span><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>' +
-		         '<a href="#" class="groupName" title="' + editGroupName + '">' + newGroupName + '</a>' +
-							 '<input type="text" class="groupEdit"><div class="ui-state-default ui-corner-all saveGroupName">' +
-							 '<span class="ui-icon ui-icon-check" title="' + saveGroupName + '"></div>' +
-							 '<ul class="groupButtons"></ul><div style="clear:both"></div></li>');
+    jQuery(".Toolbar").buttonset();
 
     EnableSorting();
-});
 
-jQuery("#addRowBreak").click(function () {
-    jQuery(".groups").append('<li class="groupItem rowBreakItem">' +
-		         '<span class="ui-icon ui-icon-cancel" title="' + deleteGroup + '"></span><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>' +
-				 '<p class="rowBreakLabel">' + newRowName + '</p>' + 
-		         '<a href="#" class="groupName" title="' + editGroupName + '">rowBreak</a>' +
-							 '<input type="text" class="groupEdit"><div class="ui-state-default ui-corner-all saveGroupName">' +
-							 '<span class="ui-icon ui-icon-check" title="' + saveGroupName + '"></div>' +
-							 '<ul class="groupButtons"><li class="groupButton ui-state-default ui-corner-all rowBreak">' +
-                                  '<span class="ui-icon ui-icon-cancel"></span>' +
-								  '<span class="item">/</span>' +
-                                 '</li></ul><div style="clear:both"></div></li>');
+    jQuery("input[id$='_iBEdit']").click(function () {
+        jQuery('.panelLoading').show();
+    });
 
-    EnableSorting();
-	jQuery('[id*="CKEditor_Options_ToolbarSet"]').val(jQuery('.groups').SerializeToolbars());
-});
+    jQuery("#createGroup").click(function() {
+        jQuery(".groups").append('<li class="groupItem">' +
+            '<span class="ui-icon ui-icon-cancel" title="' +
+            deleteGroup +
+            '"></span><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>' +
+            '<a href="#" class="groupName" title="' +
+            editGroupName +
+            '">' +
+            newGroupName +
+            '</a>' +
+            '<input type="text" class="groupEdit"><div class="ui-state-default ui-corner-all saveGroupName">' +
+            '<span class="ui-icon ui-icon-check" title="' +
+            saveGroupName +
+            '"></div>' +
+            '<ul class="groupButtons"></ul><div style="clear:both"></div></li>');
 
-jQuery('#SettingsTabs').tabs(
-   {
-       activate: function () {
-           var sel = jQuery('#SettingsTabs').tabs('option', 'active');
-           jQuery('[id*="CKEditor_Options_LastTabId"]').val(sel);
-       },
-       active: jQuery('[id*="CKEditor_Options_LastTabId"]').val()
-   });
+        EnableSorting();
+    });
 
-jQuery('#SettingsBox').height(jQuery(window).height() - 100);
-jQuery('.ui-tabs .ui-tabs-panel').height(jQuery(window).height() - 285);
+    jQuery("#createGroup").click(function() {
+        jQuery(".groups").append('<li class="groupItem">' +
+            '<span class="ui-icon ui-icon-cancel" title="' +
+            deleteGroup +
+            '"></span><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>' +
+            '<a href="#" class="groupName" title="' +
+            editGroupName +
+            '">' +
+            newGroupName +
+            '</a>' +
+            '<input type="text" class="groupEdit"><div class="ui-state-default ui-corner-all saveGroupName">' +
+            '<span class="ui-icon ui-icon-check" title="' +
+            saveGroupName +
+            '"></div>' +
+            '<ul class="groupButtons"></ul><div style="clear:both"></div></li>');
+
+        EnableSorting();
+    });
+
+    jQuery("#addRowBreak").click(function() {
+        jQuery(".groups").append('<li class="groupItem rowBreakItem">' +
+            '<span class="ui-icon ui-icon-cancel" title="' +
+            deleteGroup +
+            '"></span><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>' +
+            '<p class="rowBreakLabel">' +
+            newRowName +
+            '</p>' +
+            '<a href="#" class="groupName" title="' +
+            editGroupName +
+            '">rowBreak</a>' +
+            '<input type="text" class="groupEdit"><div class="ui-state-default ui-corner-all saveGroupName">' +
+            '<span class="ui-icon ui-icon-check" title="' +
+            saveGroupName +
+            '"></div>' +
+            '<ul class="groupButtons"><li class="groupButton ui-state-default ui-corner-all rowBreak">' +
+            '<span class="ui-icon ui-icon-cancel"></span>' +
+            '<span class="item">/</span>' +
+            '</li></ul><div style="clear:both"></div></li>');
+
+        EnableSorting();
+        jQuery('[id*="CKEditor_Options_ToolbarSet"]').val(jQuery('.groups').SerializeToolbars());
+    });
 
 
-jQuery('#ExportDialog').dialog({
-    autoOpen: false,
-    width: 350,
-    buttons: { "Cancel": function () { jQuery(this).dialog("close"); }, "Export Now": function () { window.location = jQuery(".ExportHidden").attr("href"); jQuery(this).dialog("close"); } },
-    open: function () {
-        jQuery(this).parent().appendTo("form");
+    jQuery('#SettingsTabs').tabs(
+        {
+            activate: function() {
+                var sel = jQuery('#SettingsTabs').tabs('option', 'active');
+                jQuery('[id*="CKEditor_Options_LastTabId"]').val(sel);
+            },
+            active: jQuery('[id*="CKEditor_Options_LastTabId"]').val()
+        });
+
+    jQuery('#SettingsBox').height(jQuery(window).height() - 100);
+    jQuery('.ui-tabs .ui-tabs-panel').height(jQuery(window).height() - 285);
+
+
+    jQuery('#ExportDialog').dialog({
+        autoOpen: false,
+        width: 350,
+        buttons: {
+            "Cancel": function() { jQuery(this).dialog("close"); },
+            "Export Now": function() {
+                window.location = jQuery(".ExportHidden").attr("href");
+                jQuery(this).dialog("close");
+            }
+        },
+        open: function() {
+            jQuery(this).parent().appendTo("form");
+        }
+    });
+    jQuery('#ImportDialog').dialog({
+        autoOpen: false,
+        width: 350,
+        buttons: {
+            "Cancel": function() { jQuery(this).dialog("close"); },
+            "Import Now": function() {
+                window.location = jQuery(".ImportHidden").attr("href");
+                jQuery(this).dialog("close");
+            }
+        },
+        open: function() {
+            jQuery(this).parent().appendTo("form");
+        }
+    });
+    jQuery('#ToolbarGuide').dialog({
+        autoOpen: false,
+        buttons: { "OK": function() { jQuery(this).dialog("close"); } },
+        open: function() {
+            jQuery(this).parent().appendTo("form");
+        }
+    });
+
+    if (jQuery(".settingValueInputNumeric").spinner) {
+        jQuery(".settingValueInputNumeric").spinner();
     }
-});
-jQuery('#ImportDialog').dialog({
-    autoOpen: false,
-    width: 350,
-    buttons: { "Cancel": function () { jQuery(this).dialog("close"); }, "Import Now": function () { window.location = jQuery(".ImportHidden").attr("href"); jQuery(this).dialog("close"); } },
-    open: function () {
-        jQuery(this).parent().appendTo("form");
-    }
-});
-jQuery('#ToolbarGuide').dialog({
-    autoOpen: false,
-    buttons: { "OK": function () { jQuery(this).dialog("close"); } },
-    open: function () {
-        jQuery(this).parent().appendTo("form");
-    }
-});
-
-if (jQuery(".settingValueInputNumeric").spinner) {
-	jQuery(".settingValueInputNumeric").spinner();
-}
 
     if (jQuery.ui.selectmenu !== undefined) {
         jQuery(".DefaultDropDown").selectmenu({
@@ -100,14 +152,14 @@ if (jQuery(".settingValueInputNumeric").spinner) {
     }
 
     if (jQuery(".settingValueContainer").tooltip) {
-	jQuery(".settingValueInputNumeric").tooltip();
+        jQuery(".settingValueInputNumeric").tooltip();
+    }
+
+    jQuery("#CKEditor_Options_rBlSetMode input").button();
+    jQuery("#CKEditor_Options_rBlSetMode").buttonset();
 }
 
-jQuery("#CKEditor_Options_rBlSetMode input").button();
-jQuery("#CKEditor_Options_rBlSetMode").buttonset();
-        }
-
-        jQuery(window).bind('resize', function () {
+jQuery(window).bind('resize', function () {
 jQuery('#SettingsBox').height(jQuery(window).height() - 100);
 jQuery('.ui-tabs .ui-tabs-panel').height(jQuery(window).height() - 285);
         });
