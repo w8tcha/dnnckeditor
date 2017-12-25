@@ -311,6 +311,8 @@ namespace WatchersNET.CKEditor.Web
                     this._settings["language"] = "en";
                 }
 
+                this._settings["customConfig"] = string.Empty;
+
                 if (!string.IsNullOrEmpty(this.currentSettings.Config.Skin))
                 {
                     if (this.currentSettings.Config.Skin.Equals("office2003")
@@ -491,6 +493,16 @@ namespace WatchersNET.CKEditor.Web
                                     Globals.ResolveUrl(
                                         string.Format(
                                             "~/Providers/HtmlEditorProviders/CKEditor/Browser/Browser.aspx?Command=ImageUpload&tabid={0}&PortalID={1}&mid={2}&ckid={3}&mode={4}&lang={5}",
+                                            this._portalSettings.ActiveTab.TabID,
+                                            this._portalSettings.PortalId,
+                                            this.parentModulId,
+                                            this.ID,
+                                            this.currentSettings.SettingMode,
+                                            CultureInfo.CurrentCulture.Name));
+                                this._settings["imageUploadUrl"] =
+                                    Globals.ResolveUrl(
+                                        string.Format(
+                                            "~/Providers/HtmlEditorProviders/CKEditor/Browser/Browser.aspx?Command=ImageAutoUpload&tabid={0}&PortalID={1}&mid={2}&ckid={3}&mode={4}&lang={5}",
                                             this._portalSettings.ActiveTab.TabID,
                                             this._portalSettings.PortalId,
                                             this.parentModulId,

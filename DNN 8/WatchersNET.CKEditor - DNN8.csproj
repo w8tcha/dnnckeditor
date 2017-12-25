@@ -154,6 +154,7 @@
     <Compile Include="Objects\ToolbarButton.cs" />
     <Compile Include="Objects\ToolbarGroup.cs" />
     <Compile Include="Objects\ToolbarSet.cs" />
+    <Compile Include="Objects\UploadImage.cs" />
     <Compile Include="Objects\UploadSizeRoles.cs" />
     <Compile Include="Objects\WordCountConfig.cs" />
     <Compile Include="Tabs.ashx.cs">

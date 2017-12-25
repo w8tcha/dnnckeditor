@@ -10,6 +10,8 @@
  * this file is part of the Source Code of the CKEditor Provider.
  */
 
+using System.Web.Script.Serialization;
+
 namespace WatchersNET.CKEditor.Browser
 {
     #region
@@ -1010,7 +1012,7 @@ namespace WatchersNET.CKEditor.Browser
                 if (command != null)
                 {
                     if (!command.Equals("FileUpload") && !command.Equals("FlashUpload")
-                        && !command.Equals("ImageUpload"))
+                        && !command.Equals("ImageUpload") && !command.Equals("ImageAutoUpload"))
                     {
                         return;
                     }
@@ -1018,7 +1020,17 @@ namespace WatchersNET.CKEditor.Browser
                     var uploadedFile =
                         HttpContext.Current.Request.Files[HttpContext.Current.Request.Files.AllKeys[0]];
 
-                    if (uploadedFile != null)
+                    if (uploadedFile == null)
+                    {
+                        return;
+                    }
+
+                    if (command.Equals("ImageAutoUpload"))
+                    {
+                        // Upload Auto Image Upload
+                        this.UploadAutoImageFile(uploadedFile);
+                    }
+                    else
                     {
                         // Upload QuickFile
                         this.UploadQuickFile(uploadedFile, command);
@@ -2591,6 +2603,171 @@ namespace WatchersNET.CKEditor.Browser
             // this.FilesList.DataSource = this.GetFiles(directory);
             this.FilesList.DataSource = filesPagedDataSource;
             this.FilesList.DataBind();
+        }
+
+        /// <summary>
+        /// Automatically Uploads the Pasted Image
+        /// </summary>
+        /// <param name="file">
+        /// The Uploaded Image File
+        /// </param>
+        private void UploadAutoImageFile(HttpPostedFile file)
+        {
+            var fileName = Path.GetFileName(file.FileName).Trim();
+
+            if (!string.IsNullOrEmpty(fileName))
+            {
+                // Replace dots in the name with underscores (only one dot can be there... security issue).
+                fileName = Regex.Replace(fileName, @"\.(?![^.]*$)", "_", RegexOptions.None);
+
+                // Check for Illegal Chars
+                if (Utility.ValidateFileName(fileName))
+                {
+                    fileName = Utility.CleanFileName(fileName);
+                }
+
+                // Convert Unicode Chars
+                fileName = Utility.ConvertUnicodeChars(fileName);
+            }
+            else
+            {
+                return;
+            }
+
+            // Check if file is to big for that user
+            if (this.currentSettings.UploadFileSizeLimit > 0
+                && file.ContentLength > this.currentSettings.UploadFileSizeLimit)
+            {
+                var upload = new UploadImage
+                {
+                    uploaded = 0,
+                    fileName = string.Empty,
+                    url = string.Empty,
+                    error = new Error
+                    {
+                        message =
+                            Localization.GetString("FileToBigMessage.Text", this.ResXFile, this.LanguageCode)
+                    }
+                };
+
+                this.Response.ContentType = "application/json";
+                this.Response.ContentEncoding = Encoding.UTF8;
+
+                this.Response.Write(new JavaScriptSerializer().Serialize(upload));
+
+                HttpContext.Current.ApplicationInstance.CompleteRequest();
+
+                return;
+            }
+
+            if (fileName.Length > 220)
+            {
+                fileName = fileName.Substring(fileName.Length - 220);
+            }
+
+            var extension = Path.GetExtension(file.FileName);
+            extension = extension.TrimStart('.');
+
+            var allowUpload = this.allowedImageExtensions.Any(sAllowExt => sAllowExt.Equals(extension.ToLower()));
+
+            if (allowUpload)
+            {
+                var sFileNameNoExt = Path.GetFileNameWithoutExtension(fileName);
+
+                var counter = 0;
+
+                var uploadPhysicalPath = this.StartingDir().PhysicalPath;
+
+                var currentFolderInfo = Utility.ConvertFilePathToFolderInfo(
+                    this.lblCurrentDir.Text,
+                    this._portalSettings);
+
+                if (!this.currentSettings.UploadDirId.Equals(-1) && !this.currentSettings.SubDirs)
+                {
+                    var uploadFolder = FolderManager.Instance.GetFolder(this.currentSettings.UploadDirId);
+
+                    if (uploadFolder != null)
+                    {
+                        uploadPhysicalPath = uploadFolder.PhysicalPath;
+
+                        currentFolderInfo = uploadFolder;
+                    }
+                }
+
+                var sFilePath = Path.Combine(uploadPhysicalPath, fileName);
+
+                var imageResizer = new ImageResizer
+                {
+                    ImageQuality = this.currentSettings.Config.ResizeImageQuality,
+                    MaxHeight = this.currentSettings.Config.Resize_MaxHeight,
+                    MaxWidth = this.currentSettings.Config.Resize_MaxWidth
+                };
+
+
+                // Automatically Resize Image on Upload
+                var fileStream =
+                    this.currentSettings.Config.ResizeImageOnQuickUpload && Utility.IsImageFile(file.FileName)
+                        ? imageResizer.Resize(file)
+                        : file.InputStream;
+
+                if (File.Exists(sFilePath))
+                {
+                    counter++;
+                    fileName = string.Format("{0}_{1}{2}", sFileNameNoExt, counter, Path.GetExtension(file.FileName));
+
+                    FileManager.Instance.AddFile(currentFolderInfo, fileName, fileStream);
+                }
+                else
+                {
+                    FileManager.Instance.AddFile(currentFolderInfo, fileName, fileStream);
+                }
+
+                var imageUrl = MapUrl(uploadPhysicalPath);
+
+                var upload = new UploadImage
+                {
+                    uploaded = 1,
+                    fileName = fileName,
+                    url = string.Format(!imageUrl.EndsWith("/") ? "{0}/{1}" : "{0}{1}", imageUrl, fileName),
+                    error = new Error
+                    {
+                        message =
+                            string.Empty
+                    }
+                };
+
+                this.Response.ContentType = "application/json";
+                this.Response.ContentEncoding = Encoding.UTF8;
+
+                this.Response.Write(new JavaScriptSerializer().Serialize(upload));
+
+                HttpContext.Current.ApplicationInstance.CompleteRequest();
+
+                this.Response.End();
+            }
+            else
+            {
+                var upload = new UploadImage
+                {
+                    uploaded = 0,
+                    fileName = string.Empty,
+                    url = string.Empty,
+                    error = new Error
+                    {
+                        message =
+                            Localization.GetString("Error2.Text", this.ResXFile, this.LanguageCode)
+                    }
+                };
+
+                this.Response.ContentType = "application/json";
+                this.Response.ContentEncoding = Encoding.UTF8;
+
+                this.Response.Write(new JavaScriptSerializer().Serialize(upload));
+
+                HttpContext.Current.ApplicationInstance.CompleteRequest();
+
+                this.Response.End();
+            }
         }
 
         /// <summary>

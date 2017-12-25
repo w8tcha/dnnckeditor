@@ -150,6 +150,7 @@
     <Compile Include="Objects\EditorHostSetting.cs" />
     <Compile Include="Objects\EditorProviderSettings.cs" />
     <Compile Include="Objects\FileUploadStatus.cs" />
+    <Compile Include="Objects\UploadImage.cs" />
     <Compile Include="Objects\SettingBase.cs" />
     <Compile Include="Objects\ToolbarButton.cs" />
     <Compile Include="Objects\ToolbarGroup.cs" />
