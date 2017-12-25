@@ -1,5 +1,5 @@
 ﻿<dotnetnuke type="Package" version="5.0">
-  <packages><package name="DotNetNuke.CKHtmlEditorProvider" type="Provider" version="02.01.11">
+  <packages><package name="DotNetNuke.CKHtmlEditorProvider" type="Provider" version="02.01.12">
   <friendlyName>CKEditor Editor Provider</friendlyName>
   <description>CKEditor Editor Provider for DNN</description>
   <iconFile>~/Providers/HtmlEditorProviders/CKEditor/LogoCKEditor.png</iconFile>
@@ -13,7 +13,7 @@
   <license src="CKLicense.html" />
   <releaseNotes src="CKReleaseNotes.html" />
   <dependencies>
-    <dependency type="CoreVersion">07.04.00</dependency>
+    <dependency type="CoreVersion">09.01.00</dependency>
   </dependencies>
   <components>
     <component type="Assembly">
@@ -108,7 +108,7 @@
     <component type="Cleanup" version="02.00.00" fileName="02.00.00.Cleanup.txt" />
   </components>
 </package>
-    <package name="CKEditor.EditorConfigManager" type="Module" version="02.01.11">
+    <package name="CKEditor.EditorConfigManager" type="Module" version="02.01.12">
       <friendlyName>CKEditor Config Manager</friendlyName>
       <description>Configuration Manager for the CKEditor Editor Provider</description>
       <owner>

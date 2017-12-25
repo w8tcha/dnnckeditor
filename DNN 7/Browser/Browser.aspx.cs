@@ -2041,16 +2041,16 @@ namespace WatchersNET.CKEditor.Browser
         /// <param name="nodeParent">
         /// Parent Node(Tab)
         /// </param>
-        /// <param name="iParentTabId">
+        /// <param name="parentTabId">
         /// Parent Tab ID
         /// </param>
-        private void RenderTabLevels(TreeNode nodeParent, int iParentTabId)
+        private void RenderTabLevels(TreeNode nodeParent, int parentTabId)
         {
             foreach (var objTab in
                 TabController.GetPortalTabs(
                     this._portalSettings.PortalId, -1, false, null, true, false, true, true, false))
             {
-                if (!objTab.ParentId.Equals(iParentTabId))
+                if (!objTab.ParentId.Equals(parentTabId))
                 {
                     continue;
                 }

@@ -43,8 +43,8 @@ namespace WatchersNET.CKEditor
         public void ProcessRequest(HttpContext context)
         {
             var portalId = context.Request.QueryString["PortalID"] != null
-                              ? int.Parse(context.Request.QueryString["PortalID"])
-                              : this.PortalSettings.PortalId;
+                               ? int.Parse(context.Request.QueryString["PortalID"])
+                               : this.PortalSettings.PortalId;
 
             // Generate Pages Array
             var pagesArray = new StringBuilder();
@@ -53,18 +53,18 @@ namespace WatchersNET.CKEditor
 
             var domainName = string.Format("http://{0}", Globals.GetDomainName(context.Request, true));
 
-            foreach (var tab in TabController.GetPortalTabs(
-                    portalId, -1, false, null, true, false, true, true, true))
+            foreach (var tab in TabController.GetPortalTabs(portalId, -1, false, null, true, false, true, true, true))
             {
-                var tabUrl = PortalController.GetPortalSettingAsBoolean("ContentLocalizationEnabled", portalId, false)
-                                && !string.IsNullOrEmpty(tab.CultureCode)
-                                    ? Globals.FriendlyUrl(
-                                        tab,
-                                        string.Format("{0}&language={1}", Globals.ApplicationURL(tab.TabID), tab.CultureCode))
-                                    : Globals.FriendlyUrl(tab, Globals.ApplicationURL(tab.TabID));
+                var tabUrl =
+                    PortalController.GetPortalSettingAsBoolean("ContentLocalizationEnabled", portalId, false)
+                    && !string.IsNullOrEmpty(tab.CultureCode)
+                        ? Globals.FriendlyUrl(
+                            tab,
+                            string.Format("{0}&language={1}", Globals.ApplicationURL(tab.TabID), tab.CultureCode))
+                        : Globals.FriendlyUrl(tab, Globals.ApplicationURL(tab.TabID));
 
                 tabUrl = Globals.ResolveUrl(Regex.Replace(tabUrl, domainName, "~", RegexOptions.IgnoreCase));
-                
+
                 var tabName = Microsoft.JScript.GlobalObject.escape(tab.TabName);
 
                 if (tab.Level.Equals(0))
