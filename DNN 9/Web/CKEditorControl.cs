@@ -22,6 +22,7 @@ namespace WatchersNET.CKEditor.Web
     using System.IO;
     using System.Linq;
     using System.Text;
+    using System.Text.RegularExpressions;
     using System.Threading;
     using System.Web;
     using System.Web.UI;
@@ -32,6 +33,7 @@ namespace WatchersNET.CKEditor.Web
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Entities.Portals;
+    using DotNetNuke.Entities.Tabs;
     using DotNetNuke.Framework.JavaScriptLibraries;
     using DotNetNuke.Framework.Providers;
     using DotNetNuke.Security;
@@ -428,6 +430,9 @@ namespace WatchersNET.CKEditor.Web
                 // Inject maxFileSize
                 this._settings["maxFileSize"] = Utility.GetMaxUploadSize().ToString();
 
+                // Inject Tabs for the dnnpages plugin
+                this._settings["dnnPagesArray"] = this.GetTabsArray();
+
                 HttpContext.Current.Session["CKDNNtabid"] = this._portalSettings.ActiveTab.TabID;
                 HttpContext.Current.Session["CKDNNporid"] = this._portalSettings.PortalId;
 
@@ -660,6 +665,61 @@ namespace WatchersNET.CKEditor.Web
         /// </summary>
         private static string SResXFile => Globals.ResolveUrl(
             string.Format("~/Providers/HtmlEditorProviders/CKEditor/{0}/Options.aspx.resx", Localization.LocalResourceDirectory));
+
+        /// <summary>
+        /// Gets the tabs array.
+        /// </summary>
+        /// <returns>Returns the Tabs Array as String</returns>
+        private string GetTabsArray()
+        {
+            // Generate Pages Array
+            var pagesArray = new StringBuilder();
+
+            pagesArray.Append("[");
+
+            var domainName = string.Format("http://{0}", Globals.GetDomainName(HttpContext.Current.Request, true));
+
+            foreach (var tab in TabController.GetPortalTabs(
+                this._portalSettings.PortalId, -1, false, null, true, false, true, true, true))
+            {
+                var tabUrl = PortalController.GetPortalSettingAsBoolean("ContentLocalizationEnabled", this._portalSettings.PortalId, false)
+                             && !string.IsNullOrEmpty(tab.CultureCode)
+                                 ? Globals.FriendlyUrl(
+                                     tab,
+                                     string.Format("{0}&language={1}", Globals.ApplicationURL(tab.TabID), tab.CultureCode))
+                                 : Globals.FriendlyUrl(tab, Globals.ApplicationURL(tab.TabID));
+
+
+                tabUrl = Globals.ResolveUrl(Regex.Replace(tabUrl, domainName, "~", RegexOptions.IgnoreCase));
+
+                var tabName = Microsoft.JScript.GlobalObject.escape(tab.TabName);
+
+                if (tab.Level.Equals(0))
+                {
+                    pagesArray.AppendFormat("new Array('| {0}','{1}'),", tabName, tabUrl);
+                }
+                else
+                {
+                    var separator = new StringBuilder();
+
+                    for (var index = 0; index < tab.Level; index++)
+                    {
+                        separator.Append("--");
+                    }
+
+                    pagesArray.AppendFormat("new Array('|{0} {1}','{2}'),", separator, tabName, tabUrl);
+                }
+            }
+
+            if (pagesArray.ToString().EndsWith(","))
+            {
+                pagesArray.Remove(pagesArray.Length - 1, 1);
+            }
+
+            pagesArray.Append("]");
+
+            return pagesArray.ToString();
+        }
 
         #endregion
 

@@ -149,10 +149,6 @@
     <Compile Include="Objects\UploadImage.cs" />
     <Compile Include="Objects\UploadSizeRoles.cs" />
     <Compile Include="Objects\WordCountConfig.cs" />
-    <Compile Include="Tabs.ashx.cs">
-      <DependentUpon>Tabs.ashx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="Utilities\AnchorFinder.cs" />
     <Compile Include="Browser\Browser.aspx.cs">
       <DependentUpon>Browser.aspx</DependentUpon>
@@ -297,7 +293,6 @@
     <None Include="Install\WatchersNET.CKHtmlEditorProvider.dnn">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Tabs.ashx" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
