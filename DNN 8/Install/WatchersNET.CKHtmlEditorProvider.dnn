@@ -121,7 +121,7 @@
       <license src="CKLicense.html" />
       <releaseNotes />
       <dependencies>
-        <dependency type="CoreVersion">08.00.40</dependency>
+        <dependency type="CoreVersion">08.00.04</dependency>
       </dependencies>
       <components>
         <component type="Module">
