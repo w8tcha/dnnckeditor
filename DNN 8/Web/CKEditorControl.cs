@@ -290,6 +290,46 @@ namespace WatchersNET.CKEditor.Web
                                 }
 
                                 break;
+                            case "AutoSave":
+                                {
+                                    var wordcountArray = new StringBuilder();
+
+                                    foreach (var wordCountInfo in typeof(AutoSave).GetProperties())
+                                    {
+                                        var xmlAttribute =
+                                            wordCountInfo.GetCustomAttribute<XmlAttributeAttribute>(true);
+
+                                        var rawSettingValue =
+                                            wordCountInfo.GetValue(this.currentSettings.Config.AutoSave, null);
+
+                                        var wordCountSettingValue = rawSettingValue.ToString();
+
+                                        if (string.IsNullOrEmpty(wordCountSettingValue))
+                                        {
+                                            continue;
+                                        }
+
+                                        switch (wordCountInfo.PropertyType.Name)
+                                        {
+                                            case "String":
+                                                wordcountArray.AppendFormat("{0}: \"{1}\",", xmlAttribute.AttributeName, wordCountSettingValue);
+                                                break;
+                                            case "Int32":
+                                                wordcountArray.AppendFormat("{0}: {1},", xmlAttribute.AttributeName, wordCountSettingValue);
+                                                break;
+                                            case "Boolean":
+                                                wordcountArray.AppendFormat("{0}: {1},", xmlAttribute.AttributeName, wordCountSettingValue.ToLower());
+                                                break;
+                                        }
+                                    }
+
+                                    var wordcountSettings = wordcountArray.ToString();
+
+                                    this._settings["autosave"] = string.Format(
+                                        "{{ {0} }}", wordcountSettings.Remove(wordcountSettings.Length - 1, 1));
+                                }
+
+                                break;
                             default:
                                 this._settings[xmlAttributeAttribute.AttributeName] = settingValue;
                                 break;

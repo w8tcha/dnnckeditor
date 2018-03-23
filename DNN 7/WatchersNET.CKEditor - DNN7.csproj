@@ -137,6 +137,7 @@
       <DependentUpon>EditorConfigManager.ascx</DependentUpon>
     </Compile>
     <Compile Include="Module\UpgradeController.cs" />
+    <Compile Include="Objects\AutoSave.cs" />
     <Compile Include="Objects\CodeMirror.cs" />
     <Compile Include="Objects\EditorConfig.cs" />
     <Compile Include="Objects\EditorHostSetting.cs" />

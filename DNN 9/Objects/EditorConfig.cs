@@ -33,7 +33,6 @@ namespace WatchersNET.CKEditor.Objects
             this.AutoGrow_MinHeight = 200;
             this.AutoGrow_OnStartup = false;
             this.AutoParagraph = true;
-            this.AutoSave_Delay = 25;
             this.AutoUpdateElement = true;
             this.BaseFloatZIndex = 10000;
             this.BasicEntities = true;
@@ -135,6 +134,7 @@ namespace WatchersNET.CKEditor.Objects
             this.UseComputedState = true;
             this.Width = "99%";
             this.WordCount = new WordCountConfig();
+            this.AutoSave = new AutoSave();
         }
 
         /// <summary>
@@ -196,16 +196,6 @@ namespace WatchersNET.CKEditor.Objects
         [XmlAttribute("autoParagraph")]
         [Description("Whether automatically create wrapping blocks around inline contents inside document body, this helps to ensure the integrality of the block enter mode.")]
         public bool AutoParagraph { get; set; }
-
-        /// <summary>
-        /// Gets or sets the auto save delay.
-        /// </summary>
-        /// <value>
-        /// The auto save delay.
-        /// </value>
-        [XmlAttribute("autosave_delay")]
-        [Description("Auto-save time delay (in seconds)")]
-        public int AutoSave_Delay { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [auto update element].
@@ -304,6 +294,14 @@ namespace WatchersNET.CKEditor.Objects
         /// The code mirror.
         /// </value>
         public CodeMirror CodeMirror { get; set; }
+
+        /// <summary>
+        /// Gets or sets the autosave plugin Config
+        /// </summary>
+        /// <value>
+        /// The autosave plugin Config
+        /// </value>
+        public AutoSave AutoSave { get; set; }
 
         /// <summary>
         /// Gets or sets the color button_ back style.
