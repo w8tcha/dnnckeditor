@@ -12,7 +12,7 @@
     CKEDITOR.plugins.add("autosave", {
         lang: 'ca,cs,de,en,es,fr,it,ja,nl,pl,pt-br,ru,sk,sv,zh,zh-cn', // %REMOVE_LINE_CORE%
         requires: 'notification',
-        version: "0.18.0",
+        version: "0.18.3",
         init: function (editor) {
 
             // Look for autosave from config.js - this is a bit redundant but necessary
@@ -24,13 +24,14 @@
                 _saveKeyUrl = _saveKeyIgnoreProto ? window.location.href.replace(/https?:\/\//, '') : window.location.href,
                 _saveKeyDelimiter = 'saveKeyDelimiter' in editor.config.autosave ? editor.config.autosave.saveKeyDelimiter : '_',
                 _saveKeyAttribute = 'saveKeyAttribute' in editor.config.autosave ? editor.config.autosave.saveKeyAttribute : 'name';
-            
+
             if ('saveKeyIgnoreParams' in editor.config.autosave) {
-                $(editor.config.autosave.saveKeyIgnoreParams).each(function() { 
-                    _saveKeyUrl = autosaveRemoveUrlParam(this, null, _saveKeyUrl);
-                });
+                CKEDITOR.tools.array.forEach(editor.config.autosave.saveKeyIgnoreParams,
+                    function() {
+                        _saveKeyUrl = autosaveRemoveUrlParam(this, null, _saveKeyUrl);
+                    });
             }
-            
+
             // Construct default configuration
             var defaultConfig = {
                 delay: 10,
@@ -38,7 +39,7 @@
                 saveDetectionSelectors: "a[href^='javascript:__doPostBack'][id*='Save'],a[id*='Cancel']",
                 saveOnDestroy: false,
                 NotOlderThen: 1440,
-                SaveKey: _saveKeyPrefix + _saveKeyDelimiter + _saveKeyUrl + _saveKeyDelimiter + $(document.getElementById('#' + editor.name)).attr(_saveKeyAttribute),
+                SaveKey: _saveKeyPrefix + _saveKeyDelimiter + _saveKeyUrl + _saveKeyDelimiter + document.getElementById(editor.name).getAttribute(_saveKeyAttribute),
                 diffType: "sideBySide",
                 autoLoad: false
             };
@@ -64,32 +65,23 @@
             }, editor, null, 100);
 
             editor.on('instanceReady', function(){
-                if (typeof (jQuery) === 'undefined') {
-                    CKEDITOR.scriptLoader.load('//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', function() {
-                        jQuery.noConflict();
-
-                        loadPlugin(editor, config);
-                    });
-
-                } else {
-                    CKEDITOR.scriptLoader.load(CKEDITOR.getUrl(CKEDITOR.plugins.getPath('autosave') + 'js/extensions.min.js'), function() {
-                        loadPlugin(editor, config);
-                    });
-                }
+                CKEDITOR.scriptLoader.load(CKEDITOR.getUrl(CKEDITOR.plugins.getPath('autosave') + 'js/extensions.min.js'), function() {
+                    loadPlugin(editor, config);
+                });
             }, editor, null, 100);
         }
     });
 
     function loadPlugin(editorInstance, config) {
 
-        CKEDITOR.scriptLoader.load(CKEDITOR.getUrl(CKEDITOR.plugins.getPath('autosave') + 'js/extensions.min.js'), function() {
-            GenerateAutoSaveDialog(editorInstance, config, config.SaveKey);
+        GenerateAutoSaveDialog(editorInstance, config, config.SaveKey);
 
-            CheckForAutoSavedContent(editorInstance, config, config.SaveKey, config.NotOlderThen);
-        });
+        CheckForAutoSavedContent(editorInstance, config, config.SaveKey, config.NotOlderThen);
 
-        jQuery(config.saveDetectionSelectors).click(function() {
-            RemoveStorage(config.SaveKey, editorInstance);
+        CKEDITOR.tools.array.forEach(CKEDITOR.document.find(config.saveDetectionSelectors).toArray(), function(el) {
+            el.$.addEventListener('click', function () {
+                RemoveStorage(config.SaveKey, editorInstance);
+            });
         });
 
         editorInstance.on('change', function() {
@@ -121,7 +113,7 @@
             var editor = editorInstance,
                 autoSaveKey = configAutosave.SaveKey != null
                     ? configAutosave.SaveKey
-                    : 'autosave_' + window.location + "_" + $(document.getElementyId('#' + editor.name)).attr('name');
+                    : 'autosave_' + window.location + "_" + document.getElementById(editor.name).getAttribute('name');
 
             SaveData(autoSaveKey, editor, configAutosave);
 
