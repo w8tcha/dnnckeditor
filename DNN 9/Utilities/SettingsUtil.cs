@@ -117,23 +117,25 @@ namespace WatchersNET.CKEditor.Utilities
             // Import all Editor config settings
             foreach (var info in GetEditorConfigProperties())
             {
-                if (!editorHostSettings.Any(s => s.Name.Equals(string.Format("{0}{1}", key, info.Name))))
+                var settingValue = string.Empty;
+                if (!info.Name.Equals("CodeMirror") && !info.Name.Equals("WordCount") && !info.Name.Equals("AutoSave"))
                 {
-                    continue;
-                }
+                    var settingName = string.Format("{0}{1}", key, info.Name);
+                    if (!editorHostSettings.Any(s => s.Name.Equals(settingName)))
+                    {
+                        continue;
+                    }
 
-                /*if (!info.Name.Equals("CodeMirror") && !info.Name.Equals("WordCount"))
-                {
-                    continue;
-                }*/
-                var settingValue =
-                    editorHostSettings.FirstOrDefault(
-                        setting => setting.Name.Equals(string.Format("{0}{1}", key, info.Name))).Value;
+                    settingValue =
+                        editorHostSettings.FirstOrDefault(
+                            setting => setting.Name.Equals(settingName)).Value;
 
-                if (string.IsNullOrEmpty(settingValue))
-                {
-                    continue;
+                    if (string.IsNullOrEmpty(settingValue))
+                    {
+                        continue;
+                    }
                 }
+                
 
                 switch (info.PropertyType.Name)
                 {
@@ -179,32 +181,28 @@ namespace WatchersNET.CKEditor.Utilities
                             null);
                         break;
                     case "CodeMirror":
-                        foreach (var codeMirrorInfo in
-                            typeof(CodeMirror).GetProperties()
-                                .Where(codeMirrorInfo => !codeMirrorInfo.Name.Equals("Theme")))
+                        foreach (var codeMirrorInfo in typeof(CodeMirror).GetProperties().Where(codeMirrorInfo => !codeMirrorInfo.Name.Equals("Theme")))
                         {
+                            var settingName = string.Format("{0}{1}", key, codeMirrorInfo.Name);
+                            if (!editorHostSettings.Any(s => s.Name.Equals(settingName)))
+                            {
+                                continue;
+                            }
+
+                            settingValue =editorHostSettings.FirstOrDefault(setting => setting.Name.Equals(settingName)).Value;
+
+                            if (string.IsNullOrEmpty(settingValue))
+                            {
+                                continue;
+                            }
+
                             switch (codeMirrorInfo.PropertyType.Name)
                             {
                                 case "String":
-                                    if (
-                                        editorHostSettings.Any(
-                                            s => s.Name.Equals(string.Format("{0}{1}", key, codeMirrorInfo.Name))))
-                                    {
-                                        codeMirrorInfo.SetValue(currentSettings.Config.CodeMirror, settingValue, null);
-                                    }
-
+                                    codeMirrorInfo.SetValue(currentSettings.Config.CodeMirror, settingValue, null);
                                     break;
                                 case "Boolean":
-                                    if (
-                                        editorHostSettings.Any(
-                                            s => s.Name.Equals(string.Format("{0}{1}", key, codeMirrorInfo.Name))))
-                                    {
-                                        codeMirrorInfo.SetValue(
-                                            currentSettings.Config.CodeMirror,
-                                            bool.Parse(settingValue),
-                                            null);
-                                    }
-
+                                    codeMirrorInfo.SetValue(currentSettings.Config.CodeMirror, bool.Parse(settingValue), null);
                                     break;
                             }
                         }
@@ -213,59 +211,63 @@ namespace WatchersNET.CKEditor.Utilities
                     case "WordCount":
                         foreach (var wordCountInfo in typeof(WordCountConfig).GetProperties())
                         {
+                            var settingName = string.Format("{0}{1}", key, wordCountInfo.Name);
+                            if (!editorHostSettings.Any(s => s.Name.Equals(settingName)))
+                            {
+                                continue;
+                            }
+
+                            settingValue = editorHostSettings.FirstOrDefault(setting => setting.Name.Equals(settingName)).Value;
+
+                            if (string.IsNullOrEmpty(settingValue))
+                            {
+                                continue;
+                            }
+
                             switch (wordCountInfo.PropertyType.Name)
                             {
                                 case "String":
-                                    if (
-                                        editorHostSettings.Any(
-                                            s => s.Name.Equals(string.Format("{0}{1}", key, wordCountInfo.Name))))
-                                    {
-                                        wordCountInfo.SetValue(currentSettings.Config.WordCount, settingValue, null);
-                                    }
-
+                                    wordCountInfo.SetValue(currentSettings.Config.WordCount, settingValue, null);
                                     break;
                                 case "Boolean":
-                                    if (
-                                        editorHostSettings.Any(
-                                            s => s.Name.Equals(string.Format("{0}{1}", key, wordCountInfo.Name))))
-                                    {
-                                        wordCountInfo.SetValue(
+                                    wordCountInfo.SetValue(
                                             currentSettings.Config.WordCount,
                                             bool.Parse(settingValue),
                                             null);
-                                    }
-
                                     break;
                             }
                         }
 
                         break;
                     case "AutoSave":
-                        foreach (var wordCountInfo in typeof(AutoSave).GetProperties())
+                        foreach (var autoSaveInfo in typeof(AutoSave).GetProperties())
                         {
-                            switch (wordCountInfo.PropertyType.Name)
+                            var settingName = string.Format("{0}{1}", key, autoSaveInfo.Name);
+                            if (!editorHostSettings.Any(s => s.Name.Equals(settingName)))
+                            {
+                                continue;
+                            }
+
+                            settingValue = editorHostSettings.FirstOrDefault(setting => setting.Name.Equals(settingName)).Value;
+
+                            if (string.IsNullOrEmpty(settingValue))
+                            {
+                                continue;
+                            }
+
+                            switch (autoSaveInfo.PropertyType.Name)
                             {
                                 case "Int32":
+                                    autoSaveInfo.SetValue(currentSettings.Config.AutoSave, int.Parse(settingValue), null);
+                                    break;
                                 case "String":
-                                    if (
-                                        editorHostSettings.Any(
-                                            s => s.Name.Equals(string.Format("{0}{1}", key, wordCountInfo.Name))))
-                                    {
-                                        wordCountInfo.SetValue(currentSettings.Config.AutoSave, settingValue, null);
-                                    }
-
+                                    autoSaveInfo.SetValue(currentSettings.Config.AutoSave, settingValue, null);
                                     break;
                                 case "Boolean":
-                                    if (
-                                        editorHostSettings.Any(
-                                            s => s.Name.Equals(string.Format("{0}{1}", key, wordCountInfo.Name))))
-                                    {
-                                        wordCountInfo.SetValue(
+                                    autoSaveInfo.SetValue(
                                             currentSettings.Config.AutoSave,
                                             bool.Parse(settingValue),
                                             null);
-                                    }
-
                                     break;
                             }
                         }
