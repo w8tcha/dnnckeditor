@@ -184,7 +184,7 @@
     <value>Kliknij, aby zmodyfikować nazwę grupy</value>
   </data>
   <data name="EditorConfigWarning.Text" xml:space="preserve">
-    <value>&lt;strong&gt;Informacje:&lt;/strong&gt; Ustawienia poniżej są tylko dla bardzo doświadczonych użytkowników, należy je zmieniać tylko wtedy, gdy naprawdę wiemy co robimy. Więcej informacji znajduje się na &lt;a href="http://docs.cksource.com/ckeditor_api/symbols/CKEDITOR.config.html"&gt;&lt;strong&gt;stronie dokumentacji API JavaScript CKEditor&lt;/strong&gt;&lt;/a&gt;. Ustawienia można zostawić puste, aby wczytać domyślny zestaw ustawień przy uruchomieniu edytora.</value>
+    <value>&lt;strong&gt;Informacje:&lt;/strong&gt; Ustawienia poniżej są tylko dla bardzo doświadczonych użytkowników, należy je zmieniać tylko wtedy, gdy naprawdę wiemy co robimy. Więcej informacji znajduje się na &lt;a href="https://docs.ckeditor.com/ckeditor4/latest/api/CKEDITOR_config.html"&gt;&lt;strong&gt;stronie dokumentacji API JavaScript CKEditor&lt;/strong&gt;&lt;/a&gt;. Ustawienia można zostawić puste, aby wczytać domyślny zestaw ustawień przy uruchomieniu edytora.</value>
   </data>
   <data name="EditToolbar.Text" xml:space="preserve">
     <value>Edytuj wybrany zestaw paska narzędziowego</value>

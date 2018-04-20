@@ -22,6 +22,7 @@ namespace WatchersNET.CKEditor.Web
     using System.IO;
     using System.Linq;
     using System.Text;
+    using System.Text.RegularExpressions;
     using System.Threading;
     using System.Web;
     using System.Web.UI;
@@ -32,6 +33,7 @@ namespace WatchersNET.CKEditor.Web
     using DotNetNuke.Common.Utilities;
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Entities.Portals;
+    using DotNetNuke.Entities.Tabs;
     using DotNetNuke.Framework.JavaScriptLibraries;
     using DotNetNuke.Framework.Providers;
     using DotNetNuke.Security;
@@ -218,13 +220,13 @@ namespace WatchersNET.CKEditor.Web
                                 {
                                     var codeMirrorArray = new StringBuilder();
 
-                                    foreach (var codeMirrorInfo in
-                                        typeof(CodeMirror).GetProperties())
+                                    foreach (var codeMirrorInfo in typeof(CodeMirror).GetProperties())
                                     {
                                         var xmlAttribute =
                                             codeMirrorInfo.GetCustomAttribute<XmlAttributeAttribute>(true);
                                         var rawSettingValue = codeMirrorInfo.GetValue(
-                                            this.currentSettings.Config.CodeMirror, null);
+                                            this.currentSettings.Config.CodeMirror,
+                                            null);
 
                                         var codeMirrorSettingValue = rawSettingValue.ToString();
 
@@ -236,10 +238,16 @@ namespace WatchersNET.CKEditor.Web
                                         switch (codeMirrorInfo.PropertyType.Name)
                                         {
                                             case "String":
-                                                codeMirrorArray.AppendFormat("{0}: '{1}',", xmlAttribute.AttributeName, codeMirrorSettingValue);
+                                                codeMirrorArray.AppendFormat(
+                                                    "{0}: '{1}',",
+                                                    xmlAttribute.AttributeName,
+                                                    codeMirrorSettingValue);
                                                 break;
                                             case "Boolean":
-                                                codeMirrorArray.AppendFormat("{0}: {1},", xmlAttribute.AttributeName, codeMirrorSettingValue.ToLower());
+                                                codeMirrorArray.AppendFormat(
+                                                    "{0}: {1},",
+                                                    xmlAttribute.AttributeName,
+                                                    codeMirrorSettingValue.ToLower());
                                                 break;
                                         }
                                     }
@@ -247,7 +255,8 @@ namespace WatchersNET.CKEditor.Web
                                     var codemirrorSettings = codeMirrorArray.ToString();
 
                                     this._settings["codemirror"] = string.Format(
-                                        "{{ {0} }}", codemirrorSettings.Remove(codemirrorSettings.Length - 1, 1));
+                                        "{{ {0} }}",
+                                        codemirrorSettings.Remove(codemirrorSettings.Length - 1, 1));
                                 }
 
                                 break;
@@ -260,8 +269,9 @@ namespace WatchersNET.CKEditor.Web
                                         var xmlAttribute =
                                             wordCountInfo.GetCustomAttribute<XmlAttributeAttribute>(true);
 
-                                        var rawSettingValue =
-                                            wordCountInfo.GetValue(this.currentSettings.Config.WordCount, null);
+                                        var rawSettingValue = wordCountInfo.GetValue(
+                                            this.currentSettings.Config.WordCount,
+                                            null);
 
                                         var wordCountSettingValue = rawSettingValue.ToString();
 
@@ -273,10 +283,16 @@ namespace WatchersNET.CKEditor.Web
                                         switch (wordCountInfo.PropertyType.Name)
                                         {
                                             case "String":
-                                                wordcountArray.AppendFormat("{0}: '{1}',", xmlAttribute.AttributeName, wordCountSettingValue);
+                                                wordcountArray.AppendFormat(
+                                                    "{0}: '{1}',",
+                                                    xmlAttribute.AttributeName,
+                                                    wordCountSettingValue);
                                                 break;
                                             case "Boolean":
-                                                wordcountArray.AppendFormat("{0}: {1},", xmlAttribute.AttributeName, wordCountSettingValue.ToLower());
+                                                wordcountArray.AppendFormat(
+                                                    "{0}: {1},",
+                                                    xmlAttribute.AttributeName,
+                                                    wordCountSettingValue.ToLower());
                                                 break;
                                         }
                                     }
@@ -284,7 +300,60 @@ namespace WatchersNET.CKEditor.Web
                                     var wordcountSettings = wordcountArray.ToString();
 
                                     this._settings["wordcount"] = string.Format(
-                                        "{{ {0} }}", wordcountSettings.Remove(wordcountSettings.Length - 1, 1));
+                                        "{{ {0} }}",
+                                        wordcountSettings.Remove(wordcountSettings.Length - 1, 1));
+                                }
+
+                                break;
+
+                            case "AutoSave":
+                                {
+                                    var wordcountArray = new StringBuilder();
+
+                                    foreach (var wordCountInfo in typeof(AutoSave).GetProperties())
+                                    {
+                                        var xmlAttribute =
+                                            wordCountInfo.GetCustomAttribute<XmlAttributeAttribute>(true);
+
+                                        var rawSettingValue = wordCountInfo.GetValue(
+                                            this.currentSettings.Config.AutoSave,
+                                            null);
+
+                                        var wordCountSettingValue = rawSettingValue.ToString();
+
+                                        if (string.IsNullOrEmpty(wordCountSettingValue))
+                                        {
+                                            continue;
+                                        }
+
+                                        switch (wordCountInfo.PropertyType.Name)
+                                        {
+                                            case "String":
+                                                wordcountArray.AppendFormat(
+                                                    "{0}: \"{1}\",",
+                                                    xmlAttribute.AttributeName,
+                                                    wordCountSettingValue);
+                                                break;
+                                            case "Int32":
+                                                wordcountArray.AppendFormat(
+                                                    "{0}: {1},",
+                                                    xmlAttribute.AttributeName,
+                                                    wordCountSettingValue);
+                                                break;
+                                            case "Boolean":
+                                                wordcountArray.AppendFormat(
+                                                    "{0}: {1},",
+                                                    xmlAttribute.AttributeName,
+                                                    wordCountSettingValue.ToLower());
+                                                break;
+                                        }
+                                    }
+
+                                    var wordcountSettings = wordcountArray.ToString();
+
+                                    this._settings["autosave"] = string.Format(
+                                        "{{ {0} }}",
+                                        wordcountSettings.Remove(wordcountSettings.Length - 1, 1));
                                 }
 
                                 break;
@@ -427,6 +496,9 @@ namespace WatchersNET.CKEditor.Web
 
                 // Inject maxFileSize
                 this._settings["maxFileSize"] = Utility.GetMaxUploadSize().ToString();
+
+                // Inject Tabs for the dnnpages plugin
+                this._settings["dnnPagesArray"] = this.GetTabsArray();
 
                 HttpContext.Current.Session["CKDNNtabid"] = this._portalSettings.ActiveTab.TabID;
                 HttpContext.Current.Session["CKDNNporid"] = this._portalSettings.PortalId;
@@ -660,6 +732,61 @@ namespace WatchersNET.CKEditor.Web
         /// </summary>
         private static string SResXFile => Globals.ResolveUrl(
             string.Format("~/Providers/HtmlEditorProviders/CKEditor/{0}/Options.aspx.resx", Localization.LocalResourceDirectory));
+
+        /// <summary>
+        /// Gets the tabs array.
+        /// </summary>
+        /// <returns>Returns the Tabs Array as String</returns>
+        private string GetTabsArray()
+        {
+            // Generate Pages Array
+            var pagesArray = new StringBuilder();
+
+            pagesArray.Append("[");
+
+            var domainName = string.Format("http://{0}", Globals.GetDomainName(HttpContext.Current.Request, true));
+
+            foreach (var tab in TabController.GetPortalTabs(
+                this._portalSettings.PortalId, -1, false, null, true, false, true, true, true))
+            {
+                var tabUrl = PortalController.GetPortalSettingAsBoolean("ContentLocalizationEnabled", this._portalSettings.PortalId, false)
+                             && !string.IsNullOrEmpty(tab.CultureCode)
+                                 ? Globals.FriendlyUrl(
+                                     tab,
+                                     string.Format("{0}&language={1}", Globals.ApplicationURL(tab.TabID), tab.CultureCode))
+                                 : Globals.FriendlyUrl(tab, Globals.ApplicationURL(tab.TabID));
+
+
+                tabUrl = Globals.ResolveUrl(Regex.Replace(tabUrl, domainName, "~", RegexOptions.IgnoreCase));
+
+                var tabName = Microsoft.JScript.GlobalObject.escape(tab.TabName);
+
+                if (tab.Level.Equals(0))
+                {
+                    pagesArray.AppendFormat("new Array('| {0}','{1}'),", tabName, tabUrl);
+                }
+                else
+                {
+                    var separator = new StringBuilder();
+
+                    for (var index = 0; index < tab.Level; index++)
+                    {
+                        separator.Append("--");
+                    }
+
+                    pagesArray.AppendFormat("new Array('|{0} {1}','{2}'),", separator, tabName, tabUrl);
+                }
+            }
+
+            if (pagesArray.ToString().EndsWith(","))
+            {
+                pagesArray.Remove(pagesArray.Length - 1, 1);
+            }
+
+            pagesArray.Append("]");
+
+            return pagesArray.ToString();
+        }
 
         #endregion
 

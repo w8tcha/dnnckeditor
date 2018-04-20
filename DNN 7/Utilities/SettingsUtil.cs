@@ -240,6 +240,37 @@ namespace WatchersNET.CKEditor.Utilities
                         }
 
                         break;
+                    case "AutoSave":
+                        foreach (var wordCountInfo in typeof(AutoSave).GetProperties())
+                        {
+                            switch (wordCountInfo.PropertyType.Name)
+                            {
+                                case "Int32":
+                                case "String":
+                                    if (
+                                        editorHostSettings.Any(
+                                            s => s.Name.Equals(string.Format("{0}{1}", key, wordCountInfo.Name))))
+                                    {
+                                        wordCountInfo.SetValue(currentSettings.Config.AutoSave, settingValue, null);
+                                    }
+
+                                    break;
+                                case "Boolean":
+                                    if (
+                                        editorHostSettings.Any(
+                                            s => s.Name.Equals(string.Format("{0}{1}", key, wordCountInfo.Name))))
+                                    {
+                                        wordCountInfo.SetValue(
+                                            currentSettings.Config.AutoSave,
+                                            bool.Parse(settingValue),
+                                            null);
+                                    }
+
+                                    break;
+                            }
+                        }
+
+                        break;
                 }
             }
 
@@ -921,6 +952,37 @@ namespace WatchersNET.CKEditor.Utilities
                                     {
                                         wordCountInfo.SetValue(
                                             currentSettings.Config.WordCount,
+                                            bool.Parse(
+                                                (string)hshModSet[string.Format("{0}{1}", key, wordCountInfo.Name)]),
+                                            null);
+                                    }
+
+                                    break;
+                            }
+                        }
+
+                        break;
+                    case "AutoSave":
+                        foreach (var wordCountInfo in typeof(AutoSave).GetProperties())
+                        {
+                            switch (wordCountInfo.PropertyType.Name)
+                            {
+                                case "Int32":
+                                case "String":
+                                    if (hshModSet.ContainsKey(string.Format("{0}{1}", key, wordCountInfo.Name)))
+                                    {
+                                        wordCountInfo.SetValue(
+                                            currentSettings.Config.AutoSave,
+                                            hshModSet[string.Format("{0}{1}", key, wordCountInfo.Name)],
+                                            null);
+                                    }
+
+                                    break;
+                                case "Boolean":
+                                    if (hshModSet.ContainsKey(string.Format("{0}{1}", key, wordCountInfo.Name)))
+                                    {
+                                        wordCountInfo.SetValue(
+                                            currentSettings.Config.AutoSave,
                                             bool.Parse(
                                                 (string)hshModSet[string.Format("{0}{1}", key, wordCountInfo.Name)]),
                                             null);

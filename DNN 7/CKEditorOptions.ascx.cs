@@ -670,6 +670,52 @@ namespace WatchersNET.CKEditor
 
                                 switch (wordCountInfo.PropertyType.Name)
                                 {
+                                    case "Int32": 
+                                    case "String":
+                                        {
+                                            var textBox = Utility.FindControl<TextBox>(
+                                                this.EditorConfigHolder,
+                                                wordCountInfo.Name);
+
+                                            if (textBox != null)
+                                            {
+                                                textBox.Text = value.ToString();
+                                            }
+                                        }
+
+                                        break;
+
+                                    case "Boolean":
+                                        {
+                                            var checkBox = Utility.FindControl<CheckBox>(
+                                                this.EditorConfigHolder,
+                                                wordCountInfo.Name);
+
+                                            if (checkBox != null)
+                                            {
+                                                checkBox.Checked = (bool)value;
+                                            }
+                                        }
+
+                                        break;
+                                }
+                            }
+                        }
+
+                        break;
+                    case "AutoSave":
+                        {
+                            foreach (var wordCountInfo in typeof(AutoSave).GetProperties())
+                            {
+                                value = wordCountInfo.GetValue(importedSettings.Config.AutoSave, null);
+
+                                if (value == null)
+                                {
+                                    continue;
+                                }
+
+                                switch (wordCountInfo.PropertyType.Name)
+                                {
                                     case "String":
                                         {
                                             var textBox = Utility.FindControl<TextBox>(
@@ -2271,6 +2317,60 @@ namespace WatchersNET.CKEditor
                         }
 
                         break;
+                    case "AutoSave":
+                        {
+                            foreach (var wordCountInfo in typeof(AutoSave).GetProperties())
+                            {
+                                var wordCountDescription = wordCountInfo.GetCustomAttribute<DescriptionAttribute>(true);
+
+                                var settingNameContainer2 = new HtmlGenericControl("div");
+                                settingNameContainer2.Attributes.Add("class", "settingNameContainer");
+
+                                var settingValueContainer2 = new HtmlGenericControl("div");
+                                settingValueContainer2.Attributes.Add("class", "settingValueContainer");
+
+                                var settingNameLabel2 = new Label { Text = string.Format("{0} - {1}:", info.Name, wordCountInfo.Name) };
+
+                                settingNameContainer2.Controls.Add(settingNameLabel2);
+
+                                switch (wordCountInfo.PropertyType.Name)
+                                {
+                                    case "Int32":
+                                    case "String":
+                                        {
+                                            var settingValueInput = new TextBox { ID = wordCountInfo.Name, CssClass = "settingValueInput", TextMode = TextBoxMode.MultiLine, Rows = 5 };
+
+                                            if (description != null)
+                                            {
+                                                settingValueInput.ToolTip = wordCountDescription.Description;
+                                            }
+
+                                            settingValueContainer2.Controls.Add(settingValueInput);
+                                        }
+
+                                        break;
+
+                                    case "Boolean":
+                                        {
+                                            var settingValueInput = new CheckBox { ID = wordCountInfo.Name };
+
+                                            if (description != null)
+                                            {
+                                                settingValueInput.ToolTip = wordCountDescription.Description;
+                                            }
+
+                                            settingValueContainer2.Controls.Add(settingValueInput);
+                                        }
+
+                                        break;
+                                }
+
+                                this.EditorConfigHolder.Controls.Add(settingNameContainer2);
+                                this.EditorConfigHolder.Controls.Add(settingValueContainer2);
+                            }
+                        }
+
+                        break;
                 }
 
                 if (isSubSetting)
@@ -2404,6 +2504,51 @@ namespace WatchersNET.CKEditor
                             {
                                 switch (wordCountInfo.PropertyType.Name)
                                 {
+                                    case "String":
+                                        {
+                                            var textBox = Utility.FindControl<TextBox>(
+                                                this.EditorConfigHolder,
+                                                wordCountInfo.Name);
+
+                                            if (textBox != null)
+                                            {
+                                                moduleController.UpdateModuleSetting(
+                                                    this.ModuleId,
+                                                    string.Format("{0}{1}", key, wordCountInfo.Name),
+                                                    textBox.Text);
+                                            }
+                                        }
+
+                                        break;
+
+                                    case "Boolean":
+                                        {
+                                            var checkBox = Utility.FindControl<CheckBox>(
+                                                this.EditorConfigHolder,
+                                                wordCountInfo.Name);
+
+                                            if (checkBox != null)
+                                            {
+                                                moduleController.UpdateModuleSetting(
+                                                    this.ModuleId,
+                                                    string.Format("{0}{1}", key, wordCountInfo.Name),
+                                                    checkBox.Checked.ToString());
+                                            }
+                                        }
+
+                                        break;
+                                }
+                            }
+                        }
+
+                        break;
+                    case "AutoSave":
+                        {
+                            foreach (var wordCountInfo in typeof(AutoSave).GetProperties())
+                            {
+                                switch (wordCountInfo.PropertyType.Name)
+                                {
+                                    case "Int32":
                                     case "String":
                                         {
                                             var textBox = Utility.FindControl<TextBox>(
@@ -2749,6 +2894,49 @@ namespace WatchersNET.CKEditor
                             {
                                 switch (wordCountInfo.PropertyType.Name)
                                 {
+                                    case "String":
+                                        {
+                                            var textBox = Utility.FindControl<TextBox>(
+                                                this.EditorConfigHolder,
+                                                wordCountInfo.Name);
+
+                                            if (textBox != null)
+                                            {
+                                                Utility.AddOrUpdateEditorHostSetting(
+                                                    string.Format("{0}{1}", key, wordCountInfo.Name),
+                                                    textBox.Text);
+                                            }
+                                        }
+
+                                        break;
+
+                                    case "Boolean":
+                                        {
+                                            var checkBox = Utility.FindControl<CheckBox>(
+                                                this.EditorConfigHolder,
+                                                wordCountInfo.Name);
+
+                                            if (checkBox != null)
+                                            {
+                                                Utility.AddOrUpdateEditorHostSetting(
+                                                    string.Format("{0}{1}", key, wordCountInfo.Name),
+                                                    checkBox.Checked.ToString());
+                                            }
+                                        }
+
+                                        break;
+                                }
+                            }
+                        }
+
+                        break;
+                    case "AutoSave":
+                        {
+                            foreach (var wordCountInfo in typeof(AutoSave).GetProperties())
+                            {
+                                switch (wordCountInfo.PropertyType.Name)
+                                {
+                                    case "Int32":
                                     case "String":
                                         {
                                             var textBox = Utility.FindControl<TextBox>(
@@ -3493,6 +3681,48 @@ namespace WatchersNET.CKEditor
 
                                             wordCountInfo.SetValue(
                                                 exportSettings.Config.WordCount,
+                                                checkBox.Checked,
+                                                null);
+                                        }
+
+                                        break;
+                                }
+                            }
+                        }
+
+                        break;
+                    case "AutoSave":
+                        {
+                            foreach (var wordCountInfo in typeof(AutoSave).GetProperties())
+                            {
+                                switch (wordCountInfo.PropertyType.Name)
+                                {
+                                    case "Int32":
+                                    case "String":
+                                        {
+                                            var textBox = Utility.FindControl<TextBox>(
+                                                this.EditorConfigHolder,
+                                                wordCountInfo.Name);
+
+                                            if (!string.IsNullOrEmpty(textBox.Text))
+                                            {
+                                                wordCountInfo.SetValue(
+                                                    exportSettings.Config.AutoSave,
+                                                    textBox.Text,
+                                                    null);
+                                            }
+                                        }
+
+                                        break;
+
+                                    case "Boolean":
+                                        {
+                                            var checkBox = Utility.FindControl<CheckBox>(
+                                                this.EditorConfigHolder,
+                                                wordCountInfo.Name);
+
+                                            wordCountInfo.SetValue(
+                                                exportSettings.Config.AutoSave,
                                                 checkBox.Checked,
                                                 null);
                                         }

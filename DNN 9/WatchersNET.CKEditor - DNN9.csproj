@@ -19,7 +19,7 @@
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
     <IsWebBootstrapper>true</IsWebBootstrapper>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -82,14 +82,17 @@
   <ItemGroup>
     <Reference Include="DotNetNuke, Version=9.1.1.129, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DotNetNuke.Core.9.1.1.129\lib\net40\DotNetNuke.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
     <Reference Include="DotNetNuke.Web, Version=9.1.1.129, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DotNetNuke.Web.9.1.1.129\lib\net40\DotNetNuke.Web.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
     <Reference Include="DotNetNuke.Web.Client, Version=9.1.1.129, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\DotNetNuke.Web.Client.9.1.1.129\lib\net40\DotNetNuke.Web.Client.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
     <Reference Include="DotNetNuke.WebUtility, Version=4.2.1.783, Culture=neutral, processorArchitecture=MSIL">
@@ -145,6 +148,7 @@
       <DependentUpon>EditorConfigManager.ascx</DependentUpon>
     </Compile>
     <Compile Include="Module\UpgradeController.cs" />
+    <Compile Include="Objects\AutoSave.cs" />
     <Compile Include="Objects\CodeMirror.cs" />
     <Compile Include="Objects\EditorConfig.cs" />
     <Compile Include="Objects\EditorHostSetting.cs" />
@@ -157,10 +161,6 @@
     <Compile Include="Objects\ToolbarSet.cs" />
     <Compile Include="Objects\UploadSizeRoles.cs" />
     <Compile Include="Objects\WordCountConfig.cs" />
-    <Compile Include="Tabs.ashx.cs">
-      <DependentUpon>Tabs.ashx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="Utilities\AnchorFinder.cs" />
     <Compile Include="Browser\Browser.aspx.cs">
       <DependentUpon>Browser.aspx</DependentUpon>
@@ -313,7 +313,6 @@
     <None Include="Install\WatchersNET.CKHtmlEditorProvider.dnn">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Tabs.ashx" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

@@ -62,7 +62,6 @@
     <Copy SourceFiles="$(MSBuildProjectDirectory)\CKEditorOptions.ascx" DestinationFolder="$(MSBuildProjectDirectory)\ResourcesZip"/>
     <Copy SourceFiles="$(MSBuildProjectDirectory)\Options.aspx" DestinationFolder="$(MSBuildProjectDirectory)\ResourcesZip"/>
     <Copy SourceFiles="$(MSBuildProjectDirectory)\UrlControl.ascx" DestinationFolder="$(MSBuildProjectDirectory)\ResourcesZip"/>
-    <Copy SourceFiles="$(MSBuildProjectDirectory)\Tabs.ashx" DestinationFolder="$(MSBuildProjectDirectory)\ResourcesZip"/>
     <Copy SourceFiles="$(MSBuildProjectDirectory)\Browser\Browser.aspx" DestinationFolder="$(MSBuildProjectDirectory)\ResourcesZip\Browser"/>
     <Copy SourceFiles="$(MSBuildProjectDirectory)\Browser\FileUploader.ashx" DestinationFolder="$(MSBuildProjectDirectory)\ResourcesZip\Browser"/>
     <Copy SourceFiles="$(MSBuildProjectDirectory)\Browser\ProcessImage.ashx" DestinationFolder="$(MSBuildProjectDirectory)\ResourcesZip\Browser"/>

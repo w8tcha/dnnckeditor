@@ -10,8 +10,6 @@
  * this file is part of the Source Code of the CKEditor Provider.
  */
 
-using System.Web.Script.Serialization;
-
 namespace WatchersNET.CKEditor.Browser
 {
     #region
@@ -28,6 +26,7 @@ namespace WatchersNET.CKEditor.Browser
     using System.Text;
     using System.Text.RegularExpressions;
     using System.Web;
+    using System.Web.Script.Serialization;
     using System.Web.Script.Services;
     using System.Web.Services;
     using System.Web.UI;
@@ -35,6 +34,7 @@ namespace WatchersNET.CKEditor.Browser
     using System.Web.UI.WebControls;
 
     using DotNetNuke.Common.Utilities;
+    using DotNetNuke.ComponentModel;
     using DotNetNuke.Entities.Controllers;
     using DotNetNuke.Entities.Portals;
     using DotNetNuke.Entities.Tabs;
@@ -3008,11 +3008,9 @@ namespace WatchersNET.CKEditor.Browser
 
                 try
                 {
-                    var sFolder = newDirPath;
+                    var folderPath = newDirPath;
 
-                    sFolder = sFolder.Substring(this._portalSettings.HomeDirectoryMapPath.Length).Replace("\\", "/");
-
-                    var folderController = new FolderController();
+                    folderPath = folderPath.Substring(this._portalSettings.HomeDirectoryMapPath.Length).Replace("\\", "/");
 
                     var storageLocation = (int)FolderController.StorageLocationTypes.InsecureFileSystem;
 
@@ -3032,7 +3030,22 @@ namespace WatchersNET.CKEditor.Browser
                     {
                         Directory.CreateDirectory(newDirPath);
 
-                        var folderId = folderController.AddFolder(this._portalSettings.PortalId, sFolder, storageLocation, false, false);
+                        var newFolder = new FolderInfo
+                                            {
+                                                UniqueId = Guid.NewGuid(),
+                                                VersionGuid = Guid.NewGuid(),
+                                                PortalID = this._portalSettings.PortalId,
+                                                FolderPath = folderPath,
+                                                StorageLocation = storageLocation,
+                                                IsProtected = false,
+                                                IsCached = false
+                                            };
+
+                        var folderId = FolderManager.Instance.AddFolder(
+                            FolderMappingController.Instance.GetFolderMapping(
+                                newFolder.PortalID,
+                                newFolder.FolderMappingID),
+                            newFolder.FolderPath).FolderID;
 
                         this.SetFolderPermission(folderId);
                     }

@@ -145,6 +145,7 @@
       <DependentUpon>EditorConfigManager.ascx</DependentUpon>
     </Compile>
     <Compile Include="Module\UpgradeController.cs" />
+    <Compile Include="Objects\AutoSave.cs" />
     <Compile Include="Objects\CodeMirror.cs" />
     <Compile Include="Objects\EditorConfig.cs" />
     <Compile Include="Objects\EditorHostSetting.cs" />
@@ -157,10 +158,6 @@
     <Compile Include="Objects\UploadImage.cs" />
     <Compile Include="Objects\UploadSizeRoles.cs" />
     <Compile Include="Objects\WordCountConfig.cs" />
-    <Compile Include="Tabs.ashx.cs">
-      <DependentUpon>Tabs.ashx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
     <Compile Include="Utilities\AnchorFinder.cs" />
     <Compile Include="Browser\Browser.aspx.cs">
       <DependentUpon>Browser.aspx</DependentUpon>
@@ -313,7 +310,6 @@
     <None Include="Install\WatchersNET.CKHtmlEditorProvider.dnn">
       <SubType>Designer</SubType>
     </None>
-    <Content Include="Tabs.ashx" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

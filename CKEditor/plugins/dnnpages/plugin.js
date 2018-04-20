@@ -7,8 +7,6 @@
         icons: 'anchor,anchor-rtl,link,unlink', // %REMOVE_LINE_CORE%
         hidpi: true, // %REMOVE_LINE_CORE%
         onLoad: function() {
-            CKEDITOR.scriptLoader.load(CKEDITOR.basePath + 'Tabs.ashx?PortalID=' + document.getElementById('CKDNNporid').value);
-
             // Add the CSS styles for anchor placeholders.
             var iconPath = CKEDITOR.getUrl(this.path + 'images' + (CKEDITOR.env.hidpi ? '/hidpi' : '') + '/anchor.png'),
                 baseStyle = 'background:url(' + iconPath + ') no-repeat %1 center;border:1px dotted #00f;background-size:16px;';
@@ -501,8 +499,8 @@
                 else if (href && (urlMatch = href.match(urlRegex))) {
                     var isLocalPage = false;
                     // check for portal page
-                    for (var iPage = 0; iPage < dnnpagesSelectBox.length; iPage++) {
-                        if (dnnpagesSelectBox[iPage][1] == href) {
+                    for (var iPage = 0; iPage < editor.config.dnnPagesArray; iPage++) {
+                        if (editor.config.dnnPagesArray[iPage][1] == href) {
                             isLocalPage = true;
                         }
                     }
@@ -852,15 +850,12 @@
         var dialogDefinition = ev.data.definition;
 
         if (dialogName == 'link') {
-            if (typeof (dnnpagesSelectBox) === 'undefined') {
-                console.log('yes');
+            if (typeof (ev.editor.config.dnnPagesArray) === 'undefined') {
                 return;
-            } else {
-                console.log('no');
             }
 
-            for (var i = 0; i < dnnpagesSelectBox.length; i++) {
-                dnnpagesSelectBox[i][0] = unescape(dnnpagesSelectBox[i][0]);
+            for (var i = 0; i < ev.editor.config.dnnPagesArray.length; i++) {
+                ev.editor.config.dnnPagesArray[i][0] = unescape(ev.editor.config.dnnPagesArray[i][0]);
             }
 
             var editor = ev.editor;
@@ -1033,7 +1028,7 @@
                         label: editor.lang.dnnpages.localPageLabel,
                         id: 'localPage',
                         title: editor.lang.dnnpages.localPageTitle,
-                        items: dnnpagesSelectBox,
+                        items: editor.config.dnnPagesArray,
                         setup: function(data) {
                             if (data.localPage) {
                                 this.setValue(data.localPage);
