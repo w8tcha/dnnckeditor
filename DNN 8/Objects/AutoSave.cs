@@ -24,7 +24,7 @@ namespace WatchersNET.CKEditor.Objects
         /// </summary>
         public AutoSave()
         {
-            this.Delay = 1;
+            this.Delay = 10;
             this.MessageType = "notification";
             this.SaveDetectionSelectors = "a[href^='javascript:__doPostBack'][id*='Save'],a[id*='Cancel']";
             this.NotOlderThen = 1440;

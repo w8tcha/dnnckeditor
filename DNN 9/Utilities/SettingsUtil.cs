@@ -189,7 +189,8 @@ namespace WatchersNET.CKEditor.Utilities
                                 continue;
                             }
 
-                            settingValue =editorHostSettings.FirstOrDefault(setting => setting.Name.Equals(settingName)).Value;
+                            settingValue = editorHostSettings
+                                .FirstOrDefault(setting => setting.Name.Equals(settingName)).Value;
 
                             if (string.IsNullOrEmpty(settingValue))
                             {
