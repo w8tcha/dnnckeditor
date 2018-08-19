@@ -123,6 +123,7 @@ namespace WatchersNET.CKEditor.Objects
             this.StartupMode = "wysiwyg";
             this.StartupOutlineBlocks = false;
             this.StartupShowBorders = true;
+            this.StylesheetParser_skipSelectors = "/(^body\\.|^html\\.|^caption\\.|\\.high|^\\.)/i";
             this.TabIndex = 0;
             this.TabSpaces = 0;
             this.Templates = "default";
@@ -1793,6 +1794,16 @@ namespace WatchersNET.CKEditor.Objects
         [XmlAttribute("stylesSet")]
         [Description("The 'styles definition set' to use in the editor. They will be used in the styles combo and the style selector of the div container.")]
         public string StylesSet { get; set; }
+
+        /// <summary>
+        /// Gets or sets the stylesheet parser skip selectors.
+        /// </summary>
+        /// <value>
+        /// The stylesheet parser skip selectors.
+        /// </value>
+        [XmlAttribute("stylesheetParser_skipSelectors")]
+        [Description("A regular expression that defines whether a CSS rule will be skipped by the Stylesheet Parser plugin. ")]
+        public string StylesheetParser_skipSelectors { get; set; }
 
         /// <summary>
         /// Gets or sets the index of the tab.

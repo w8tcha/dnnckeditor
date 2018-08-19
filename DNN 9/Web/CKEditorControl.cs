@@ -1552,7 +1552,7 @@ namespace WatchersNET.CKEditor.Web
                         continue;
                     }
 
-                    editorScript.AppendFormat("{0}:\'{1}\'", key, value);
+                    editorScript.AppendFormat(value.EndsWith("/i") ? "{0}:{1}" : "{0}:\'{1}\'", key, value);
 
                     editorScript.Append(currentCount == keysCount ? "};" : ",");
                 }
