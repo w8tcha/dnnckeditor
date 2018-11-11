@@ -716,6 +716,7 @@ namespace WatchersNET.CKEditor
 
                                 switch (wordCountInfo.PropertyType.Name)
                                 {
+                                    case "Int32":
                                     case "String":
                                         {
                                             var textBox = Utility.FindControl<TextBox>(
