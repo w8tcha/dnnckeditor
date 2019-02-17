@@ -26,5 +26,5 @@ using System.Runtime.InteropServices;
 
 [assembly: ComVisible(false)]
 
-[assembly: AssemblyVersion("2.01.18")]
-[assembly: AssemblyFileVersion("2.01.1.8")]
+[assembly: AssemblyVersion("2.01.19")]
+[assembly: AssemblyFileVersion("2.01.1.9")]
