@@ -2442,7 +2442,7 @@ namespace WatchersNET.CKEditor.Browser
             try
             {
                 this.SetDefaultLinkTypeText();
-
+                /*
                 // Enable Buttons
                 this.CheckFolderAccess(fileInfo.FolderId, true);
 
@@ -2550,6 +2550,7 @@ namespace WatchersNET.CKEditor.Browser
                     .Text.Replace(@"http://www.MyWebsite.com/LinkClick.aspx?fileticket=xyz", absoluteUrl);
 
                 ////////
+                */
             }
             catch (Exception)
             {
