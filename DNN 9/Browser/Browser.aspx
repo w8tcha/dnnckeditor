@@ -310,8 +310,9 @@
                 <ItemTemplate>
                   <li class="FilesListRow" id="ListRow" runat="server" 
                       title='<%# DataBinder.Eval(Container.DataItem, "PictureURL").ToString().Substring(DataBinder.Eval(Container.DataItem, "PictureURL").ToString().LastIndexOf("/", StringComparison.Ordinal) + 1)%>'>
-                    <asp:LinkButton runat="server" ID="FileListItem" CssClass="FilesListItem" 
-                       CommandArgument='<%# DataBinder.Eval(Container.DataItem, "FileId").ToString()%>'>
+                    <asp:LinkButton runat="server" ID="FileListItem" 
+                                    CssClass="FilesListItem" 
+                                    CommandArgument='<%# DataBinder.Eval(Container.DataItem, "FileId").ToString()%>'>
                       <asp:Image runat="server" ID="FileThumb" CssClass="FilePreview" ImageUrl='<%# DataBinder.Eval(Container.DataItem, "PictureURL").ToString()%>'
                           AlternateText='<%# DataBinder.Eval(Container.DataItem, "FileName").ToString()%>' ToolTip='<%# DataBinder.Eval(Container.DataItem, "FileName").ToString()%>' />
                       <span class="ItemInfo"><%# DataBinder.Eval(Container.DataItem, "Info").ToString()%></span>
@@ -388,7 +389,7 @@
                 url: "FileUploader.ashx",
                 acceptFileTypes: new RegExp('(\.|\/)(' + '<%= this.AcceptFileTypes %>' + ')', 'i'),
                 maxFileSize: maxFileSize,
-                progressall: function(e, data) {
+                progressall: function (e, data) {
                     var progress = parseInt(data.loaded / data.total * 100, 10);
                     if (progress == 100) {
                         __doPostBack('cmdUploadNow', '');
