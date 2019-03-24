@@ -38,6 +38,7 @@ namespace WatchersNET.CKEditor.Browser
     using DotNetNuke.Entities.Portals;
     using DotNetNuke.Entities.Tabs;
     using DotNetNuke.Entities.Users;
+    using DotNetNuke.Framework.JavaScriptLibraries;
     using DotNetNuke.Framework.Providers;
     using DotNetNuke.Security.Permissions;
     using DotNetNuke.Security.Roles;
@@ -410,49 +411,49 @@ namespace WatchersNET.CKEditor.Browser
             var jqueryScriptLink = new HtmlGenericControl("script");
 
             jqueryScriptLink.Attributes["type"] = "text/javascript";
-            jqueryScriptLink.Attributes["src"] = "//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js";
+            jqueryScriptLink.Attributes["src"] = this.ResolveUrl("../Scripts/jquery-3.3.1.min.js");
 
             this.favicon.Controls.Add(jqueryScriptLink);
 
             var jqueryUiScriptLink = new HtmlGenericControl("script");
 
             jqueryUiScriptLink.Attributes["type"] = "text/javascript";
-            jqueryUiScriptLink.Attributes["src"] = "//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js";
+            jqueryUiScriptLink.Attributes["src"] = this.ResolveUrl("../Scripts/jquery-ui-1.12.1.min.js");
 
             this.favicon.Controls.Add(jqueryUiScriptLink);
 
             var jqueryImageSliderScriptLink = new HtmlGenericControl("script");
 
             jqueryImageSliderScriptLink.Attributes["type"] = "text/javascript";
-            jqueryImageSliderScriptLink.Attributes["src"] = this.ResolveUrl("js/jquery.ImageSlider.js");
+            jqueryImageSliderScriptLink.Attributes["src"] = this.ResolveUrl("../Scripts/jquery.ImageSlider.js");
 
             this.favicon.Controls.Add(jqueryImageSliderScriptLink);
 
             var jqueryImageResizerScriptLink = new HtmlGenericControl("script");
 
             jqueryImageResizerScriptLink.Attributes["type"] = "text/javascript";
-            jqueryImageResizerScriptLink.Attributes["src"] = this.ResolveUrl("js/jquery.cropzoom.js");
+            jqueryImageResizerScriptLink.Attributes["src"] = this.ResolveUrl("../Scripts/jquery.cropzoom.js");
 
             this.favicon.Controls.Add(jqueryImageResizerScriptLink);
 
             var jqueryCropZoomScriptLink = new HtmlGenericControl("script");
 
             jqueryCropZoomScriptLink.Attributes["type"] = "text/javascript";
-            jqueryCropZoomScriptLink.Attributes["src"] = this.ResolveUrl("js/jquery.ImageResizer.js");
+            jqueryCropZoomScriptLink.Attributes["src"] = this.ResolveUrl("../Scripts/jquery.ImageResizer.js");
 
             this.favicon.Controls.Add(jqueryCropZoomScriptLink);
 
             var jqueryPageMetodScriptLink = new HtmlGenericControl("script");
 
             jqueryPageMetodScriptLink.Attributes["type"] = "text/javascript";
-            jqueryPageMetodScriptLink.Attributes["src"] = this.ResolveUrl("js/jquery.pagemethod.js");
+            jqueryPageMetodScriptLink.Attributes["src"] = this.ResolveUrl("../Scripts/jquery.pagemethod.js");
 
             this.favicon.Controls.Add(jqueryPageMetodScriptLink);
 
             var jqueryFileUploadScriptLink = new HtmlGenericControl("script");
 
             jqueryFileUploadScriptLink.Attributes["type"] = "text/javascript";
-            jqueryFileUploadScriptLink.Attributes["src"] = this.ResolveUrl("js/jquery.fileupload.comb.min.js");
+            jqueryFileUploadScriptLink.Attributes["src"] = this.ResolveUrl("../Scripts/jquery.fileupload.comb.min.js");
 
             this.favicon.Controls.Add(jqueryFileUploadScriptLink);
 
@@ -460,7 +461,7 @@ namespace WatchersNET.CKEditor.Browser
 
             objCssLink.Attributes["rel"] = "stylesheet";
             objCssLink.Attributes["type"] = "text/css";
-            objCssLink.Attributes["href"] = "//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/blitzer/jquery-ui.css";
+            objCssLink.Attributes["href"] = this.ResolveUrl("../Content/themes/base/jquery-ui.min.css");
 
             this.favicon.Controls.Add(objCssLink);
 

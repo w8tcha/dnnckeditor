@@ -1,6 +1,6 @@
 [
   {
-    "outputFileName": "Browser/Browser.comb.css",
+    "outputFileName": "Content/Browser.comb.css",
     "inputFiles": [
       "Browser/Browser.css",
       "Browser/jquery.fileupload-ui.css",
@@ -8,7 +8,7 @@
     ]
   },
   {
-    "outputFileName": "../CKEditor/Browser/Browser.comb.css",
+    "outputFileName": "Content/Browser.comb.css",
     "inputFiles": [
       "Browser/Browser.css",
       "Browser/jquery.fileupload.css",

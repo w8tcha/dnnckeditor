@@ -1,5 +1,5 @@
 ﻿<%@ Page language="c#" Codebehind="Browser.aspx.cs" AutoEventWireup="True" Inherits="WatchersNET.CKEditor.Browser.Browser" %>
-<%@ Register TagPrefix="asp" Namespace="System.Web.UI" Assembly="System.Web"%>
+
 <%@ Register TagPrefix="wnet" Namespace="WatchersNET.CKEditor.Controls" Assembly="WatchersNET.CKEditor" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -7,9 +7,9 @@
     <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
     <meta name="language" content="en" />
     <title id="title" runat="server">WatchersNET.FileBrowser</title>
-    <link rel="stylesheet" type="text/css" href="Browser.comb.min.css" />
+    <link rel="stylesheet" type="text/css" href="../Content/Browser.comb.min.css" />
     <asp:Placeholder id="favicon" runat="server"></asp:Placeholder>
-    <script src="js/Browser.js" type="text/javascript"></script>
+    <script src="../Scripts/Browser.js" type="text/javascript"></script>
   </head>
   <body>
     <form id="fBrowser" method="post" runat="server">

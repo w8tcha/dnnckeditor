@@ -89,28 +89,28 @@ namespace WatchersNET.CKEditor
             var jqueryScriptLink = new HtmlGenericControl("script");
 
             jqueryScriptLink.Attributes["type"] = "text/javascript";
-            jqueryScriptLink.Attributes["src"] = "//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js";
+            jqueryScriptLink.Attributes["src"] = this.ResolveUrl("Scripts/jquery-3.3.1.min.js");
 
             this.favicon.Controls.Add(jqueryScriptLink);
 
             var jqueryUiScriptLink = new HtmlGenericControl("script");
 
             jqueryUiScriptLink.Attributes["type"] = "text/javascript";
-            jqueryUiScriptLink.Attributes["src"] = "//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js";
+            jqueryUiScriptLink.Attributes["src"] = this.ResolveUrl("Scripts/jquery-ui-1.12.1.min.js");
 
             this.favicon.Controls.Add(jqueryUiScriptLink);
 
             var notificationScriptLink = new HtmlGenericControl("script");
 
             notificationScriptLink.Attributes["type"] = "text/javascript";
-            notificationScriptLink.Attributes["src"] = this.ResolveUrl("js/jquery.notification.js");
+            notificationScriptLink.Attributes["src"] = this.ResolveUrl("Scripts/jquery.notification.js");
 
             this.favicon.Controls.Add(notificationScriptLink);
 
             var optionsScriptLink = new HtmlGenericControl("script");
 
             optionsScriptLink.Attributes["type"] = "text/javascript";
-            optionsScriptLink.Attributes["src"] = this.ResolveUrl("js/Options.js");
+            optionsScriptLink.Attributes["src"] = this.ResolveUrl("Scripts/Options.js");
 
             this.favicon.Controls.Add(optionsScriptLink);
 
@@ -118,7 +118,7 @@ namespace WatchersNET.CKEditor
 
             objCssLink.Attributes["rel"] = "stylesheet";
             objCssLink.Attributes["type"] = "text/css";
-            objCssLink.Attributes["href"] = "//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/blitzer/jquery-ui.css";
+            objCssLink.Attributes["href"] = this.ResolveUrl("Content/themes/basse/jquery-ui.min.css");
 
             this.favicon.Controls.Add(objCssLink);
 
@@ -126,7 +126,7 @@ namespace WatchersNET.CKEditor
 
             notificationCssLink.Attributes["rel"] = "stylesheet";
             notificationCssLink.Attributes["type"] = "text/css";
-            notificationCssLink.Attributes["href"] = this.ResolveUrl("css/jquery.notification.css");
+            notificationCssLink.Attributes["href"] = this.ResolveUrl("Content/jquery.notification.css");
 
             this.favicon.Controls.Add(notificationCssLink);
 
@@ -134,7 +134,7 @@ namespace WatchersNET.CKEditor
 
             optionsCssLink.Attributes["rel"] = "stylesheet";
             optionsCssLink.Attributes["type"] = "text/css";
-            optionsCssLink.Attributes["href"] = this.ResolveUrl("css/Options.css");
+            optionsCssLink.Attributes["href"] = this.ResolveUrl("Content/Options.css");
 
             this.favicon.Controls.Add(optionsCssLink);
 
