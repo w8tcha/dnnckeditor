@@ -1,7 +1,7 @@
-﻿An WYSIWYG HTML Editor Provider for DNN® 7/8/9
+﻿An WYSIWYG HTML Editor Provider for DNN® 9
 ![](http://www.watchersnet.de/Portals/0/LogoCKEditor.png)
 
-_**Warning** Be Aware Evoq Versions are not supported, [more Info here](https://dnnckeditor.codeplex.com/workitem/7873)_
+_**Warning** Be Aware Evoq Versions are not supported
 
 * * *
 
