@@ -118,7 +118,7 @@ namespace WatchersNET.CKEditor
 
             objCssLink.Attributes["rel"] = "stylesheet";
             objCssLink.Attributes["type"] = "text/css";
-            objCssLink.Attributes["href"] = this.ResolveUrl("Content/themes/basse/jquery-ui.min.css");
+            objCssLink.Attributes["href"] = this.ResolveUrl("Content/themes/base/jquery-ui.min.css");
 
             this.favicon.Controls.Add(objCssLink);
 
@@ -147,7 +147,6 @@ namespace WatchersNET.CKEditor
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected override void OnInit(EventArgs e)
         {
-            // CODEGEN: This call is required by the ASP.NET Web Form Designer.
             this.InitializeComponent();
             base.OnInit(e);
 
@@ -162,8 +161,8 @@ namespace WatchersNET.CKEditor
         /// <param name="e">The <see cref="EventArgs" /> instance containing the event data.</param>
         protected void Page_Load(object sender, EventArgs e)
         {
-            var iMid = -1;
-            var iTid = -1;
+            var moduleId = -1;
+            var tabId = -1;
 
             ModuleInfo modInfo = null;
             var db = new ModuleController();
@@ -173,18 +172,18 @@ namespace WatchersNET.CKEditor
                 // Get ModuleID from Url
                 if (this.request.QueryString["mid"] != null && Information.IsNumeric(this.Request.QueryString["mid"]))
                 {
-                    iMid = Convert.ToInt32(this.request.QueryString["mid"]);
+                    moduleId = Convert.ToInt32(this.request.QueryString["mid"]);
                 }
 
                 // Get TabId from Url
                 if (this.request.QueryString["tid"] != null && Information.IsNumeric(this.Request.QueryString["tid"]))
                 {
-                    iTid = Convert.ToInt32(this.request.QueryString["tid"]);
+                    tabId = Convert.ToInt32(this.request.QueryString["tid"]);
                 }
 
-                if (iMid != -1 && iTid != -1)
+                if (moduleId != -1 && tabId != -1)
                 {
-                    modInfo = db.GetModule(iMid, iTid, false);
+                    modInfo = db.GetModule(moduleId, tabId, false);
                 }
                 else
                 {
@@ -201,12 +200,12 @@ namespace WatchersNET.CKEditor
             try
             {
                 // Get ModuleID from Url
-                var oEditorOptions = (CKEditorOptions)this.Page.LoadControl("CKEditorOptions.ascx");
+                var editorOptions = (CKEditorOptions)this.Page.LoadControl("CKEditorOptions.ascx");
 
-                oEditorOptions.ID = "CKEditor_Options";
-                oEditorOptions.ModuleConfiguration = modInfo;
+                editorOptions.ID = "CKEditor_Options";
+                editorOptions.ModuleConfiguration = modInfo;
 
-                this.phControls.Controls.Add(oEditorOptions);
+                this.phControls.Controls.Add(editorOptions);
             }
             catch (Exception exception)
             {
@@ -233,7 +232,7 @@ namespace WatchersNET.CKEditor
         /// </returns>
         private PortalSettings GetPortalSettings()
         {
-            int iTabId = 0, iPortalId = 0;
+            int tabId = 0, portalId = 0;
 
             PortalSettings portalSettings;
 
@@ -241,21 +240,21 @@ namespace WatchersNET.CKEditor
             {
                 if (this.request.QueryString["tabid"] != null)
                 {
-                    iTabId = int.Parse(this.request.QueryString["tabid"]);
+                    tabId = int.Parse(this.request.QueryString["tabid"]);
                 }
 
                 if (this.request.QueryString["PortalID"] != null)
                 {
-                    iPortalId = int.Parse(this.request.QueryString["PortalID"]);
+                    portalId = int.Parse(this.request.QueryString["PortalID"]);
                 }
 
-                var sDomainName = Globals.GetDomainName(this.Request, true);
+                var domainName = Globals.GetDomainName(this.Request, true);
 
-                var sPortalAlias = PortalAliasController.GetPortalAliasByPortal(iPortalId, sDomainName);
+                var portalAlias = PortalAliasController.GetPortalAliasByPortal(portalId, domainName);
 
-                var objPortalAliasInfo = PortalAliasController.Instance.GetPortalAlias(sPortalAlias);
+                var objPortalAliasInfo = PortalAliasController.Instance.GetPortalAlias(portalAlias);
 
-                portalSettings = new PortalSettings(iTabId, objPortalAliasInfo);
+                portalSettings = new PortalSettings(tabId, objPortalAliasInfo);
             }
             catch (Exception)
             {
