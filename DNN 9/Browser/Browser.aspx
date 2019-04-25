@@ -334,6 +334,7 @@
                   </ul>
                 </FooterTemplate>
               </asp:Repeater>
+              <asp:HiddenField runat="server" ID="SelectedFile" EnableViewState="True" Value=""/>
             </div>
             <wnet:Pager id="PagerFileLinks" runat="server" OnPageChanged="PagerFileLinks_PageChanged"></wnet:Pager>
           </td>
@@ -360,7 +361,6 @@
             </tr>
           </table>
         </asp:Panel>
-
         <asp:Button id="cmdClose" CssClass="DefaultButton ui-state-focus" runat="server" text="OK" onclick="CmdCloseClick"></asp:Button>&nbsp;<asp:Button id="cmdCancel" runat="server" text="Cancel" ></asp:Button>   
       </div>
       <!-- Loading screen -->
@@ -394,6 +394,12 @@
                     if (progress == 100) {
                         __doPostBack('cmdUploadNow', '');
                     }
+                },
+                completed: function (e, data) {
+                    if (data.result[0].name != null) {
+                        $('#' + '<%= this.SelectedFile.ClientID %>').val(data.result[0].name);
+                    }
+                    
                 },
                 dropZone: $('#dropzone')
             }).bind('fileuploadsubmit',

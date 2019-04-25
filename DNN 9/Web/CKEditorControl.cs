@@ -1164,7 +1164,7 @@ namespace WatchersNET.CKEditor.Web
         private void LoadAllSettings()
         {
             var settingsDictionary = Utility.GetEditorHostSettings();
-            var portalRoles = new RoleController().GetPortalRoles(this._portalSettings.PortalId);
+            var portalRoles = new RoleController().GetRoles(this._portalSettings.PortalId);
 
             // Load Default Settings
             this.currentSettings = SettingsUtil.GetDefaultSettings(

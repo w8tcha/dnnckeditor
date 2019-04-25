@@ -249,28 +249,28 @@ namespace WatchersNET.CKEditor
                 this.InfoTabHolder.Visible = false;
                 this.btnCancel.Visible = false;
 
-                if (this.DefaultHostLoadMode.Equals(0))
+                switch (this.DefaultHostLoadMode)
                 {
-                    this.lblSettings.Text = string.Format(
-                        "{0} - <em>{1} {2} - Portal ID: {3}</em>",
-                        Localization.GetString("lblSettings.Text", this.ResXFile, this.LangCode),
-                        Localization.GetString("lblPortal.Text", this.ResXFile, this.LangCode),
-                        this._portalSettings.PortalName,
-                        this.CurrentOrSelectedPortalId);
-                }
-                else if (this.DefaultHostLoadMode.Equals(1))
-                {
-                    this.lblSettings.Text = string.Format(
-                        "{0} - <em>{1} {2} - TabID: {3}</em>",
-                        Localization.GetString("lblSettings.Text", this.ResXFile, this.LangCode),
-                        Localization.GetString("lblPage.Text", this.ResXFile, this.LangCode),
-                        new TabController().GetTab(this.CurrentOrSelectedTabId, this._portalSettings.PortalId, false)
-                                           .TabName,
-                        this.CurrentOrSelectedTabId);
-                }
-                else
-                {
-                    this.lblSettings.Text = Localization.GetString("lblSettings.Text", this.ResXFile, this.LangCode);
+                    case 0:
+                        this.lblSettings.Text = string.Format(
+                            "{0} - <em>{1} {2} - Portal ID: {3}</em>",
+                            Localization.GetString("lblSettings.Text", this.ResXFile, this.LangCode),
+                            Localization.GetString("lblPortal.Text", this.ResXFile, this.LangCode),
+                            this._portalSettings.PortalName,
+                            this.CurrentOrSelectedPortalId);
+                        break;
+                    case 1:
+                        this.lblSettings.Text = string.Format(
+                            "{0} - <em>{1} {2} - TabID: {3}</em>",
+                            Localization.GetString("lblSettings.Text", this.ResXFile, this.LangCode),
+                            Localization.GetString("lblPage.Text", this.ResXFile, this.LangCode),
+                            new TabController().GetTab(this.CurrentOrSelectedTabId, this._portalSettings.PortalId, false)
+                                .TabName,
+                            this.CurrentOrSelectedTabId);
+                        break;
+                    default:
+                        this.lblSettings.Text = Localization.GetString("lblSettings.Text", this.ResXFile, this.LangCode);
+                        break;
                 }
 
                 this.LoadSettings(this.DefaultHostLoadMode);
@@ -874,7 +874,7 @@ namespace WatchersNET.CKEditor
                 }
                 else
                 {
-                    var objRole = this.objRoleController.GetRole(
+                    var objRole = this.objRoleController.GetRoleById(
                         uploadSizeRole.RoleId,
                         this._portalSettings.PortalId);
 
@@ -969,7 +969,7 @@ namespace WatchersNET.CKEditor
             var lic = new ListItemCollection();
 
             foreach (var roleItem in
-                from RoleInfo objRole in this.objRoleController.GetPortalRoles(this._portalSettings.PortalId)
+                from RoleInfo objRole in this.objRoleController.GetRoles(this._portalSettings.PortalId)
                 select new ListItem { Text = objRole.RoleName, Value = objRole.RoleID.ToString() })
             {
                 lic.Add(roleItem);
@@ -1065,7 +1065,7 @@ namespace WatchersNET.CKEditor
             moduleController.DeleteModuleSetting(
                 this.ModuleId, string.Format("{0}{1}", moduleKey, SettingConstants.RESIZEWIDTH));
 
-            foreach (RoleInfo objRole in this.objRoleController.GetPortalRoles(this._portalSettings.PortalId))
+            foreach (RoleInfo objRole in this.objRoleController.GetRoles(this._portalSettings.PortalId))
             {
                 moduleController.DeleteModuleSetting(
                     this.ModuleId, string.Format("{0}{2}#{1}", moduleKey, objRole.RoleID, SettingConstants.TOOLB));
@@ -1083,11 +1083,13 @@ namespace WatchersNET.CKEditor
         /// </summary>
         private void FillInformations()
         {
-            var ckEditorPackage = PackageController.GetPackageByName("DotNetNuke.CKHtmlEditorProvider");
+            var extensionPackage = PackageController.Instance.GetExtensionPackage(
+                Null.NullInteger,
+                p => p.Name == "DotNetNuke.CKHtmlEditorProvider");
 
-            if (ckEditorPackage != null)
+            if (extensionPackage != null)
             {
-                this.ProviderVersion.Text += ckEditorPackage.Version;
+                this.ProviderVersion.Text += extensionPackage.Version;
             }
 
             this.lblPortal.Text += this._portalSettings.PortalName;
@@ -1165,7 +1167,7 @@ namespace WatchersNET.CKEditor
         {
             this.chblBrowsGr.Items.Clear();
 
-            foreach (RoleInfo objRole in this.objRoleController.GetPortalRoles(this._portalSettings.PortalId))
+            foreach (var objRole in this.objRoleController.GetRoles(this._portalSettings.PortalId))
             {
                 var roleItem = new ListItem { Text = objRole.RoleName, Value = objRole.RoleID.ToString() };
 
@@ -1874,7 +1876,7 @@ namespace WatchersNET.CKEditor
             this.LoadDefaultSettings();
 
             var settingsDictionary = Utility.GetEditorHostSettings();
-            var portalRoles = this.objRoleController.GetPortalRoles(this._portalSettings.PortalId);
+            var portalRoles = this.objRoleController.GetRoles(this._portalSettings.PortalId);
 
             var portalKey = string.Format("DNNCKP#{0}#", this._portalSettings.PortalId);
             var pageKey = string.Format("DNNCKT#{0}#", this.CurrentOrSelectedTabId);

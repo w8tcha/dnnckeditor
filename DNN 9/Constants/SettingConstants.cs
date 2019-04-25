@@ -24,12 +24,6 @@ namespace WatchersNET.CKEditor.Constants
         /// <summary>
         /// The Legacy Toolbar Setting XML File Name
         /// </summary>
-        [Obsolete("Legacy XML File")]
-        public const string ToolbarXmlFileName = "CKToolbar.xml";
-
-        /// <summary>
-        /// The Legacy Toolbar Setting XML File Name
-        /// </summary>
         public const string ToolbarSetXmlFileName = "CKToolbarSets.xml";
 
         /// <summary>

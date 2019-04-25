@@ -25,6 +25,7 @@ namespace WatchersNET.CKEditor.Utilities
     using System.Xml.Serialization;
 
     using DotNetNuke.Common;
+    using DotNetNuke.Common.Utilities;
     using DotNetNuke.Entities.Modules;
     using DotNetNuke.Entities.Portals;
     using DotNetNuke.Security;
@@ -40,7 +41,7 @@ namespace WatchersNET.CKEditor.Utilities
     /// </summary>
     public class SettingsUtil
     {
-       #region Public Methods
+        #region Public Methods
 
         /// <summary>
         /// Checks the exists portal or page settings.
@@ -52,14 +53,13 @@ namespace WatchersNET.CKEditor.Utilities
         /// </returns>
         internal static bool CheckExistsPortalOrPageSettings(List<EditorHostSetting> editorHostSettings, string key)
         {
-            if (
-                editorHostSettings.Any(
-                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.SKIN))))
+            if (editorHostSettings.Any(
+                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.SKIN))))
             {
-                return
-                    !string.IsNullOrEmpty(
-                        editorHostSettings.FirstOrDefault(
-                            setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.SKIN))).Value);
+                return !string.IsNullOrEmpty(
+                           editorHostSettings.FirstOrDefault(
+                                   setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.SKIN)))
+                               .Value);
             }
 
             // No Portal/Page Settings Found
@@ -74,9 +74,15 @@ namespace WatchersNET.CKEditor.Utilities
         /// <returns>Returns if The Module Settings Exists or not.</returns>
         internal static bool CheckExistsModuleSettings(string moduleKey, int moduleId)
         {
-            var hshModSet = new ModuleController().GetModuleSettings(moduleId);
+            var module = ModuleController.Instance.GetModule(moduleId, Null.NullInteger, false);
 
-            return hshModSet.Keys.Cast<string>().Any(key => key.StartsWith(moduleKey));
+            if (module == null)
+            {
+                return false;
+            }
+
+            var hshModSet = module.ModuleSettings;
+            return hshModSet != null && hshModSet.Keys.Cast<string>().Any(key => key.StartsWith(moduleKey));
         }
 
         /// <summary>
@@ -87,9 +93,16 @@ namespace WatchersNET.CKEditor.Utilities
         /// <returns>Returns if The Module Settings Exists or not.</returns>
         internal static bool CheckExistsModuleInstanceSettings(string moduleKey, int moduleId)
         {
-            var hshModSet = new ModuleController().GetModuleSettings(moduleId);
+            var module = ModuleController.Instance.GetModule(moduleId, Null.NullInteger, false);
 
-            return !string.IsNullOrEmpty((string)hshModSet[string.Format("{0}skin", moduleKey)]);
+            if (module == null)
+            {
+                return false;
+            }
+
+            var hshModSet = module.ModuleSettings;
+
+            return hshModSet != null && !string.IsNullOrEmpty((string)hshModSet[string.Format("{0}skin", moduleKey)]);
         }
 
         /// <summary>
@@ -108,7 +121,7 @@ namespace WatchersNET.CKEditor.Utilities
             EditorProviderSettings currentSettings,
             List<EditorHostSetting> editorHostSettings,
             string key,
-            ArrayList portalRoles)
+            IList<RoleInfo> portalRoles)
         {
             var roleController = new RoleController();
 
@@ -126,16 +139,14 @@ namespace WatchersNET.CKEditor.Utilities
                         continue;
                     }
 
-                    settingValue =
-                        editorHostSettings.FirstOrDefault(
-                            setting => setting.Name.Equals(settingName)).Value;
+                    settingValue = editorHostSettings.FirstOrDefault(setting => setting.Name.Equals(settingName)).Value;
 
                     if (string.IsNullOrEmpty(settingValue))
                     {
                         continue;
                     }
                 }
-                
+
 
                 switch (info.PropertyType.Name)
                 {
@@ -181,7 +192,8 @@ namespace WatchersNET.CKEditor.Utilities
                             null);
                         break;
                     case "CodeMirror":
-                        foreach (var codeMirrorInfo in typeof(CodeMirror).GetProperties().Where(codeMirrorInfo => !codeMirrorInfo.Name.Equals("Theme")))
+                        foreach (var codeMirrorInfo in typeof(CodeMirror).GetProperties()
+                            .Where(codeMirrorInfo => !codeMirrorInfo.Name.Equals("Theme")))
                         {
                             var settingName = string.Format("{0}{1}", key, codeMirrorInfo.Name);
                             if (!editorHostSettings.Any(s => s.Name.Equals(settingName)))
@@ -203,7 +215,10 @@ namespace WatchersNET.CKEditor.Utilities
                                     codeMirrorInfo.SetValue(currentSettings.Config.CodeMirror, settingValue, null);
                                     break;
                                 case "Boolean":
-                                    codeMirrorInfo.SetValue(currentSettings.Config.CodeMirror, bool.Parse(settingValue), null);
+                                    codeMirrorInfo.SetValue(
+                                        currentSettings.Config.CodeMirror,
+                                        bool.Parse(settingValue),
+                                        null);
                                     break;
                             }
                         }
@@ -218,7 +233,8 @@ namespace WatchersNET.CKEditor.Utilities
                                 continue;
                             }
 
-                            settingValue = editorHostSettings.FirstOrDefault(setting => setting.Name.Equals(settingName)).Value;
+                            settingValue = editorHostSettings
+                                .FirstOrDefault(setting => setting.Name.Equals(settingName)).Value;
 
                             if (string.IsNullOrEmpty(settingValue))
                             {
@@ -232,9 +248,9 @@ namespace WatchersNET.CKEditor.Utilities
                                     break;
                                 case "Boolean":
                                     wordCountInfo.SetValue(
-                                            currentSettings.Config.WordCount,
-                                            bool.Parse(settingValue),
-                                            null);
+                                        currentSettings.Config.WordCount,
+                                        bool.Parse(settingValue),
+                                        null);
                                     break;
                             }
                         }
@@ -249,7 +265,8 @@ namespace WatchersNET.CKEditor.Utilities
                                 continue;
                             }
 
-                            settingValue = editorHostSettings.FirstOrDefault(setting => setting.Name.Equals(settingName)).Value;
+                            settingValue = editorHostSettings
+                                .FirstOrDefault(setting => setting.Name.Equals(settingName)).Value;
 
                             if (string.IsNullOrEmpty(settingValue))
                             {
@@ -259,16 +276,19 @@ namespace WatchersNET.CKEditor.Utilities
                             switch (autoSaveInfo.PropertyType.Name)
                             {
                                 case "Int32":
-                                    autoSaveInfo.SetValue(currentSettings.Config.AutoSave, int.Parse(settingValue), null);
+                                    autoSaveInfo.SetValue(
+                                        currentSettings.Config.AutoSave,
+                                        int.Parse(settingValue),
+                                        null);
                                     break;
                                 case "String":
                                     autoSaveInfo.SetValue(currentSettings.Config.AutoSave, settingValue, null);
                                     break;
                                 case "Boolean":
                                     autoSaveInfo.SetValue(
-                                            currentSettings.Config.AutoSave,
-                                            bool.Parse(settingValue),
-                                            null);
+                                        currentSettings.Config.AutoSave,
+                                        bool.Parse(settingValue),
+                                        null);
                                     break;
                             }
                         }
@@ -278,13 +298,11 @@ namespace WatchersNET.CKEditor.Utilities
             }
 
             /////////////////
-            if (
-                editorHostSettings.Any(
-                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.SKIN))))
+            if (editorHostSettings.Any(
+                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.SKIN))))
             {
-                var settingValue =
-                    editorHostSettings.FirstOrDefault(
-                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.SKIN))).Value;
+                var settingValue = editorHostSettings
+                    .FirstOrDefault(s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.SKIN))).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -292,13 +310,11 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (
-                editorHostSettings.Any(
-                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.CODEMIRRORTHEME))))
+            if (editorHostSettings.Any(
+                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.CODEMIRRORTHEME))))
             {
-                var settingValue =
-                    editorHostSettings.FirstOrDefault(
-                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.CODEMIRRORTHEME))).Value;
+                var settingValue = editorHostSettings.FirstOrDefault(
+                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.CODEMIRRORTHEME))).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -307,45 +323,32 @@ namespace WatchersNET.CKEditor.Utilities
             }
 
             var listToolbarRoles = (from RoleInfo objRole in portalRoles
-                                                   where
-                                                       editorHostSettings.Any(
-                                                           setting =>
-                                                           setting.Name.Equals(
-                                                               string.Format(
-                                                                   "{0}{2}#{1}",
-                                                                   key,
-                                                                   objRole.RoleID,
-                                                                   SettingConstants.TOOLB)))
-                                                   where
-                                                       !string.IsNullOrEmpty(
-                                                           editorHostSettings.FirstOrDefault(
-                                                               s =>
-                                                               s.Name.Equals(
-                                                                   string.Format(
-                                                                       "{0}{2}#{1}",
-                                                                       key,
-                                                                       objRole.RoleID,
-                                                                       SettingConstants.TOOLB))).Value)
-                                                   let sToolbar =
-                                                       editorHostSettings.FirstOrDefault(
-                                                           s =>
-                                                           s.Name.Equals(
-                                                               string.Format(
-                                                                   "{0}{2}#{1}",
-                                                                   key,
-                                                                   objRole.RoleID,
-                                                                   SettingConstants.TOOLB))).Value
-                                                   select
-                                                       new ToolbarRoles { RoleId = objRole.RoleID, Toolbar = sToolbar })
-                .ToList();
+                                    where editorHostSettings.Any(
+                                        setting => setting.Name.Equals(
+                                            string.Format("{0}{2}#{1}", key, objRole.RoleID, SettingConstants.TOOLB)))
+                                    where !string.IsNullOrEmpty(
+                                              editorHostSettings.FirstOrDefault(
+                                                  s => s.Name.Equals(
+                                                      string.Format(
+                                                          "{0}{2}#{1}",
+                                                          key,
+                                                          objRole.RoleID,
+                                                          SettingConstants.TOOLB))).Value)
+                                    let sToolbar =
+                                        editorHostSettings.FirstOrDefault(
+                                            s => s.Name.Equals(
+                                                string.Format(
+                                                    "{0}{2}#{1}",
+                                                    key,
+                                                    objRole.RoleID,
+                                                    SettingConstants.TOOLB))).Value
+                                    select new ToolbarRoles { RoleId = objRole.RoleID, Toolbar = sToolbar }).ToList();
 
-            if (
-                editorHostSettings.Any(
-                    setting => setting.Name.Equals(string.Format("{0}{2}#{1}", key, "-1", SettingConstants.TOOLB))))
+            if (editorHostSettings.Any(
+                setting => setting.Name.Equals(string.Format("{0}{2}#{1}", key, "-1", SettingConstants.TOOLB))))
             {
-                var settingValue =
-                    editorHostSettings.FirstOrDefault(
-                        s => s.Name.Equals(string.Format("{0}{2}#{1}", key, "-1", SettingConstants.TOOLB))).Value;
+                var settingValue = editorHostSettings.FirstOrDefault(
+                    s => s.Name.Equals(string.Format("{0}{2}#{1}", key, "-1", SettingConstants.TOOLB))).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -356,61 +359,57 @@ namespace WatchersNET.CKEditor.Utilities
             currentSettings.ToolBarRoles = listToolbarRoles;
 
             var listUploadSizeRoles = (from RoleInfo objRole in portalRoles
-                                       where
-                                           editorHostSettings.Any(
-                                               setting =>
-                                               setting.Name.Equals(
-                                                   string.Format(
-                                                       "{0}{2}#{1}",
-                                                       key,
-                                                       objRole.RoleID,
-                                                       SettingConstants.UPLOADFILELIMITS)))
-                                       where
-                                           !string.IsNullOrEmpty(
-                                               editorHostSettings.FirstOrDefault(
-                                                   s =>
-                                                   s.Name.Equals(
-                                                       string.Format(
-                                                           "{0}{2}#{1}",
-                                                           key,
-                                                           objRole.RoleID,
-                                                           SettingConstants.UPLOADFILELIMITS))).Value)
+                                       where editorHostSettings.Any(
+                                           setting => setting.Name.Equals(
+                                               string.Format(
+                                                   "{0}{2}#{1}",
+                                                   key,
+                                                   objRole.RoleID,
+                                                   SettingConstants.UPLOADFILELIMITS)))
+                                       where !string.IsNullOrEmpty(
+                                                 editorHostSettings.FirstOrDefault(
+                                                     s => s.Name.Equals(
+                                                         string.Format(
+                                                             "{0}{2}#{1}",
+                                                             key,
+                                                             objRole.RoleID,
+                                                             SettingConstants.UPLOADFILELIMITS))).Value)
                                        let uploadFileLimit =
                                            editorHostSettings.FirstOrDefault(
-                                               s =>
-                                               s.Name.Equals(
+                                               s => s.Name.Equals(
                                                    string.Format(
                                                        "{0}{2}#{1}",
                                                        key,
                                                        objRole.RoleID,
                                                        SettingConstants.UPLOADFILELIMITS))).Value
-                                       select
-                                           new UploadSizeRoles { RoleId = objRole.RoleID, UploadFileLimit = Convert.ToInt32(uploadFileLimit) })
-                .ToList();
+                                       select new UploadSizeRoles
+                                                  {
+                                                      RoleId = objRole.RoleID,
+                                                      UploadFileLimit = Convert.ToInt32(uploadFileLimit)
+                                                  }).ToList();
 
-            if (
-                editorHostSettings.Any(
-                    setting => setting.Name.Equals(string.Format("{0}{2}#{1}", key, "-1", SettingConstants.UPLOADFILELIMITS))))
+            if (editorHostSettings.Any(
+                setting => setting.Name.Equals(
+                    string.Format("{0}{2}#{1}", key, "-1", SettingConstants.UPLOADFILELIMITS))))
             {
-                var settingValue =
-                    editorHostSettings.FirstOrDefault(
-                        s => s.Name.Equals(string.Format("{0}{2}#{1}", key, "-1", SettingConstants.UPLOADFILELIMITS))).Value;
+                var settingValue = editorHostSettings.FirstOrDefault(
+                        s => s.Name.Equals(string.Format("{0}{2}#{1}", key, "-1", SettingConstants.UPLOADFILELIMITS)))
+                    .Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
-                    listUploadSizeRoles.Add(new UploadSizeRoles { RoleId = -1, UploadFileLimit = Convert.ToInt32(settingValue) });
+                    listUploadSizeRoles.Add(
+                        new UploadSizeRoles { RoleId = -1, UploadFileLimit = Convert.ToInt32(settingValue) });
                 }
             }
 
             currentSettings.UploadSizeRoles = listUploadSizeRoles;
 
-            if (
-                editorHostSettings.Any(
-                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.ROLES))))
+            if (editorHostSettings.Any(
+                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.ROLES))))
             {
-                var settingValue =
-                    editorHostSettings.FirstOrDefault(
-                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.ROLES))).Value;
+                var settingValue = editorHostSettings
+                    .FirstOrDefault(s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.ROLES))).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -439,13 +438,11 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (
-                editorHostSettings.Any(
-                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.BROWSER))))
+            if (editorHostSettings.Any(
+                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.BROWSER))))
             {
-                var settingValue =
-                    editorHostSettings.FirstOrDefault(
-                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.BROWSER))).Value;
+                var settingValue = editorHostSettings.FirstOrDefault(
+                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.BROWSER))).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -488,13 +485,11 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (
-                editorHostSettings.Any(
-                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.INJECTJS))))
+            if (editorHostSettings.Any(
+                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.INJECTJS))))
             {
-                var settingValue =
-                    editorHostSettings.FirstOrDefault(
-                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.INJECTJS))).Value;
+                var settingValue = editorHostSettings.FirstOrDefault(
+                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.INJECTJS))).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -506,13 +501,11 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (
-                editorHostSettings.Any(
-                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.ALLOWEDIMAGEEXTENSIONS))))
+            if (editorHostSettings.Any(
+                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.ALLOWEDIMAGEEXTENSIONS))))
             {
-                var settingValue =
-                    editorHostSettings.FirstOrDefault(
-                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.ALLOWEDIMAGEEXTENSIONS))).Value;
+                var settingValue = editorHostSettings.FirstOrDefault(
+                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.ALLOWEDIMAGEEXTENSIONS))).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -520,13 +513,11 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (
-                editorHostSettings.Any(
-                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.WIDTH))))
+            if (editorHostSettings.Any(
+                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.WIDTH))))
             {
-                var settingValue =
-                    editorHostSettings.FirstOrDefault(
-                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.WIDTH))).Value;
+                var settingValue = editorHostSettings
+                    .FirstOrDefault(s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.WIDTH))).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -534,13 +525,11 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (
-                editorHostSettings.Any(
-                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.HEIGHT))))
+            if (editorHostSettings.Any(
+                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.HEIGHT))))
             {
-                var settingValue =
-                    editorHostSettings.FirstOrDefault(
-                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.HEIGHT))).Value;
+                var settingValue = editorHostSettings
+                    .FirstOrDefault(s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.HEIGHT))).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -548,13 +537,11 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (
-                editorHostSettings.Any(
-                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.BLANKTEXT))))
+            if (editorHostSettings.Any(
+                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.BLANKTEXT))))
             {
-                var settingValue =
-                    editorHostSettings.FirstOrDefault(
-                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.BLANKTEXT))).Value;
+                var settingValue = editorHostSettings.FirstOrDefault(
+                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.BLANKTEXT))).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -562,13 +549,11 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (
-                editorHostSettings.Any(
-                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.CSS))))
+            if (editorHostSettings.Any(
+                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.CSS))))
             {
-                var settingValue =
-                    editorHostSettings.FirstOrDefault(
-                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.CSS))).Value;
+                var settingValue = editorHostSettings
+                    .FirstOrDefault(s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.CSS))).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -576,13 +561,11 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (
-                editorHostSettings.Any(
-                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.TEMPLATEFILES))))
+            if (editorHostSettings.Any(
+                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.TEMPLATEFILES))))
             {
-                var settingValue =
-                    editorHostSettings.FirstOrDefault(
-                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.TEMPLATEFILES))).Value;
+                var settingValue = editorHostSettings.FirstOrDefault(
+                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.TEMPLATEFILES))).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -590,13 +573,11 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (
-                editorHostSettings.Any(
-                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.CUSTOMJSFILE))))
+            if (editorHostSettings.Any(
+                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.CUSTOMJSFILE))))
             {
-                var settingValue =
-                    editorHostSettings.FirstOrDefault(
-                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.CUSTOMJSFILE))).Value;
+                var settingValue = editorHostSettings.FirstOrDefault(
+                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.CUSTOMJSFILE))).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -604,13 +585,11 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (
-                editorHostSettings.Any(
-                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.CONFIG))))
+            if (editorHostSettings.Any(
+                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.CONFIG))))
             {
-                var settingValue =
-                    editorHostSettings.FirstOrDefault(
-                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.CONFIG))).Value;
+                var settingValue = editorHostSettings
+                    .FirstOrDefault(s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.CONFIG))).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -618,13 +597,11 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (
-                editorHostSettings.Any(
-                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.FILELISTPAGESIZE))))
+            if (editorHostSettings.Any(
+                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.FILELISTPAGESIZE))))
             {
-                var settingValue =
-                    editorHostSettings.FirstOrDefault(
-                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.FILELISTPAGESIZE))).Value;
+                var settingValue = editorHostSettings.FirstOrDefault(
+                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.FILELISTPAGESIZE))).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -632,13 +609,11 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (
-                editorHostSettings.Any(
-                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.FILELISTVIEWMODE))))
+            if (editorHostSettings.Any(
+                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.FILELISTVIEWMODE))))
             {
-                var settingValue =
-                    editorHostSettings.FirstOrDefault(
-                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.FILELISTVIEWMODE))).Value;
+                var settingValue = editorHostSettings.FirstOrDefault(
+                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.FILELISTVIEWMODE))).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -646,13 +621,11 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (
-                editorHostSettings.Any(
-                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.DEFAULTLINKMODE))))
+            if (editorHostSettings.Any(
+                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.DEFAULTLINKMODE))))
             {
-                var settingValue =
-                    editorHostSettings.FirstOrDefault(
-                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.DEFAULTLINKMODE))).Value;
+                var settingValue = editorHostSettings.FirstOrDefault(
+                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.DEFAULTLINKMODE))).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -660,13 +633,11 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (
-                editorHostSettings.Any(
-                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.USEANCHORSELECTOR))))
+            if (editorHostSettings.Any(
+                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.USEANCHORSELECTOR))))
             {
-                var settingValue =
-                    editorHostSettings.FirstOrDefault(
-                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.USEANCHORSELECTOR))).Value;
+                var settingValue = editorHostSettings.FirstOrDefault(
+                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.USEANCHORSELECTOR))).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -678,13 +649,11 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (
-                editorHostSettings.Any(
-                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.SHOWPAGELINKSTABFIRST))))
+            if (editorHostSettings.Any(
+                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.SHOWPAGELINKSTABFIRST))))
             {
-                var settingValue =
-                    editorHostSettings.FirstOrDefault(
-                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.SHOWPAGELINKSTABFIRST))).Value;
+                var settingValue = editorHostSettings.FirstOrDefault(
+                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.SHOWPAGELINKSTABFIRST))).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -696,13 +665,11 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (
-                editorHostSettings.Any(
-                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.OVERRIDEFILEONUPLOAD))))
+            if (editorHostSettings.Any(
+                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.OVERRIDEFILEONUPLOAD))))
             {
-                var settingValue =
-                    editorHostSettings.FirstOrDefault(
-                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.OVERRIDEFILEONUPLOAD))).Value;
+                var settingValue = editorHostSettings.FirstOrDefault(
+                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.OVERRIDEFILEONUPLOAD))).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -714,13 +681,11 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (
-                editorHostSettings.Any(
-                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.SUBDIRS))))
+            if (editorHostSettings.Any(
+                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.SUBDIRS))))
             {
-                var settingValue =
-                    editorHostSettings.FirstOrDefault(
-                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.SUBDIRS))).Value;
+                var settingValue = editorHostSettings.FirstOrDefault(
+                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.SUBDIRS))).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -732,13 +697,11 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (
-                editorHostSettings.Any(
-                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.BROWSERROOTDIRID))))
+            if (editorHostSettings.Any(
+                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.BROWSERROOTDIRID))))
             {
-                var settingValue =
-                    editorHostSettings.FirstOrDefault(
-                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.BROWSERROOTDIRID))).Value;
+                var settingValue = editorHostSettings.FirstOrDefault(
+                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.BROWSERROOTDIRID))).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -753,13 +716,11 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (
-                editorHostSettings.Any(
-                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.UPLOADDIRID))))
+            if (editorHostSettings.Any(
+                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.UPLOADDIRID))))
             {
-                var settingValue =
-                    editorHostSettings.FirstOrDefault(
-                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.UPLOADDIRID))).Value;
+                var settingValue = editorHostSettings.FirstOrDefault(
+                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.UPLOADDIRID))).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -774,13 +735,11 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (
-                editorHostSettings.Any(
-                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.RESIZEWIDTH))))
+            if (editorHostSettings.Any(
+                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.RESIZEWIDTH))))
             {
-                var settingValue =
-                    editorHostSettings.FirstOrDefault(
-                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.RESIZEWIDTH))).Value;
+                var settingValue = editorHostSettings.FirstOrDefault(
+                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.RESIZEWIDTH))).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -795,13 +754,11 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (
-                editorHostSettings.Any(
-                    setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.RESIZEHEIGHT))))
+            if (editorHostSettings.Any(
+                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.RESIZEHEIGHT))))
             {
-                var settingValue =
-                    editorHostSettings.FirstOrDefault(
-                        s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.RESIZEHEIGHT))).Value;
+                var settingValue = editorHostSettings.FirstOrDefault(
+                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.RESIZEHEIGHT))).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -830,20 +787,30 @@ namespace WatchersNET.CKEditor.Utilities
         /// <returns>
         /// Returns the filled Module Settings
         /// </returns>
-        internal static EditorProviderSettings LoadModuleSettings(PortalSettings portalSettings, EditorProviderSettings currentSettings, string key, int moduleId, ArrayList portalRoles)
+        internal static EditorProviderSettings LoadModuleSettings(
+            PortalSettings portalSettings,
+            EditorProviderSettings currentSettings,
+            string key,
+            int moduleId,
+            IList<RoleInfo> portalRoles)
         {
-            var hshModSet = new ModuleController().GetModuleSettings(moduleId);
+            Hashtable hshModSet = null;
+            var module = ModuleController.Instance.GetModule(moduleId, Null.NullInteger, false);
+            if (module != null)
+            {
+                hshModSet = module.ModuleSettings;
+            }
+
+            hshModSet = hshModSet ?? new Hashtable();
 
             var roleController = new RoleController();
 
             var roles = new ArrayList();
 
             // Import all Editor config settings
-            foreach (
-                var info in GetEditorConfigProperties()
-                    .Where(
-                        info => !string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, info.Name)])
-                        /*|| info.Name.Equals("CodeMirror") || info.Name.Equals("WordCount")*/))
+            foreach (var info in GetEditorConfigProperties().Where(
+                info => !string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, info.Name)])
+                /*|| info.Name.Equals("CodeMirror") || info.Name.Equals("WordCount")*/))
             {
                 switch (info.PropertyType.Name)
                 {
@@ -875,38 +842,39 @@ namespace WatchersNET.CKEditor.Utilities
                     case "ToolbarLocation":
                         info.SetValue(
                             currentSettings.Config,
-                            (ToolBarLocation)
-                            Enum.Parse(
-                                typeof(ToolBarLocation), (string)hshModSet[string.Format("{0}{1}", key, info.Name)]),
+                            (ToolBarLocation)Enum.Parse(
+                                typeof(ToolBarLocation),
+                                (string)hshModSet[string.Format("{0}{1}", key, info.Name)]),
                             null);
                         break;
                     case "DefaultLinkType":
                         info.SetValue(
                             currentSettings.Config,
-                            (LinkType)
-                            Enum.Parse(typeof(LinkType), (string)hshModSet[string.Format("{0}{1}", key, info.Name)]),
+                            (LinkType)Enum.Parse(
+                                typeof(LinkType),
+                                (string)hshModSet[string.Format("{0}{1}", key, info.Name)]),
                             null);
                         break;
                     case "EnterMode":
                     case "ShiftEnterMode":
                         info.SetValue(
                             currentSettings.Config,
-                            (EnterModus)
-                            Enum.Parse(typeof(EnterModus), (string)hshModSet[string.Format("{0}{1}", key, info.Name)]),
+                            (EnterModus)Enum.Parse(
+                                typeof(EnterModus),
+                                (string)hshModSet[string.Format("{0}{1}", key, info.Name)]),
                             null);
                         break;
                     case "ContentsLangDirection":
                         info.SetValue(
                             currentSettings.Config,
-                            (LanguageDirection)
-                            Enum.Parse(
-                                typeof(LanguageDirection), (string)hshModSet[string.Format("{0}{1}", key, info.Name)]),
+                            (LanguageDirection)Enum.Parse(
+                                typeof(LanguageDirection),
+                                (string)hshModSet[string.Format("{0}{1}", key, info.Name)]),
                             null);
                         break;
                     case "CodeMirror":
-                        foreach (var codeMirrorInfo in
-                            typeof(CodeMirror).GetProperties()
-                                              .Where(codeMirrorInfo => !codeMirrorInfo.Name.Equals("Theme")))
+                        foreach (var codeMirrorInfo in typeof(CodeMirror).GetProperties()
+                            .Where(codeMirrorInfo => !codeMirrorInfo.Name.Equals("Theme")))
                         {
                             switch (codeMirrorInfo.PropertyType.Name)
                             {
@@ -1005,24 +973,32 @@ namespace WatchersNET.CKEditor.Utilities
                 currentSettings.Config.Skin = (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.SKIN)];
             }
 
-            if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.CODEMIRRORTHEME)]))
+            if (!string.IsNullOrEmpty(
+                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.CODEMIRRORTHEME)]))
             {
-                currentSettings.Config.CodeMirror.Theme = (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.CODEMIRRORTHEME)];
+                currentSettings.Config.CodeMirror.Theme = (string)hshModSet[string.Format(
+                    "{0}{1}",
+                    key,
+                    SettingConstants.CODEMIRRORTHEME)];
             }
 
             var listToolbarRoles = (from RoleInfo objRole in portalRoles
-                                                   where
-                                                       !string.IsNullOrEmpty(
-                                                           (string)
-                                                           hshModSet[string.Format("{0}{2}#{1}", key, objRole.RoleID, SettingConstants.TOOLB)])
-                                                   let sToolbar =
-                                                       (string)
-                                                       hshModSet[string.Format("{0}{2}#{1}", key, objRole.RoleID, SettingConstants.TOOLB)]
-                                                   select
-                                                       new ToolbarRoles { RoleId = objRole.RoleID, Toolbar = sToolbar })
-                .ToList();
+                                    where !string.IsNullOrEmpty(
+                                              (string)hshModSet[string.Format(
+                                                  "{0}{2}#{1}",
+                                                  key,
+                                                  objRole.RoleID,
+                                                  SettingConstants.TOOLB)])
+                                    let sToolbar =
+                                        (string)hshModSet[string.Format(
+                                            "{0}{2}#{1}",
+                                            key,
+                                            objRole.RoleID,
+                                            SettingConstants.TOOLB)]
+                                    select new ToolbarRoles { RoleId = objRole.RoleID, Toolbar = sToolbar }).ToList();
 
-            if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{2}#{1}", key, "-1", SettingConstants.TOOLB)]))
+            if (!string.IsNullOrEmpty(
+                    (string)hshModSet[string.Format("{0}{2}#{1}", key, "-1", SettingConstants.TOOLB)]))
             {
                 var sToolbar = (string)hshModSet[string.Format("{0}{2}#{1}", key, "-1", SettingConstants.TOOLB)];
 
@@ -1032,32 +1008,34 @@ namespace WatchersNET.CKEditor.Utilities
             currentSettings.ToolBarRoles = listToolbarRoles;
 
             var listUploadSizeRoles = (from RoleInfo objRole in portalRoles
-                                       where
-                                           !string.IsNullOrEmpty(
-                                               (string)
-                                               hshModSet[string.Format("{0}{2}#{1}", key, objRole.RoleID, SettingConstants.UPLOADFILELIMITS)])
+                                       where !string.IsNullOrEmpty(
+                                                 (string)hshModSet[string.Format(
+                                                     "{0}{2}#{1}",
+                                                     key,
+                                                     objRole.RoleID,
+                                                     SettingConstants.UPLOADFILELIMITS)])
                                        let uploadFileLimit =
-                                           (string)
-                                           hshModSet[string.Format("{0}{2}#{1}", key, objRole.RoleID, SettingConstants.UPLOADFILELIMITS)]
-                                       select
-                                           new UploadSizeRoles { RoleId = objRole.RoleID, UploadFileLimit = Convert.ToInt32(uploadFileLimit) })
-                .ToList();
+                                           (string)hshModSet[string.Format(
+                                               "{0}{2}#{1}",
+                                               key,
+                                               objRole.RoleID,
+                                               SettingConstants.UPLOADFILELIMITS)]
+                                       select new UploadSizeRoles
+                                                  {
+                                                      RoleId = objRole.RoleID,
+                                                      UploadFileLimit = Convert.ToInt32(uploadFileLimit)
+                                                  }).ToList();
 
-            if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{2}#{1}", key, "-1", SettingConstants.UPLOADFILELIMITS)]))
+            if (!string.IsNullOrEmpty(
+                    (string)hshModSet[string.Format("{0}{2}#{1}", key, "-1", SettingConstants.UPLOADFILELIMITS)]))
             {
                 listUploadSizeRoles.Add(
                     new UploadSizeRoles
-                    {
-                        RoleId = -1,
-                        UploadFileLimit =
-                            Convert.ToInt32(
-                                hshModSet[
-                                    string.Format(
-                                        "{0}{2}#{1}",
-                                        key,
-                                        "-1",
-                                        SettingConstants.UPLOADFILELIMITS)])
-                    });
+                        {
+                            RoleId = -1,
+                            UploadFileLimit = Convert.ToInt32(
+                                hshModSet[string.Format("{0}{2}#{1}", key, "-1", SettingConstants.UPLOADFILELIMITS)])
+                        });
             }
 
             currentSettings.UploadSizeRoles = listUploadSizeRoles;
@@ -1074,8 +1052,7 @@ namespace WatchersNET.CKEditor.Utilities
                 {
                     if (Utility.IsNumeric(sRoleName))
                     {
-                        var roleInfo = roleController.GetRoleById(
-                            portalSettings.PortalId, int.Parse(sRoleName));
+                        var roleInfo = roleController.GetRoleById(portalSettings.PortalId, int.Parse(sRoleName));
 
                         if (roleInfo != null)
                         {
@@ -1132,15 +1109,21 @@ namespace WatchersNET.CKEditor.Utilities
             if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.INJECTJS)]))
             {
                 bool bResult;
-                if (bool.TryParse((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.INJECTJS)], out bResult))
+                if (bool.TryParse(
+                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.INJECTJS)],
+                    out bResult))
                 {
                     currentSettings.InjectSyntaxJs = bResult;
                 }
             }
 
-            if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.ALLOWEDIMAGEEXTENSIONS)]))
+            if (!string.IsNullOrEmpty(
+                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.ALLOWEDIMAGEEXTENSIONS)]))
             {
-                currentSettings.AllowedImageExtensions = (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.ALLOWEDIMAGEEXTENSIONS)];
+                currentSettings.AllowedImageExtensions = (string)hshModSet[string.Format(
+                    "{0}{1}",
+                    key,
+                    SettingConstants.ALLOWEDIMAGEEXTENSIONS)];
             }
 
             if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.WIDTH)]))
@@ -1150,7 +1133,8 @@ namespace WatchersNET.CKEditor.Utilities
 
             if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.HEIGHT)]))
             {
-                currentSettings.Config.Height = (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.HEIGHT)];
+                currentSettings.Config.Height =
+                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.HEIGHT)];
             }
 
             if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.BLANKTEXT)]))
@@ -1160,65 +1144,86 @@ namespace WatchersNET.CKEditor.Utilities
 
             if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.CSS)]))
             {
-                currentSettings.Config.ContentsCss = (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.CSS)];
+                currentSettings.Config.ContentsCss =
+                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.CSS)];
             }
 
             if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.TEMPLATEFILES)]))
             {
-                currentSettings.Config.Templates_Files = (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.TEMPLATEFILES)];
+                currentSettings.Config.Templates_Files = (string)hshModSet[string.Format(
+                    "{0}{1}",
+                    key,
+                    SettingConstants.TEMPLATEFILES)];
             }
 
             if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.CUSTOMJSFILE)]))
             {
-                currentSettings.CustomJsFile = (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.CUSTOMJSFILE)];
+                currentSettings.CustomJsFile = (string)hshModSet[string.Format(
+                    "{0}{1}",
+                    key,
+                    SettingConstants.CUSTOMJSFILE)];
             }
 
             if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.CONFIG)]))
             {
-                currentSettings.Config.CustomConfig = (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.CONFIG)];
+                currentSettings.Config.CustomConfig =
+                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.CONFIG)];
             }
 
-            if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.FILELISTPAGESIZE)]))
+            if (!string.IsNullOrEmpty(
+                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.FILELISTPAGESIZE)]))
             {
-                currentSettings.FileListPageSize = int.Parse((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.FILELISTPAGESIZE)]);
+                currentSettings.FileListPageSize = int.Parse(
+                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.FILELISTPAGESIZE)]);
             }
 
-            if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.FILELISTVIEWMODE)]))
+            if (!string.IsNullOrEmpty(
+                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.FILELISTVIEWMODE)]))
             {
-                currentSettings.FileListViewMode =
-                    (FileListView)
-                    Enum.Parse(typeof(FileListView), (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.FILELISTVIEWMODE)]);
+                currentSettings.FileListViewMode = (FileListView)Enum.Parse(
+                    typeof(FileListView),
+                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.FILELISTVIEWMODE)]);
             }
 
-            if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.DEFAULTLINKMODE)]))
+            if (!string.IsNullOrEmpty(
+                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.DEFAULTLINKMODE)]))
             {
-                currentSettings.DefaultLinkMode =
-                    (LinkMode)
-                    Enum.Parse(typeof(LinkMode), (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.DEFAULTLINKMODE)]);
+                currentSettings.DefaultLinkMode = (LinkMode)Enum.Parse(
+                    typeof(LinkMode),
+                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.DEFAULTLINKMODE)]);
             }
 
-            if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.USEANCHORSELECTOR)]))
+            if (!string.IsNullOrEmpty(
+                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.USEANCHORSELECTOR)]))
             {
                 bool bResult;
-                if (bool.TryParse((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.USEANCHORSELECTOR)], out bResult))
+                if (bool.TryParse(
+                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.USEANCHORSELECTOR)],
+                    out bResult))
                 {
                     currentSettings.UseAnchorSelector = bResult;
                 }
             }
 
-            if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.SHOWPAGELINKSTABFIRST)]))
+            if (!string.IsNullOrEmpty(
+                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.SHOWPAGELINKSTABFIRST)]))
             {
                 bool bResult;
-                if (bool.TryParse((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.SHOWPAGELINKSTABFIRST)], out bResult))
+                if (bool.TryParse(
+                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.SHOWPAGELINKSTABFIRST)],
+                    out bResult))
                 {
                     currentSettings.ShowPageLinksTabFirst = bResult;
                 }
             }
 
-            if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.OVERRIDEFILEONUPLOAD)]))
+            if (!string.IsNullOrEmpty(
+                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.OVERRIDEFILEONUPLOAD)]))
             {
                 bool bResult;
-                if (bool.TryParse((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.OVERRIDEFILEONUPLOAD)], out bResult))
+                if (bool.TryParse(
+                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.OVERRIDEFILEONUPLOAD)],
+                    out bResult))
                 {
                     currentSettings.OverrideFileOnUpload = bResult;
                 }
@@ -1227,17 +1232,21 @@ namespace WatchersNET.CKEditor.Utilities
             if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.SUBDIRS)]))
             {
                 bool bResult;
-                if (bool.TryParse((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.SUBDIRS)], out bResult))
+                if (bool.TryParse(
+                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.SUBDIRS)],
+                    out bResult))
                 {
                     currentSettings.SubDirs = bResult;
                 }
             }
 
-            if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.BROWSERROOTDIRID)]))
+            if (!string.IsNullOrEmpty(
+                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.BROWSERROOTDIRID)]))
             {
                 try
                 {
-                    currentSettings.BrowserRootDirId = int.Parse((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.BROWSERROOTDIRID)]);
+                    currentSettings.BrowserRootDirId = int.Parse(
+                        (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.BROWSERROOTDIRID)]);
                 }
                 catch (Exception)
                 {
@@ -1249,7 +1258,8 @@ namespace WatchersNET.CKEditor.Utilities
             {
                 try
                 {
-                    currentSettings.UploadDirId = int.Parse((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.UPLOADDIRID)]);
+                    currentSettings.UploadDirId = int.Parse(
+                        (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.UPLOADDIRID)]);
                 }
                 catch (Exception)
                 {
@@ -1261,7 +1271,8 @@ namespace WatchersNET.CKEditor.Utilities
             {
                 try
                 {
-                    currentSettings.ResizeWidth = int.Parse((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.RESIZEWIDTH)]);
+                    currentSettings.ResizeWidth = int.Parse(
+                        (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.RESIZEWIDTH)]);
                 }
                 catch (Exception)
                 {
@@ -1273,7 +1284,8 @@ namespace WatchersNET.CKEditor.Utilities
             {
                 try
                 {
-                    currentSettings.ResizeHeight = int.Parse((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.RESIZEHEIGHT)]);
+                    currentSettings.ResizeHeight = int.Parse(
+                        (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.RESIZEHEIGHT)]);
                 }
                 catch (Exception)
                 {
@@ -1294,7 +1306,11 @@ namespace WatchersNET.CKEditor.Utilities
         /// <returns>
         /// Returns the Default Provider Settings
         /// </returns>
-        internal static EditorProviderSettings GetDefaultSettings(PortalSettings portalSettings, string homeDirPath, string alternateSubFolder, ArrayList portalRoles)
+        internal static EditorProviderSettings GetDefaultSettings(
+            PortalSettings portalSettings,
+            string homeDirPath,
+            string alternateSubFolder,
+            IList<RoleInfo> portalRoles)
         {
             var roles = new ArrayList();
 
@@ -1312,33 +1328,25 @@ namespace WatchersNET.CKEditor.Utilities
                 homeDirPath = alternatePath;
             }
 
-            // Check if old Settings File Exists
-            if (File.Exists(Path.Combine(homeDirPath, SettingConstants.XmlDefaultFileName)))
-            {
-                // Import Old SettingsBase Xml File
-                ImportSettingBaseXml(homeDirPath);
-            }
-
             if (!File.Exists(Path.Combine(homeDirPath, SettingConstants.XmlSettingsFileName)))
             {
                 if (!File.Exists(Path.Combine(Globals.HostMapPath, SettingConstants.XmlDefaultFileName)))
                 {
                     CreateDefaultSettingsFile();
                 }
-                else
-                {
-                    // Import Old SettingBase Xml File
-                    ImportSettingBaseXml(Globals.HostMapPath, true);
-                }
 
-                File.Copy(Path.Combine(Globals.HostMapPath, SettingConstants.XmlDefaultFileName), Path.Combine(homeDirPath, SettingConstants.XmlSettingsFileName));
+                File.Copy(
+                    Path.Combine(Globals.HostMapPath, SettingConstants.XmlDefaultFileName),
+                    Path.Combine(homeDirPath, SettingConstants.XmlSettingsFileName));
             }
 
             var serializer = new XmlSerializer(typeof(EditorProviderSettings));
-            var reader =
-                new StreamReader(
-                    new FileStream(
-                        Path.Combine(homeDirPath, SettingConstants.XmlSettingsFileName), FileMode.Open, FileAccess.Read, FileShare.Read));
+            var reader = new StreamReader(
+                new FileStream(
+                    Path.Combine(homeDirPath, SettingConstants.XmlSettingsFileName),
+                    FileMode.Open,
+                    FileAccess.Read,
+                    FileShare.Read));
 
             var settings = (EditorProviderSettings)serializer.Deserialize(reader);
 
@@ -1432,13 +1440,12 @@ namespace WatchersNET.CKEditor.Utilities
 
             var serializer = new XmlSerializer(typeof(EditorProviderSettings));
 
-            var textWriter =
-                new StreamWriter(
-                    new FileStream(
-                        Path.Combine(Globals.HostMapPath, SettingConstants.XmlDefaultFileName),
-                        FileMode.OpenOrCreate,
-                        FileAccess.ReadWrite,
-                        FileShare.ReadWrite));
+            var textWriter = new StreamWriter(
+                new FileStream(
+                    Path.Combine(Globals.HostMapPath, SettingConstants.XmlDefaultFileName),
+                    FileMode.OpenOrCreate,
+                    FileAccess.ReadWrite,
+                    FileShare.ReadWrite));
 
             serializer.Serialize(textWriter, newSettings);
 
@@ -1451,143 +1458,31 @@ namespace WatchersNET.CKEditor.Utilities
         /// <returns>Returns the EditorConfig Properties</returns>
         internal static IEnumerable<PropertyInfo> GetEditorConfigProperties()
         {
-            return
-                typeof(EditorConfig).GetProperties()
-                    .Where(
-                        info =>
-                        !info.Name.Equals("Magicline_KeystrokeNext") && !info.Name.Equals("Magicline_KeystrokePrevious")
-                        && !info.Name.Equals("Plugins") && !info.Name.Equals("Codemirror_Theme")
-                        && !info.Name.Equals("Width") && !info.Name.Equals("Height") && !info.Name.Equals("ContentsCss")
-                        && !info.Name.Equals("Templates_Files") && !info.Name.Equals("CustomConfig")
-                        && !info.Name.Equals("Skin") && !info.Name.Equals("Templates_Files")
-                        && !info.Name.Equals("Toolbar") && !info.Name.Equals("Language")
-                        && !info.Name.Equals("FileBrowserWindowWidth") && !info.Name.Equals("FileBrowserWindowHeight")
-                        && !info.Name.Equals("FileBrowserWindowWidth") && !info.Name.Equals("FileBrowserWindowHeight")
-                        && !info.Name.Equals("FileBrowserUploadUrl") && !info.Name.Equals("FileBrowserImageUploadUrl")
-                        && !info.Name.Equals("FilebrowserImageBrowseLinkUrl")
-                        && !info.Name.Equals("FileBrowserImageBrowseUrl")
-                        && !info.Name.Equals("FileBrowserFlashUploadUrl")
-                        && !info.Name.Equals("FileBrowserFlashBrowseUrl") && !info.Name.Equals("FileBrowserBrowseUrl"));
-        }
-
-        /// <summary>
-        /// Imports the old SettingsBase Xml File
-        /// </summary>
-        /// <param name="homeDirPath">The home folder path.</param>
-        /// <param name="isDefaultXmlFile">if set to <c>true</c> [is default XML file].</param>
-        internal static void ImportSettingBaseXml(string homeDirPath, bool isDefaultXmlFile = false)
-        {
-            var oldXmlPath = Path.Combine(homeDirPath, SettingConstants.XmlDefaultFileName);
-            var oldSerializer = new XmlSerializer(typeof(SettingBase));
-            var reader = new XmlTextReader(new FileStream(oldXmlPath, FileMode.Open, FileAccess.Read, FileShare.Read));
-
-            if (!oldSerializer.CanDeserialize(reader))
-            {
-                reader.Close();
-
-                return;
-            }
-
-            var oldDefaultSettings = (SettingBase)oldSerializer.Deserialize(reader);
-
-            reader.Close();
-
-            // Fix for old skins
-            if (oldDefaultSettings.sSkin.Equals("office2003")
-                            || oldDefaultSettings.sSkin.Equals("BootstrapCK-Skin")
-                            || oldDefaultSettings.sSkin.Equals("chris")
-                            || oldDefaultSettings.sSkin.Equals("v2"))
-            {
-                oldDefaultSettings.sSkin = "moono";
-            }
-
-            // Migrate Settings
-            var importedSettings = new EditorProviderSettings
-            {
-                FileListPageSize = oldDefaultSettings.FileListPageSize,
-                FileListViewMode = oldDefaultSettings.FileListViewMode,
-                UseAnchorSelector = oldDefaultSettings.UseAnchorSelector,
-                ShowPageLinksTabFirst = oldDefaultSettings.ShowPageLinksTabFirst,
-                SubDirs = oldDefaultSettings.bSubDirs,
-                InjectSyntaxJs = oldDefaultSettings.injectSyntaxJs,
-                BrowserRootDirId = oldDefaultSettings.BrowserRootDirId,
-                UploadDirId = oldDefaultSettings.UploadDirId,
-                ResizeHeight = oldDefaultSettings.iResizeHeight,
-                ResizeWidth = oldDefaultSettings.iResizeWidth,
-                ToolBarRoles = oldDefaultSettings.listToolbRoles,
-                BlankText = oldDefaultSettings.sBlankText,
-                BrowserRoles = oldDefaultSettings.sBrowserRoles,
-                Browser = oldDefaultSettings.sBrowser,
-                Config =
-                {
-                    CustomConfig = oldDefaultSettings.sConfig,
-                    ContentsCss = oldDefaultSettings.sCss,
-                    Skin = oldDefaultSettings.sSkin,
-                    Templates_Files = oldDefaultSettings.sTemplates,
-                    Height = oldDefaultSettings.BrowserHeight,
-                    Width = oldDefaultSettings.BrowserWidth,
-                    AutoParagraph = true,
-                    AutoUpdateElement = true,
-                    BasicEntities = true,
-                    BrowserContextMenuOnCtrl = true,
-                    ColorButton_EnableMore = true,
-                    DisableNativeSpellChecker = true,
-                    DisableNativeTableHandles = true,
-                    EnableTabKeyTools = true,
-                    Entities = true,
-                    Entities_Greek = true,
-                    Entities_Latin = true,
-                    FillEmptyBlocks = true,
-                    IgnoreEmptyParagraph = true,
-                    Image_RemoveLinkByEmptyURL = true,
-                    PasteFromWordRemoveFontStyles = true,
-                    PasteFromWordRemoveStyles = true,
-                    Resize_Enabled = true,
-                    StartupShowBorders = true,
-                    ToolbarGroupCycling = true,
-                    ToolbarStartupExpanded = true,
-                    UseComputedState = true,
-                    AutoGrow_BottomSpace = 0,
-                    AutoGrow_MaxHeight = 0,
-                    AutoGrow_MinHeight = 200,
-                    BaseFloatZIndex = 10000,
-                    Dialog_MagnetDistance = 20,
-                    IndentOffset = 40,
-                    Menu_SubMenuDelay = 400,
-                    Resize_MaxHeight = 600,
-                    Resize_MaxWidth = 3000,
-                    Resize_MinHeight = 250,
-                    Resize_MinWidth = 750,
-                    ResizeImageQuality = 80,
-                    Scayt_MaxSuggestions = 5,
-                    Smiley_columns = 8,
-                    SourceAreaTabSize = 20,
-                    TabIndex = 0,
-                    TabSpaces = 0,
-                    UndoStackSize = 20
-                }
-            };
-
-            // Delete Old File
-            File.Delete(oldXmlPath);
-
-            // Save new xml file
-            var newSerializer = new XmlSerializer(typeof(EditorProviderSettings));
-
-            using (
-                var textWriter =
-                    new StreamWriter(
-                        new FileStream(
-                            Path.Combine(
-                                homeDirPath, isDefaultXmlFile ? SettingConstants.XmlDefaultFileName : SettingConstants.XmlSettingsFileName),
-                            FileMode.OpenOrCreate,
-                            FileAccess.ReadWrite,
-                            FileShare.ReadWrite)))
-            {
-                newSerializer.Serialize(textWriter, importedSettings);
-
-                textWriter.Close();
-            }
+            return typeof(EditorConfig).GetProperties().Where(
+                info => !info.Name.Equals("Magicline_KeystrokeNext") && !info.Name.Equals("Magicline_KeystrokePrevious")
+                                                                     && !info.Name.Equals("Plugins")
+                                                                     && !info.Name.Equals("Codemirror_Theme")
+                                                                     && !info.Name.Equals("Width")
+                                                                     && !info.Name.Equals("Height")
+                                                                     && !info.Name.Equals("ContentsCss")
+                                                                     && !info.Name.Equals("Templates_Files")
+                                                                     && !info.Name.Equals("CustomConfig")
+                                                                     && !info.Name.Equals("Skin")
+                                                                     && !info.Name.Equals("Templates_Files")
+                                                                     && !info.Name.Equals("Toolbar")
+                                                                     && !info.Name.Equals("Language")
+                                                                     && !info.Name.Equals("FileBrowserWindowWidth")
+                                                                     && !info.Name.Equals("FileBrowserWindowHeight")
+                                                                     && !info.Name.Equals("FileBrowserWindowWidth")
+                                                                     && !info.Name.Equals("FileBrowserWindowHeight")
+                                                                     && !info.Name.Equals("FileBrowserUploadUrl")
+                                                                     && !info.Name.Equals("FileBrowserImageUploadUrl")
+                                                                     && !info.Name.Equals(
+                                                                         "FilebrowserImageBrowseLinkUrl")
+                                                                     && !info.Name.Equals("FileBrowserImageBrowseUrl")
+                                                                     && !info.Name.Equals("FileBrowserFlashUploadUrl")
+                                                                     && !info.Name.Equals("FileBrowserFlashBrowseUrl")
+                                                                     && !info.Name.Equals("FileBrowserBrowseUrl"));
         }
 
         /// <summary>
@@ -1597,7 +1492,10 @@ namespace WatchersNET.CKEditor.Utilities
         /// <param name="portalSettings">The portal settings.</param>
         /// <param name="httpRequest">The HTTP request.</param>
         /// <returns>Returns the MAX. upload file size for the current user</returns>
-        internal static int GetCurrentUserUploadSize(EditorProviderSettings settings, PortalSettings portalSettings, HttpRequest httpRequest)
+        internal static int GetCurrentUserUploadSize(
+            EditorProviderSettings settings,
+            PortalSettings portalSettings,
+            HttpRequest httpRequest)
         {
             var uploadFileLimitForPortal = Convert.ToInt32(Utility.GetMaxUploadSize());
 

@@ -38,7 +38,6 @@ namespace WatchersNET.CKEditor.Browser
     using DotNetNuke.Entities.Portals;
     using DotNetNuke.Entities.Tabs;
     using DotNetNuke.Entities.Users;
-    using DotNetNuke.Framework.JavaScriptLibraries;
     using DotNetNuke.Framework.Providers;
     using DotNetNuke.Security.Permissions;
     using DotNetNuke.Security.Roles;
@@ -852,7 +851,7 @@ namespace WatchersNET.CKEditor.Browser
             var objProvider = (Provider)providerConfiguration.Providers[providerConfiguration.DefaultProvider];
 
             var settingsDictionary = Utility.GetEditorHostSettings();
-            var portalRoles = new RoleController().GetPortalRoles(this._portalSettings.PortalId);
+            var portalRoles = new RoleController().GetRoles(this._portalSettings.PortalId);
 
             switch (this.currentSettings.SettingMode)
             {
@@ -3388,6 +3387,11 @@ namespace WatchersNET.CKEditor.Browser
             this.SyncCurrentFolder();
 
             this.ShowFilesIn(this.lblCurrentDir.Text);
+
+            this.GoToSelectedFile(this.SelectedFile.Value);
+            this.GoToSelectedFile(this.SelectedFile.Value);
+
+            this.SelectedFile.Value = string.Empty;
 
             this.panUploadDiv.Visible = false;
         }

@@ -14,9 +14,7 @@ namespace WatchersNET.CKEditor
 {
     #region
 
-    using System;
     using System.Collections;
-    using System.Linq.Expressions;
     using System.Web.UI;
     using System.Web.UI.WebControls;
 
@@ -49,7 +47,7 @@ namespace WatchersNET.CKEditor
         #region Properties
 
         /// <summary>
-        /// Gets or sets AdditionalToolbars.
+        /// Gets or sets Additional Toolbars.
         /// </summary>
         public override ArrayList AdditionalToolbars { get; set; } = new ArrayList();
 

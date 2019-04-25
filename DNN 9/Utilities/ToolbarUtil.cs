@@ -941,12 +941,6 @@ namespace WatchersNET.CKEditor.Utilities
 
             var createDefault = false;
 
-            // Import old ToolbarXmlFileName first if exist
-            if (File.Exists(Path.Combine(homeDirPath, SettingConstants.ToolbarXmlFileName)))
-            {
-                ImportOldToolbarXml(homeDirPath);
-            }
-
             if (!File.Exists(Path.Combine(homeDirPath, SettingConstants.ToolbarSetXmlFileName)))
             {
                 if (!File.Exists(Path.Combine(Globals.HostMapPath, SettingConstants.ToolbarSetXmlFileName)))
@@ -1061,80 +1055,6 @@ namespace WatchersNET.CKEditor.Utilities
             }
         }
 
-        /// <summary>
-        /// Imports the old toolbar XML.
-        /// </summary>
-        /// <param name="homeDirPath">The home folder path.</param>
-        internal static void ImportOldToolbarXml(string homeDirPath)
-        {
-            // Delete old xml file in Host Path
-            if (File.Exists(Path.Combine(Globals.HostMapPath, SettingConstants.ToolbarXmlFileName)))
-            {
-                File.Delete(Path.Combine(Globals.HostMapPath, SettingConstants.ToolbarXmlFileName));
-            }
-
-            // Import old xml file
-            var oldXmlPath = Path.Combine(homeDirPath, SettingConstants.ToolbarXmlFileName);
-
-            var oldSerializer = new XmlSerializer(typeof(List<Toolbar>));
-
-            List<Toolbar> toolBars;
-
-            using (
-                var textReader =
-                    new StreamReader(new FileStream(oldXmlPath, FileMode.Open, FileAccess.Read, FileShare.Read)))
-            {
-                toolBars = (List<Toolbar>)oldSerializer.Deserialize(textReader);
-
-                textReader.Close();
-            }
-
-            var listToolbarsSets = new List<ToolbarSet>();
-
-            // Migrate toolbars
-            foreach (var toolbar in toolBars)
-            {
-                ToolbarSet toolbarSet;
-
-                switch (toolbar.sToolbarName)
-                {
-                    case "Basic":
-                        toolbarSet = GetDefaultToolbar("Basic");
-                        break;
-                    case "Standard":
-                        toolbarSet = GetDefaultToolbar("Standard");
-                        break;
-                    case "Full":
-                        toolbarSet = GetDefaultToolbar("Full");
-                        break;
-                    default:
-                        {
-                            toolbar.sToolbarSet = toolbar.sToolbarSet.Replace("oembed", "Embed");
-                            toolbarSet = ConvertStringToToolbarSet(toolbar.sToolbarSet);
-                        }
-
-                        break;
-                }
-
-                toolbarSet.Name = toolbar.sToolbarName;
-                toolbarSet.Priority = toolbar.iPriority;
-
-                listToolbarsSets.Add(toolbarSet);
-            }
-
-            // Save update new xml file
-            var newSerializer = new XmlSerializer(typeof(List<ToolbarSet>));
-
-            using (var textWriter = new StreamWriter(Path.Combine(homeDirPath, SettingConstants.ToolbarSetXmlFileName)))
-            {
-                newSerializer.Serialize(textWriter, listToolbarsSets);
-
-                textWriter.Close();
-            }
-
-            // Delete old xml file
-            File.Delete(Path.Combine(homeDirPath, SettingConstants.ToolbarXmlFileName));
-        }
 
         #endregion
     }
