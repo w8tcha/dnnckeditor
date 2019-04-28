@@ -77,7 +77,7 @@ namespace WatchersNET.CKEditor.Browser
         /// <summary>
         ///   The allowed image ext.
         /// </summary>
-        private List<string> allowedImageExtensions = new List<string>();
+        private readonly List<string> allowedImageExtensions = new List<string>();
 
         /// <summary>
         ///   The request.
@@ -249,7 +249,7 @@ namespace WatchersNET.CKEditor.Browser
                 this.GetStorageLocationType(currentFolderInfo.FolderID).Equals(
                     FolderController.StorageLocationTypes.DatabaseSecure);
 
-            var files = (List<IFileInfo>)FolderManager.Instance.GetFiles(currentFolderInfo);
+            var files = FolderManager.Instance.GetFiles(currentFolderInfo).ToList();
 
             if (this.SortFilesDescending)
             {
