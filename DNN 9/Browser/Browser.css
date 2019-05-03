@@ -426,3 +426,6 @@ img {border:0}
 .CurrentDirInfo {
     margin:5px 0 5px 5px
 }
+.SelectedFolder {
+    font-weight: bold;
+}

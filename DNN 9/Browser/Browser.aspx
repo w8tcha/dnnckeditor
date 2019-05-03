@@ -289,7 +289,7 @@
           <td style="padding-top:9px">
             <asp:Label id="lblSubDirs" runat="server" Text="Subdirectories:"></asp:Label><br />
             <div id="FoldersBox">
-             <asp:TreeView ID="FoldersTree" runat="server" ExpandDepth="1" Image="Images/folder.gif"/>
+             <asp:TreeView ID="FoldersTree" runat="server" ExpandDepth="1" Image="Images/folder.gif" SelectedNodeStyle-CssClass="SelectedFolder"/>
             </div>
             <asp:Label runat="server" ID="FileSpaceUsedLabel" CssClass="fileSpaceUsedLabel"></asp:Label>
           </td>

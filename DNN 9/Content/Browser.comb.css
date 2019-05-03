@@ -426,6 +426,9 @@ img {border:0}
 .CurrentDirInfo {
     margin:5px 0 5px 5px
 }
+.SelectedFolder {
+    font-weight: bold;
+}
 @charset "UTF-8";
 /*
  * jQuery File Upload Plugin CSS 1.3.0
