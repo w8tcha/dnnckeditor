@@ -39,6 +39,7 @@ namespace WatchersNET.CKEditor.Browser
     using DotNetNuke.Entities.Tabs;
     using DotNetNuke.Entities.Users;
     using DotNetNuke.Framework.Providers;
+    using DotNetNuke.Security;
     using DotNetNuke.Security.Permissions;
     using DotNetNuke.Security.Roles;
     using DotNetNuke.Services.FileSystem;
@@ -100,7 +101,7 @@ namespace WatchersNET.CKEditor.Browser
         private string extensionWhiteList;
 
         /// <summary>
-        /// The browser modus
+        /// The browser Modus
         /// </summary>
         private string browserModus;
 
@@ -2441,7 +2442,7 @@ namespace WatchersNET.CKEditor.Browser
             try
             {
                 this.SetDefaultLinkTypeText();
-                /*
+                
                 // Enable Buttons
                 this.CheckFolderAccess(fileInfo.FolderId, true);
 
@@ -2501,7 +2502,7 @@ namespace WatchersNET.CKEditor.Browser
                 //////
                 this.FileId.Text = fileInfo.FileId.ToString();
                 this.lblFileName.Text = fileName;
-
+                /*
                 // Relative Url
                 this.rblLinkType.Items[0].Text = Regex.Replace(
                     this.rblLinkType.Items[0].Text,
@@ -3066,7 +3067,7 @@ namespace WatchersNET.CKEditor.Browser
             // Show Link Panel
             this.panLinkMode.Visible = true;
             this.cmdClose.Visible = true;
-            this.panInfo.Visible = true;
+            this.panInfo.Visible = PortalSecurity.IsInRoles(this._portalSettings.AdministratorRoleName);
 
             if (this.browserModus.Equals("Link"))
             {
@@ -3103,7 +3104,7 @@ namespace WatchersNET.CKEditor.Browser
             // Show Link Panel
             this.panLinkMode.Visible = true;
             this.cmdClose.Visible = true;
-            this.panInfo.Visible = true;
+            this.panInfo.Visible = PortalSecurity.IsInRoles(this._portalSettings.AdministratorRoleName);
             this.title.InnerText = string.Format("{0} - WatchersNET.FileBrowser", this.lblModus.Text);
 
             if (this.browserModus.Equals("Link"))
@@ -3242,7 +3243,7 @@ namespace WatchersNET.CKEditor.Browser
             // Show Link Panel
             this.panLinkMode.Visible = true;
             this.cmdClose.Visible = true;
-            this.panInfo.Visible = true;
+            this.panInfo.Visible = PortalSecurity.IsInRoles(this._portalSettings.AdministratorRoleName);
             this.title.InnerText = string.Format("{0} - WatchersNET.FileBrowser", this.lblModus.Text);
 
             if (this.browserModus.Equals("Link"))
