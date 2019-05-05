@@ -116,7 +116,7 @@
     <Copy SourceFiles="$(MSBuildProjectDirectory)\App_LocalResources\Options.aspx.resx" DestinationFolder="$(MSBuildProjectDirectory)\ResourcesZip\App_LocalResources"/>
 
     <!--  Scripts -->
-    <Copy SourceFiles="$(MSBuildProjectDirectory)\Scripts\jquery-3.3.1.min.js" DestinationFolder="$(MSBuildProjectDirectory)\ResourcesZip\Scripts"/>
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\Scripts\jquery-3.4.1.min.js" DestinationFolder="$(MSBuildProjectDirectory)\ResourcesZip\Scripts"/>
     <Copy SourceFiles="$(MSBuildProjectDirectory)\Scripts\jquery-ui-1.12.1.min.js" DestinationFolder="$(MSBuildProjectDirectory)\ResourcesZip\Scripts"/>
     <Copy SourceFiles="$(MSBuildProjectDirectory)\Scripts\Browser.js" DestinationFolder="$(MSBuildProjectDirectory)\ResourcesZip\Scripts"/>
     <Copy SourceFiles="$(MSBuildProjectDirectory)\Scripts\jquery.cropzoom.js" DestinationFolder="$(MSBuildProjectDirectory)\ResourcesZip\Scripts"/>

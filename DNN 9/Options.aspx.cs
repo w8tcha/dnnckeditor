@@ -89,7 +89,7 @@ namespace WatchersNET.CKEditor
             var jqueryScriptLink = new HtmlGenericControl("script");
 
             jqueryScriptLink.Attributes["type"] = "text/javascript";
-            jqueryScriptLink.Attributes["src"] = this.ResolveUrl("Scripts/jquery-3.3.1.min.js");
+            jqueryScriptLink.Attributes["src"] = this.ResolveUrl("Scripts/jquery-3.4.1.min.js");
 
             this.favicon.Controls.Add(jqueryScriptLink);
 

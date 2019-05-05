@@ -411,7 +411,7 @@ namespace WatchersNET.CKEditor.Browser
             var jqueryScriptLink = new HtmlGenericControl("script");
 
             jqueryScriptLink.Attributes["type"] = "text/javascript";
-            jqueryScriptLink.Attributes["src"] = this.ResolveUrl("../Scripts/jquery-3.3.1.min.js");
+            jqueryScriptLink.Attributes["src"] = this.ResolveUrl("../Scripts/jquery-3.4.1.min.js");
 
             this.favicon.Controls.Add(jqueryScriptLink);
 
@@ -1684,14 +1684,15 @@ namespace WatchersNET.CKEditor.Browser
             {
                 Text = dirInfo.Name,
                 Value = dirInfo.FullName,
-                ImageUrl = "Images/folder.gif"
+                
+               ImageUrl = "Images/folder.gif"
             };
 
             switch (this.GetStorageLocationType(currentFolderInfo.PhysicalPath))
             {
                 case FolderController.StorageLocationTypes.SecureFileSystem:
                     {
-                        folderNode.ImageUrl = "Images/folderLocked.gif";
+                       folderNode.ImageUrl = "Images/folderLocked.gif";
                     }
 
                     break;

@@ -307,12 +307,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Scripts\Browser.js" />
-    <Content Include="Scripts\jquery-3.3.1.js" />
-    <Content Include="Scripts\jquery-3.3.1.min.js">
-      <DependentUpon>jquery-3.3.1.js</DependentUpon>
+    <Content Include="Scripts\jquery-3.4.1.js" />
+    <Content Include="Scripts\jquery-3.4.1.min.js">
+      <DependentUpon>jquery-3.4.1.js</DependentUpon>
     </Content>
-    <Content Include="Scripts\jquery-3.3.1.min.map">
-      <DependentUpon>jquery-3.3.1.min.js</DependentUpon>
+    <Content Include="Scripts\jquery-3.4.1.min.map">
+      <DependentUpon>jquery-3.4.1.min.js</DependentUpon>
     </Content>
     <Content Include="Scripts\jquery-ui-1.12.1.js" />
     <Content Include="Scripts\jquery-ui-1.12.1.min.js">
