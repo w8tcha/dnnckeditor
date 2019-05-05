@@ -467,6 +467,26 @@ namespace WatchersNET.CKEditor.Browser
 
             this.GetSelectedImageOrLink();
 
+            if (this.Page.IsPostBack)
+            {
+                var script = @"var elem = document.getElementById('{0}_SelectedNode');
+                          if(elem != null )
+                          {
+                                var node = document.getElementById(elem.value);
+                                if(node != null)
+                                {
+                                     node.scrollIntoView(true);
+                                }
+                          }
+                        ";
+                ScriptManager.RegisterStartupScript(
+                    this,
+                    this.GetType(),
+                    "scrollIntoViewScript",
+                    script.Replace("{0}", this.FoldersTree.ClientID),
+                    true);
+            }
+
             base.OnPreRender(e);
         }
 
