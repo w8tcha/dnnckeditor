@@ -31,3 +31,17 @@ div.blog_rte div{width:auto}
     font-weight: bold;
     font-size: 1.2em;
 }
+
+.cke_dialog_body {
+    border: solid 1px #cdcdcd;
+}
+
+/* Fix for the Dialog Height Issue #56 */ 
+.cke_dialog_body .cke_dialog_contents_body .cke_dialog_ui_text, 
+.cke_dialog_body .cke_dialog_contents_body .cke_dialog_ui_select, 
+.cke_dialog_body .cke_dialog_contents_body .cke_dialog_ui_hbox_last > a.cke_dialog_ui_button {
+    margin-top: 0;
+}
+.cke_dialog_body .cke_dialog_title {
+    padding: 9px 19px 8px 12px;
+}
