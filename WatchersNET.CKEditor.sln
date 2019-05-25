@@ -12,6 +12,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CKEditor", "CKEditor", "{60E6AFFA-BD7F-488B-A565-4EA5D1B1F5DF}"
+	ProjectSection(SolutionItems) = preProject
+		CKEditor\editor.css = CKEditor\editor.css
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchersNET.CKEditor", "DNN 9\WatchersNET.CKEditor.csproj", "{C6FD76D7-A04A-4EA5-8E5C-6B62201B5F61}"
 EndProject
