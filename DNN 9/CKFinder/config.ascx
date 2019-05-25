@@ -49,10 +49,8 @@
         {
             if (this.bUseSubDirs)
             {
-                sStartDir = Path.Combine(this.portalSettings.HomeDirectory,
-                                         string.Format("userfiles/{0}/", this.portalSettings.UserInfo.Username));
-                sStartDirMapPath = Path.Combine(this.portalSettings.HomeDirectoryMapPath,
-                                                string.Format("userfiles/{0}/", this.portalSettings.UserInfo.Username));
+                sStartDir = Path.Combine(this.portalSettings.HomeDirectory, $"userfiles/{this.portalSettings.UserInfo.Username}/");
+                sStartDirMapPath = Path.Combine(this.portalSettings.HomeDirectoryMapPath, $"userfiles/{this.portalSettings.UserInfo.Username}/");
             }
             else
             {

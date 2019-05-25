@@ -11,5 +11,17 @@
  */
 
 using System.Reflection;
+using System.Runtime.InteropServices;
 
 [assembly: AssemblyDescription("CKEditor HTML Editor Provider for DNN 9.x")]
+
+[assembly: AssemblyTitle("CKEditor Provider")]
+[assembly: AssemblyCompany("WatchersNET")]
+[assembly: AssemblyProduct("CKEditor Provider")]
+[assembly: AssemblyCopyright("© Ingo Herbote")]
+[assembly: AssemblyTrademark("")]
+
+[assembly: ComVisible(false)]
+
+[assembly: AssemblyVersion("2.01.25")]
+[assembly: AssemblyFileVersion("2.01.2.5")]

@@ -192,11 +192,7 @@ namespace WatchersNET.CKEditor.Browser
                     while (File.Exists(Path.Combine(this.StorageFolder.PhysicalPath, fileName)))
                     {
                         counter++;
-                        fileName = string.Format(
-                            "{0}_{1}{2}",
-                            fileNameNoExtenstion,
-                            counter,
-                            Path.GetExtension(file.FileName));
+                        fileName = $"{fileNameNoExtenstion}_{counter}{Path.GetExtension(file.FileName)}";
                     }
                 }
 

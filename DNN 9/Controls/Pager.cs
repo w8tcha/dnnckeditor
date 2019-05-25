@@ -128,162 +128,163 @@ namespace WatchersNET.CKEditor.Controls
 
             var previousColumn = new TableCell { CssClass = "PagerFirstColumn" };
 
-            var iStart = this.CurrentPageIndex - 2;
-            var iEnd = this.CurrentPageIndex + 3;
+            var start = this.CurrentPageIndex - 2;
+            var end = this.CurrentPageIndex + 3;
 
-            if (iStart < 0)
+            if (start < 0)
             {
-                iStart = 0;
+                start = 0;
             }
 
-            if (iEnd > this.PageCount)
+            if (end > this.PageCount)
             {
-                iEnd = this.PageCount;
+                end = this.PageCount;
             }
 
-            var ulFirstElement = new HtmlGenericControl("ul");
+            var firstElement = new HtmlGenericControl("ul");
 
-            ulFirstElement.Attributes.Add("class", "FilesPager");
+            firstElement.Attributes.Add("class", "FilesPager");
 
             // First Page
-            if (iStart > 0)
+            if (start > 0)
             {
-                var liFirstElement = new HtmlGenericControl("li");
+                var element = new HtmlGenericControl("li");
 
-                liFirstElement.Attributes.Add("class", "FirstPage");
+                element.Attributes.Add("class", "FirstPage");
 
                 var firstPageLink = new HyperLink
                 {
                     ID = "FirstPageLink",
-                    ToolTip = string.Format("{0}{1}", Localization.GetString("GoTo.Text", this.RessourceFile, this.LanguageCode), Localization.GetString("FirstPage.Text", this.RessourceFile, this.LanguageCode)),
-                    Text = string.Format("&laquo; {0}", Localization.GetString("FirstPage.Text", this.RessourceFile, this.LanguageCode)),
+                    ToolTip =
+                        $"{Localization.GetString("GoTo.Text", this.RessourceFile, this.LanguageCode)}{Localization.GetString("FirstPage.Text", this.RessourceFile, this.LanguageCode)}",
+                    Text = $"&laquo; {Localization.GetString("FirstPage.Text", this.RessourceFile, this.LanguageCode)}",
                     NavigateUrl =
-                        this.Page.ClientScript.GetPostBackClientHyperlink(this, string.Format("Page_{0}", 0), false)
+                        this.Page.ClientScript.GetPostBackClientHyperlink(this, $"Page_{0}", false)
                 };
 
-                liFirstElement.Controls.Add(firstPageLink);
+                element.Controls.Add(firstPageLink);
 
-                ulFirstElement.Controls.Add(liFirstElement);
+                firstElement.Controls.Add(element);
             }
 
             // Previous Page
-            if (this.CurrentPageIndex > iStart)
+            if (this.CurrentPageIndex > start)
             {
-                var liPrevElement = new HtmlGenericControl("li");
+                var prevElement = new HtmlGenericControl("li");
 
-                liPrevElement.Attributes.Add("class", "PreviousPage");
+                prevElement.Attributes.Add("class", "PreviousPage");
 
                 var lastPrevLink = new HyperLink
-                {
-                    ID = "PreviousPageLink",
-                    ToolTip = string.Format("{0}{1}", Localization.GetString("GoTo.Text", this.RessourceFile, this.LanguageCode), Localization.GetString("PreviousPage.Text", this.RessourceFile, this.LanguageCode)),
-                    Text = string.Format("&lt; {0}", Localization.GetString("PreviousPage.Text", this.RessourceFile, this.LanguageCode)),
-                    NavigateUrl =
-                        this.Page.ClientScript.GetPostBackClientHyperlink(
-                            this, string.Format("Page_{0}", this.CurrentPageIndex - 1), false)
-                };
+                                       {
+                                           ID = "PreviousPageLink",
+                                           ToolTip =
+                                               $"{Localization.GetString("GoTo.Text", this.RessourceFile, this.LanguageCode)}{Localization.GetString("PreviousPage.Text", this.RessourceFile, this.LanguageCode)}",
+                                           Text =
+                                               $"&lt; {Localization.GetString("PreviousPage.Text", this.RessourceFile, this.LanguageCode)}",
+                                           NavigateUrl = this.Page.ClientScript.GetPostBackClientHyperlink(
+                                               this,
+                                               $"Page_{this.CurrentPageIndex - 1}",
+                                               false)
+                                       };
 
-                liPrevElement.Controls.Add(lastPrevLink);
+                prevElement.Controls.Add(lastPrevLink);
 
-                ulFirstElement.Controls.Add(liPrevElement);
+                firstElement.Controls.Add(prevElement);
             }
 
             // Add Column
-            previousColumn.Controls.Add(ulFirstElement);
+            previousColumn.Controls.Add(firstElement);
             mainTableRow.Cells.Add(previousColumn);
 
             // Second Page Numbers Column
-            var ulSecondElement = new HtmlGenericControl("ul");
+            var secondElement = new HtmlGenericControl("ul");
 
             var pageNumbersColumn = new TableCell { CssClass = "PagerNumbersColumn", HorizontalAlign = HorizontalAlign.Center };
 
-            ulSecondElement.Attributes.Add("class", "FilesPager");
+            secondElement.Attributes.Add("class", "FilesPager");
 
-            for (var i = iStart; i < iEnd; i++)
+            for (var i = start; i < end; i++)
             {
-                var liElement = new HtmlGenericControl("li");
+                var element = new HtmlGenericControl("li");
 
-                liElement.Attributes.Add("class", i.Equals(this.CurrentPageIndex) ? "ActivePage" : "NormalPage");
+                element.Attributes.Add("class", i.Equals(this.CurrentPageIndex) ? "ActivePage" : "NormalPage");
 
                 var page = (i + 1).ToString();
 
                 var pageLink = new HyperLink
                 {
-                    ID = string.Format("NextPageLink{0}", page),
-                    ToolTip = string.Format("{0}: {1}", Localization.GetString("GoTo.Text", this.RessourceFile, this.LanguageCode), page),
+                    ID = $"NextPageLink{page}",
+                    ToolTip = $"{Localization.GetString("GoTo.Text", this.RessourceFile, this.LanguageCode)}: {page}",
                     Text = page,
                     NavigateUrl =
-                        this.Page.ClientScript.GetPostBackClientHyperlink(this, string.Format("Page_{0}", i), false)
+                        this.Page.ClientScript.GetPostBackClientHyperlink(this, $"Page_{i}", false)
                 };
 
-                liElement.Controls.Add(pageLink);
+                element.Controls.Add(pageLink);
 
-                ulSecondElement.Controls.Add(liElement);
+                secondElement.Controls.Add(element);
             }
 
             // Add Column
-            pageNumbersColumn.Controls.Add(ulSecondElement);
+            pageNumbersColumn.Controls.Add(secondElement);
             mainTableRow.Cells.Add(pageNumbersColumn);
 
             // Last Page Column
-            var ulThirdElement = new HtmlGenericControl("ul");
+            var thirdElement = new HtmlGenericControl("ul");
 
-            ulThirdElement.Attributes.Add("class", "FilesPager");
+            thirdElement.Attributes.Add("class", "FilesPager");
 
             var lastColumn = new TableCell { CssClass = "PagerLastColumn" };
 
             // Next Page
             if (this.CurrentPageIndex < (this.PageCount - 1))
             {
-                var liNextElement = new HtmlGenericControl("li");
+                var nextElement = new HtmlGenericControl("li");
 
-                liNextElement.Attributes.Add("class", "NextPage");
+                nextElement.Attributes.Add("class", "NextPage");
 
                 var lastNextLink = new HyperLink
                 {
                     ID = "NextPageLink",
-                    ToolTip = string.Format("{0}{1}", Localization.GetString("GoTo.Text", this.RessourceFile, this.LanguageCode), Localization.GetString("NextPage.Text", this.RessourceFile, this.LanguageCode)),
-                    Text = string.Format("{0} &gt;", Localization.GetString("NextPage.Text", this.RessourceFile, this.LanguageCode)),
+                    ToolTip =
+                        $"{Localization.GetString("GoTo.Text", this.RessourceFile, this.LanguageCode)}{Localization.GetString("NextPage.Text", this.RessourceFile, this.LanguageCode)}",
+                    Text = $"{Localization.GetString("NextPage.Text", this.RessourceFile, this.LanguageCode)} &gt;",
                     NavigateUrl =
                         this.Page.ClientScript.GetPostBackClientHyperlink(
-                            this, string.Format("Page_{0}", this.CurrentPageIndex + 2 - 1), false)
+                            this,
+                            $"Page_{this.CurrentPageIndex + 2 - 1}", false)
                 };
 
-                liNextElement.Controls.Add(lastNextLink);
+                nextElement.Controls.Add(lastNextLink);
 
-                ulThirdElement.Controls.Add(liNextElement);
+                thirdElement.Controls.Add(nextElement);
             }
 
-            if (iEnd < this.PageCount)
+            if (end < this.PageCount)
             {
-                var liLastElement = new HtmlGenericControl("li");
+                var lastElement = new HtmlGenericControl("li");
 
-                liLastElement.Attributes.Add("class", "LastPage");
+                lastElement.Attributes.Add("class", "LastPage");
 
                 var lastPageLink = new HyperLink
                 {
                     ID = "LastPageLink",
                     ToolTip =
-                        string.Format(
-                            "{0}{1}",
-                            Localization.GetString("GoTo.Text", this.RessourceFile, this.LanguageCode),
-                            Localization.GetString("LastPage.Text", this.RessourceFile, this.LanguageCode)),
-                    Text =
-                        string.Format(
-                            "{0} &raquo;",
-                            Localization.GetString("LastPage.Text", this.RessourceFile, this.LanguageCode)),
+                        $"{Localization.GetString("GoTo.Text", this.RessourceFile, this.LanguageCode)}{Localization.GetString("LastPage.Text", this.RessourceFile, this.LanguageCode)}",
+                    Text = $"{Localization.GetString("LastPage.Text", this.RessourceFile, this.LanguageCode)} &raquo;",
                     NavigateUrl =
                         this.Page.ClientScript.GetPostBackClientHyperlink(
-                            this, string.Format("Page_{0}", this.PageCount - 1), false)
+                            this,
+                            $"Page_{this.PageCount - 1}", false)
                 };
 
-                liLastElement.Controls.Add(lastPageLink);
+                lastElement.Controls.Add(lastPageLink);
 
-                ulThirdElement.Controls.Add(liLastElement);
+                thirdElement.Controls.Add(lastElement);
             }
 
             // Add Column
-            lastColumn.Controls.Add(ulThirdElement);
+            lastColumn.Controls.Add(thirdElement);
             mainTableRow.Cells.Add(lastColumn);
 
             // Render Complete Control

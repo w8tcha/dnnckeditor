@@ -141,11 +141,8 @@ namespace WatchersNET.CKEditor.Browser
             {
                 var page = this.Request.ServerVariables["SCRIPT_NAME"].Split('/');
 
-                var fileRoot = string.Format(
-                    "{0}/{1}/{2}.resx",
-                    this.TemplateSourceDirectory,
-                    Localization.LocalResourceDirectory,
-                    page[page.GetUpperBound(0)]);
+                var fileRoot =
+                    $"{this.TemplateSourceDirectory}/{Localization.LocalResourceDirectory}/{page[page.GetUpperBound(0)]}.resx";
 
                 return fileRoot;
             }
@@ -286,7 +283,7 @@ namespace WatchersNET.CKEditor.Browser
                             {
                                 if (isSecure || isDatabaseSecure)
                                 {
-                                    var link = string.Format("fileID={0}", fileItem.FileId);
+                                    var link = $"fileID={fileItem.FileId}";
 
                                     dr["PictureURL"] = Globals.LinkClick(link, int.Parse(this.request.QueryString["tabid"]), Null.NullInteger);
                                 }
@@ -299,11 +296,7 @@ namespace WatchersNET.CKEditor.Browser
                                 dr["FileId"] = item.FileId;
 
                                 dr["Info"] =
-                                    string.Format(
-                                        "<span class=\"FileName\">{0}</span><br /><span class=\"FileInfo\">Size: {1}</span><br /><span class=\"FileInfo\">Created: {2}</span>",
-                                        name,
-                                        fileItem.Size,
-                                        fileItem.LastModificationTime);
+                                    $"<span class=\"FileName\">{name}</span><br /><span class=\"FileInfo\">Size: {fileItem.Size}</span><br /><span class=\"FileInfo\">Created: {fileItem.LastModificationTime}</span>";
 
                                 filesTable.Rows.Add(dr);
                             }
@@ -320,11 +313,7 @@ namespace WatchersNET.CKEditor.Browser
                                 dr["PictureURL"] = "images/types/swf.png";
 
                                 dr["Info"] =
-                                    string.Format(
-                                        "<span class=\"FileName\">{0}</span><br /><span class=\"FileInfo\">Size: {1}</span><br /><span class=\"FileInfo\">Created: {2}</span>",
-                                        name,
-                                        fileItem.Size,
-                                        fileItem.LastModificationTime);
+                                    $"<span class=\"FileName\">{name}</span><br /><span class=\"FileInfo\">Size: {fileItem.Size}</span><br /><span class=\"FileInfo\">Created: {fileItem.LastModificationTime}</span>";
 
                                 dr["FileName"] = name;
                                 dr["FileId"] = item.FileId;
@@ -349,7 +338,7 @@ namespace WatchersNET.CKEditor.Browser
 
                             var dr = filesTable.NewRow();
 
-                            var imageExtension = string.Format("images/types/{0}.png", extension);
+                            var imageExtension = $"images/types/{extension}.png";
 
                             if (File.Exists(this.MapPath(imageExtension)))
                             {
@@ -364,7 +353,7 @@ namespace WatchersNET.CKEditor.Browser
                             {
                                 if (isSecure || isDatabaseSecure)
                                 {
-                                    var link = string.Format("fileID={0}", fileItem.FileId);
+                                    var link = $"fileID={fileItem.FileId}";
 
                                     dr["PictureURL"] = Globals.LinkClick(link, int.Parse(this.request.QueryString["tabid"]), Null.NullInteger);
                                 }
@@ -378,11 +367,7 @@ namespace WatchersNET.CKEditor.Browser
                             dr["FileId"] = fileItem.FileId;
 
                             dr["Info"] =
-                                string.Format(
-                                    "<span class=\"FileName\">{0}</span><br /><span class=\"FileInfo\">Size: {1}</span><br /><span class=\"FileInfo\">Created: {2}</span>",
-                                    name,
-                                    fileItem.Size,
-                                    fileItem.LastModificationTime);
+                                $"<span class=\"FileName\">{name}</span><br /><span class=\"FileInfo\">Size: {fileItem.Size}</span><br /><span class=\"FileInfo\">Created: {fileItem.LastModificationTime}</span>";
 
                             filesTable.Rows.Add(dr);
                         }
@@ -510,7 +495,7 @@ namespace WatchersNET.CKEditor.Browser
                     int.Parse(this.dnntreeTabs.SelectedValue), this._portalSettings.PortalId, true);
 
                 string fileName = null;
-                var domainName = string.Format("http://{0}", Globals.GetDomainName(this.Request, true));
+                var domainName = $"http://{Globals.GetDomainName(this.Request, true)}";
 
                 // Add Language Parameter ?!
                 var localeSelected = this.LanguageRow.Visible && this.LanguageList.SelectedIndex > 0;
@@ -518,16 +503,13 @@ namespace WatchersNET.CKEditor.Browser
                 var friendlyUrl = localeSelected
                                       ? Globals.FriendlyUrl(
                                           selectTab,
-                                          string.Format(
-                                              "{0}&language={1}",
-                                              Globals.ApplicationURL(selectTab.TabID),
-                                              this.LanguageList.SelectedValue),
+                                          $"{Globals.ApplicationURL(selectTab.TabID)}&language={this.LanguageList.SelectedValue}",
                                           this._portalSettings)
                                       : Globals.FriendlyUrl(
                                           selectTab, Globals.ApplicationURL(selectTab.TabID), this._portalSettings);
 
                 var locale = localeSelected
-                                 ? string.Format("language/{0}/", this.LanguageList.SelectedValue)
+                                 ? $"language/{this.LanguageList.SelectedValue}/"
                                  : string.Empty;
 
                 // Relative or Absolute Url
@@ -546,8 +528,7 @@ namespace WatchersNET.CKEditor.Browser
                             else
                             {
                                 fileName =
-                                    Globals.ResolveUrl(
-                                        string.Format("~/tabid/{0}/{1}Default.aspx", selectTab.TabID, locale));
+                                    Globals.ResolveUrl($"~/tabid/{selectTab.TabID}/{locale}Default.aspx");
                             }
 
                             break;
@@ -561,10 +542,8 @@ namespace WatchersNET.CKEditor.Browser
 
                                 fileName = Globals.ResolveUrl(Regex.Replace(fileName, domainName, "~", RegexOptions.IgnoreCase));
 
-                                fileName = string.Format("{0}://{1}{2}",
-                                    HttpContext.Current.Request.Url.Scheme,
-                                    HttpContext.Current.Request.Url.Authority,
-                                    fileName);
+                                fileName =
+                                    $"{HttpContext.Current.Request.Url.Scheme}://{HttpContext.Current.Request.Url.Authority}{fileName}";
                             }
                             else
                             {
@@ -593,16 +572,8 @@ namespace WatchersNET.CKEditor.Browser
 
                     case "lnkAbsClick":
                         {
-                            fileName = string.Format(
-                                "{0}://{1}{2}",
-                                HttpContext.Current.Request.Url.Scheme,
-                                HttpContext.Current.Request.Url.Authority,
-                                Globals.LinkClick(
-                                    selectTab.TabID.ToString(),
-                                    this.TrackClicks.Checked
-                                        ? int.Parse(this.request.QueryString["tabid"])
-                                        : Null.NullInteger,
-                                    Null.NullInteger));
+                            fileName =
+                                $"{HttpContext.Current.Request.Url.Scheme}://{HttpContext.Current.Request.Url.Authority}{Globals.LinkClick(selectTab.TabID.ToString(), this.TrackClicks.Checked ? int.Parse(this.request.QueryString["tabid"]) : Null.NullInteger, Null.NullInteger)}";
 
                             if (fileName.Contains("&language"))
                             {
@@ -616,7 +587,7 @@ namespace WatchersNET.CKEditor.Browser
                 // Add Page Anchor if one is selected
                 if (this.AnchorList.SelectedIndex > 0 && this.AnchorList.Items.Count > 1)
                 {
-                    fileName = string.Format("{0}#{1}", fileName, this.AnchorList.SelectedItem.Text);
+                    fileName = $"{fileName}#{this.AnchorList.SelectedItem.Text}";
                 }
 
                 this.Response.Write("<script type=\"text/javascript\">");
@@ -645,17 +616,14 @@ namespace WatchersNET.CKEditor.Browser
 
                         case "absLnk":
                             {
-                                filePath = string.Format(
-                                    "{0}://{1}{2}",
-                                    HttpContext.Current.Request.Url.Scheme,
-                                    HttpContext.Current.Request.Url.Authority,
-                                    MapUrl(this.lblCurrentDir.Text));
+                                filePath =
+                                    $"{HttpContext.Current.Request.Url.Scheme}://{HttpContext.Current.Request.Url.Authority}{MapUrl(this.lblCurrentDir.Text)}";
                                 break;
                             }
 
                         case "lnkClick":
                             {
-                                var link = string.Format("fileID={0}", fileInfo.FileId);
+                                var link = $"fileID={fileInfo.FileId}";
 
                                 fileName = Globals.LinkClick(link, int.Parse(this.request.QueryString["tabid"]), Null.NullInteger, this.TrackClicks.Checked);
                                 filePath = string.Empty;
@@ -665,13 +633,10 @@ namespace WatchersNET.CKEditor.Browser
 
                         case "lnkAbsClick":
                             {
-                                var link = string.Format("fileID={0}", fileInfo.FileId);
+                                var link = $"fileID={fileInfo.FileId}";
 
-                                fileName = string.Format(
-                                    "{0}://{1}{2}",
-                                    HttpContext.Current.Request.Url.Scheme,
-                                    HttpContext.Current.Request.Url.Authority,
-                                    Globals.LinkClick(link, int.Parse(this.request.QueryString["tabid"]), Null.NullInteger, this.TrackClicks.Checked));
+                                fileName =
+                                    $"{HttpContext.Current.Request.Url.Scheme}://{HttpContext.Current.Request.Url.Authority}{Globals.LinkClick(link, int.Parse(this.request.QueryString["tabid"]), Null.NullInteger, this.TrackClicks.Checked)}";
 
                                 filePath = string.Empty;
 
@@ -689,9 +654,7 @@ namespace WatchersNET.CKEditor.Browser
                 {
                     this.Response.Write("<script type=\"text/javascript\">");
                     this.Response.Write(
-                        string.Format(
-                            "javascript:alert('{0}');",
-                            Localization.GetString("Error5.Text", this.ResXFile, this.LanguageCode)));
+                        $"javascript:alert('{Localization.GetString("Error5.Text", this.ResXFile, this.LanguageCode)}');");
                     this.Response.Write("</script>");
 
                     this.Response.End();
@@ -713,12 +676,12 @@ namespace WatchersNET.CKEditor.Browser
             if (!string.IsNullOrEmpty(fileUrl))
             {
                 fileUrl = !fileUrl.EndsWith("/")
-                               ? string.Format("{0}/{1}", fileUrl, fileName)
-                               : string.Format("{0}{1}", fileUrl, fileName);
+                               ? $"{fileUrl}/{fileName}"
+                               : $"{fileUrl}{fileName}";
             }
             else
             {
-                fileUrl = string.Format("{0}{1}", fileUrl, fileName);
+                fileUrl = $"{fileUrl}{fileName}";
             }
 
             if (!fileUrl.Contains("?") && !isPageLink)
@@ -746,11 +709,7 @@ namespace WatchersNET.CKEditor.Browser
             funcNum = Regex.Replace(funcNum, @"[^0-9]", string.Empty, RegexOptions.None);
 
             return
-                string.Format(
-                    "var E = window.top.opener;E.CKEDITOR.tools.callFunction({0},'{1}','{2}') ;self.close();",
-                    funcNum,
-                    fileUrl,
-                    errorMsg.Replace("'", "\\'"));
+                $"var E = window.top.opener;E.CKEDITOR.tools.callFunction({funcNum},'{fileUrl}','{errorMsg.Replace("'", "\\'")}') ;self.close();";
         }
 
         /// <summary>
@@ -774,11 +733,8 @@ namespace WatchersNET.CKEditor.Browser
 
             funcNum = Regex.Replace(funcNum, @"[^0-9]", string.Empty, RegexOptions.None);
 
-            return string.Format(
-                "var E = window.parent;E['CKEDITOR'].tools.callFunction({0},'{1}','{2}') ;",
-                funcNum,
-                Microsoft.JScript.GlobalObject.escape(fileUrl),
-                errorMsg.Replace("'", "\\'"));
+            return
+                $"var E = window.parent;E['CKEDITOR'].tools.callFunction({funcNum},'{Microsoft.JScript.GlobalObject.escape(fileUrl)}','{errorMsg.Replace("'", "\\'")}') ;";
         }
 
         /// <summary>
@@ -889,7 +845,7 @@ namespace WatchersNET.CKEditor.Browser
                         this._portalSettings,
                         this.currentSettings,
                         settingsDictionary,
-                        string.Format("DNNCKP#{0}#", this.request.QueryString["PortalID"]),
+                        $"DNNCKP#{this.request.QueryString["PortalID"]}#",
                         portalRoles);
                     break;
                 case SettingsMode.Page:
@@ -897,15 +853,14 @@ namespace WatchersNET.CKEditor.Browser
                         this._portalSettings,
                         this.currentSettings,
                         settingsDictionary,
-                        string.Format("DNNCKT#{0}#", this.request.QueryString["tabid"]),
+                        $"DNNCKT#{this.request.QueryString["tabid"]}#",
                         portalRoles);
                     break;
                 case SettingsMode.ModuleInstance:
                     this.currentSettings = SettingsUtil.LoadModuleSettings(
                         this._portalSettings,
                         this.currentSettings,
-                        string.Format(
-                            "DNNCKMI#{0}#INS#{1}#", this.request.QueryString["mid"], this.request.QueryString["ckId"]),
+                        $"DNNCKMI#{this.request.QueryString["mid"]}#INS#{this.request.QueryString["ckId"]}#",
                         int.Parse(this.request.QueryString["mid"]),
                         portalRoles);
                     break;
@@ -950,13 +905,13 @@ namespace WatchersNET.CKEditor.Browser
                     if (this.request.QueryString["Type"] != null)
                     {
                         this.browserModus = this.request.QueryString["Type"];
-                        this.lblModus.Text = string.Format("Browser-Modus: {0}", this.browserModus);
+                        this.lblModus.Text = $"Browser-Modus: {this.browserModus}";
 
                         if (!this.IsPostBack)
                         {
                             this.GetAcceptedFileTypes();
 
-                            this.title.InnerText = string.Format("{0} - WatchersNET.FileBrowser", this.lblModus.Text);
+                            this.title.InnerText = $"{this.lblModus.Text} - WatchersNET.FileBrowser";
 
                             this.AnchorList.Visible = this.currentSettings.UseAnchorSelector;
                             this.LabelAnchor.Visible = this.currentSettings.UseAnchorSelector;
@@ -992,12 +947,9 @@ namespace WatchersNET.CKEditor.Browser
                                         this.panPageMode.Visible = true;
 
                                         this.TrackClicks.Visible = false;
-                                        this.lblModus.Text = string.Format(
-                                            "Browser-Modus: {0}",
-                                            string.Format("Page {0}", this.browserModus));
-                                        this.title.InnerText = string.Format(
-                                            "{0} - WatchersNET.FileBrowser",
-                                            this.lblModus.Text);
+                                        this.lblModus.Text =
+                                            $"Browser-Modus: {$"Page {this.browserModus}"}";
+                                        this.title.InnerText = $"{this.lblModus.Text} - WatchersNET.FileBrowser";
 
                                         this.RenderTabs();
                                     }
@@ -1105,9 +1057,8 @@ namespace WatchersNET.CKEditor.Browser
             }
             else
             {
-                var errorScript = string.Format(
-                    "javascript:alert('{0}');self.close();",
-                    Localization.GetString("Error1.Text", this.ResXFile, this.LanguageCode));
+                var errorScript =
+                    $"javascript:alert('{Localization.GetString("Error1.Text", this.ResXFile, this.LanguageCode)}');self.close();";
 
                 this.Response.Write("<script type=\"text/javascript\">");
                 this.Response.Write(errorScript);
@@ -1188,7 +1139,7 @@ namespace WatchersNET.CKEditor.Browser
                     exception.Message.Replace("'", string.Empty).Replace("\r\n", string.Empty).Replace(
                         "\n", string.Empty).Replace("\r", string.Empty);
 
-                this.Response.Write(string.Format("javascript:alert('{0}');", this.Context.Server.HtmlEncode(message)));
+                this.Response.Write($"javascript:alert('{this.Context.Server.HtmlEncode(message)}');");
 
                 this.Response.Write("</script>");
             }
@@ -1252,7 +1203,7 @@ namespace WatchersNET.CKEditor.Browser
             this.BrowserMode.Visible = false;
 
             this.lblResizeHeader.Text = Localization.GetString("lblResizeHeader.Text", this.ResXFile, this.LanguageCode);
-            this.title.InnerText = string.Format("{0} - WatchersNET.FileBrowser", this.lblResizeHeader.Text);
+            this.title.InnerText = $"{this.lblResizeHeader.Text} - WatchersNET.FileBrowser";
 
             // Hide all Unwanted Elements from the Image Editor
             this.cmdClose.Visible = false;
@@ -1266,7 +1217,7 @@ namespace WatchersNET.CKEditor.Browser
 
             var sFileNameNoExt = Path.GetFileNameWithoutExtension(sFilePath);
 
-            this.txtThumbName.Text = string.Format("{0}_resized", sFileNameNoExt);
+            this.txtThumbName.Text = $"{sFileNameNoExt}_resized";
 
             var sExtension = Path.GetExtension(sFilePath);
             sExtension = sExtension.TrimStart('.');
@@ -1424,9 +1375,8 @@ namespace WatchersNET.CKEditor.Browser
         {
             var sAppPath = HttpContext.Current.Server.MapPath("~");
 
-            var sUrl = string.Format(
-                "{0}",
-                HttpContext.Current.Request.ApplicationPath + sPath.Replace(sAppPath, string.Empty).Replace("\\", "/"));
+            var sUrl =
+                $"{HttpContext.Current.Request.ApplicationPath + sPath.Replace(sAppPath, string.Empty).Replace("\\", "/")}";
 
             return sUrl;
         }
@@ -1708,7 +1658,7 @@ namespace WatchersNET.CKEditor.Browser
                ImageUrl = "Images/folder.gif"
             };
 
-            switch (this.GetStorageLocationType(currentFolderInfo.PhysicalPath))
+            /*switch (this.GetStorageLocationType(currentFolderInfo.PhysicalPath))
             {
                 case FolderController.StorageLocationTypes.SecureFileSystem:
                     {
@@ -1722,7 +1672,7 @@ namespace WatchersNET.CKEditor.Browser
                     }
 
                     break;
-            }
+            }*/
 
             this.FoldersTree.Nodes.Add(folderNode);
 
@@ -1731,22 +1681,6 @@ namespace WatchersNET.CKEditor.Browser
             foreach (var node in
                 folders.Cast<FolderInfo>().Select(this.RenderFolder).Where(node => node != null))
             {
-                switch (this.GetStorageLocationType(Convert.ToInt32(node.ToolTip)))
-                {
-                    case FolderController.StorageLocationTypes.SecureFileSystem:
-                        {
-                            node.ImageUrl = "Images/folderLocked.gif";
-                        }
-
-                        break;
-                    case FolderController.StorageLocationTypes.DatabaseSecure:
-                        {
-                            node.ImageUrl = "Images/folderdb.gif";
-                        }
-
-                        break;
-                }
-
                 folderNode.ChildNodes.Add(node);
             }
         }
@@ -1816,7 +1750,6 @@ namespace WatchersNET.CKEditor.Browser
 
             if (!this.currentSettings.BrowserRootDirId.Equals(-1))
             {
-                // var rootFolder = new FolderController().GetFolderInfo(this._portalSettings.PortalId, this.currentSettings.BrowserRootDirId);
                 var rootFolder = FolderManager.Instance.GetFolder(this.currentSettings.BrowserRootDirId);
 
                 if (rootFolder != null)
@@ -1891,7 +1824,7 @@ namespace WatchersNET.CKEditor.Browser
             // Create user folder based on the user id
             userFolderPath = Path.Combine(
                 userFolderPath,
-                string.Format("{0}\\", UserController.Instance.GetCurrentUserInfo().UserID));
+                $"{UserController.Instance.GetCurrentUserInfo().UserID}\\");
 
             if (!Directory.Exists(userFolderPath))
             {
@@ -2001,8 +1934,6 @@ namespace WatchersNET.CKEditor.Browser
                 tnFolder.ImageUrl = "Images/folderdb.gif";
             }
 
-            /*ArrayList folders = FileSystemUtils.GetFoldersByParentFolder(
-                this._portalSettings.PortalId, folderInfo.FolderPath);*/
             var folders = FolderManager.Instance.GetFolders(folderInfo).ToList();
 
             if (!folders.Any())
@@ -2151,7 +2082,8 @@ namespace WatchersNET.CKEditor.Browser
             sbScript1.AppendFormat("document.getElementById('{0}').scrollIntoView();", elementId);
 
             this.Page.ClientScript.RegisterStartupScript(
-                this.GetType(), string.Format("ScrollToSelected{0}", Guid.NewGuid()), sbScript1.ToString(), true);
+                this.GetType(),
+                $"ScrollToSelected{Guid.NewGuid()}", sbScript1.ToString(), true);
         }
 
         /// <summary>
@@ -2326,41 +2258,28 @@ namespace WatchersNET.CKEditor.Browser
             this.OverrideFile.Text = Localization.GetString("OverrideFile.Text", this.ResXFile, this.LanguageCode);
 
             // LinkButtons (with Image)
-            this.Syncronize.Text = string.Format(
-               "<img src=\"Images/SyncFolder.png\" alt=\"{0}\" title=\"{1}\" />",
-               Localization.GetString("Syncronize.Text", this.ResXFile, this.LanguageCode),
-               Localization.GetString("Syncronize.Help", this.ResXFile, this.LanguageCode));
+            this.Syncronize.Text =
+                $"<img src=\"Images/SyncFolder.png\" alt=\"{Localization.GetString("Syncronize.Text", this.ResXFile, this.LanguageCode)}\" title=\"{Localization.GetString("Syncronize.Help", this.ResXFile, this.LanguageCode)}\" />";
             this.Syncronize.ToolTip = Localization.GetString("Syncronize.Help", this.ResXFile, this.LanguageCode);
 
-            this.cmdCreate.Text = string.Format(
-                "<img src=\"Images/CreateFolder.png\" alt=\"{0}\" title=\"{1}\" />",
-                Localization.GetString("cmdCreate.Text", this.ResXFile, this.LanguageCode),
-                Localization.GetString("cmdCreate.Help", this.ResXFile, this.LanguageCode));
+            this.cmdCreate.Text =
+                $"<img src=\"Images/CreateFolder.png\" alt=\"{Localization.GetString("cmdCreate.Text", this.ResXFile, this.LanguageCode)}\" title=\"{Localization.GetString("cmdCreate.Help", this.ResXFile, this.LanguageCode)}\" />";
             this.cmdCreate.ToolTip = Localization.GetString("cmdCreate.Help", this.ResXFile, this.LanguageCode);
 
             this.cmdDownload.Text =
-                string.Format(
-                    "<img src=\"Images/DownloadButton.png\" alt=\"{0}\" title=\"{1}\" />",
-                    Localization.GetString("cmdDownload.Text", this.ResXFile, this.LanguageCode),
-                    Localization.GetString("cmdDownload.Help", this.ResXFile, this.LanguageCode));
+                $"<img src=\"Images/DownloadButton.png\" alt=\"{Localization.GetString("cmdDownload.Text", this.ResXFile, this.LanguageCode)}\" title=\"{Localization.GetString("cmdDownload.Help", this.ResXFile, this.LanguageCode)}\" />";
             this.cmdDownload.ToolTip = Localization.GetString("cmdDownload.Help", this.ResXFile, this.LanguageCode);
 
-            this.cmdUpload.Text = string.Format(
-                "<img src=\"Images/UploadButton.png\" alt=\"{0}\" title=\"{1}\" />",
-                Localization.GetString("cmdUpload.Text", this.ResXFile, this.LanguageCode),
-                Localization.GetString("cmdUpload.Help", this.ResXFile, this.LanguageCode));
+            this.cmdUpload.Text =
+                $"<img src=\"Images/UploadButton.png\" alt=\"{Localization.GetString("cmdUpload.Text", this.ResXFile, this.LanguageCode)}\" title=\"{Localization.GetString("cmdUpload.Help", this.ResXFile, this.LanguageCode)}\" />";
             this.cmdUpload.ToolTip = Localization.GetString("cmdUpload.Help", this.ResXFile, this.LanguageCode);
 
-            this.cmdDelete.Text = string.Format(
-                "<img src=\"Images/DeleteFile.png\" alt=\"{0}\" title=\"{1}\" />",
-                Localization.GetString("cmdDelete.Text", this.ResXFile, this.LanguageCode),
-                Localization.GetString("cmdDelete.Help", this.ResXFile, this.LanguageCode));
+            this.cmdDelete.Text =
+                $"<img src=\"Images/DeleteFile.png\" alt=\"{Localization.GetString("cmdDelete.Text", this.ResXFile, this.LanguageCode)}\" title=\"{Localization.GetString("cmdDelete.Help", this.ResXFile, this.LanguageCode)}\" />";
             this.cmdDelete.ToolTip = Localization.GetString("cmdDelete.Help", this.ResXFile, this.LanguageCode);
 
-            this.cmdResizer.Text = string.Format(
-                "<img src=\"Images/ResizeImage.png\" alt=\"{0}\" title=\"{1}\" />",
-                Localization.GetString("cmdResizer.Text", this.ResXFile, this.LanguageCode),
-                Localization.GetString("cmdResizer.Help", this.ResXFile, this.LanguageCode));
+            this.cmdResizer.Text =
+                $"<img src=\"Images/ResizeImage.png\" alt=\"{Localization.GetString("cmdResizer.Text", this.ResXFile, this.LanguageCode)}\" title=\"{Localization.GetString("cmdResizer.Help", this.ResXFile, this.LanguageCode)}\" />";
             this.cmdResizer.ToolTip = Localization.GetString("cmdResizer.Help", this.ResXFile, this.LanguageCode);
 
             const string SwitchContent =
@@ -2387,16 +2306,12 @@ namespace WatchersNET.CKEditor.Browser
                 Localization.GetString("IconsViewTitle.Text", this.ResXFile, this.LanguageCode));
             this.SwitchIconsView.ToolTip = Localization.GetString("IconsViewTitle.Text", this.ResXFile, this.LanguageCode);
 
-            this.SortAscending.Text = string.Format(
-                 "<img src=\"Images/SortAscending.png\" alt=\"{0}\" title=\"{1}\" />",
-                 Localization.GetString("SortAscending.Text", this.ResXFile, this.LanguageCode),
-                 Localization.GetString("SortAscending.Help", this.ResXFile, this.LanguageCode));
+            this.SortAscending.Text =
+                $"<img src=\"Images/SortAscending.png\" alt=\"{Localization.GetString("SortAscending.Text", this.ResXFile, this.LanguageCode)}\" title=\"{Localization.GetString("SortAscending.Help", this.ResXFile, this.LanguageCode)}\" />";
             this.SortAscending.ToolTip = Localization.GetString("SortAscending.Help", this.ResXFile, this.LanguageCode);
 
-            this.SortDescending.Text = string.Format(
-                 "<img src=\"Images/SortDescending.png\" alt=\"{0}\" title=\"{1}\" />",
-                 Localization.GetString("SortDescending.Text", this.ResXFile, this.LanguageCode),
-                 Localization.GetString("SortDescending.Help", this.ResXFile, this.LanguageCode));
+            this.SortDescending.Text =
+                $"<img src=\"Images/SortDescending.png\" alt=\"{Localization.GetString("SortDescending.Text", this.ResXFile, this.LanguageCode)}\" title=\"{Localization.GetString("SortDescending.Help", this.ResXFile, this.LanguageCode)}\" />";
             this.SortDescending.ToolTip = Localization.GetString("SortDescending.Help", this.ResXFile, this.LanguageCode);
 
             ClientAPI.AddButtonConfirm(this.cmdDelete, Localization.GetString("AreYouSure.Text", this.ResXFile, this.LanguageCode));
@@ -2586,10 +2501,8 @@ namespace WatchersNET.CKEditor.Browser
         /// <param name="pagerChanged">if set to <c>true</c> [pager changed].</param>
         private void ShowFilesIn(IFolderInfo currentFolderInfo, bool pagerChanged = false)
         {
-            this.CurrentPathInfo.Text = string.Format(
-                "{0}/{1}",
-                Localization.GetString("Root.Text", this.ResXFile, this.LanguageCode),
-                currentFolderInfo.FolderPath);
+            this.CurrentPathInfo.Text =
+                $"{Localization.GetString("Root.Text", this.ResXFile, this.LanguageCode)}/{currentFolderInfo.FolderPath}";
 
             this.CheckFolderAccess(currentFolderInfo.FolderID, false);
 
@@ -2622,7 +2535,6 @@ namespace WatchersNET.CKEditor.Browser
 
             this.PagerFileLinks.Visible = filesPagedDataSource.PageCount > 1;
 
-            // this.FilesList.DataSource = this.GetFiles(directory);
             this.FilesList.DataSource = filesPagedDataSource;
             this.FilesList.DataBind();
         }
@@ -2735,7 +2647,7 @@ namespace WatchersNET.CKEditor.Browser
                 if (File.Exists(sFilePath))
                 {
                     counter++;
-                    fileName = string.Format("{0}_{1}{2}", sFileNameNoExt, counter, Path.GetExtension(file.FileName));
+                    fileName = $"{sFileNameNoExt}_{counter}{Path.GetExtension(file.FileName)}";
 
                     FileManager.Instance.AddFile(currentFolderInfo, fileName, fileStream);
                 }
@@ -2831,9 +2743,7 @@ namespace WatchersNET.CKEditor.Browser
                 this.Page.ClientScript.RegisterStartupScript(
                     this.GetType(),
                     "errorcloseScript",
-                    string.Format(
-                        "javascript:alert('{0}')",
-                        Localization.GetString("FileToBigMessage.Text", this.ResXFile, this.LanguageCode)),
+                    $"javascript:alert('{Localization.GetString("FileToBigMessage.Text", this.ResXFile, this.LanguageCode)}')",
                     true);
 
                 this.Response.End();
@@ -2919,7 +2829,7 @@ namespace WatchersNET.CKEditor.Browser
                 if (File.Exists(sFilePath))
                 {
                     iCounter++;
-                    fileName = string.Format("{0}_{1}{2}", sFileNameNoExt, iCounter, Path.GetExtension(file.FileName));
+                    fileName = $"{sFileNameNoExt}_{iCounter}{Path.GetExtension(file.FileName)}";
 
                     FileManager.Instance.AddFile(currentFolderInfo, fileName, fileStream);
                 }
@@ -2939,9 +2849,7 @@ namespace WatchersNET.CKEditor.Browser
                 this.Page.ClientScript.RegisterStartupScript(
                     this.GetType(),
                     "errorcloseScript",
-                    string.Format(
-                        "javascript:alert('{0}')",
-                        Localization.GetString("Error2.Text", this.ResXFile, this.LanguageCode)),
+                    $"javascript:alert('{Localization.GetString("Error2.Text", this.ResXFile, this.LanguageCode)}')",
                     true);
 
                 this.Response.End();
@@ -3039,7 +2947,7 @@ namespace WatchersNET.CKEditor.Browser
                         this.SetFolderPermission(folderId);
                     }
 
-                    this.lblCurrentDir.Text = string.Format("{0}\\", newDirPath);
+                    this.lblCurrentDir.Text = $"{newDirPath}\\";
                 }
                 catch (Exception exception)
                 {
@@ -3049,7 +2957,7 @@ namespace WatchersNET.CKEditor.Browser
                     exception.Message.Replace("'", string.Empty).Replace("\r\n", string.Empty).Replace(
                         "\n", string.Empty).Replace("\r", string.Empty);
 
-                    this.Response.Write(string.Format("javascript:alert('{0}');", this.Context.Server.HtmlEncode(message)));
+                    this.Response.Write($"javascript:alert('{this.Context.Server.HtmlEncode(message)}');");
 
                     this.Response.Write("</script>");
                 }
@@ -3095,7 +3003,7 @@ namespace WatchersNET.CKEditor.Browser
                 this.BrowserMode.Visible = true;
             }
 
-            this.title.InnerText = string.Format("{0} - WatchersNET.FileBrowser", this.lblModus.Text);
+            this.title.InnerText = $"{this.lblModus.Text} - WatchersNET.FileBrowser";
 
             // Add new file to database
             var currentFolderInfo = Utility.ConvertFilePathToFolderInfo(this.lblCurrentDir.Text, this._portalSettings);
@@ -3106,7 +3014,7 @@ namespace WatchersNET.CKEditor.Browser
 
             var sExtension = Path.GetExtension(this.lblFileName.Text);
 
-            this.GoToSelectedFile(string.Format("{0}{1}", this.txtCropImageName.Text, sExtension));
+            this.GoToSelectedFile($"{this.txtCropImageName.Text}{sExtension}");
         }
 
         /// <summary>
@@ -3126,7 +3034,7 @@ namespace WatchersNET.CKEditor.Browser
             this.panLinkMode.Visible = true;
             this.cmdClose.Visible = true;
             this.panInfo.Visible = PortalSecurity.IsInRoles(this._portalSettings.AdministratorRoleName);
-            this.title.InnerText = string.Format("{0} - WatchersNET.FileBrowser", this.lblModus.Text);
+            this.title.InnerText = $"{this.lblModus.Text} - WatchersNET.FileBrowser";
 
             if (this.browserModus.Equals("Link"))
             {
@@ -3179,7 +3087,7 @@ namespace WatchersNET.CKEditor.Browser
             {
                 imageFullPath = Path.Combine(
                     this.lblCurrentDir.Text,
-                    string.Format("{0}_resized{1}", Path.GetFileNameWithoutExtension(filePath), extension));
+                    $"{Path.GetFileNameWithoutExtension(filePath)}_resized{extension}");
             }
 
             // Create an Resized Thumbnail
@@ -3207,7 +3115,7 @@ namespace WatchersNET.CKEditor.Browser
 
                 imageFullPath = Path.Combine(
                     this.lblCurrentDir.Text,
-                    string.Format("{0}_{1}{2}", fileNameWithoutExtension, counter, Path.GetExtension(imageFullPath)));
+                    $"{fileNameWithoutExtension}_{counter}{Path.GetExtension(imageFullPath)}");
             }
 
             // Add Compression to Jpeg Images
@@ -3265,7 +3173,7 @@ namespace WatchersNET.CKEditor.Browser
             this.panLinkMode.Visible = true;
             this.cmdClose.Visible = true;
             this.panInfo.Visible = PortalSecurity.IsInRoles(this._portalSettings.AdministratorRoleName);
-            this.title.InnerText = string.Format("{0} - WatchersNET.FileBrowser", this.lblModus.Text);
+            this.title.InnerText = $"{this.lblModus.Text} - WatchersNET.FileBrowser";
 
             if (this.browserModus.Equals("Link"))
             {
@@ -3301,13 +3209,13 @@ namespace WatchersNET.CKEditor.Browser
             this.cmdResize2.Visible = true;
 
             this.lblResizeHeader.Text = Localization.GetString("lblResizeHeader2.Text", this.ResXFile, this.LanguageCode);
-            this.title.InnerText = string.Format("{0} - WatchersNET.FileBrowser", this.lblResizeHeader.Text);
+            this.title.InnerText = $"{this.lblResizeHeader.Text} - WatchersNET.FileBrowser";
 
             var sFilePath = Path.Combine(this.lblCurrentDir.Text, this.lblFileName.Text);
 
             var sFileNameNoExt = Path.GetFileNameWithoutExtension(sFilePath);
 
-            this.txtCropImageName.Text = string.Format("{0}_Crop", sFileNameNoExt);
+            this.txtCropImageName.Text = $"{sFileNameNoExt}_Crop";
 
             var fs = new FileStream(sFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
 
@@ -3382,7 +3290,8 @@ namespace WatchersNET.CKEditor.Browser
             sbCropZoom.Append("});");
 
             this.Page.ClientScript.RegisterStartupScript(
-                this.GetType(), string.Format("CropZoomScript{0}", Guid.NewGuid()), sbCropZoom.ToString(), true);
+                this.GetType(),
+                $"CropZoomScript{Guid.NewGuid()}", sbCropZoom.ToString(), true);
         }
 
         /// <summary>
@@ -3437,7 +3346,7 @@ namespace WatchersNET.CKEditor.Browser
             var selectTab = tabController.GetTab(
                 int.Parse(this.dnntreeTabs.SelectedValue), this._portalSettings.PortalId, true);
 
-            var sDomainName = string.Format("http://{0}", Globals.GetDomainName(this.Request, true));
+            var sDomainName = $"http://{Globals.GetDomainName(this.Request, true)}";
 
             // Add Language Parameter ?!
             var localeSelected = this.LanguageRow.Visible && this.LanguageList.SelectedIndex > 0;
@@ -3447,10 +3356,7 @@ namespace WatchersNET.CKEditor.Browser
                 var fileName = localeSelected
                                        ? Globals.FriendlyUrl(
                                            selectTab,
-                                           string.Format(
-                                               "{0}&language={1}",
-                                               Globals.ApplicationURL(selectTab.TabID),
-                                               this.LanguageList.SelectedValue),
+                                           $"{Globals.ApplicationURL(selectTab.TabID)}&language={this.LanguageList.SelectedValue}",
                                            this._portalSettings)
                                        : Globals.FriendlyUrl(
                                            selectTab, Globals.ApplicationURL(selectTab.TabID), this._portalSettings);
@@ -3468,22 +3374,18 @@ namespace WatchersNET.CKEditor.Browser
                 this.rblLinkType.Items[1].Text = Regex.Replace(
                     this.rblLinkType.Items[1].Text,
                     "http://www.MyWebsite.com/Images/MyImage.jpg",
-                   string.Format(
-                "{0}://{1}{2}",
-                HttpContext.Current.Request.Url.Scheme,
-                HttpContext.Current.Request.Url.Authority,
-                fileName),
+                    $"{HttpContext.Current.Request.Url.Scheme}://{HttpContext.Current.Request.Url.Authority}{fileName}",
                     RegexOptions.IgnoreCase);
             }
             else
             {
-                var locale = localeSelected ? string.Format("language/{0}/", this.LanguageList.SelectedValue) : string.Empty;
+                var locale = localeSelected ? $"language/{this.LanguageList.SelectedValue}/" : string.Empty;
 
                 // Relative Url
                 this.rblLinkType.Items[0].Text = Regex.Replace(
                     this.rblLinkType.Items[0].Text,
                     "/Images/MyImage.jpg",
-                    Globals.ResolveUrl(string.Format("~/tabid/{0}/{1}Default.aspx", selectTab.TabID, locale)),
+                    Globals.ResolveUrl($"~/tabid/{selectTab.TabID}/{locale}Default.aspx"),
                     RegexOptions.IgnoreCase);
 
                 // Absolute Url
@@ -3506,11 +3408,8 @@ namespace WatchersNET.CKEditor.Browser
             this.rblLinkType.Items[2].Text =
                 this.rblLinkType.Items[2].Text.Replace(@"/LinkClick.aspx?fileticket=xyz", secureLink);
 
-            var absoluteUrl = string.Format(
-                "{0}://{1}{2}",
-                HttpContext.Current.Request.Url.Scheme,
-                HttpContext.Current.Request.Url.Authority,
-                secureLink);
+            var absoluteUrl =
+                $"{HttpContext.Current.Request.Url.Scheme}://{HttpContext.Current.Request.Url.Authority}{secureLink}";
 
             this.rblLinkType.Items[3].Text =
                 this.rblLinkType.Items[3].Text.Replace(
@@ -3523,7 +3422,7 @@ namespace WatchersNET.CKEditor.Browser
 
             this.Page.ClientScript.RegisterStartupScript(
                 this.GetType(),
-                string.Format("hideLoadingScript{0}", Guid.NewGuid()),
+                $"hideLoadingScript{Guid.NewGuid()}",
                 "jQuery('#panelLoading').hide();",
                 true);
         }
@@ -3549,11 +3448,8 @@ namespace WatchersNET.CKEditor.Browser
 
                 if (tabUrl.StartsWith("/"))
                 {
-                    tabUrl = string.Format(
-                        "{0}://{1}{2}",
-                        HttpContext.Current.Request.Url.Scheme,
-                        HttpContext.Current.Request.Url.Authority,
-                        tabUrl);
+                    tabUrl =
+                        $"{HttpContext.Current.Request.Url.Scheme}://{HttpContext.Current.Request.Url.Authority}{tabUrl}";
                 }
 
                 var page = wc.DownloadString(tabUrl);
@@ -3626,19 +3522,19 @@ namespace WatchersNET.CKEditor.Browser
                 case "file":
                     this.panLinkMode.Visible = true;
                     this.panPageMode.Visible = false;
-                    this.lblModus.Text = string.Format("Browser-Modus: {0}", this.browserModus);
+                    this.lblModus.Text = $"Browser-Modus: {this.browserModus}";
                     break;
                 case "page":
                     this.panLinkMode.Visible = false;
                     this.panPageMode.Visible = true;
                     this.TrackClicks.Visible = false;
-                    this.lblModus.Text = string.Format("Browser-Modus: {0}", string.Format("Page {0}", this.browserModus));
+                    this.lblModus.Text = $"Browser-Modus: {$"Page {this.browserModus}"}";
 
                     this.RenderTabs();
                     break;
             }
 
-            this.title.InnerText = string.Format("{0} - WatchersNET.FileBrowser", this.lblModus.Text);
+            this.title.InnerText = $"{this.lblModus.Text} - WatchersNET.FileBrowser";
 
             this.SetDefaultLinkTypeText();
         }
@@ -3673,7 +3569,7 @@ namespace WatchersNET.CKEditor.Browser
         {
             var newDir = this.FoldersTree.SelectedNode.Value;
 
-            this.lblCurrentDir.Text = !newDir.EndsWith("\\") ? string.Format("{0}\\", newDir) : newDir;
+            this.lblCurrentDir.Text = !newDir.EndsWith("\\") ? $"{newDir}\\" : newDir;
             this.ShowFilesIn(newDir);
 
             // Reset selected file
@@ -3693,7 +3589,7 @@ namespace WatchersNET.CKEditor.Browser
         {
             var spaceAvailable = this._portalSettings.HostSpace.Equals(0)
                                      ? Localization.GetString("UnlimitedSpace.Text", this.ResXFile, this.LanguageCode)
-                                     : string.Format("{0}MB", this._portalSettings.HostSpace);
+                                     : $"{this._portalSettings.HostSpace}MB";
 
             var spaceUsed = new PortalController().GetPortalSpaceUsedBytes(this._portalSettings.PortalId);
 
@@ -3712,11 +3608,11 @@ namespace WatchersNET.CKEditor.Browser
                     spaceUsedDouble = spaceUsed / 1024.0;
                 }
 
-                usedSpace = string.Format("{0:0.##}{1}", spaceUsedDouble, suffix[index]);
+                usedSpace = $"{spaceUsedDouble:0.##}{suffix[index]}";
             }
             else
             {
-                usedSpace = string.Format("{0:0.##}{1}", spaceUsedDouble, suffix[index]);
+                usedSpace = $"{spaceUsedDouble:0.##}{suffix[index]}";
             }
 
             this.FileSpaceUsedLabel.Text =

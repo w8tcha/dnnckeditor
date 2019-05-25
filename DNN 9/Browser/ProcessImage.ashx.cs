@@ -81,38 +81,38 @@ namespace WatchersNET.CKEditor.Browser
             var viewPortH = float.Parse(context.Request["viewPortH"]);
             var viewPortW = float.Parse(context.Request["viewPortW"]);
 
-            bool bSaveFile;
+            bool saveFile;
 
             try
             {
-                bSaveFile = bool.Parse(context.Request["saveFile"]);
+                saveFile = bool.Parse(context.Request["saveFile"]);
             }
             catch (Exception)
             {
-                bSaveFile = false;
+                saveFile = false;
             }
 
-            string sNewFileName = null;
+            string newFileName = null;
 
             if (!string.IsNullOrEmpty(context.Request["newFileName"]))
             {
-                sNewFileName = context.Request["newFileName"];
+                newFileName = context.Request["newFileName"];
             }
 
-            var pWidth = imageW;
-            var pHeight = imageH;
+            var width = imageW;
+            var height = imageH;
 
             var img = (Bitmap)Image.FromFile(context.Server.MapPath(imgSource));
 
             // Resize
-            var imageP = this.ResizeImage(img, Convert.ToInt32(pWidth), Convert.ToInt32(pHeight));
+            var imageP = this.ResizeImage(img, Convert.ToInt32(width), Convert.ToInt32(height));
 
             // Rotate if angle is not 0.00 or 360
             if (angle > 0.0F && angle < 360.00F)
             {
                 imageP = (Bitmap)RotateImage(imageP, angle);
-                pWidth = imageP.Width;
-                pHeight = imageP.Height;
+                width = imageP.Width;
+                height = imageP.Height;
             }
 
             // Calculate Coords of the Image into the ViewPort
@@ -121,26 +121,26 @@ namespace WatchersNET.CKEditor.Browser
             float srcY;
             float dstY;
 
-            if (pWidth > viewPortW)
+            if (width > viewPortW)
             {
-                srcX = Math.Abs(imageX - Math.Abs((imageW - pWidth) / 2));
+                srcX = Math.Abs(imageX - Math.Abs((imageW - width) / 2));
                 dstX = 0;
             }
             else
             {
                 srcX = 0;
-                dstX = imageX + ((imageW - pWidth) / 2);
+                dstX = imageX + ((imageW - width) / 2);
             }
 
-            if (pHeight > viewPortH)
+            if (height > viewPortH)
             {
-                srcY = Math.Abs(imageY - Math.Abs((imageH - pHeight) / 2));
+                srcY = Math.Abs(imageY - Math.Abs((imageH - height) / 2));
                 dstY = 0;
             }
             else
             {
                 srcY = 0;
-                dstY = imageY + ((imageH - pHeight) / 2);
+                dstY = imageY + ((imageH - height) / 2);
             }
 
             // Get Image viewed into the ViewPort
@@ -149,12 +149,12 @@ namespace WatchersNET.CKEditor.Browser
             // Get Selector Portion
             imageP = ImageCopy(imageP, 0, 0, selectorX, selectorY, selectorW, selectorH);
 
-            if (bSaveFile)
+            if (saveFile)
             {
                 context.Response.ContentType = "text/plain";
 
                 var sourceFilePath = context.Server.MapPath(imgSource);
-                var sourceFolder = sourceFilePath.Remove(sourceFilePath.LastIndexOf("\\"));
+                var sourceFolder = sourceFilePath.Remove(sourceFilePath.LastIndexOf("\\", StringComparison.Ordinal));
 
                 if (PortalSettings.Current != null && !this.HasWritePermission(
                         PathUtils.Instance.GetRelativePath(PortalSettings.Current.PortalId, sourceFolder)))
@@ -162,7 +162,7 @@ namespace WatchersNET.CKEditor.Browser
                     throw new SecurityException("You don't have write permission to save files under this folder.");
                 }
 
-                imageP.Save(GenerateName(sNewFileName, context.Server.MapPath(imgSource)));
+                imageP.Save(GenerateName(newFileName, context.Server.MapPath(imgSource)));
             }
             else
             {
@@ -214,9 +214,8 @@ namespace WatchersNET.CKEditor.Browser
             var sNewFilePath = !string.IsNullOrEmpty(sNewFileName)
                                       ? Path.Combine(sSourcePath, sNewFileName + sExtension)
                                       : Path.Combine(
-                                          sSourcePath, 
-                                          string.Format(
-                                              "{0}_crop{1}", Path.GetFileNameWithoutExtension(sSourceFullPath), sExtension));
+                                          sSourcePath,
+                                          $"{Path.GetFileNameWithoutExtension(sSourceFullPath)}_crop{sExtension}");
 
             var iCounter = 0;
 
@@ -227,7 +226,8 @@ namespace WatchersNET.CKEditor.Browser
                 var sFileNameNoExt = Path.GetFileNameWithoutExtension(sNewFilePath);
 
                 sNewFilePath = Path.Combine(
-                    sSourcePath, string.Format("{0}_{1}{2}", sFileNameNoExt, iCounter, sExtension));
+                    sSourcePath,
+                    $"{sFileNameNoExt}_{iCounter}{sExtension}");
             }
 
             return sNewFilePath;

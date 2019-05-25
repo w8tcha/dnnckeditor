@@ -21,7 +21,6 @@ namespace WatchersNET.CKEditor.Utilities
     using System.Linq;
     using System.Reflection;
     using System.Web;
-    using System.Xml;
     using System.Xml.Serialization;
 
     using DotNetNuke.Common;
@@ -53,13 +52,11 @@ namespace WatchersNET.CKEditor.Utilities
         /// </returns>
         internal static bool CheckExistsPortalOrPageSettings(List<EditorHostSetting> editorHostSettings, string key)
         {
-            if (editorHostSettings.Any(
-                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.SKIN))))
+            if (editorHostSettings.Any(setting => setting.Name.Equals($"{key}{SettingConstants.SKIN}")))
             {
                 return !string.IsNullOrEmpty(
                            editorHostSettings.FirstOrDefault(
-                                   setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.SKIN)))
-                               .Value);
+                               setting => setting.Name.Equals($"{key}{SettingConstants.SKIN}"))?.Value);
             }
 
             // No Portal/Page Settings Found
@@ -102,7 +99,7 @@ namespace WatchersNET.CKEditor.Utilities
 
             var hshModSet = module.ModuleSettings;
 
-            return hshModSet != null && !string.IsNullOrEmpty((string)hshModSet[string.Format("{0}skin", moduleKey)]);
+            return hshModSet != null && !string.IsNullOrEmpty((string)hshModSet[$"{moduleKey}skin"]);
         }
 
         /// <summary>
@@ -133,7 +130,7 @@ namespace WatchersNET.CKEditor.Utilities
                 var settingValue = string.Empty;
                 if (!info.Name.Equals("CodeMirror") && !info.Name.Equals("WordCount") && !info.Name.Equals("AutoSave"))
                 {
-                    var settingName = string.Format("{0}{1}", key, info.Name);
+                    var settingName = $"{key}{info.Name}";
                     if (!editorHostSettings.Any(s => s.Name.Equals(settingName)))
                     {
                         continue;
@@ -146,7 +143,6 @@ namespace WatchersNET.CKEditor.Utilities
                         continue;
                     }
                 }
-
 
                 switch (info.PropertyType.Name)
                 {
@@ -195,7 +191,7 @@ namespace WatchersNET.CKEditor.Utilities
                         foreach (var codeMirrorInfo in typeof(CodeMirror).GetProperties()
                             .Where(codeMirrorInfo => !codeMirrorInfo.Name.Equals("Theme")))
                         {
-                            var settingName = string.Format("{0}{1}", key, codeMirrorInfo.Name);
+                            var settingName = $"{key}{codeMirrorInfo.Name}";
                             if (!editorHostSettings.Any(s => s.Name.Equals(settingName)))
                             {
                                 continue;
@@ -227,7 +223,7 @@ namespace WatchersNET.CKEditor.Utilities
                     case "WordCount":
                         foreach (var wordCountInfo in typeof(WordCountConfig).GetProperties())
                         {
-                            var settingName = string.Format("{0}{1}", key, wordCountInfo.Name);
+                            var settingName = $"{key}{wordCountInfo.Name}";
                             if (!editorHostSettings.Any(s => s.Name.Equals(settingName)))
                             {
                                 continue;
@@ -259,7 +255,7 @@ namespace WatchersNET.CKEditor.Utilities
                     case "AutoSave":
                         foreach (var autoSaveInfo in typeof(AutoSave).GetProperties())
                         {
-                            var settingName = string.Format("{0}{1}", key, autoSaveInfo.Name);
+                            var settingName = $"{key}{autoSaveInfo.Name}";
                             if (!editorHostSettings.Any(s => s.Name.Equals(settingName)))
                             {
                                 continue;
@@ -298,11 +294,10 @@ namespace WatchersNET.CKEditor.Utilities
             }
 
             /////////////////
-            if (editorHostSettings.Any(
-                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.SKIN))))
+            if (editorHostSettings.Any(setting => setting.Name.Equals($"{key}{SettingConstants.SKIN}")))
             {
                 var settingValue = editorHostSettings
-                    .FirstOrDefault(s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.SKIN))).Value;
+                    .FirstOrDefault(s => s.Name.Equals($"{key}{SettingConstants.SKIN}")).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -310,11 +305,10 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (editorHostSettings.Any(
-                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.CODEMIRRORTHEME))))
+            if (editorHostSettings.Any(setting => setting.Name.Equals($"{key}{SettingConstants.CODEMIRRORTHEME}")))
             {
                 var settingValue = editorHostSettings.FirstOrDefault(
-                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.CODEMIRRORTHEME))).Value;
+                    s => s.Name.Equals($"{key}{SettingConstants.CODEMIRRORTHEME}")).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -333,7 +327,7 @@ namespace WatchersNET.CKEditor.Utilities
                                                           "{0}{2}#{1}",
                                                           key,
                                                           objRole.RoleID,
-                                                          SettingConstants.TOOLB))).Value)
+                                                          SettingConstants.TOOLB)))?.Value)
                                     let sToolbar =
                                         editorHostSettings.FirstOrDefault(
                                             s => s.Name.Equals(
@@ -341,7 +335,7 @@ namespace WatchersNET.CKEditor.Utilities
                                                     "{0}{2}#{1}",
                                                     key,
                                                     objRole.RoleID,
-                                                    SettingConstants.TOOLB))).Value
+                                                    SettingConstants.TOOLB)))?.Value
                                     select new ToolbarRoles { RoleId = objRole.RoleID, Toolbar = sToolbar }).ToList();
 
             if (editorHostSettings.Any(
@@ -373,7 +367,7 @@ namespace WatchersNET.CKEditor.Utilities
                                                              "{0}{2}#{1}",
                                                              key,
                                                              objRole.RoleID,
-                                                             SettingConstants.UPLOADFILELIMITS))).Value)
+                                                             SettingConstants.UPLOADFILELIMITS)))?.Value)
                                        let uploadFileLimit =
                                            editorHostSettings.FirstOrDefault(
                                                s => s.Name.Equals(
@@ -381,7 +375,7 @@ namespace WatchersNET.CKEditor.Utilities
                                                        "{0}{2}#{1}",
                                                        key,
                                                        objRole.RoleID,
-                                                       SettingConstants.UPLOADFILELIMITS))).Value
+                                                       SettingConstants.UPLOADFILELIMITS)))?.Value
                                        select new UploadSizeRoles
                                                   {
                                                       RoleId = objRole.RoleID,
@@ -405,25 +399,24 @@ namespace WatchersNET.CKEditor.Utilities
 
             currentSettings.UploadSizeRoles = listUploadSizeRoles;
 
-            if (editorHostSettings.Any(
-                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.ROLES))))
+            if (editorHostSettings.Any(setting => setting.Name.Equals($"{key}{SettingConstants.ROLES}")))
             {
                 var settingValue = editorHostSettings
-                    .FirstOrDefault(s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.ROLES))).Value;
+                    .FirstOrDefault(s => s.Name.Equals($"{key}{SettingConstants.ROLES}")).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
-                    var sRoles = settingValue;
+                    var browserRoles = settingValue;
 
-                    currentSettings.BrowserRoles = sRoles;
+                    currentSettings.BrowserRoles = browserRoles;
 
-                    var rolesA = sRoles.Split(';');
+                    var rolesA = browserRoles.Split(';');
 
-                    foreach (var sRoleName in rolesA)
+                    foreach (var roleName in rolesA)
                     {
-                        if (Utility.IsNumeric(sRoleName))
+                        if (Utility.IsNumeric(roleName))
                         {
-                            var roleInfo = roleController.GetRoleById(portalSettings.PortalId, int.Parse(sRoleName));
+                            var roleInfo = roleController.GetRoleById(portalSettings.PortalId, int.Parse(roleName));
 
                             if (roleInfo != null)
                             {
@@ -432,17 +425,16 @@ namespace WatchersNET.CKEditor.Utilities
                         }
                         else
                         {
-                            roles.Add(sRoleName);
+                            roles.Add(roleName);
                         }
                     }
                 }
             }
 
-            if (editorHostSettings.Any(
-                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.BROWSER))))
+            if (editorHostSettings.Any(setting => setting.Name.Equals($"{key}{SettingConstants.BROWSER}")))
             {
                 var settingValue = editorHostSettings.FirstOrDefault(
-                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.BROWSER))).Value;
+                    s => s.Name.Equals($"{key}{SettingConstants.BROWSER}")).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -451,9 +443,9 @@ namespace WatchersNET.CKEditor.Utilities
                     switch (currentSettings.Browser)
                     {
                         case "ckfinder":
-                            foreach (string sRoleName in roles)
+                            foreach (string roleName in roles)
                             {
-                                if (PortalSecurity.IsInRoles(sRoleName))
+                                if (PortalSecurity.IsInRoles(roleName))
                                 {
                                     currentSettings.BrowserMode = Browser.CKFinder;
 
@@ -465,9 +457,9 @@ namespace WatchersNET.CKEditor.Utilities
 
                             break;
                         case "standard":
-                            foreach (string sRoleName in roles)
+                            foreach (string roleName in roles)
                             {
-                                if (PortalSecurity.IsInRoles(sRoleName))
+                                if (PortalSecurity.IsInRoles(roleName))
                                 {
                                     currentSettings.BrowserMode = Browser.StandardBrowser;
 
@@ -485,11 +477,10 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (editorHostSettings.Any(
-                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.INJECTJS))))
+            if (editorHostSettings.Any(setting => setting.Name.Equals($"{key}{SettingConstants.INJECTJS}")))
             {
                 var settingValue = editorHostSettings.FirstOrDefault(
-                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.INJECTJS))).Value;
+                    s => s.Name.Equals($"{key}{SettingConstants.INJECTJS}")).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -502,10 +493,10 @@ namespace WatchersNET.CKEditor.Utilities
             }
 
             if (editorHostSettings.Any(
-                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.ALLOWEDIMAGEEXTENSIONS))))
+                setting => setting.Name.Equals($"{key}{SettingConstants.ALLOWEDIMAGEEXTENSIONS}")))
             {
                 var settingValue = editorHostSettings.FirstOrDefault(
-                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.ALLOWEDIMAGEEXTENSIONS))).Value;
+                    s => s.Name.Equals($"{key}{SettingConstants.ALLOWEDIMAGEEXTENSIONS}")).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -513,11 +504,10 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (editorHostSettings.Any(
-                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.WIDTH))))
+            if (editorHostSettings.Any(setting => setting.Name.Equals($"{key}{SettingConstants.WIDTH}")))
             {
                 var settingValue = editorHostSettings
-                    .FirstOrDefault(s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.WIDTH))).Value;
+                    .FirstOrDefault(s => s.Name.Equals($"{key}{SettingConstants.WIDTH}")).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -525,11 +515,10 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (editorHostSettings.Any(
-                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.HEIGHT))))
+            if (editorHostSettings.Any(setting => setting.Name.Equals($"{key}{SettingConstants.HEIGHT}")))
             {
                 var settingValue = editorHostSettings
-                    .FirstOrDefault(s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.HEIGHT))).Value;
+                    .FirstOrDefault(s => s.Name.Equals($"{key}{SettingConstants.HEIGHT}")).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -537,11 +526,10 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (editorHostSettings.Any(
-                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.BLANKTEXT))))
+            if (editorHostSettings.Any(setting => setting.Name.Equals($"{key}{SettingConstants.BLANKTEXT}")))
             {
                 var settingValue = editorHostSettings.FirstOrDefault(
-                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.BLANKTEXT))).Value;
+                    s => s.Name.Equals($"{key}{SettingConstants.BLANKTEXT}")).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -549,11 +537,10 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (editorHostSettings.Any(
-                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.CSS))))
+            if (editorHostSettings.Any(setting => setting.Name.Equals($"{key}{SettingConstants.CSS}")))
             {
-                var settingValue = editorHostSettings
-                    .FirstOrDefault(s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.CSS))).Value;
+                var settingValue = editorHostSettings.FirstOrDefault(s => s.Name.Equals($"{key}{SettingConstants.CSS}"))
+                    .Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -561,11 +548,10 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (editorHostSettings.Any(
-                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.TEMPLATEFILES))))
+            if (editorHostSettings.Any(setting => setting.Name.Equals($"{key}{SettingConstants.TEMPLATEFILES}")))
             {
                 var settingValue = editorHostSettings.FirstOrDefault(
-                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.TEMPLATEFILES))).Value;
+                    s => s.Name.Equals($"{key}{SettingConstants.TEMPLATEFILES}")).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -573,11 +559,10 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (editorHostSettings.Any(
-                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.CUSTOMJSFILE))))
+            if (editorHostSettings.Any(setting => setting.Name.Equals($"{key}{SettingConstants.CUSTOMJSFILE}")))
             {
                 var settingValue = editorHostSettings.FirstOrDefault(
-                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.CUSTOMJSFILE))).Value;
+                    s => s.Name.Equals($"{key}{SettingConstants.CUSTOMJSFILE}")).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -585,11 +570,10 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (editorHostSettings.Any(
-                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.CONFIG))))
+            if (editorHostSettings.Any(setting => setting.Name.Equals($"{key}{SettingConstants.CONFIG}")))
             {
                 var settingValue = editorHostSettings
-                    .FirstOrDefault(s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.CONFIG))).Value;
+                    .FirstOrDefault(s => s.Name.Equals($"{key}{SettingConstants.CONFIG}")).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -597,11 +581,10 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (editorHostSettings.Any(
-                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.FILELISTPAGESIZE))))
+            if (editorHostSettings.Any(setting => setting.Name.Equals($"{key}{SettingConstants.FILELISTPAGESIZE}")))
             {
                 var settingValue = editorHostSettings.FirstOrDefault(
-                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.FILELISTPAGESIZE))).Value;
+                    s => s.Name.Equals($"{key}{SettingConstants.FILELISTPAGESIZE}")).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -609,11 +592,10 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (editorHostSettings.Any(
-                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.FILELISTVIEWMODE))))
+            if (editorHostSettings.Any(setting => setting.Name.Equals($"{key}{SettingConstants.FILELISTVIEWMODE}")))
             {
                 var settingValue = editorHostSettings.FirstOrDefault(
-                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.FILELISTVIEWMODE))).Value;
+                    s => s.Name.Equals($"{key}{SettingConstants.FILELISTVIEWMODE}")).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -621,11 +603,10 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (editorHostSettings.Any(
-                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.DEFAULTLINKMODE))))
+            if (editorHostSettings.Any(setting => setting.Name.Equals($"{key}{SettingConstants.DEFAULTLINKMODE}")))
             {
                 var settingValue = editorHostSettings.FirstOrDefault(
-                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.DEFAULTLINKMODE))).Value;
+                    s => s.Name.Equals($"{key}{SettingConstants.DEFAULTLINKMODE}")).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -633,11 +614,10 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (editorHostSettings.Any(
-                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.USEANCHORSELECTOR))))
+            if (editorHostSettings.Any(setting => setting.Name.Equals($"{key}{SettingConstants.USEANCHORSELECTOR}")))
             {
                 var settingValue = editorHostSettings.FirstOrDefault(
-                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.USEANCHORSELECTOR))).Value;
+                    s => s.Name.Equals($"{key}{SettingConstants.USEANCHORSELECTOR}")).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -650,10 +630,10 @@ namespace WatchersNET.CKEditor.Utilities
             }
 
             if (editorHostSettings.Any(
-                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.SHOWPAGELINKSTABFIRST))))
+                setting => setting.Name.Equals($"{key}{SettingConstants.SHOWPAGELINKSTABFIRST}")))
             {
                 var settingValue = editorHostSettings.FirstOrDefault(
-                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.SHOWPAGELINKSTABFIRST))).Value;
+                    s => s.Name.Equals($"{key}{SettingConstants.SHOWPAGELINKSTABFIRST}")).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -665,11 +645,10 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (editorHostSettings.Any(
-                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.OVERRIDEFILEONUPLOAD))))
+            if (editorHostSettings.Any(setting => setting.Name.Equals($"{key}{SettingConstants.OVERRIDEFILEONUPLOAD}")))
             {
                 var settingValue = editorHostSettings.FirstOrDefault(
-                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.OVERRIDEFILEONUPLOAD))).Value;
+                    s => s.Name.Equals($"{key}{SettingConstants.OVERRIDEFILEONUPLOAD}")).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -681,11 +660,10 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (editorHostSettings.Any(
-                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.SUBDIRS))))
+            if (editorHostSettings.Any(setting => setting.Name.Equals($"{key}{SettingConstants.SUBDIRS}")))
             {
                 var settingValue = editorHostSettings.FirstOrDefault(
-                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.SUBDIRS))).Value;
+                    s => s.Name.Equals($"{key}{SettingConstants.SUBDIRS}")).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -697,11 +675,10 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (editorHostSettings.Any(
-                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.BROWSERROOTDIRID))))
+            if (editorHostSettings.Any(setting => setting.Name.Equals($"{key}{SettingConstants.BROWSERROOTDIRID}")))
             {
                 var settingValue = editorHostSettings.FirstOrDefault(
-                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.BROWSERROOTDIRID))).Value;
+                    s => s.Name.Equals($"{key}{SettingConstants.BROWSERROOTDIRID}")).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -716,11 +693,10 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (editorHostSettings.Any(
-                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.UPLOADDIRID))))
+            if (editorHostSettings.Any(setting => setting.Name.Equals($"{key}{SettingConstants.UPLOADDIRID}")))
             {
                 var settingValue = editorHostSettings.FirstOrDefault(
-                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.UPLOADDIRID))).Value;
+                    s => s.Name.Equals($"{key}{SettingConstants.UPLOADDIRID}")).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -735,11 +711,10 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (editorHostSettings.Any(
-                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.RESIZEWIDTH))))
+            if (editorHostSettings.Any(setting => setting.Name.Equals($"{key}{SettingConstants.RESIZEWIDTH}")))
             {
                 var settingValue = editorHostSettings.FirstOrDefault(
-                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.RESIZEWIDTH))).Value;
+                    s => s.Name.Equals($"{key}{SettingConstants.RESIZEWIDTH}")).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -754,11 +729,10 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (editorHostSettings.Any(
-                setting => setting.Name.Equals(string.Format("{0}{1}", key, SettingConstants.RESIZEHEIGHT))))
+            if (editorHostSettings.Any(setting => setting.Name.Equals($"{key}{SettingConstants.RESIZEHEIGHT}")))
             {
                 var settingValue = editorHostSettings.FirstOrDefault(
-                    s => s.Name.Equals(string.Format("{0}{1}", key, SettingConstants.RESIZEHEIGHT))).Value;
+                    s => s.Name.Equals($"{key}{SettingConstants.RESIZEHEIGHT}")).Value;
 
                 if (!string.IsNullOrEmpty(settingValue))
                 {
@@ -809,31 +783,25 @@ namespace WatchersNET.CKEditor.Utilities
 
             // Import all Editor config settings
             foreach (var info in GetEditorConfigProperties().Where(
-                info => !string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, info.Name)])
+                info => !string.IsNullOrEmpty((string)hshModSet[$"{key}{info.Name}"])
                 /*|| info.Name.Equals("CodeMirror") || info.Name.Equals("WordCount")*/))
             {
                 switch (info.PropertyType.Name)
                 {
                     case "String":
-                        info.SetValue(currentSettings.Config, hshModSet[string.Format("{0}{1}", key, info.Name)], null);
+                        info.SetValue(currentSettings.Config, hshModSet[$"{key}{info.Name}"], null);
                         break;
                     case "Int32":
-                        info.SetValue(
-                            currentSettings.Config,
-                            int.Parse((string)hshModSet[string.Format("{0}{1}", key, info.Name)]),
-                            null);
+                        info.SetValue(currentSettings.Config, int.Parse((string)hshModSet[$"{key}{info.Name}"]), null);
                         break;
                     case "Decimal":
                         info.SetValue(
                             currentSettings.Config,
-                            decimal.Parse((string)hshModSet[string.Format("{0}{1}", key, info.Name)]),
+                            decimal.Parse((string)hshModSet[$"{key}{info.Name}"]),
                             null);
                         break;
                     case "Boolean":
-                        info.SetValue(
-                            currentSettings.Config,
-                            bool.Parse((string)hshModSet[string.Format("{0}{1}", key, info.Name)]),
-                            null);
+                        info.SetValue(currentSettings.Config, bool.Parse((string)hshModSet[$"{key}{info.Name}"]), null);
                         break;
                 }
 
@@ -844,24 +812,20 @@ namespace WatchersNET.CKEditor.Utilities
                             currentSettings.Config,
                             (ToolBarLocation)Enum.Parse(
                                 typeof(ToolBarLocation),
-                                (string)hshModSet[string.Format("{0}{1}", key, info.Name)]),
+                                (string)hshModSet[$"{key}{info.Name}"]),
                             null);
                         break;
                     case "DefaultLinkType":
                         info.SetValue(
                             currentSettings.Config,
-                            (LinkType)Enum.Parse(
-                                typeof(LinkType),
-                                (string)hshModSet[string.Format("{0}{1}", key, info.Name)]),
+                            (LinkType)Enum.Parse(typeof(LinkType), (string)hshModSet[$"{key}{info.Name}"]),
                             null);
                         break;
                     case "EnterMode":
                     case "ShiftEnterMode":
                         info.SetValue(
                             currentSettings.Config,
-                            (EnterModus)Enum.Parse(
-                                typeof(EnterModus),
-                                (string)hshModSet[string.Format("{0}{1}", key, info.Name)]),
+                            (EnterModus)Enum.Parse(typeof(EnterModus), (string)hshModSet[$"{key}{info.Name}"]),
                             null);
                         break;
                     case "ContentsLangDirection":
@@ -869,7 +833,7 @@ namespace WatchersNET.CKEditor.Utilities
                             currentSettings.Config,
                             (LanguageDirection)Enum.Parse(
                                 typeof(LanguageDirection),
-                                (string)hshModSet[string.Format("{0}{1}", key, info.Name)]),
+                                (string)hshModSet[$"{key}{info.Name}"]),
                             null);
                         break;
                     case "CodeMirror":
@@ -879,22 +843,21 @@ namespace WatchersNET.CKEditor.Utilities
                             switch (codeMirrorInfo.PropertyType.Name)
                             {
                                 case "String":
-                                    if (hshModSet.ContainsKey(string.Format("{0}{1}", key, codeMirrorInfo.Name)))
+                                    if (hshModSet.ContainsKey($"{key}{codeMirrorInfo.Name}"))
                                     {
                                         codeMirrorInfo.SetValue(
                                             currentSettings.Config.CodeMirror,
-                                            hshModSet[string.Format("{0}{1}", key, codeMirrorInfo.Name)],
+                                            hshModSet[$"{key}{codeMirrorInfo.Name}"],
                                             null);
                                     }
 
                                     break;
                                 case "Boolean":
-                                    if (hshModSet.ContainsKey(string.Format("{0}{1}", key, codeMirrorInfo.Name)))
+                                    if (hshModSet.ContainsKey($"{key}{codeMirrorInfo.Name}"))
                                     {
                                         codeMirrorInfo.SetValue(
                                             currentSettings.Config.CodeMirror,
-                                            bool.Parse(
-                                                (string)hshModSet[string.Format("{0}{1}", key, codeMirrorInfo.Name)]),
+                                            bool.Parse((string)hshModSet[$"{key}{codeMirrorInfo.Name}"]),
                                             null);
                                     }
 
@@ -909,22 +872,21 @@ namespace WatchersNET.CKEditor.Utilities
                             switch (wordCountInfo.PropertyType.Name)
                             {
                                 case "String":
-                                    if (hshModSet.ContainsKey(string.Format("{0}{1}", key, wordCountInfo.Name)))
+                                    if (hshModSet.ContainsKey($"{key}{wordCountInfo.Name}"))
                                     {
                                         wordCountInfo.SetValue(
                                             currentSettings.Config.WordCount,
-                                            hshModSet[string.Format("{0}{1}", key, wordCountInfo.Name)],
+                                            hshModSet[$"{key}{wordCountInfo.Name}"],
                                             null);
                                     }
 
                                     break;
                                 case "Boolean":
-                                    if (hshModSet.ContainsKey(string.Format("{0}{1}", key, wordCountInfo.Name)))
+                                    if (hshModSet.ContainsKey($"{key}{wordCountInfo.Name}"))
                                     {
                                         wordCountInfo.SetValue(
                                             currentSettings.Config.WordCount,
-                                            bool.Parse(
-                                                (string)hshModSet[string.Format("{0}{1}", key, wordCountInfo.Name)]),
+                                            bool.Parse((string)hshModSet[$"{key}{wordCountInfo.Name}"]),
                                             null);
                                     }
 
@@ -940,22 +902,21 @@ namespace WatchersNET.CKEditor.Utilities
                             {
                                 case "Int32":
                                 case "String":
-                                    if (hshModSet.ContainsKey(string.Format("{0}{1}", key, wordCountInfo.Name)))
+                                    if (hshModSet.ContainsKey($"{key}{wordCountInfo.Name}"))
                                     {
                                         wordCountInfo.SetValue(
                                             currentSettings.Config.AutoSave,
-                                            hshModSet[string.Format("{0}{1}", key, wordCountInfo.Name)],
+                                            hshModSet[$"{key}{wordCountInfo.Name}"],
                                             null);
                                     }
 
                                     break;
                                 case "Boolean":
-                                    if (hshModSet.ContainsKey(string.Format("{0}{1}", key, wordCountInfo.Name)))
+                                    if (hshModSet.ContainsKey($"{key}{wordCountInfo.Name}"))
                                     {
                                         wordCountInfo.SetValue(
                                             currentSettings.Config.AutoSave,
-                                            bool.Parse(
-                                                (string)hshModSet[string.Format("{0}{1}", key, wordCountInfo.Name)]),
+                                            bool.Parse((string)hshModSet[$"{key}{wordCountInfo.Name}"]),
                                             null);
                                     }
 
@@ -968,18 +929,14 @@ namespace WatchersNET.CKEditor.Utilities
             }
 
             /////////////////
-            if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.SKIN)]))
+            if (!string.IsNullOrEmpty((string)hshModSet[$"{key}{SettingConstants.SKIN}"]))
             {
-                currentSettings.Config.Skin = (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.SKIN)];
+                currentSettings.Config.Skin = (string)hshModSet[$"{key}{SettingConstants.SKIN}"];
             }
 
-            if (!string.IsNullOrEmpty(
-                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.CODEMIRRORTHEME)]))
+            if (!string.IsNullOrEmpty((string)hshModSet[$"{key}{SettingConstants.CODEMIRRORTHEME}"]))
             {
-                currentSettings.Config.CodeMirror.Theme = (string)hshModSet[string.Format(
-                    "{0}{1}",
-                    key,
-                    SettingConstants.CODEMIRRORTHEME)];
+                currentSettings.Config.CodeMirror.Theme = (string)hshModSet[$"{key}{SettingConstants.CODEMIRRORTHEME}"];
             }
 
             var listToolbarRoles = (from RoleInfo objRole in portalRoles
@@ -1040,9 +997,9 @@ namespace WatchersNET.CKEditor.Utilities
 
             currentSettings.UploadSizeRoles = listUploadSizeRoles;
 
-            if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.ROLES)]))
+            if (!string.IsNullOrEmpty((string)hshModSet[$"{key}{SettingConstants.ROLES}"]))
             {
-                var sRoles = (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.ROLES)];
+                var sRoles = (string)hshModSet[$"{key}{SettingConstants.ROLES}"];
 
                 currentSettings.BrowserRoles = sRoles;
 
@@ -1066,16 +1023,16 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.BROWSER)]))
+            if (!string.IsNullOrEmpty((string)hshModSet[$"{key}{SettingConstants.BROWSER}"]))
             {
-                currentSettings.Browser = (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.BROWSER)];
+                currentSettings.Browser = (string)hshModSet[$"{key}{SettingConstants.BROWSER}"];
 
                 switch (currentSettings.Browser)
                 {
                     case "ckfinder":
-                        foreach (string sRoleName in roles)
+                        foreach (string roleName in roles)
                         {
-                            if (PortalSecurity.IsInRoles(sRoleName))
+                            if (PortalSecurity.IsInRoles(roleName))
                             {
                                 currentSettings.BrowserMode = Browser.CKFinder;
 
@@ -1087,9 +1044,9 @@ namespace WatchersNET.CKEditor.Utilities
 
                         break;
                     case "standard":
-                        foreach (string sRoleName in roles)
+                        foreach (string roleName in roles)
                         {
-                            if (PortalSecurity.IsInRoles(sRoleName))
+                            if (PortalSecurity.IsInRoles(roleName))
                             {
                                 currentSettings.BrowserMode = Browser.StandardBrowser;
 
@@ -1106,147 +1063,118 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.INJECTJS)]))
+            if (!string.IsNullOrEmpty((string)hshModSet[$"{key}{SettingConstants.INJECTJS}"]))
             {
                 bool bResult;
-                if (bool.TryParse(
-                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.INJECTJS)],
-                    out bResult))
+                if (bool.TryParse((string)hshModSet[$"{key}{SettingConstants.INJECTJS}"], out bResult))
                 {
                     currentSettings.InjectSyntaxJs = bResult;
                 }
             }
 
-            if (!string.IsNullOrEmpty(
-                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.ALLOWEDIMAGEEXTENSIONS)]))
+            if (!string.IsNullOrEmpty((string)hshModSet[$"{key}{SettingConstants.ALLOWEDIMAGEEXTENSIONS}"]))
             {
-                currentSettings.AllowedImageExtensions = (string)hshModSet[string.Format(
-                    "{0}{1}",
-                    key,
-                    SettingConstants.ALLOWEDIMAGEEXTENSIONS)];
+                currentSettings.AllowedImageExtensions = (string)hshModSet[
+                    $"{key}{SettingConstants.ALLOWEDIMAGEEXTENSIONS}"];
             }
 
-            if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.WIDTH)]))
+            if (!string.IsNullOrEmpty((string)hshModSet[$"{key}{SettingConstants.WIDTH}"]))
             {
-                currentSettings.Config.Width = (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.WIDTH)];
+                currentSettings.Config.Width = (string)hshModSet[$"{key}{SettingConstants.WIDTH}"];
             }
 
-            if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.HEIGHT)]))
+            if (!string.IsNullOrEmpty((string)hshModSet[$"{key}{SettingConstants.HEIGHT}"]))
             {
-                currentSettings.Config.Height =
-                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.HEIGHT)];
+                currentSettings.Config.Height = (string)hshModSet[$"{key}{SettingConstants.HEIGHT}"];
             }
 
-            if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.BLANKTEXT)]))
+            if (!string.IsNullOrEmpty((string)hshModSet[$"{key}{SettingConstants.BLANKTEXT}"]))
             {
-                currentSettings.BlankText = (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.BLANKTEXT)];
+                currentSettings.BlankText = (string)hshModSet[$"{key}{SettingConstants.BLANKTEXT}"];
             }
 
-            if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.CSS)]))
+            if (!string.IsNullOrEmpty((string)hshModSet[$"{key}{SettingConstants.CSS}"]))
             {
-                currentSettings.Config.ContentsCss =
-                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.CSS)];
+                currentSettings.Config.ContentsCss = (string)hshModSet[$"{key}{SettingConstants.CSS}"];
             }
 
-            if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.TEMPLATEFILES)]))
+            if (!string.IsNullOrEmpty((string)hshModSet[$"{key}{SettingConstants.TEMPLATEFILES}"]))
             {
-                currentSettings.Config.Templates_Files = (string)hshModSet[string.Format(
-                    "{0}{1}",
-                    key,
-                    SettingConstants.TEMPLATEFILES)];
+                currentSettings.Config.Templates_Files = (string)hshModSet[$"{key}{SettingConstants.TEMPLATEFILES}"];
             }
 
-            if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.CUSTOMJSFILE)]))
+            if (!string.IsNullOrEmpty((string)hshModSet[$"{key}{SettingConstants.CUSTOMJSFILE}"]))
             {
-                currentSettings.CustomJsFile = (string)hshModSet[string.Format(
-                    "{0}{1}",
-                    key,
-                    SettingConstants.CUSTOMJSFILE)];
+                currentSettings.CustomJsFile = (string)hshModSet[$"{key}{SettingConstants.CUSTOMJSFILE}"];
             }
 
-            if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.CONFIG)]))
+            if (!string.IsNullOrEmpty((string)hshModSet[$"{key}{SettingConstants.CONFIG}"]))
             {
-                currentSettings.Config.CustomConfig =
-                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.CONFIG)];
+                currentSettings.Config.CustomConfig = (string)hshModSet[$"{key}{SettingConstants.CONFIG}"];
             }
 
-            if (!string.IsNullOrEmpty(
-                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.FILELISTPAGESIZE)]))
+            if (!string.IsNullOrEmpty((string)hshModSet[$"{key}{SettingConstants.FILELISTPAGESIZE}"]))
             {
                 currentSettings.FileListPageSize = int.Parse(
-                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.FILELISTPAGESIZE)]);
+                    (string)hshModSet[$"{key}{SettingConstants.FILELISTPAGESIZE}"]);
             }
 
-            if (!string.IsNullOrEmpty(
-                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.FILELISTVIEWMODE)]))
+            if (!string.IsNullOrEmpty((string)hshModSet[$"{key}{SettingConstants.FILELISTVIEWMODE}"]))
             {
                 currentSettings.FileListViewMode = (FileListView)Enum.Parse(
                     typeof(FileListView),
-                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.FILELISTVIEWMODE)]);
+                    (string)hshModSet[$"{key}{SettingConstants.FILELISTVIEWMODE}"]);
             }
 
-            if (!string.IsNullOrEmpty(
-                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.DEFAULTLINKMODE)]))
+            if (!string.IsNullOrEmpty((string)hshModSet[$"{key}{SettingConstants.DEFAULTLINKMODE}"]))
             {
                 currentSettings.DefaultLinkMode = (LinkMode)Enum.Parse(
                     typeof(LinkMode),
-                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.DEFAULTLINKMODE)]);
+                    (string)hshModSet[$"{key}{SettingConstants.DEFAULTLINKMODE}"]);
             }
 
-            if (!string.IsNullOrEmpty(
-                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.USEANCHORSELECTOR)]))
+            if (!string.IsNullOrEmpty((string)hshModSet[$"{key}{SettingConstants.USEANCHORSELECTOR}"]))
             {
                 bool bResult;
-                if (bool.TryParse(
-                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.USEANCHORSELECTOR)],
-                    out bResult))
+                if (bool.TryParse((string)hshModSet[$"{key}{SettingConstants.USEANCHORSELECTOR}"], out bResult))
                 {
                     currentSettings.UseAnchorSelector = bResult;
                 }
             }
 
-            if (!string.IsNullOrEmpty(
-                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.SHOWPAGELINKSTABFIRST)]))
+            if (!string.IsNullOrEmpty((string)hshModSet[$"{key}{SettingConstants.SHOWPAGELINKSTABFIRST}"]))
             {
                 bool bResult;
-                if (bool.TryParse(
-                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.SHOWPAGELINKSTABFIRST)],
-                    out bResult))
+                if (bool.TryParse((string)hshModSet[$"{key}{SettingConstants.SHOWPAGELINKSTABFIRST}"], out bResult))
                 {
                     currentSettings.ShowPageLinksTabFirst = bResult;
                 }
             }
 
-            if (!string.IsNullOrEmpty(
-                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.OVERRIDEFILEONUPLOAD)]))
+            if (!string.IsNullOrEmpty((string)hshModSet[$"{key}{SettingConstants.OVERRIDEFILEONUPLOAD}"]))
             {
                 bool bResult;
-                if (bool.TryParse(
-                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.OVERRIDEFILEONUPLOAD)],
-                    out bResult))
+                if (bool.TryParse((string)hshModSet[$"{key}{SettingConstants.OVERRIDEFILEONUPLOAD}"], out bResult))
                 {
                     currentSettings.OverrideFileOnUpload = bResult;
                 }
             }
 
-            if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.SUBDIRS)]))
+            if (!string.IsNullOrEmpty((string)hshModSet[$"{key}{SettingConstants.SUBDIRS}"]))
             {
                 bool bResult;
-                if (bool.TryParse(
-                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.SUBDIRS)],
-                    out bResult))
+                if (bool.TryParse((string)hshModSet[$"{key}{SettingConstants.SUBDIRS}"], out bResult))
                 {
                     currentSettings.SubDirs = bResult;
                 }
             }
 
-            if (!string.IsNullOrEmpty(
-                    (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.BROWSERROOTDIRID)]))
+            if (!string.IsNullOrEmpty((string)hshModSet[$"{key}{SettingConstants.BROWSERROOTDIRID}"]))
             {
                 try
                 {
                     currentSettings.BrowserRootDirId = int.Parse(
-                        (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.BROWSERROOTDIRID)]);
+                        (string)hshModSet[$"{key}{SettingConstants.BROWSERROOTDIRID}"]);
                 }
                 catch (Exception)
                 {
@@ -1254,12 +1182,11 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.UPLOADDIRID)]))
+            if (!string.IsNullOrEmpty((string)hshModSet[$"{key}{SettingConstants.UPLOADDIRID}"]))
             {
                 try
                 {
-                    currentSettings.UploadDirId = int.Parse(
-                        (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.UPLOADDIRID)]);
+                    currentSettings.UploadDirId = int.Parse((string)hshModSet[$"{key}{SettingConstants.UPLOADDIRID}"]);
                 }
                 catch (Exception)
                 {
@@ -1267,12 +1194,11 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.RESIZEWIDTH)]))
+            if (!string.IsNullOrEmpty((string)hshModSet[$"{key}{SettingConstants.RESIZEWIDTH}"]))
             {
                 try
                 {
-                    currentSettings.ResizeWidth = int.Parse(
-                        (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.RESIZEWIDTH)]);
+                    currentSettings.ResizeWidth = int.Parse((string)hshModSet[$"{key}{SettingConstants.RESIZEWIDTH}"]);
                 }
                 catch (Exception)
                 {
@@ -1280,12 +1206,12 @@ namespace WatchersNET.CKEditor.Utilities
                 }
             }
 
-            if (!string.IsNullOrEmpty((string)hshModSet[string.Format("{0}{1}", key, SettingConstants.RESIZEHEIGHT)]))
+            if (!string.IsNullOrEmpty((string)hshModSet[$"{key}{SettingConstants.RESIZEHEIGHT}"]))
             {
                 try
                 {
                     currentSettings.ResizeHeight = int.Parse(
-                        (string)hshModSet[string.Format("{0}{1}", key, SettingConstants.RESIZEHEIGHT)]);
+                        (string)hshModSet[$"{key}{SettingConstants.RESIZEHEIGHT}"]);
                 }
                 catch (Exception)
                 {
@@ -1369,11 +1295,11 @@ namespace WatchersNET.CKEditor.Utilities
                 {
                     var rolesA = rolesString.Split(';');
 
-                    foreach (var sRoleName in rolesA)
+                    foreach (var roleName in rolesA)
                     {
-                        if (Utility.IsNumeric(sRoleName))
+                        if (Utility.IsNumeric(roleName))
                         {
-                            var roleInfo = roleController.GetRoleById(portalSettings.PortalId, int.Parse(sRoleName));
+                            var roleInfo = roleController.GetRoleById(portalSettings.PortalId, int.Parse(roleName));
 
                             if (roleInfo != null)
                             {
@@ -1382,7 +1308,7 @@ namespace WatchersNET.CKEditor.Utilities
                         }
                         else
                         {
-                            roles.Add(sRoleName);
+                            roles.Add(roleName);
                         }
                     }
                 }
@@ -1393,9 +1319,9 @@ namespace WatchersNET.CKEditor.Utilities
                 switch (settings.Browser)
                 {
                     case "ckfinder":
-                        foreach (string sRoleName in roles)
+                        foreach (string roleName in roles)
                         {
-                            if (PortalSecurity.IsInRoles(sRoleName))
+                            if (PortalSecurity.IsInRoles(roleName))
                             {
                                 settings.BrowserMode = Browser.CKFinder;
 
@@ -1407,9 +1333,9 @@ namespace WatchersNET.CKEditor.Utilities
 
                         break;
                     case "standard":
-                        foreach (string sRoleName in roles)
+                        foreach (string roleName in roles)
                         {
-                            if (PortalSecurity.IsInRoles(sRoleName))
+                            if (PortalSecurity.IsInRoles(roleName))
                             {
                                 settings.BrowserMode = Browser.StandardBrowser;
 
@@ -1544,9 +1470,9 @@ namespace WatchersNET.CKEditor.Utilities
             }
 
             // Compare The User Toolbars if the User is more then One Role, and apply the Toolbar with the Highest Priority
-            var iHighestPrio = listUserUploadFileSizes.Max(toolb => toolb.Priority);
+            var highestPrio = listUserUploadFileSizes.Max(toolb => toolb.Priority);
 
-            return listUserUploadFileSizes.Find(toolbarSel => toolbarSel.Priority.Equals(iHighestPrio)).Priority;
+            return listUserUploadFileSizes.Find(toolbarSel => toolbarSel.Priority.Equals(highestPrio)).Priority;
         }
 
         #endregion

@@ -95,7 +95,7 @@ namespace WatchersNET.CKEditor.Utilities
                     var toolBarGroup = new ToolbarGroup
                                            {
                                                items = new List<string>(),
-                                               name = string.Format("Group{0}", groupId)
+                                               name = $"Group{groupId}"
                                            };
 
                     foreach (var s in group)
@@ -1054,7 +1054,6 @@ namespace WatchersNET.CKEditor.Utilities
                 textWriter.Close();
             }
         }
-
 
         #endregion
     }

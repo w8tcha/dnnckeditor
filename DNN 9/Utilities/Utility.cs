@@ -41,9 +41,8 @@ namespace WatchersNET.CKEditor.Utilities
         /// <summary>
         /// Path Validator Expression
         /// </summary>
-        private static readonly string PathValidatorExpression = string.Format(
-            "^[^{0}]+$",
-            string.Join(string.Empty, Array.ConvertAll(Path.GetInvalidPathChars(), x => Regex.Escape(x.ToString()))));
+        private static readonly string PathValidatorExpression =
+            $"^[^{string.Join(string.Empty, Array.ConvertAll(Path.GetInvalidPathChars(), x => Regex.Escape(x.ToString())))}]+$";
 
         /// <summary>
         /// Path Validator Regex
@@ -53,9 +52,8 @@ namespace WatchersNET.CKEditor.Utilities
         /// <summary>
         /// FileName Validator Expression
         /// </summary>
-        private static readonly string FileNameValidatorExpression = string.Format(
-            "^[^{0}]+$",
-            string.Join(string.Empty, Array.ConvertAll(Path.GetInvalidFileNameChars(), x => Regex.Escape(x.ToString()))));
+        private static readonly string FileNameValidatorExpression =
+            $"^[^{string.Join(string.Empty, Array.ConvertAll(Path.GetInvalidFileNameChars(), x => Regex.Escape(x.ToString())))}]+$";
 
         /// <summary>
         /// FileName Validator Regex
@@ -65,9 +63,8 @@ namespace WatchersNET.CKEditor.Utilities
         /// <summary>
         /// Path Cleaner Expression
         /// </summary>
-        private static readonly string PathCleanerExpression = string.Format(
-            "[{0}]",
-            string.Join(string.Empty, Array.ConvertAll(Path.GetInvalidPathChars(), x => Regex.Escape(x.ToString()))));
+        private static readonly string PathCleanerExpression =
+            $"[{string.Join(string.Empty, Array.ConvertAll(Path.GetInvalidPathChars(), x => Regex.Escape(x.ToString())))}]";
 
         /// <summary>
         /// Path Cleaner Regex
@@ -77,9 +74,8 @@ namespace WatchersNET.CKEditor.Utilities
         /// <summary>
         /// FileName Cleaner Expression
         /// </summary>
-        private static readonly string FileNameCleanerExpression = string.Format(
-            "[{0}]",
-            string.Join(string.Empty, Array.ConvertAll(Path.GetInvalidFileNameChars(), x => Regex.Escape(x.ToString()))));
+        private static readonly string FileNameCleanerExpression =
+            $"[{string.Join(string.Empty, Array.ConvertAll(Path.GetInvalidFileNameChars(), x => Regex.Escape(x.ToString())))}]";
 
         /// <summary>
         /// FileName Cleaner Regex
@@ -97,31 +93,31 @@ namespace WatchersNET.CKEditor.Utilities
         /// </returns>
         public static bool IsUnit(object valueToCheck)
         {
-            var sInputValue = Convert.ToString(valueToCheck);
+            var inputValue = Convert.ToString(valueToCheck);
 
-            string sNewValue;
+            string newValue;
 
-            if (sInputValue.EndsWith("px"))
+            if (inputValue.EndsWith("px"))
             {
-                sNewValue = sInputValue.Replace("px", string.Empty);
+                newValue = inputValue.Replace("px", string.Empty);
 
-                if (IsNumeric(sNewValue))
+                if (IsNumeric(newValue))
                 {
                     return true;
                 }
             }
-            else if (sInputValue.EndsWith("%"))
+            else if (inputValue.EndsWith("%"))
             {
-                sNewValue = sInputValue.Replace("%", string.Empty);
+                newValue = inputValue.Replace("%", string.Empty);
 
-                if (IsNumeric(sNewValue))
+                if (IsNumeric(newValue))
                 {
                     return true;
                 }
             }
             else
             {
-                if (IsNumeric(sInputValue))
+                if (IsNumeric(inputValue))
                 {
                     return true;
                 }
@@ -149,7 +145,6 @@ namespace WatchersNET.CKEditor.Utilities
             return numeric;
         }
         
-
         /// <summary>
         /// Validates the <paramref name="path"/>.
         /// </summary>
@@ -325,11 +320,11 @@ namespace WatchersNET.CKEditor.Utilities
         /// Converts a File Path to a file Info
         /// </summary>
         /// <param name="filePath">The file path.</param>
-        /// <param name="portalID">The portal ID.</param>
+        /// <param name="portalId">The portal ID.</param>
         /// <returns>
         /// Returns the file Info
         /// </returns>
-        public static int ConvertFilePathToFileId(string filePath, int portalID)
+        public static int ConvertFilePathToFileId(string filePath, int portalId)
         {
             var fileName = Path.GetFileName(filePath);
 
@@ -339,7 +334,7 @@ namespace WatchersNET.CKEditor.Utilities
             }
 
             var folderPath = filePath.Substring(0, filePath.LastIndexOf(fileName, StringComparison.Ordinal));
-            var folder = FolderManager.Instance.GetFolder(portalID, folderPath);
+            var folder = FolderManager.Instance.GetFolder(portalId, folderPath);
 
             var file = FileManager.Instance.GetFile(folder, fileName);
 

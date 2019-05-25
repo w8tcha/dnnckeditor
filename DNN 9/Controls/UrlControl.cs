@@ -83,11 +83,7 @@ namespace WatchersNET.CKEditor.Controls
         public string LocalResourceFile
         {
             get => string.IsNullOrEmpty(this.localResourceFile)
-                       ? string.Format(
-                           "{0}/{1}/URLControl.ascx.resx",
-                           this.TemplateSourceDirectory.Replace(
-                               "Providers/HtmlEditorProviders/CKEditor", "controls"),
-                           Localization.LocalResourceDirectory)
+                       ? $"{this.TemplateSourceDirectory.Replace("Providers/HtmlEditorProviders/CKEditor", "controls")}/{Localization.LocalResourceDirectory}/URLControl.ascx.resx"
                        : this.localResourceFile;
 
             set => this.localResourceFile = value;
@@ -137,7 +133,7 @@ namespace WatchersNET.CKEditor.Controls
                 }
 
                 url = !string.IsNullOrEmpty(this.Files.SelectedItem.Value)
-                          ? string.Format("FileID={0}", this.Files.SelectedItem.Value)
+                          ? $"FileID={this.Files.SelectedItem.Value}"
                           : string.Empty;
 
                 return url;

@@ -141,7 +141,7 @@ namespace WatchersNET.CKEditor.Objects
             this.type = "image/png";
             this.size = fileLength;
             this.progress = "1.0";
-            this.url = string.Format("{0}FileTransferHandler.ashx?f={1}", HandlerPath, fileName);
+            this.url = $"{HandlerPath}FileTransferHandler.ashx?f={fileName}";
         }
     }
 }

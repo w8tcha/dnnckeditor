@@ -1,5 +1,5 @@
 ﻿<dotnetnuke type="Package" version="5.0">
-  <packages><package name="DotNetNuke.CKHtmlEditorProvider" type="Provider" version="02.01.24">
+  <packages><package name="DotNetNuke.CKHtmlEditorProvider" type="Provider" version="02.01.25">
   <friendlyName>CKEditor Editor Provider</friendlyName>
   <description>CKEditor Editor Provider for DNN</description>
   <iconFile>~/Providers/HtmlEditorProviders/CKEditor/LogoCKEditor.png</iconFile>
@@ -108,13 +108,13 @@
     <component type="Cleanup" version="02.00.00" fileName="02.00.00.Cleanup.txt" />
   </components>
 </package>
-    <package name="CKEditor.EditorConfigManager" type="Module" version="02.01.24">
+    <package name="CKEditor.EditorConfigManager" type="Module" version="02.01.25">
       <friendlyName>CKEditor Config Manager</friendlyName>
       <description>Configuration Manager for the CKEditor Editor Provider</description>
       <owner>
         <name>Ingo Herbote</name>
         <organization>WatchersNET</organization>
-        <url>https://dnnckeditor.codeplex.com/</url>
+        <url>https://github.com/w8tcha/dnnckeditor/</url>
         <email>thewatcher@watchersnet.de</email>
       </owner>
       <iconFile>~/Providers/HtmlEditorProviders/CKEditor/CKEditorConfig.png</iconFile>

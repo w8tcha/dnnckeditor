@@ -64,11 +64,8 @@ namespace WatchersNET.CKEditor
             {
                 var page = this.Request.ServerVariables["SCRIPT_NAME"].Split('/');
 
-                var fileRoot = string.Format(
-                    "{0}/{1}/{2}.resx",
-                    this.TemplateSourceDirectory,
-                    Localization.LocalResourceDirectory,
-                    page[page.GetUpperBound(0)]);
+                var fileRoot =
+                    $"{this.TemplateSourceDirectory}/{Localization.LocalResourceDirectory}/{page[page.GetUpperBound(0)]}.resx";
 
                 return fileRoot;
             }

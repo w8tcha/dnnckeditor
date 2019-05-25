@@ -28,7 +28,7 @@ namespace WatchersNET.CKEditor.Constants
         StandardBrowser = 1,
 
         /// <summary>
-        /// ckfinder browser
+        /// CKFinder browser
         /// </summary>
         CKFinder = 2
     }

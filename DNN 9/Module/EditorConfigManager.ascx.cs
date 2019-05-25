@@ -53,9 +53,7 @@ namespace WatchersNET.CKEditor.Module
         ///   Gets the Name for the Current Resource file name
         /// </summary>
         protected string ResXFile => this.ResolveUrl(
-            string.Format(
-                "~/Providers/HtmlEditorProviders/CKEditor/{0}/Options.aspx.resx",
-                Localization.LocalResourceDirectory));
+            $"~/Providers/HtmlEditorProviders/CKEditor/{Localization.LocalResourceDirectory}/Options.aspx.resx");
 
         /// <summary>
         /// Gets or sets the editor options control
@@ -377,7 +375,7 @@ namespace WatchersNET.CKEditor.Module
         /// <param name="editorHostSettings">The editor host settings.</param>
         private void RenderPortalNode(PortalInfo portal, ModuleController moduleController, List<EditorHostSetting> editorHostSettings)
         {
-            var portalKey = string.Format("DNNCKP#{0}#", portal.PortalID);
+            var portalKey = $"DNNCKP#{portal.PortalID}#";
 
             var portalSettingsExists = SettingsUtil.CheckExistsPortalOrPageSettings(editorHostSettings, portalKey);
 
@@ -385,7 +383,7 @@ namespace WatchersNET.CKEditor.Module
             var portalNode = new TreeNode
             {
                 Text = portal.PortalName,
-                Value = string.Format("p{0}", portal.PortalID),
+                Value = $"p{portal.PortalID}",
                 ImageUrl =
                     portalSettingsExists
                         ? "../images/PortalHasSetting.png"
@@ -414,7 +412,7 @@ namespace WatchersNET.CKEditor.Module
             ModuleController moduleController,
             List<EditorHostSetting> editorHostSettings)
         {
-            var tabKey = string.Format("DNNCKT#{0}#", tabInfo.TabID);
+            var tabKey = $"DNNCKT#{tabInfo.TabID}#";
 
             var tabSettingsExists = SettingsUtil.CheckExistsPortalOrPageSettings(editorHostSettings, tabKey);
 
@@ -422,7 +420,7 @@ namespace WatchersNET.CKEditor.Module
             var tabNode = new TreeNode
                               {
                                   Text = tabInfo.TabName,
-                                  Value = string.Format("t{0}", tabInfo.TabID),
+                                  Value = $"t{tabInfo.TabID}",
                                   ImageUrl =
                                       tabSettingsExists
                                           ? "../images/PageHasSetting.png"
@@ -440,7 +438,7 @@ namespace WatchersNET.CKEditor.Module
             var modules = moduleController.GetTabModules(tabInfo.TabID).Values;
 
             foreach (var moduleNode in from moduleInfo in modules
-                                       let moduleKey = string.Format("DNNCKMI#{0}#INS#", moduleInfo.ModuleID)
+                                       let moduleKey = $"DNNCKMI#{moduleInfo.ModuleID}#INS#"
                                        let moduleSettingsExists =
                                            SettingsUtil.CheckExistsModuleSettings(moduleKey, moduleInfo.ModuleID)
                                        select
@@ -451,7 +449,7 @@ namespace WatchersNET.CKEditor.Module
                                                        moduleSettingsExists
                                                            ? "../images/ModuleHasSetting.png"
                                                            : "../images/ModuleNoSetting.png",
-                                                   Value = string.Format("m{0}", moduleInfo.ModuleID)
+                                                   Value = $"m{moduleInfo.ModuleID}"
                                                })
             {
                 tabNode.ChildNodes.Add(moduleNode);
