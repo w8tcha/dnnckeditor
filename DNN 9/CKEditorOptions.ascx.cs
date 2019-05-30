@@ -784,14 +784,14 @@ namespace WatchersNET.CKEditor
                             continue;
                         }
 
-                        var ddLToolB =
+                        var dropDownList =
                             (DropDownList)this.gvToolbars.Rows[i].Cells[1].FindControl("ddlToolbars");
 
-                        ddLToolB.ClearSelection();
+                        dropDownList.ClearSelection();
 
-                        if (ddLToolB.Items.FindByValue(objToolbRoles.Toolbar) != null)
+                        if (dropDownList.Items.FindByValue(objToolbRoles.Toolbar) != null)
                         {
-                            ddLToolB.SelectedValue = objToolbRoles.Toolbar;
+                            dropDownList.SelectedValue = objToolbRoles.Toolbar;
                         }
                     }
                 }
@@ -828,10 +828,10 @@ namespace WatchersNET.CKEditor
                 }
             }
 
-            var imporUploadSizeRoles = importedSettings.UploadSizeRoles;
+            var importedSettingsUploadSizeRoles = importedSettings.UploadSizeRoles;
 
             // Load Upload Size Setting for Each Portal Role
-            foreach (var uploadSizeRole in imporUploadSizeRoles)
+            foreach (var uploadSizeRole in importedSettingsUploadSizeRoles)
             {
                 if (uploadSizeRole.RoleId.Equals(-1))
                 {
@@ -878,17 +878,17 @@ namespace WatchersNET.CKEditor
 
             if (!string.IsNullOrEmpty(importedSettings.Config.ContentsCss))
             {
-                this.CssUrl.Url = this.ReFormatURL(importedSettings.Config.ContentsCss);
+                this.CssUrl.Url = this.ReFormatUrl(importedSettings.Config.ContentsCss);
             }
 
             if (!string.IsNullOrEmpty(importedSettings.Config.Templates_Files))
             {
-                this.TemplUrl.Url = this.ReFormatURL(importedSettings.Config.Templates_Files);
+                this.TemplUrl.Url = this.ReFormatUrl(importedSettings.Config.Templates_Files);
             }
 
             if (!string.IsNullOrEmpty(importedSettings.CustomJsFile))
             {
-                this.CustomJsFile.Url = this.ReFormatURL(importedSettings.CustomJsFile);
+                this.CustomJsFile.Url = this.ReFormatUrl(importedSettings.CustomJsFile);
             }
 
             if (!string.IsNullOrEmpty(importedSettings.BrowserRoles))
@@ -1305,9 +1305,9 @@ namespace WatchersNET.CKEditor
         /// </summary>
         private void HideAddToolbar()
         {
-            var bHideAll = !this.dDlToolbarPrio.Items.Cast<ListItem>().Any(item => item.Enabled);
+            var hideAll = !this.dDlToolbarPrio.Items.Cast<ListItem>().Any(item => item.Enabled);
 
-            if (bHideAll)
+            if (hideAll)
             {
                 this.iBAdd.Visible = false;
             }
@@ -1606,15 +1606,15 @@ namespace WatchersNET.CKEditor
             }
 
 
-            var ddLToolB = (DropDownList)e.Row.FindControl("ddlToolbars");
+            var dropDownList = (DropDownList)e.Row.FindControl("ddlToolbars");
 
-            if (ddLToolB == null)
+            if (dropDownList == null)
             {
                 return;
             }
 
-            ddLToolB.DataSource = licToolbars;
-            ddLToolB.DataBind();
+            dropDownList.DataSource = licToolbars;
+            dropDownList.DataBind();
         }
 
         /// <summary>
@@ -1995,7 +1995,7 @@ namespace WatchersNET.CKEditor
         /// <returns>
         /// Returns the Formatted Url.
         /// </returns>
-        private string ReFormatURL(string inputUrl)
+        private string ReFormatUrl(string inputUrl)
         {
             if (inputUrl.StartsWith("http://") || inputUrl.StartsWith("FileID="))
             {
@@ -2645,16 +2645,16 @@ namespace WatchersNET.CKEditor
                 $"{key}{SettingConstants.CUSTOMJSFILE}",
                 this.CustomJsFile.Url);
 
-            var sRoles = this.chblBrowsGr.Items.Cast<ListItem>()
+            var roles = this.chblBrowsGr.Items.Cast<ListItem>()
                 .Where(item => item.Selected)
                 .Aggregate(string.Empty, (current, item) => current + (item.Value + ";"));
 
-            if (sRoles != string.Empty)
+            if (roles != string.Empty)
             {
                 moduleController.UpdateModuleSetting(
                     this.ModuleId,
                     $"{key}{SettingConstants.ROLES}",
-                    sRoles);
+                    roles);
             }
 
             // Save Toolbar Setting for every Role
@@ -2662,9 +2662,9 @@ namespace WatchersNET.CKEditor
             {
                 var label = (Label)this.gvToolbars.Rows[i].Cells[0].FindControl("lblRoleName");
 
-                var ddLToolB = (DropDownList)this.gvToolbars.Rows[i].Cells[1].FindControl("ddlToolbars");
+                var dropDownList = (DropDownList)this.gvToolbars.Rows[i].Cells[1].FindControl("ddlToolbars");
 
-                if (label == null || ddLToolB == null)
+                if (label == null || dropDownList == null)
                 {
                     continue;
                 }
@@ -2674,7 +2674,7 @@ namespace WatchersNET.CKEditor
                     moduleController.UpdateModuleSetting(
                         this.ModuleId,
                         string.Format("{0}{2}#{1}", key, "-1", SettingConstants.TOOLB),
-                        ddLToolB.SelectedValue);
+                        dropDownList.SelectedValue);
                 }
                 else
                 {
@@ -2683,7 +2683,7 @@ namespace WatchersNET.CKEditor
                     moduleController.UpdateModuleSetting(
                         this.ModuleId,
                         string.Format("{0}{2}#{1}", key, objRole.RoleID, SettingConstants.TOOLB),
-                        ddLToolB.SelectedValue);
+                        dropDownList.SelectedValue);
                 }
             }
 
@@ -2999,13 +2999,13 @@ namespace WatchersNET.CKEditor
                 $"{key}{SettingConstants.CUSTOMJSFILE}",
                 this.CustomJsFile.Url);
 
-            var sRoles = this.chblBrowsGr.Items.Cast<ListItem>()
+            var roles = this.chblBrowsGr.Items.Cast<ListItem>()
                 .Where(item => item.Selected)
                 .Aggregate(string.Empty, (current, item) => current + item.Value + ";");
 
-            if (sRoles != string.Empty)
+            if (roles != string.Empty)
             {
-                Utility.AddOrUpdateEditorHostSetting($"{key}{SettingConstants.ROLES}", sRoles);
+                Utility.AddOrUpdateEditorHostSetting($"{key}{SettingConstants.ROLES}", roles);
             }
 
             // Save Toolbar Setting for every Role
@@ -3013,9 +3013,9 @@ namespace WatchersNET.CKEditor
             {
                 var label = (Label)this.gvToolbars.Rows[i].Cells[0].FindControl("lblRoleName");
 
-                var ddLToolB = (DropDownList)this.gvToolbars.Rows[i].Cells[1].FindControl("ddlToolbars");
+                var dropDownList = (DropDownList)this.gvToolbars.Rows[i].Cells[1].FindControl("ddlToolbars");
 
-                if (label == null || ddLToolB == null)
+                if (label == null || dropDownList == null)
                 {
                     continue;
                 }
@@ -3024,7 +3024,7 @@ namespace WatchersNET.CKEditor
                 {
                     Utility.AddOrUpdateEditorHostSetting(
                         $"{key}toolb#{"-1"}",
-                        ddLToolB.SelectedValue);
+                        dropDownList.SelectedValue);
                 }
                 else
                 {
@@ -3032,7 +3032,7 @@ namespace WatchersNET.CKEditor
 
                     Utility.AddOrUpdateEditorHostSetting(
                         $"{key}toolb#{objRole.RoleID}",
-                        ddLToolB.SelectedValue);
+                        dropDownList.SelectedValue);
                 }
             }
 

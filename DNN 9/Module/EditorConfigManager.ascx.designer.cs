@@ -8,11 +8,10 @@
 //------------------------------------------------------------------------------
 
 namespace WatchersNET.CKEditor.Module {
-    using System.Web.UI.WebControls;
-
+    
+    
     public partial class EditorConfigManager {
         
-
         /// <summary>
         /// ModuleHeader control.
         /// </summary>
@@ -20,9 +19,8 @@ namespace WatchersNET.CKEditor.Module {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected Label ModuleHeader;
+        protected global::System.Web.UI.WebControls.Label ModuleHeader;
         
-
         /// <summary>
         /// PortalOnlyLabel control.
         /// </summary>
@@ -30,9 +28,8 @@ namespace WatchersNET.CKEditor.Module {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected Label PortalOnlyLabel;
+        protected global::System.Web.UI.WebControls.Label PortalOnlyLabel;
         
-
         /// <summary>
         /// PortalOnly control.
         /// </summary>
@@ -40,9 +37,8 @@ namespace WatchersNET.CKEditor.Module {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected CheckBox PortalOnly;
+        protected global::System.Web.UI.WebControls.CheckBox PortalOnly;
         
-
         /// <summary>
         /// PortalTabsAndModulesTree control.
         /// </summary>
@@ -50,9 +46,8 @@ namespace WatchersNET.CKEditor.Module {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected TreeView PortalTabsAndModulesTree;
+        protected global::System.Web.UI.WebControls.TreeView PortalTabsAndModulesTree;
         
-
         /// <summary>
         /// IconLegendLabel control.
         /// </summary>
@@ -60,9 +55,8 @@ namespace WatchersNET.CKEditor.Module {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected Label IconLegendLabel;
+        protected global::System.Web.UI.WebControls.Label IconLegendLabel;
         
-
         /// <summary>
         /// PortalHasSettingImage control.
         /// </summary>
@@ -70,9 +64,8 @@ namespace WatchersNET.CKEditor.Module {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected Image PortalHasSettingImage;
+        protected global::System.Web.UI.WebControls.Image PortalHasSettingImage;
         
-
         /// <summary>
         /// PortalHasSettingLabel control.
         /// </summary>
@@ -80,9 +73,8 @@ namespace WatchersNET.CKEditor.Module {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected Label PortalHasSettingLabel;
+        protected global::System.Web.UI.WebControls.Label PortalHasSettingLabel;
         
-
         /// <summary>
         /// PortalNoSettingImage control.
         /// </summary>
@@ -90,9 +82,8 @@ namespace WatchersNET.CKEditor.Module {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected Image PortalNoSettingImage;
+        protected global::System.Web.UI.WebControls.Image PortalNoSettingImage;
         
-
         /// <summary>
         /// PortalNoSettingLabel control.
         /// </summary>
@@ -100,9 +91,8 @@ namespace WatchersNET.CKEditor.Module {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected Label PortalNoSettingLabel;
+        protected global::System.Web.UI.WebControls.Label PortalNoSettingLabel;
         
-
         /// <summary>
         /// PageHasSettingImage control.
         /// </summary>
@@ -110,9 +100,8 @@ namespace WatchersNET.CKEditor.Module {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected Image PageHasSettingImage;
+        protected global::System.Web.UI.WebControls.Image PageHasSettingImage;
         
-
         /// <summary>
         /// PageHasSettingLabel control.
         /// </summary>
@@ -120,9 +109,8 @@ namespace WatchersNET.CKEditor.Module {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected Label PageHasSettingLabel;
+        protected global::System.Web.UI.WebControls.Label PageHasSettingLabel;
         
-
         /// <summary>
         /// PageNoSettingImage control.
         /// </summary>
@@ -130,9 +118,8 @@ namespace WatchersNET.CKEditor.Module {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected Image PageNoSettingImage;
+        protected global::System.Web.UI.WebControls.Image PageNoSettingImage;
         
-
         /// <summary>
         /// PageNoSettingLabel control.
         /// </summary>
@@ -140,9 +127,8 @@ namespace WatchersNET.CKEditor.Module {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected Label PageNoSettingLabel;
+        protected global::System.Web.UI.WebControls.Label PageNoSettingLabel;
         
-
         /// <summary>
         /// ModuleHasSettingImage control.
         /// </summary>
@@ -150,9 +136,8 @@ namespace WatchersNET.CKEditor.Module {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected Image ModuleHasSettingImage;
+        protected global::System.Web.UI.WebControls.Image ModuleHasSettingImage;
         
-
         /// <summary>
         /// ModuleHasSettingLabel control.
         /// </summary>
@@ -160,9 +145,8 @@ namespace WatchersNET.CKEditor.Module {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected Label ModuleHasSettingLabel;
+        protected global::System.Web.UI.WebControls.Label ModuleHasSettingLabel;
         
-
         /// <summary>
         /// ModuleNoSettingImage control.
         /// </summary>
@@ -170,9 +154,8 @@ namespace WatchersNET.CKEditor.Module {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected Image ModuleNoSettingImage;
+        protected global::System.Web.UI.WebControls.Image ModuleNoSettingImage;
         
-
         /// <summary>
         /// ModuleNoSettingLabel control.
         /// </summary>
@@ -180,9 +163,8 @@ namespace WatchersNET.CKEditor.Module {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected Label ModuleNoSettingLabel;
+        protected global::System.Web.UI.WebControls.Label ModuleNoSettingLabel;
         
-
         /// <summary>
         /// OptionsPlaceHolder control.
         /// </summary>
@@ -190,9 +172,8 @@ namespace WatchersNET.CKEditor.Module {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected PlaceHolder OptionsPlaceHolder;
+        protected global::System.Web.UI.WebControls.PlaceHolder OptionsPlaceHolder;
         
-
         /// <summary>
         /// ModuleInstanceInfoPlaceHolder control.
         /// </summary>
@@ -200,9 +181,8 @@ namespace WatchersNET.CKEditor.Module {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected PlaceHolder ModuleInstanceInfoPlaceHolder;
+        protected global::System.Web.UI.WebControls.PlaceHolder ModuleInstanceInfoPlaceHolder;
         
-
         /// <summary>
         /// ModuleInstanceInfo control.
         /// </summary>
@@ -210,6 +190,6 @@ namespace WatchersNET.CKEditor.Module {
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected Label ModuleInstanceInfo;
+        protected global::System.Web.UI.WebControls.Label ModuleInstanceInfo;
     }
 }

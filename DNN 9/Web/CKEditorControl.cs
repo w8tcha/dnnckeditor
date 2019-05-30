@@ -732,9 +732,7 @@ namespace WatchersNET.CKEditor.Web
 
             while (ctl != null)
             {
-                var portalModuleBase = ctl as PortalModuleBase;
-
-                if (portalModuleBase != null)
+                if (ctl is PortalModuleBase portalModuleBase)
                 {
                     if (portalModuleBase.TabModuleId == Null.NullInteger)
                     {
@@ -769,9 +767,7 @@ namespace WatchersNET.CKEditor.Web
         /// </returns>
         public bool HasRenderedTextArea(Control control)
         {
-            var editorControl = control as CKEditorControl;
-
-            if (editorControl != null && editorControl.IsRendered)
+            if (control is CKEditorControl editorControl && editorControl.IsRendered)
             {
                 return true;
             }
@@ -1406,9 +1402,7 @@ namespace WatchersNET.CKEditor.Web
                         @"if (CKEDITOR && CKEDITOR.instances && CKEDITOR.instances.{0}) {{ CKEDITOR.instances.{0}.updateElement(); CKEDITOR.instances.{0}.destroy(); }}",
                         editorFixedId);
 
-                this.RegisterOnSubmitStatement(
-                    this.GetType(),
-                    $"CKEditor_OnAjaxSubmit_{editorFixedId}", postBackScript);
+                this.RegisterOnSubmitStatement(this.GetType(), $"CKEditor_OnAjaxSubmit_{editorFixedId}", postBackScript);
             }
 
             var editorScript = new StringBuilder();
