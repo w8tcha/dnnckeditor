@@ -4,9 +4,12 @@
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\MicrosoftAjax\AjaxMin.tasks" />
 
   <Target Name="PackageModule" Condition=" '$(Configuration)|$(Platform)' == 'Deploy|AnyCPU' ">
-    <GetAssemblyIdentity AssemblyFiles="$(MSBuildProjectDirectory)\Install\bin\WatchersNET.CKEditor.dll">
-      <Output TaskParameter="Assemblies" ItemName="AssemblyIdentities"/>
-    </GetAssemblyIdentity>
+    <XmlRead Prefix="n"
+             Namespace="http://schemas.microsoft.com/developer/msbuild/2003"
+             XPath="dotnetnuke/packages/package[starts-with(@name,'DotNetNuke.CKHtmlEditorProvider')]/@version"
+             XmlFileName="$(MSBuildProjectDirectory)\Install\$(DNNFileName).dnn">
+      <Output TaskParameter="Value" PropertyName="Version" />
+    </XmlRead>
     <ItemGroup>
       <DefaultExclude Include="**\.svn\**" />
       <DefaultExclude Include="**\bin\**" />
@@ -155,9 +158,9 @@
       <Output TaskParameter="Include" ItemName="OutputContent" />
     </CreateItem>
     <!-- Create the Install package -->
-    <Zip Files="@(OutputContent)" WorkingDirectory="$(MSBuildProjectDirectory)\Package" ZipFileName="$(PackageName)_%(AssemblyIdentities.Version)_Install_DNN9.$(Extension)" />
+    <Zip Files="@(OutputContent)" WorkingDirectory="$(MSBuildProjectDirectory)\Package" ZipFileName="$(PackageName)_$(Version)_Install_DNN9.$(Extension)" />
     <!-- Copy the Install package to the deploy folder -->
-    <Copy SourceFiles="$(MSBuildProjectDirectory)\$(PackageName)_%(AssemblyIdentities.Version)_Install_DNN9.$(Extension)" DestinationFolder="$(MSBuildProjectDirectory)/../deploy" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\$(PackageName)_$(Version)_Install_DNN9.$(Extension)" DestinationFolder="$(MSBuildProjectDirectory)/../deploy" />
 
     <RemoveDir Directories ="$(MSBuildProjectDirectory)\Package" />
 
@@ -165,7 +168,7 @@
     <RemoveDir Directories ="$(MSBuildProjectDirectory)\ResourcesZip" ContinueOnError="true" />
 
     <Delete Files="$(MSBuildProjectDirectory)\Resources.$(Extension)" />
-    <Delete Files="$(MSBuildProjectDirectory)\$(PackageName)_%(AssemblyIdentities.Version)_Install_DNN9.$(Extension)" />
+    <Delete Files="$(MSBuildProjectDirectory)\$(PackageName)_$(Version)_Install_DNN9.$(Extension)" />
 
     <!-- create the SOURCE RESOURCES.ZIP file -->
     <Copy SourceFiles="@(SourceInclude)" DestinationFolder="$(MSBuildProjectDirectory)\Package\%(RecursiveDir)" />
@@ -174,10 +177,10 @@
       <Output TaskParameter="Include" ItemName="OutputSource" />
     </CreateItem>
 
-    <Zip Files="@(OutputSource)" WorkingDirectory="$(MSBuildProjectDirectory)\Package" ZipFileName="$(PackageName)_%(AssemblyIdentities.Version)_Source.$(Extension)" />
-    <Copy SourceFiles="$(MSBuildProjectDirectory)\$(PackageName)_%(AssemblyIdentities.Version)_Source.$(Extension)" DestinationFolder="$(MSBuildProjectDirectory)/../deploy" />
+    <Zip Files="@(OutputSource)" WorkingDirectory="$(MSBuildProjectDirectory)\Package" ZipFileName="$(PackageName)_$(Version)_Source.$(Extension)" />
+    <Copy SourceFiles="$(MSBuildProjectDirectory)\$(PackageName)_$(Version)_Source.$(Extension)" DestinationFolder="$(MSBuildProjectDirectory)/../deploy" />
 
-    <Delete Files="$(MSBuildProjectDirectory)\$(PackageName)_%(AssemblyIdentities.Version)_Source.$(Extension)" />
+    <Delete Files="$(MSBuildProjectDirectory)\$(PackageName)_$(Version)_Source.$(Extension)" />
 
     <RemoveDir Directories ="$(MSBuildProjectDirectory)\Package" />
 
