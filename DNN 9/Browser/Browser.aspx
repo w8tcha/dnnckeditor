@@ -334,7 +334,7 @@
                   </ul>
                 </FooterTemplate>
               </asp:Repeater>
-              <asp:HiddenField runat="server" ID="SelectedFile" EnableViewState="True" Value=""/>
+              <asp:HiddenField runat="server" ID="SelectedFile" EnableViewState="True" ViewStateMode="Enabled"/>
             </div>
             <wnet:Pager id="PagerFileLinks" runat="server" OnPageChanged="PagerFileLinks_PageChanged"></wnet:Pager>
           </td>
@@ -389,17 +389,12 @@
                 url: "FileUploader.ashx",
                 acceptFileTypes: new RegExp('(\.|\/)(' + '<%= this.AcceptFileTypes %>' + ')', 'i'),
                 maxFileSize: maxFileSize,
-                progressall: function (e, data) {
-                    var progress = parseInt(data.loaded / data.total * 100, 10);
-                    if (progress == 100) {
-                        __doPostBack('cmdUploadNow', '');
-                    }
-                },
-                completed: function (e, data) {
+                completed: function(e, data) {
                     if (data.result[0].name != null) {
                         $('#' + '<%= this.SelectedFile.ClientID %>').val(data.result[0].name);
                     }
-                    
+
+                    __doPostBack('cmdUploadNow', '');
                 },
                 dropZone: $('#dropzone')
             }).bind('fileuploadsubmit',

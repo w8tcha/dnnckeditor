@@ -25,6 +25,7 @@ namespace WatchersNET.CKEditor.Browser
     using System.Net;
     using System.Text;
     using System.Text.RegularExpressions;
+    using System.Threading;
     using System.Web;
     using System.Web.Script.Serialization;
     using System.Web.Script.Services;
@@ -125,9 +126,8 @@ namespace WatchersNET.CKEditor.Browser
         /// <summary>
         ///   Gets Current Language from Url
         /// </summary>
-        protected string LanguageCode => !string.IsNullOrEmpty(this.request.QueryString["lang"])
-                                             ? this.request.QueryString["lang"]
-                                             : "en-US";
+        protected string LanguageCode =>
+            !string.IsNullOrEmpty(this.request.QueryString["lang"]) ? this.request.QueryString["lang"] : "en-US";
 
         /// <summary>
         /// Gets the Name for the Current Resource file name
@@ -154,10 +154,11 @@ namespace WatchersNET.CKEditor.Browser
         /// <value>
         /// The maximum size of the upload.
         /// </value>
-        protected long MaxUploadSize => this.currentSettings.UploadFileSizeLimit > 0
-                                        && this.currentSettings.UploadFileSizeLimit <= Utility.GetMaxUploadSize()
-                                            ? this.currentSettings.UploadFileSizeLimit
-                                            : Utility.GetMaxUploadSize();
+        protected long MaxUploadSize =>
+            this.currentSettings.UploadFileSizeLimit > 0
+            && this.currentSettings.UploadFileSizeLimit <= Utility.GetMaxUploadSize()
+                ? this.currentSettings.UploadFileSizeLimit
+                : Utility.GetMaxUploadSize();
 
         /// <summary>
         /// Gets the get folder information identifier.
@@ -165,7 +166,8 @@ namespace WatchersNET.CKEditor.Browser
         /// <value>
         /// The get folder information identifier.
         /// </value>
-        protected int GetFolderInfoID => Utility.ConvertFilePathToFolderInfo(this.lblCurrentDir.Text, this._portalSettings).FolderID;
+        protected int GetFolderInfoID =>
+            Utility.ConvertFilePathToFolderInfo(this.lblCurrentDir.Text, this._portalSettings).FolderID;
 
         /// <summary>
         /// Gets or sets the files table.
@@ -239,13 +241,11 @@ namespace WatchersNET.CKEditor.Browser
             }
 
             // Get Folder Info Secure?
-            var isSecure =
-                this.GetStorageLocationType(currentFolderInfo.FolderID).Equals(
-                    FolderController.StorageLocationTypes.SecureFileSystem);
+            var isSecure = this.GetStorageLocationType(currentFolderInfo.FolderID)
+                .Equals(FolderController.StorageLocationTypes.SecureFileSystem);
 
-            var isDatabaseSecure =
-                this.GetStorageLocationType(currentFolderInfo.FolderID).Equals(
-                    FolderController.StorageLocationTypes.DatabaseSecure);
+            var isDatabaseSecure = this.GetStorageLocationType(currentFolderInfo.FolderID)
+                .Equals(FolderController.StorageLocationTypes.DatabaseSecure);
 
             var files = FolderManager.Instance.GetFiles(currentFolderInfo).ToList();
 
@@ -276,16 +276,18 @@ namespace WatchersNET.CKEditor.Browser
                 {
                     case "Image":
                         {
-                            foreach (var dr in
-                                from sAllowExt in this.allowedImageExtensions
-                                where name.ToLower().EndsWith(sAllowExt)
-                                select filesTable.NewRow())
+                            foreach (var dr in from sAllowExt in this.allowedImageExtensions
+                                               where name.ToLower().EndsWith(sAllowExt)
+                                               select filesTable.NewRow())
                             {
                                 if (isSecure || isDatabaseSecure)
                                 {
                                     var link = $"fileID={fileItem.FileId}";
 
-                                    dr["PictureURL"] = Globals.LinkClick(link, int.Parse(this.request.QueryString["tabid"]), Null.NullInteger);
+                                    dr["PictureURL"] = Globals.LinkClick(
+                                        link,
+                                        int.Parse(this.request.QueryString["tabid"]),
+                                        Null.NullInteger);
                                 }
                                 else
                                 {
@@ -305,10 +307,9 @@ namespace WatchersNET.CKEditor.Browser
                         break;
                     case "Flash":
                         {
-                            foreach (var dr in
-                                from sAllowExt in this.allowedFlashExt
-                                where name.ToLower().EndsWith(sAllowExt)
-                                select filesTable.NewRow())
+                            foreach (var dr in from sAllowExt in this.allowedFlashExt
+                                               where name.ToLower().EndsWith(sAllowExt)
+                                               select filesTable.NewRow())
                             {
                                 dr["PictureURL"] = "images/types/swf.png";
 
@@ -355,7 +356,10 @@ namespace WatchersNET.CKEditor.Browser
                                 {
                                     var link = $"fileID={fileItem.FileId}";
 
-                                    dr["PictureURL"] = Globals.LinkClick(link, int.Parse(this.request.QueryString["tabid"]), Null.NullInteger);
+                                    dr["PictureURL"] = Globals.LinkClick(
+                                        link,
+                                        int.Parse(this.request.QueryString["tabid"]),
+                                        Null.NullInteger);
                                 }
                                 else
                                 {
@@ -492,7 +496,9 @@ namespace WatchersNET.CKEditor.Browser
                 var tabController = new TabController();
 
                 var selectTab = tabController.GetTab(
-                    int.Parse(this.dnntreeTabs.SelectedValue), this._portalSettings.PortalId, true);
+                    int.Parse(this.dnntreeTabs.SelectedValue),
+                    this._portalSettings.PortalId,
+                    true);
 
                 string fileName = null;
                 var domainName = $"http://{Globals.GetDomainName(this.Request, true)}";
@@ -506,11 +512,11 @@ namespace WatchersNET.CKEditor.Browser
                                           $"{Globals.ApplicationURL(selectTab.TabID)}&language={this.LanguageList.SelectedValue}",
                                           this._portalSettings)
                                       : Globals.FriendlyUrl(
-                                          selectTab, Globals.ApplicationURL(selectTab.TabID), this._portalSettings);
+                                          selectTab,
+                                          Globals.ApplicationURL(selectTab.TabID),
+                                          this._portalSettings);
 
-                var locale = localeSelected
-                                 ? $"language/{this.LanguageList.SelectedValue}/"
-                                 : string.Empty;
+                var locale = localeSelected ? $"language/{this.LanguageList.SelectedValue}/" : string.Empty;
 
                 // Relative or Absolute Url
                 switch (this.rblLinkType.SelectedValue)
@@ -521,14 +527,12 @@ namespace WatchersNET.CKEditor.Browser
                             {
                                 fileName = friendlyUrl;
 
-                                fileName =
-                                    Globals.ResolveUrl(
-                                        Regex.Replace(fileName, domainName, "~", RegexOptions.IgnoreCase));
+                                fileName = Globals.ResolveUrl(
+                                    Regex.Replace(fileName, domainName, "~", RegexOptions.IgnoreCase));
                             }
                             else
                             {
-                                fileName =
-                                    Globals.ResolveUrl($"~/tabid/{selectTab.TabID}/{locale}Default.aspx");
+                                fileName = Globals.ResolveUrl($"~/tabid/{selectTab.TabID}/{locale}Default.aspx");
                             }
 
                             break;
@@ -540,7 +544,8 @@ namespace WatchersNET.CKEditor.Browser
                             {
                                 fileName = friendlyUrl;
 
-                                fileName = Globals.ResolveUrl(Regex.Replace(fileName, domainName, "~", RegexOptions.IgnoreCase));
+                                fileName = Globals.ResolveUrl(
+                                    Regex.Replace(fileName, domainName, "~", RegexOptions.IgnoreCase));
 
                                 fileName =
                                     $"{HttpContext.Current.Request.Url.Scheme}://{HttpContext.Current.Request.Url.Authority}{fileName}";
@@ -548,7 +553,10 @@ namespace WatchersNET.CKEditor.Browser
                             else
                             {
                                 fileName = string.Format(
-                                    "{2}/tabid/{0}/{1}Default.aspx", selectTab.TabID, locale, domainName);
+                                    "{2}/tabid/{0}/{1}Default.aspx",
+                                    selectTab.TabID,
+                                    locale,
+                                    domainName);
                             }
                         }
 
@@ -564,7 +572,7 @@ namespace WatchersNET.CKEditor.Browser
 
                             if (fileName.Contains("&language"))
                             {
-                                fileName = fileName.Remove(fileName.IndexOf("&language"));
+                                fileName = fileName.Remove(fileName.IndexOf("&language", StringComparison.Ordinal));
                             }
 
                             break;
@@ -577,7 +585,7 @@ namespace WatchersNET.CKEditor.Browser
 
                             if (fileName.Contains("&language"))
                             {
-                                fileName = fileName.Remove(fileName.IndexOf("&language"));
+                                fileName = fileName.Remove(fileName.IndexOf("&language", StringComparison.Ordinal));
                             }
 
                             break;
@@ -625,7 +633,11 @@ namespace WatchersNET.CKEditor.Browser
                             {
                                 var link = $"fileID={fileInfo.FileId}";
 
-                                fileName = Globals.LinkClick(link, int.Parse(this.request.QueryString["tabid"]), Null.NullInteger, this.TrackClicks.Checked);
+                                fileName = Globals.LinkClick(
+                                    link,
+                                    int.Parse(this.request.QueryString["tabid"]),
+                                    Null.NullInteger,
+                                    this.TrackClicks.Checked);
                                 filePath = string.Empty;
 
                                 break;
@@ -675,9 +687,7 @@ namespace WatchersNET.CKEditor.Browser
         {
             if (!string.IsNullOrEmpty(fileUrl))
             {
-                fileUrl = !fileUrl.EndsWith("/")
-                               ? $"{fileUrl}/{fileName}"
-                               : $"{fileUrl}{fileName}";
+                fileUrl = !fileUrl.EndsWith("/") ? $"{fileUrl}/{fileName}" : $"{fileUrl}{fileName}";
             }
             else
             {
@@ -820,8 +830,9 @@ namespace WatchersNET.CKEditor.Browser
 
             if (!string.IsNullOrEmpty(this.request.QueryString["mode"]))
             {
-                this.currentSettings.SettingMode =
-                    (SettingsMode)Enum.Parse(typeof(SettingsMode), this.request.QueryString["mode"]);
+                this.currentSettings.SettingMode = (SettingsMode)Enum.Parse(
+                    typeof(SettingsMode),
+                    this.request.QueryString["mode"]);
             }
 
             var providerConfiguration = ProviderConfiguration.GetProviderConfiguration("htmlEditor");
@@ -947,8 +958,7 @@ namespace WatchersNET.CKEditor.Browser
                                         this.panPageMode.Visible = true;
 
                                         this.TrackClicks.Visible = false;
-                                        this.lblModus.Text =
-                                            $"Browser-Modus: {$"Page {this.browserModus}"}";
+                                        this.lblModus.Text = $"Browser-Modus: {$"Page {this.browserModus}"}";
                                         this.title.InnerText = $"{this.lblModus.Text} - WatchersNET.FileBrowser";
 
                                         this.RenderTabs();
@@ -984,13 +994,13 @@ namespace WatchersNET.CKEditor.Browser
                 if (command != null)
                 {
                     if (!command.Equals("FileUpload") && !command.Equals("FlashUpload")
-                        && !command.Equals("ImageUpload") && !command.Equals("ImageAutoUpload"))
+                                                      && !command.Equals("ImageUpload")
+                                                      && !command.Equals("ImageAutoUpload"))
                     {
                         return;
                     }
 
-                    var uploadedFile =
-                        HttpContext.Current.Request.Files[HttpContext.Current.Request.Files.AllKeys[0]];
+                    var uploadedFile = HttpContext.Current.Request.Files[HttpContext.Current.Request.Files.AllKeys[0]];
 
                     if (uploadedFile == null)
                     {
@@ -1096,9 +1106,6 @@ namespace WatchersNET.CKEditor.Browser
         protected void Syncronize_Click(object sender, EventArgs e)
         {
             this.SyncCurrentFolder();
-
-            // Reload Folder
-            this.ShowFilesIn(this.lblCurrentDir.Text);
         }
 
         /// <summary>
@@ -1117,9 +1124,9 @@ namespace WatchersNET.CKEditor.Browser
 
             var thumbFolder = Path.Combine(this.lblCurrentDir.Text, "_thumbs");
 
-            var thumbPath =
-                Path.Combine(thumbFolder, this.lblFileName.Text).Replace(
-                    this.lblFileName.Text.Substring(this.lblFileName.Text.LastIndexOf(".", StringComparison.Ordinal)), ".png");
+            var thumbPath = Path.Combine(thumbFolder, this.lblFileName.Text).Replace(
+                this.lblFileName.Text.Substring(this.lblFileName.Text.LastIndexOf(".", StringComparison.Ordinal)),
+                ".png");
 
             try
             {
@@ -1135,9 +1142,8 @@ namespace WatchersNET.CKEditor.Browser
             {
                 this.Response.Write("<script type=\"text/javascript\">");
 
-                var message =
-                    exception.Message.Replace("'", string.Empty).Replace("\r\n", string.Empty).Replace(
-                        "\n", string.Empty).Replace("\r", string.Empty);
+                var message = exception.Message.Replace("'", string.Empty).Replace("\r\n", string.Empty)
+                    .Replace("\n", string.Empty).Replace("\r", string.Empty);
 
                 this.Response.Write($"javascript:alert('{this.Context.Server.HtmlEncode(message)}');");
 
@@ -1202,7 +1208,10 @@ namespace WatchersNET.CKEditor.Browser
             this.panLinkMode.Visible = false;
             this.BrowserMode.Visible = false;
 
-            this.lblResizeHeader.Text = Localization.GetString("lblResizeHeader.Text", this.ResXFile, this.LanguageCode);
+            this.lblResizeHeader.Text = Localization.GetString(
+                "lblResizeHeader.Text",
+                this.ResXFile,
+                this.LanguageCode);
             this.title.InnerText = $"{this.lblResizeHeader.Text} - WatchersNET.FileBrowser";
 
             // Hide all Unwanted Elements from the Image Editor
@@ -1213,31 +1222,31 @@ namespace WatchersNET.CKEditor.Browser
             this.lblCropInfo.Visible = false;
 
             ////
-            var sFilePath = Path.Combine(this.lblCurrentDir.Text, this.lblFileName.Text);
+            var filePath = Path.Combine(this.lblCurrentDir.Text, this.lblFileName.Text);
 
-            var sFileNameNoExt = Path.GetFileNameWithoutExtension(sFilePath);
+            var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(filePath);
 
-            this.txtThumbName.Text = $"{sFileNameNoExt}_resized";
+            this.txtThumbName.Text = $"{fileNameWithoutExtension}_resized";
 
-            var sExtension = Path.GetExtension(sFilePath);
-            sExtension = sExtension.TrimStart('.');
+            var extension = Path.GetExtension(filePath);
+            extension = extension.TrimStart('.');
 
-            var bEnable = this.allowedImageExtensions.Any(sAllowExt => sAllowExt.Equals(sExtension.ToLower()));
+            var enable = this.allowedImageExtensions.Any(sAllowExt => sAllowExt.Equals(extension.ToLower()));
 
-            if (!bEnable)
+            if (!enable)
             {
                 return;
             }
 
-            var fs = new FileStream(sFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+            var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
 
             var image = Image.FromStream(fs);
 
-            var sbScript1 = new StringBuilder();
+            var script1 = new StringBuilder();
 
             // Show Preview Images
-            this.imgOriginal.ImageUrl = MapUrl(sFilePath);
-            this.imgResized.ImageUrl = MapUrl(sFilePath);
+            this.imgOriginal.ImageUrl = MapUrl(filePath);
+            this.imgResized.ImageUrl = MapUrl(filePath);
 
             var w = image.Width;
             var h = image.Height;
@@ -1266,46 +1275,46 @@ namespace WatchersNET.CKEditor.Browser
                 newHeight = image.Height;
             }
 
-            int iDefaultWidth, iDefaultHeight;
+            int defaultWidth, defaultHeight;
 
             if (this.currentSettings.ResizeWidth > 0)
             {
-                iDefaultWidth = this.currentSettings.ResizeWidth;
+                defaultWidth = this.currentSettings.ResizeWidth;
 
                 // Check if Default Value is greater the Image Value
-                if (iDefaultWidth > image.Width)
+                if (defaultWidth > image.Width)
                 {
-                    iDefaultWidth = image.Width;
+                    defaultWidth = image.Width;
                 }
             }
             else
             {
-                iDefaultWidth = (int)newWidth;
+                defaultWidth = (int)newWidth;
             }
 
             if (this.currentSettings.ResizeHeight > 0)
             {
-                iDefaultHeight = this.currentSettings.ResizeHeight;
+                defaultHeight = this.currentSettings.ResizeHeight;
 
                 // Check if Default Value is greater the Image Value
-                if (iDefaultHeight > image.Height)
+                if (defaultHeight > image.Height)
                 {
-                    iDefaultHeight = image.Height;
+                    defaultHeight = image.Height;
                 }
             }
             else
             {
-                iDefaultHeight = (int)newHeight;
+                defaultHeight = (int)newHeight;
             }
 
-            this.txtHeight.Text = iDefaultHeight.ToString();
-            this.txtWidth.Text = iDefaultWidth.ToString();
+            this.txtHeight.Text = defaultHeight.ToString();
+            this.txtWidth.Text = defaultWidth.ToString();
 
             this.imgOriginal.Height = (int)newHeight;
             this.imgOriginal.Width = (int)newWidth;
 
-            this.imgResized.Height = iDefaultHeight;
-            this.imgResized.Width = iDefaultWidth;
+            this.imgResized.Height = defaultHeight;
+            this.imgResized.Width = defaultWidth;
 
             this.imgOriginal.ToolTip = Localization.GetString("imgOriginal.Text", this.ResXFile, this.LanguageCode);
             this.imgOriginal.AlternateText = this.imgOriginal.ToolTip;
@@ -1313,15 +1322,19 @@ namespace WatchersNET.CKEditor.Browser
             this.imgResized.ToolTip = Localization.GetString("imgResized.Text", this.ResXFile, this.LanguageCode);
             this.imgResized.AlternateText = this.imgResized.ToolTip;
 
-            sbScript1.Append("ResizeMe('#imgResized', 360, 300);");
+            script1.Append("ResizeMe('#imgResized', 360, 300);");
 
             //////////////
-            sbScript1.AppendFormat(
-                "SetupSlider('#SliderWidth', 1, {0}, 1, 'horizontal', {1}, '#txtWidth');", image.Width, iDefaultWidth);
-            sbScript1.AppendFormat(
-                "SetupSlider('#SliderHeight', 1, {0}, 1, 'vertical', {1}, '#txtHeight');", image.Height, iDefaultHeight);
+            script1.AppendFormat(
+                "SetupSlider('#SliderWidth', 1, {0}, 1, 'horizontal', {1}, '#txtWidth');",
+                image.Width,
+                defaultWidth);
+            script1.AppendFormat(
+                "SetupSlider('#SliderHeight', 1, {0}, 1, 'vertical', {1}, '#txtHeight');",
+                image.Height,
+                defaultHeight);
 
-            this.Page.ClientScript.RegisterStartupScript(this.GetType(), "SliderScript", sbScript1.ToString(), true);
+            this.Page.ClientScript.RegisterStartupScript(this.GetType(), "SliderScript", script1.ToString(), true);
 
             image.Dispose();
         }
@@ -1373,12 +1386,12 @@ namespace WatchersNET.CKEditor.Browser
         /// </returns>
         private static string MapUrl(string sPath)
         {
-            var sAppPath = HttpContext.Current.Server.MapPath("~");
+            var appPath = HttpContext.Current.Server.MapPath("~");
 
-            var sUrl =
-                $"{HttpContext.Current.Request.ApplicationPath + sPath.Replace(sAppPath, string.Empty).Replace("\\", "/")}";
+            var url =
+                $"{HttpContext.Current.Request.ApplicationPath + sPath.Replace(appPath, string.Empty).Replace("\\", "/")}";
 
-            return sUrl;
+            return url;
         }
 
         /// <summary>
@@ -1601,20 +1614,18 @@ namespace WatchersNET.CKEditor.Browser
                 return;
             }
 
-            foreach (
-                var folderPermission in from PermissionInfo permission in PermissionController.GetPermissionsByFolder()
-                                        where
-                                            permission.PermissionKey.ToUpper() == "READ"
-                                            || permission.PermissionKey.ToUpper() == "WRITE"
-                                            || permission.PermissionKey.ToUpper() == "BROWSE"
-                                        select
-                                            new FolderPermissionInfo(permission)
-                                            {
-                                                FolderID = folderInfo.FolderID,
-                                                UserID = currentUserInfo.UserID,
-                                                RoleID = Null.NullInteger,
-                                                AllowAccess = true
-                                            })
+            foreach (var folderPermission in from PermissionInfo permission in
+                                                 PermissionController.GetPermissionsByFolder()
+                                             where permission.PermissionKey.ToUpper() == "READ"
+                                                   || permission.PermissionKey.ToUpper() == "WRITE"
+                                                   || permission.PermissionKey.ToUpper() == "BROWSE"
+                                             select new FolderPermissionInfo(permission)
+                                                        {
+                                                            FolderID = folderInfo.FolderID,
+                                                            UserID = currentUserInfo.UserID,
+                                                            RoleID = Null.NullInteger,
+                                                            AllowAccess = true
+                                                        })
             {
                 folderInfo.FolderPermissions.Add(folderPermission);
             }
@@ -1637,7 +1648,9 @@ namespace WatchersNET.CKEditor.Browser
 
             this.rblLinkType.Items[2].Text = Localization.GetString("lnkClick.Text", this.ResXFile, this.LanguageCode);
             this.rblLinkType.Items[3].Text = Localization.GetString(
-                "lnkAbsClick.Text", this.ResXFile, this.LanguageCode);
+                "lnkAbsClick.Text",
+                this.ResXFile,
+                this.LanguageCode);
         }
 
         /// <summary>
@@ -1651,12 +1664,9 @@ namespace WatchersNET.CKEditor.Browser
             var dirInfo = new DirectoryInfo(currentFolderInfo.PhysicalPath);
 
             var folderNode = new TreeNode
-            {
-                Text = dirInfo.Name,
-                Value = dirInfo.FullName,
-                
-               ImageUrl = "Images/folder.gif"
-            };
+                                 {
+                                     Text = dirInfo.Name, Value = dirInfo.FullName, ImageUrl = "Images/folder.gif"
+                                 };
 
             /*switch (this.GetStorageLocationType(currentFolderInfo.PhysicalPath))
             {
@@ -1678,8 +1688,7 @@ namespace WatchersNET.CKEditor.Browser
 
             var folders = FolderManager.Instance.GetFolders(currentFolderInfo);
 
-            foreach (var node in
-                folders.Cast<FolderInfo>().Select(this.RenderFolder).Where(node => node != null))
+            foreach (var node in folders.Cast<FolderInfo>().Select(this.RenderFolder).Where(node => node != null))
             {
                 folderNode.ChildNodes.Add(node);
             }
@@ -1706,7 +1715,7 @@ namespace WatchersNET.CKEditor.Browser
         /// </returns>
         private PortalSettings GetPortalSettings()
         {
-            int iTabId = 0, iPortalId = 0;
+            int tabId = 0, portalId = 0;
 
             PortalSettings portalSettings;
 
@@ -1714,21 +1723,21 @@ namespace WatchersNET.CKEditor.Browser
             {
                 if (this.request.QueryString["tabid"] != null)
                 {
-                    iTabId = int.Parse(this.request.QueryString["tabid"]);
+                    tabId = int.Parse(this.request.QueryString["tabid"]);
                 }
 
                 if (this.request.QueryString["PortalID"] != null)
                 {
-                    iPortalId = int.Parse(this.request.QueryString["PortalID"]);
+                    portalId = int.Parse(this.request.QueryString["PortalID"]);
                 }
 
-                var sDomainName = Globals.GetDomainName(this.Request, true);
+                var domainName = Globals.GetDomainName(this.Request, true);
 
-                var sPortalAlias = PortalAliasController.GetPortalAliasByPortal(iPortalId, sDomainName);
+                var portalAlias = PortalAliasController.GetPortalAliasByPortal(portalId, domainName);
 
-                var objPortalAliasInfo = PortalAliasController.Instance.GetPortalAlias(sPortalAlias);
+                var objPortalAliasInfo = PortalAliasController.Instance.GetPortalAlias(portalAlias);
 
-                portalSettings = new PortalSettings(iTabId, objPortalAliasInfo);
+                portalSettings = new PortalSettings(tabId, objPortalAliasInfo);
             }
             catch (Exception)
             {
@@ -1783,9 +1792,7 @@ namespace WatchersNET.CKEditor.Browser
 
             var folderStart = startingFolderInfo.PhysicalPath;
 
-            folderStart =
-                folderStart.Substring(this._portalSettings.HomeDirectoryMapPath.Length).Replace(
-                    "\\", "/");
+            folderStart = folderStart.Substring(this._portalSettings.HomeDirectoryMapPath.Length).Replace("\\", "/");
 
             startingFolderInfo = FolderManager.Instance.AddFolder(this._portalSettings.PortalId, folderStart);
 
@@ -1812,7 +1819,8 @@ namespace WatchersNET.CKEditor.Browser
             {
                 var folderStart = userFolderPath;
 
-                folderStart = folderStart.Substring(this._portalSettings.HomeDirectoryMapPath.Length).Replace("\\", "/");
+                folderStart = folderStart.Substring(this._portalSettings.HomeDirectoryMapPath.Length)
+                    .Replace("\\", "/");
 
                 userFolderInfo = FolderManager.Instance.AddFolder(this._portalSettings.PortalId, folderStart);
 
@@ -1822,15 +1830,14 @@ namespace WatchersNET.CKEditor.Browser
             }
 
             // Create user folder based on the user id
-            userFolderPath = Path.Combine(
-                userFolderPath,
-                $"{UserController.Instance.GetCurrentUserInfo().UserID}\\");
+            userFolderPath = Path.Combine(userFolderPath, $"{UserController.Instance.GetCurrentUserInfo().UserID}\\");
 
             if (!Directory.Exists(userFolderPath))
             {
                 var folderStart = userFolderPath;
 
-                folderStart = folderStart.Substring(this._portalSettings.HomeDirectoryMapPath.Length).Replace("\\", "/");
+                folderStart = folderStart.Substring(this._portalSettings.HomeDirectoryMapPath.Length)
+                    .Replace("\\", "/");
 
                 userFolderInfo = FolderManager.Instance.AddFolder(this._portalSettings.PortalId, folderStart);
 
@@ -1917,32 +1924,32 @@ namespace WatchersNET.CKEditor.Browser
                 return null;
             }
 
-            var tnFolder = new TreeNode
-            {
-                Text = folderInfo.FolderName,
-                Value = folderInfo.PhysicalPath,
-                ImageUrl = "Images/folder.gif",
-                ToolTip = folderInfo.FolderID.ToString()
-            };
+            var folder = new TreeNode
+                               {
+                                   Text = folderInfo.FolderName,
+                                   Value = folderInfo.PhysicalPath,
+                                   ImageUrl = "Images/folder.gif",
+                                   ToolTip = folderInfo.FolderID.ToString()
+                               };
 
-            if (folderInfo.StorageLocation.Equals((int)FolderController.StorageLocationTypes.SecureFileSystem))
+            switch (folderInfo.StorageLocation)
             {
-                tnFolder.ImageUrl = "Images/folderLocked.gif";
-            }
-            else if (folderInfo.StorageLocation.Equals((int)FolderController.StorageLocationTypes.DatabaseSecure))
-            {
-                tnFolder.ImageUrl = "Images/folderdb.gif";
+                case (int)FolderController.StorageLocationTypes.SecureFileSystem:
+                    folder.ImageUrl = "Images/folderLocked.gif";
+                    break;
+                case (int)FolderController.StorageLocationTypes.DatabaseSecure:
+                    folder.ImageUrl = "Images/folderdb.gif";
+                    break;
             }
 
             var folders = FolderManager.Instance.GetFolders(folderInfo).ToList();
 
             if (!folders.Any())
             {
-                return tnFolder;
+                return folder;
             }
 
-            foreach (var node in
-                folders.Cast<FolderInfo>().Select(this.RenderFolder).Where(node => node != null))
+            foreach (var node in folders.Cast<FolderInfo>().Select(this.RenderFolder).Where(node => node != null))
             {
                 switch (this.GetStorageLocationType(Convert.ToInt32(node.ToolTip)))
                 {
@@ -1960,10 +1967,10 @@ namespace WatchersNET.CKEditor.Browser
                         break;
                 }
 
-                tnFolder.ChildNodes.Add(node);
+                folder.ChildNodes.Add(node);
             }
 
-            return tnFolder;
+            return folder;
         }
 
         /// <summary>
@@ -1977,9 +1984,16 @@ namespace WatchersNET.CKEditor.Browser
         /// </param>
         private void RenderTabLevels(TreeNode nodeParent, int parentTabId)
         {
-            foreach (var objTab in
-                TabController.GetPortalTabs(
-                    this._portalSettings.PortalId, -1, false, null, true, false, true, true, false))
+            foreach (var objTab in TabController.GetPortalTabs(
+                this._portalSettings.PortalId,
+                -1,
+                false,
+                null,
+                true,
+                false,
+                true,
+                true,
+                false))
             {
                 if (!objTab.ParentId.Equals(parentTabId))
                 {
@@ -2016,11 +2030,8 @@ namespace WatchersNET.CKEditor.Browser
         /// </summary>
         private void GetLanguageList()
         {
-            foreach (
-                var languageListItem in
-                    new LocaleController().GetLocales(this._portalSettings.PortalId)
-                                          .Values.Select(
-                                              language => new ListItem { Text = language.Text, Value = language.Code }))
+            foreach (var languageListItem in new LocaleController().GetLocales(this._portalSettings.PortalId).Values
+                .Select(language => new ListItem { Text = language.Text, Value = language.Code }))
             {
                 this.LanguageList.Items.Add(languageListItem);
             }
@@ -2038,7 +2049,9 @@ namespace WatchersNET.CKEditor.Browser
                 }
 
                 var currentTab = new TabController().GetTab(
-                    int.Parse(this.request.QueryString["tabid"]), this._portalSettings.PortalId, false);
+                    int.Parse(this.request.QueryString["tabid"]),
+                    this._portalSettings.PortalId,
+                    false);
 
                 if (currentTab == null || string.IsNullOrEmpty(currentTab.CultureCode))
                 {
@@ -2077,13 +2090,15 @@ namespace WatchersNET.CKEditor.Browser
         /// </param>
         private void ScrollToSelectedFile(string elementId)
         {
-            var sbScript1 = new StringBuilder();
+            var script1 = new StringBuilder();
 
-            sbScript1.AppendFormat("document.getElementById('{0}').scrollIntoView();", elementId);
+            script1.AppendFormat("document.getElementById('{0}').scrollIntoView();", elementId);
 
             this.Page.ClientScript.RegisterStartupScript(
                 this.GetType(),
-                $"ScrollToSelected{Guid.NewGuid()}", sbScript1.ToString(), true);
+                $"ScrollToSelected{Guid.NewGuid()}",
+                script1.ToString(),
+                true);
         }
 
         /// <summary>
@@ -2099,10 +2114,8 @@ namespace WatchersNET.CKEditor.Browser
         {
             var fileName = fileUrl.Substring(fileUrl.LastIndexOf("/", StringComparison.Ordinal) + 1);
 
-            if (fileName.StartsWith("LinkClick") ||
-                fileUrl.StartsWith("http:") ||
-                fileUrl.StartsWith("https:") ||
-                fileUrl.StartsWith("mailto:"))
+            if (fileName.StartsWith("LinkClick") || fileUrl.StartsWith("http:") || fileUrl.StartsWith("https:")
+                || fileUrl.StartsWith("mailto:"))
             {
                 ckFileUrl = null;
                 return false;
@@ -2120,13 +2133,13 @@ namespace WatchersNET.CKEditor.Browser
 
             var newDir = this.lblCurrentDir.Text;
 
-            var tnNewFolder = this.FoldersTree.FindNode(newDir);
+            var newFolder = this.FoldersTree.FindNode(newDir);
 
-            if (tnNewFolder != null)
+            if (newFolder != null)
             {
-                tnNewFolder.Selected = true;
-                tnNewFolder.Expand();
-                tnNewFolder.Expanded = true;
+                newFolder.Selected = true;
+                newFolder.Expand();
+                newFolder.Expanded = true;
             }
 
             this.ShowFilesIn(newDir);
@@ -2147,7 +2160,8 @@ namespace WatchersNET.CKEditor.Browser
 
             scriptSelected.Append("if (typeof(parentCKEDITOR) !== 'undefined') {");
             scriptSelected.AppendFormat(
-                "var selection = parentCKEDITOR.instances.{0}.getSelection(),", this.request.QueryString["CKEditor"]);
+                "var selection = parentCKEDITOR.instances.{0}.getSelection(),",
+                this.request.QueryString["CKEditor"]);
             scriptSelected.Append("element = selection.getStartElement();");
 
             scriptSelected.Append("if (element !== null) {");
@@ -2157,12 +2171,14 @@ namespace WatchersNET.CKEditor.Browser
 
             scriptSelected.Append("var imageUrl = element.getAttribute('src');");
 
-            scriptSelected.Append("if (element.getAttribute('src') && imageUrl.indexOf('LinkClick') == -1 && imageUrl.indexOf('http:') == -1 && imageUrl.indexOf('https:') == -1) {");
+            scriptSelected.Append(
+                "if (element.getAttribute('src') && imageUrl.indexOf('LinkClick') == -1 && imageUrl.indexOf('http:') == -1 && imageUrl.indexOf('https:') == -1) {");
             scriptSelected.Append(
                 "jQuery.PageMethod('Browser.aspx', 'SetFile', function(message){if (location.href.indexOf('reload')==-1) location.replace(location.href+'&reload=true');}, null, 'fileUrl', imageUrl);");
 
             scriptSelected.Append("} else {");
-            scriptSelected.Append("if (location.href.indexOf('reload')==-1) location.replace(location.href+'&reload=true');");
+            scriptSelected.Append(
+                "if (location.href.indexOf('reload')==-1) location.replace(location.href+'&reload=true');");
 
             scriptSelected.Append("} }");
             scriptSelected.Append("else if (element.getName() == 'a')");
@@ -2170,13 +2186,15 @@ namespace WatchersNET.CKEditor.Browser
 
             scriptSelected.Append("var fileUrl = element.getAttribute('href');");
 
-            scriptSelected.Append("if (element.getAttribute('href') && fileUrl.indexOf('LinkClick') == -1 && fileUrl.indexOf('http:') == -1 && fileUrl.indexOf('https:') == -1) {");
+            scriptSelected.Append(
+                "if (element.getAttribute('href') && fileUrl.indexOf('LinkClick') == -1 && fileUrl.indexOf('http:') == -1 && fileUrl.indexOf('https:') == -1) {");
 
             scriptSelected.Append(
                 "jQuery.PageMethod('Browser.aspx', 'SetFile', function(message){if (location.href.indexOf('reload')==-1) location.replace(location.href+'&reload=true');}, null, 'fileUrl', fileUrl);");
             scriptSelected.Append("} else {");
 
-            scriptSelected.Append("if (location.href.indexOf('reload')==-1) location.replace(location.href+'&reload=true');");
+            scriptSelected.Append(
+                "if (location.href.indexOf('reload')==-1) location.replace(location.href+'&reload=true');");
 
             scriptSelected.Append("} }");
 
@@ -2185,7 +2203,10 @@ namespace WatchersNET.CKEditor.Browser
             scriptSelected.Append("}");
 
             this.Page.ClientScript.RegisterStartupScript(
-                this.GetType(), "GetSelectedImageLink", scriptSelected.ToString(), true);
+                this.GetType(),
+                "GetSelectedImageLink",
+                scriptSelected.ToString(),
+                true);
         }
 
         /// <summary>
@@ -2194,13 +2215,25 @@ namespace WatchersNET.CKEditor.Browser
         private void SetLanguage()
         {
             // Buttons
-            this.cmdResizeCancel.Text = Localization.GetString("cmdResizeCancel.Text", this.ResXFile, this.LanguageCode);
+            this.cmdResizeCancel.Text = Localization.GetString(
+                "cmdResizeCancel.Text",
+                this.ResXFile,
+                this.LanguageCode);
             this.cmdResizeNow.Text = Localization.GetString("cmdResizeNow.Text", this.ResXFile, this.LanguageCode);
-            this.cmdUploadCancel.Text = Localization.GetString("cmdUploadCancel.Text", this.ResXFile, this.LanguageCode);
+            this.cmdUploadCancel.Text = Localization.GetString(
+                "cmdUploadCancel.Text",
+                this.ResXFile,
+                this.LanguageCode);
             this.cmdCancel.Text = Localization.GetString("cmdCancel.Text", this.ResXFile, this.LanguageCode);
             this.cmdClose.Text = Localization.GetString("cmdClose.Text", this.ResXFile, this.LanguageCode);
-            this.cmdCreateFolder.Text = Localization.GetString("cmdCreateFolder.Text", this.ResXFile, this.LanguageCode);
-            this.cmdCreateCancel.Text = Localization.GetString("cmdCreateCancel.Text", this.ResXFile, this.LanguageCode);
+            this.cmdCreateFolder.Text = Localization.GetString(
+                "cmdCreateFolder.Text",
+                this.ResXFile,
+                this.LanguageCode);
+            this.cmdCreateCancel.Text = Localization.GetString(
+                "cmdCreateCancel.Text",
+                this.ResXFile,
+                this.LanguageCode);
             this.cmdCrop.Text = Localization.GetString("cmdCrop.Text", this.ResXFile, this.LanguageCode);
             this.cmdZoom.Text = Localization.GetString("cmdZoom.Text", this.ResXFile, this.LanguageCode);
             this.cmdRotate.Text = Localization.GetString("cmdRotate.Text", this.ResXFile, this.LanguageCode);
@@ -2219,12 +2252,18 @@ namespace WatchersNET.CKEditor.Browser
             this.lblWidth.Text = Localization.GetString("lblWidth.Text", this.ResXFile, this.LanguageCode);
             this.lblThumbName.Text = Localization.GetString("lblThumbName.Text", this.ResXFile, this.LanguageCode);
             this.lblImgQuality.Text = Localization.GetString("lblImgQuality.Text", this.ResXFile, this.LanguageCode);
-            this.lblResizeHeader.Text = Localization.GetString("lblResizeHeader.Text", this.ResXFile, this.LanguageCode);
+            this.lblResizeHeader.Text = Localization.GetString(
+                "lblResizeHeader.Text",
+                this.ResXFile,
+                this.LanguageCode);
             this.lblOtherTools.Text = Localization.GetString("lblOtherTools.Text", this.ResXFile, this.LanguageCode);
             this.lblCropImageName.Text = Localization.GetString("lblThumbName.Text", this.ResXFile, this.LanguageCode);
             this.lblCropInfo.Text = Localization.GetString("lblCropInfo.Text", this.ResXFile, this.LanguageCode);
             this.lblShowPreview.Text = Localization.GetString("lblShowPreview.Text", this.ResXFile, this.LanguageCode);
-            this.lblClearPreview.Text = Localization.GetString("lblClearPreview.Text", this.ResXFile, this.LanguageCode);
+            this.lblClearPreview.Text = Localization.GetString(
+                "lblClearPreview.Text",
+                this.ResXFile,
+                this.LanguageCode);
             this.lblOriginal.Text = Localization.GetString("lblOriginal.Text", this.ResXFile, this.LanguageCode);
             this.lblPreview.Text = Localization.GetString("lblPreview.Text", this.ResXFile, this.LanguageCode);
             this.lblNewFoldName.Text = Localization.GetString("lblNewFoldName.Text", this.ResXFile, this.LanguageCode);
@@ -2234,14 +2273,19 @@ namespace WatchersNET.CKEditor.Browser
             this.AddFiles.Text = Localization.GetString("AddFiles.Text", this.ResXFile, this.LanguageCode);
             this.Wait.Text = Localization.GetString("Wait.Text", this.ResXFile, this.LanguageCode);
             this.WaitMessage.Text = Localization.GetString("WaitMessage.Text", this.ResXFile, this.LanguageCode);
-            this.ExtraTabOptions.Text = Localization.GetString("ExtraTabOptions.Text", this.ResXFile, this.LanguageCode);
-            this.LabelTabLanguage.Text = Localization.GetString("LabelTabLanguage.Text", this.ResXFile, this.LanguageCode);
+            this.ExtraTabOptions.Text = Localization.GetString(
+                "ExtraTabOptions.Text",
+                this.ResXFile,
+                this.LanguageCode);
+            this.LabelTabLanguage.Text = Localization.GetString(
+                "LabelTabLanguage.Text",
+                this.ResXFile,
+                this.LanguageCode);
 
-            this.MaximumUploadSizeInfo.Text =
-                string.Format(
-                    Localization.GetString("FileSizeRestriction", this.ResXFile, this.LanguageCode),
-                     this.MaxUploadSize / (1024 * 1024),
-                    this.AcceptFileTypes.Replace("|", ","));
+            this.MaximumUploadSizeInfo.Text = string.Format(
+                Localization.GetString("FileSizeRestriction", this.ResXFile, this.LanguageCode),
+                this.MaxUploadSize / (1024 * 1024),
+                this.AcceptFileTypes.Replace("|", ","));
 
             // RadioButtonList
             this.BrowserMode.Items[0].Text = Localization.GetString("FileLink.Text", this.ResXFile, this.LanguageCode);
@@ -2253,7 +2297,10 @@ namespace WatchersNET.CKEditor.Browser
 
             // CheckBoxes
             this.chkAspect.Text = Localization.GetString("chkAspect.Text", this.ResXFile, this.LanguageCode);
-            this.chkHumanFriendy.Text = Localization.GetString("chkHumanFriendy.Text", this.ResXFile, this.LanguageCode);
+            this.chkHumanFriendy.Text = Localization.GetString(
+                "chkHumanFriendy.Text",
+                this.ResXFile,
+                this.LanguageCode);
             this.TrackClicks.Text = Localization.GetString("TrackClicks.Text", this.ResXFile, this.LanguageCode);
             this.OverrideFile.Text = Localization.GetString("OverrideFile.Text", this.ResXFile, this.LanguageCode);
 
@@ -2290,21 +2337,30 @@ namespace WatchersNET.CKEditor.Browser
                 "DetailView",
                 Localization.GetString("DetailView.Text", this.ResXFile, this.LanguageCode),
                 Localization.GetString("DetailViewTitle.Text", this.ResXFile, this.LanguageCode));
-            this.SwitchDetailView.ToolTip = Localization.GetString("DetailViewTitle.Text", this.ResXFile, this.LanguageCode);
+            this.SwitchDetailView.ToolTip = Localization.GetString(
+                "DetailViewTitle.Text",
+                this.ResXFile,
+                this.LanguageCode);
 
             this.SwitchListView.Text = string.Format(
                 SwitchContent,
                 "ListView",
                 Localization.GetString("ListView.Text", this.ResXFile, this.LanguageCode),
                 Localization.GetString("ListViewTitle.Text", this.ResXFile, this.LanguageCode));
-            this.SwitchListView.ToolTip = Localization.GetString("ListViewTitle.Text", this.ResXFile, this.LanguageCode);
+            this.SwitchListView.ToolTip = Localization.GetString(
+                "ListViewTitle.Text",
+                this.ResXFile,
+                this.LanguageCode);
 
             this.SwitchIconsView.Text = string.Format(
                 SwitchContent,
                 "IconsView",
                 Localization.GetString("IconsView.Text", this.ResXFile, this.LanguageCode),
                 Localization.GetString("IconsViewTitle.Text", this.ResXFile, this.LanguageCode));
-            this.SwitchIconsView.ToolTip = Localization.GetString("IconsViewTitle.Text", this.ResXFile, this.LanguageCode);
+            this.SwitchIconsView.ToolTip = Localization.GetString(
+                "IconsViewTitle.Text",
+                this.ResXFile,
+                this.LanguageCode);
 
             this.SortAscending.Text =
                 $"<img src=\"Images/SortAscending.png\" alt=\"{Localization.GetString("SortAscending.Text", this.ResXFile, this.LanguageCode)}\" title=\"{Localization.GetString("SortAscending.Help", this.ResXFile, this.LanguageCode)}\" />";
@@ -2312,9 +2368,14 @@ namespace WatchersNET.CKEditor.Browser
 
             this.SortDescending.Text =
                 $"<img src=\"Images/SortDescending.png\" alt=\"{Localization.GetString("SortDescending.Text", this.ResXFile, this.LanguageCode)}\" title=\"{Localization.GetString("SortDescending.Help", this.ResXFile, this.LanguageCode)}\" />";
-            this.SortDescending.ToolTip = Localization.GetString("SortDescending.Help", this.ResXFile, this.LanguageCode);
+            this.SortDescending.ToolTip = Localization.GetString(
+                "SortDescending.Help",
+                this.ResXFile,
+                this.LanguageCode);
 
-            ClientAPI.AddButtonConfirm(this.cmdDelete, Localization.GetString("AreYouSure.Text", this.ResXFile, this.LanguageCode));
+            ClientAPI.AddButtonConfirm(
+                this.cmdDelete,
+                Localization.GetString("AreYouSure.Text", this.ResXFile, this.LanguageCode));
 
             this.SetDefaultLinkTypeText();
         }
@@ -2378,7 +2439,7 @@ namespace WatchersNET.CKEditor.Browser
             try
             {
                 this.SetDefaultLinkTypeText();
-                
+
                 // Enable Buttons
                 this.CheckFolderAccess(fileInfo.FolderId, true);
 
@@ -2573,16 +2634,18 @@ namespace WatchersNET.CKEditor.Browser
                 && file.ContentLength > this.currentSettings.UploadFileSizeLimit)
             {
                 var upload = new UploadImage
-                {
-                    uploaded = 0,
-                    fileName = string.Empty,
-                    url = string.Empty,
-                    error = new Error
-                    {
-                        message =
-                            Localization.GetString("FileToBigMessage.Text", this.ResXFile, this.LanguageCode)
-                    }
-                };
+                                 {
+                                     uploaded = 0,
+                                     fileName = string.Empty,
+                                     url = string.Empty,
+                                     error = new Error
+                                                 {
+                                                     message = Localization.GetString(
+                                                         "FileToBigMessage.Text",
+                                                         this.ResXFile,
+                                                         this.LanguageCode)
+                                                 }
+                                 };
 
                 this.Response.ContentType = "application/json";
                 this.Response.ContentEncoding = Encoding.UTF8;
@@ -2606,7 +2669,7 @@ namespace WatchersNET.CKEditor.Browser
 
             if (allowUpload)
             {
-                var sFileNameNoExt = Path.GetFileNameWithoutExtension(fileName);
+                var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
 
                 var counter = 0;
 
@@ -2628,14 +2691,14 @@ namespace WatchersNET.CKEditor.Browser
                     }
                 }
 
-                var sFilePath = Path.Combine(uploadPhysicalPath, fileName);
+                var filePath = Path.Combine(uploadPhysicalPath, fileName);
 
                 var imageResizer = new ImageResizer
-                {
-                    ImageQuality = this.currentSettings.Config.ResizeImageQuality,
-                    MaxHeight = this.currentSettings.Config.Resize_MaxHeight,
-                    MaxWidth = this.currentSettings.Config.Resize_MaxWidth
-                };
+                                       {
+                                           ImageQuality = this.currentSettings.Config.ResizeImageQuality,
+                                           MaxHeight = this.currentSettings.Config.Resize_MaxHeight,
+                                           MaxWidth = this.currentSettings.Config.Resize_MaxWidth
+                                       };
 
 
                 // Automatically Resize Image on Upload
@@ -2644,10 +2707,10 @@ namespace WatchersNET.CKEditor.Browser
                         ? imageResizer.Resize(file)
                         : file.InputStream;
 
-                if (File.Exists(sFilePath))
+                if (File.Exists(filePath))
                 {
                     counter++;
-                    fileName = $"{sFileNameNoExt}_{counter}{Path.GetExtension(file.FileName)}";
+                    fileName = $"{fileNameWithoutExtension}_{counter}{Path.GetExtension(file.FileName)}";
 
                     FileManager.Instance.AddFile(currentFolderInfo, fileName, fileStream);
                 }
@@ -2659,16 +2722,15 @@ namespace WatchersNET.CKEditor.Browser
                 var imageUrl = MapUrl(uploadPhysicalPath);
 
                 var upload = new UploadImage
-                {
-                    uploaded = 1,
-                    fileName = fileName,
-                    url = string.Format(!imageUrl.EndsWith("/") ? "{0}/{1}" : "{0}{1}", imageUrl, fileName),
-                    error = new Error
-                    {
-                        message =
-                            string.Empty
-                    }
-                };
+                                 {
+                                     uploaded = 1,
+                                     fileName = fileName,
+                                     url = string.Format(
+                                         !imageUrl.EndsWith("/") ? "{0}/{1}" : "{0}{1}",
+                                         imageUrl,
+                                         fileName),
+                                     error = new Error { message = string.Empty }
+                                 };
 
                 this.Response.ContentType = "application/json";
                 this.Response.ContentEncoding = Encoding.UTF8;
@@ -2682,16 +2744,18 @@ namespace WatchersNET.CKEditor.Browser
             else
             {
                 var upload = new UploadImage
-                {
-                    uploaded = 0,
-                    fileName = string.Empty,
-                    url = string.Empty,
-                    error = new Error
-                    {
-                        message =
-                            Localization.GetString("Error2.Text", this.ResXFile, this.LanguageCode)
-                    }
-                };
+                                 {
+                                     uploaded = 0,
+                                     fileName = string.Empty,
+                                     url = string.Empty,
+                                     error = new Error
+                                                 {
+                                                     message = Localization.GetString(
+                                                         "Error2.Text",
+                                                         this.ResXFile,
+                                                         this.LanguageCode)
+                                                 }
+                                 };
 
                 this.Response.ContentType = "application/json";
                 this.Response.ContentEncoding = Encoding.UTF8;
@@ -2788,9 +2852,9 @@ namespace WatchersNET.CKEditor.Browser
 
             if (allowUpl)
             {
-                var sFileNameNoExt = Path.GetFileNameWithoutExtension(fileName);
+                var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
 
-                var iCounter = 0;
+                var counter = 0;
 
                 var uploadPhysicalPath = this.StartingDir().PhysicalPath;
 
@@ -2810,7 +2874,7 @@ namespace WatchersNET.CKEditor.Browser
                     }
                 }
 
-                var sFilePath = Path.Combine(uploadPhysicalPath, fileName);
+                var filePath = Path.Combine(uploadPhysicalPath, fileName);
 
                 var imageResizer = new ImageResizer
                                        {
@@ -2826,10 +2890,10 @@ namespace WatchersNET.CKEditor.Browser
                         ? imageResizer.Resize(file)
                         : file.InputStream;
 
-                if (File.Exists(sFilePath))
+                if (File.Exists(filePath))
                 {
-                    iCounter++;
-                    fileName = $"{sFileNameNoExt}_{iCounter}{Path.GetExtension(file.FileName)}";
+                    counter++;
+                    fileName = $"{fileNameWithoutExtension}_{counter}{Path.GetExtension(file.FileName)}";
 
                     FileManager.Instance.AddFile(currentFolderInfo, fileName, fileStream);
                 }
@@ -2868,7 +2932,10 @@ namespace WatchersNET.CKEditor.Browser
         private void Cancel_Click(object sender, EventArgs e)
         {
             this.Page.ClientScript.RegisterStartupScript(
-                this.GetType(), "closeScript", "javascript:self.close();", true);
+                this.GetType(),
+                "closeScript",
+                "javascript:self.close();",
+                true);
         }
 
         /// <summary>
@@ -2907,7 +2974,8 @@ namespace WatchersNET.CKEditor.Browser
                 {
                     var folderPath = newDirPath;
 
-                    folderPath = folderPath.Substring(this._portalSettings.HomeDirectoryMapPath.Length).Replace("\\", "/");
+                    folderPath = folderPath.Substring(this._portalSettings.HomeDirectoryMapPath.Length)
+                        .Replace("\\", "/");
 
                     var storageLocation = (int)FolderController.StorageLocationTypes.InsecureFileSystem;
 
@@ -2953,9 +3021,8 @@ namespace WatchersNET.CKEditor.Browser
                 {
                     this.Response.Write("<script type=\"text/javascript\">");
 
-                    var message =
-                    exception.Message.Replace("'", string.Empty).Replace("\r\n", string.Empty).Replace(
-                        "\n", string.Empty).Replace("\r", string.Empty);
+                    var message = exception.Message.Replace("'", string.Empty).Replace("\r\n", string.Empty)
+                        .Replace("\n", string.Empty).Replace("\r", string.Empty);
 
                     this.Response.Write($"javascript:alert('{this.Context.Server.HtmlEncode(message)}');");
 
@@ -2967,12 +3034,12 @@ namespace WatchersNET.CKEditor.Browser
 
                     this.ShowFilesIn(newDirPath);
 
-                    var tnNewFolder = this.FoldersTree.FindNode(this.tbFolderName.Text);
+                    var newFolder = this.FoldersTree.FindNode(this.tbFolderName.Text);
 
-                    if (tnNewFolder != null)
+                    if (newFolder != null)
                     {
-                        tnNewFolder.Selected = true;
-                        tnNewFolder.Expand();
+                        newFolder.Selected = true;
+                        newFolder.Expand();
                     }
                 }
             }
@@ -3008,13 +3075,17 @@ namespace WatchersNET.CKEditor.Browser
             // Add new file to database
             var currentFolderInfo = Utility.ConvertFilePathToFolderInfo(this.lblCurrentDir.Text, this._portalSettings);
 
-            FolderManager.Instance.Synchronize(this._portalSettings.PortalId, currentFolderInfo.FolderPath, false, true);
+            FolderManager.Instance.Synchronize(
+                this._portalSettings.PortalId,
+                currentFolderInfo.FolderPath,
+                false,
+                true);
 
             this.ShowFilesIn(this.lblCurrentDir.Text);
 
-            var sExtension = Path.GetExtension(this.lblFileName.Text);
+            var extension = Path.GetExtension(this.lblFileName.Text);
 
-            this.GoToSelectedFile($"{this.txtCropImageName.Text}{sExtension}");
+            this.GoToSelectedFile($"{this.txtCropImageName.Text}{extension}");
         }
 
         /// <summary>
@@ -3153,7 +3224,11 @@ namespace WatchersNET.CKEditor.Browser
             // Add new file to database
             var currentFolderInfo = Utility.ConvertFilePathToFolderInfo(this.lblCurrentDir.Text, this._portalSettings);
 
-            FolderManager.Instance.Synchronize(this._portalSettings.PortalId, currentFolderInfo.FolderPath, false, true);
+            FolderManager.Instance.Synchronize(
+                this._portalSettings.PortalId,
+                currentFolderInfo.FolderPath,
+                false,
+                true);
 
             /*else if (OldImage.RawFormat.Equals(ImageFormat.Gif))
             {
@@ -3208,90 +3283,95 @@ namespace WatchersNET.CKEditor.Browser
             this.cmdZoom.Visible = false;
             this.cmdResize2.Visible = true;
 
-            this.lblResizeHeader.Text = Localization.GetString("lblResizeHeader2.Text", this.ResXFile, this.LanguageCode);
+            this.lblResizeHeader.Text = Localization.GetString(
+                "lblResizeHeader2.Text",
+                this.ResXFile,
+                this.LanguageCode);
             this.title.InnerText = $"{this.lblResizeHeader.Text} - WatchersNET.FileBrowser";
 
-            var sFilePath = Path.Combine(this.lblCurrentDir.Text, this.lblFileName.Text);
+            var filePath = Path.Combine(this.lblCurrentDir.Text, this.lblFileName.Text);
 
-            var sFileNameNoExt = Path.GetFileNameWithoutExtension(sFilePath);
+            var fileNameWithoutExtension = Path.GetFileNameWithoutExtension(filePath);
 
-            this.txtCropImageName.Text = $"{sFileNameNoExt}_Crop";
+            this.txtCropImageName.Text = $"{fileNameWithoutExtension}_Crop";
 
-            var fs = new FileStream(sFilePath, FileMode.Open, FileAccess.Read, FileShare.Read);
+            var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.Read);
 
             var image = Image.FromStream(fs);
 
-            var sbCropZoom = new StringBuilder();
+            var cropZoom = new StringBuilder();
 
-            sbCropZoom.Append("jQuery(document).ready(function () {");
+            cropZoom.Append("jQuery(document).ready(function () {");
 
-            sbCropZoom.Append("jQuery('#imgResized').hide();");
+            cropZoom.Append("jQuery('#imgResized').hide();");
 
-            sbCropZoom.Append("var cropzoom = jQuery('#ImageOriginal').cropzoom({");
-            sbCropZoom.Append("width: 400,");
-            sbCropZoom.Append("height: 300,");
-            sbCropZoom.Append("bgColor: '#CCC',");
-            sbCropZoom.Append("enableRotation: true,");
-            sbCropZoom.Append("enableZoom: true,");
+            cropZoom.Append("var cropzoom = jQuery('#ImageOriginal').cropzoom({");
+            cropZoom.Append("width: 400,");
+            cropZoom.Append("height: 300,");
+            cropZoom.Append("bgColor: '#CCC',");
+            cropZoom.Append("enableRotation: true,");
+            cropZoom.Append("enableZoom: true,");
 
-            sbCropZoom.Append("selector: {");
+            cropZoom.Append("selector: {");
 
-            sbCropZoom.Append("w:100,");
-            sbCropZoom.Append("h:80,");
-            sbCropZoom.Append("showPositionsOnDrag: true,");
-            sbCropZoom.Append("showDimetionsOnDrag: true,");
-            sbCropZoom.Append("bgInfoLayer: '#FFF',");
-            sbCropZoom.Append("infoFontSize: 10,");
-            sbCropZoom.Append("infoFontColor: 'blue',");
-            sbCropZoom.Append("showPositionsOnDrag: true,");
-            sbCropZoom.Append("showDimetionsOnDrag: true,");
-            sbCropZoom.Append("maxHeight: null,");
-            sbCropZoom.Append("maxWidth: null,");
-            sbCropZoom.Append("centered: true,");
-            sbCropZoom.Append("borderColor: 'blue',");
-            sbCropZoom.Append("borderColorHover: '#9eda29'");
+            cropZoom.Append("w:100,");
+            cropZoom.Append("h:80,");
+            cropZoom.Append("showPositionsOnDrag: true,");
+            cropZoom.Append("showDimetionsOnDrag: true,");
+            cropZoom.Append("bgInfoLayer: '#FFF',");
+            cropZoom.Append("infoFontSize: 10,");
+            cropZoom.Append("infoFontColor: 'blue',");
+            cropZoom.Append("showPositionsOnDrag: true,");
+            cropZoom.Append("showDimetionsOnDrag: true,");
+            cropZoom.Append("maxHeight: null,");
+            cropZoom.Append("maxWidth: null,");
+            cropZoom.Append("centered: true,");
+            cropZoom.Append("borderColor: 'blue',");
+            cropZoom.Append("borderColorHover: '#9eda29'");
 
-            sbCropZoom.Append("},");
+            cropZoom.Append("},");
 
-            sbCropZoom.Append("image: {");
-            sbCropZoom.AppendFormat("source: '{0}',", MapUrl(sFilePath));
-            sbCropZoom.AppendFormat("width: {0},", image.Width);
-            sbCropZoom.AppendFormat("height: {0},", image.Height);
-            sbCropZoom.Append("minZoom: 10,");
-            sbCropZoom.Append("maxZoom: 150");
-            sbCropZoom.Append("}");
-            sbCropZoom.Append("});");
+            cropZoom.Append("image: {");
+            cropZoom.AppendFormat("source: '{0}',", MapUrl(filePath));
+            cropZoom.AppendFormat("width: {0},", image.Width);
+            cropZoom.AppendFormat("height: {0},", image.Height);
+            cropZoom.Append("minZoom: 10,");
+            cropZoom.Append("maxZoom: 150");
+            cropZoom.Append("}");
+            cropZoom.Append("});");
 
             // Preview Button
-            sbCropZoom.Append("jQuery('#PreviewCrop').click(function () {");
+            cropZoom.Append("jQuery('#PreviewCrop').click(function () {");
 
-            sbCropZoom.Append("jQuery('#lblCropInfo').hide();");
-            sbCropZoom.Append(
+            cropZoom.Append("jQuery('#lblCropInfo').hide();");
+            cropZoom.Append(
                 "jQuery('#imgResized').attr('src', 'ProcessImage.ashx?' + cropzoom.PreviewParams()).show();");
 
-            sbCropZoom.Append("ResizeMe('#imgResized', 360, 300);");
+            cropZoom.Append("ResizeMe('#imgResized', 360, 300);");
 
-            sbCropZoom.Append("});");
+            cropZoom.Append("});");
 
             // Reset Button
-            sbCropZoom.Append("jQuery('#ClearCrop').click(function(){");
-            sbCropZoom.Append("jQuery('#imgResized').hide();");
-            sbCropZoom.Append("jQuery('#lblCropInfo').show();");
-            sbCropZoom.Append("cropzoom.restore();");
-            sbCropZoom.Append("});");
+            cropZoom.Append("jQuery('#ClearCrop').click(function(){");
+            cropZoom.Append("jQuery('#imgResized').hide();");
+            cropZoom.Append("jQuery('#lblCropInfo').show();");
+            cropZoom.Append("cropzoom.restore();");
+            cropZoom.Append("});");
 
             // Save Button
-            sbCropZoom.Append("jQuery('#CropNow').click(function(e) {");
-            sbCropZoom.Append("e.preventDefault();");
-            sbCropZoom.Append(
+            cropZoom.Append("jQuery('#CropNow').click(function(e) {");
+            cropZoom.Append("e.preventDefault();");
+            cropZoom.Append(
                 "cropzoom.send('ProcessImage.ashx', 'POST', { newFileName:  jQuery('#txtCropImageName').val(), saveFile: true }, function(){ javascript: __doPostBack('cmdCropNow', ''); });");
-            sbCropZoom.Append("});");
+            cropZoom.Append("});");
 
-            sbCropZoom.Append("});");
+            cropZoom.Append("});");
 
             this.Page.ClientScript.RegisterStartupScript(
                 this.GetType(),
-                $"CropZoomScript{Guid.NewGuid()}", sbCropZoom.ToString(), true);
+                $"CropZoomScript{Guid.NewGuid()}",
+                cropZoom.ToString(),
+                true);
         }
 
         /// <summary>
@@ -3315,11 +3395,9 @@ namespace WatchersNET.CKEditor.Browser
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void UploadNow_Click(object sender, EventArgs e)
         {
+            Thread.Sleep(1000);
             this.SyncCurrentFolder();
 
-            this.ShowFilesIn(this.lblCurrentDir.Text);
-
-            this.GoToSelectedFile(this.SelectedFile.Value);
             this.GoToSelectedFile(this.SelectedFile.Value);
 
             this.SelectedFile.Value = string.Empty;
@@ -3344,9 +3422,11 @@ namespace WatchersNET.CKEditor.Browser
             var tabController = new TabController();
 
             var selectTab = tabController.GetTab(
-                int.Parse(this.dnntreeTabs.SelectedValue), this._portalSettings.PortalId, true);
+                int.Parse(this.dnntreeTabs.SelectedValue),
+                this._portalSettings.PortalId,
+                true);
 
-            var sDomainName = $"http://{Globals.GetDomainName(this.Request, true)}";
+            var domainName = $"http://{Globals.GetDomainName(this.Request, true)}";
 
             // Add Language Parameter ?!
             var localeSelected = this.LanguageRow.Visible && this.LanguageList.SelectedIndex > 0;
@@ -3354,20 +3434,22 @@ namespace WatchersNET.CKEditor.Browser
             if (this.chkHumanFriendy.Checked)
             {
                 var fileName = localeSelected
-                                       ? Globals.FriendlyUrl(
-                                           selectTab,
-                                           $"{Globals.ApplicationURL(selectTab.TabID)}&language={this.LanguageList.SelectedValue}",
-                                           this._portalSettings)
-                                       : Globals.FriendlyUrl(
-                                           selectTab, Globals.ApplicationURL(selectTab.TabID), this._portalSettings);
+                                   ? Globals.FriendlyUrl(
+                                       selectTab,
+                                       $"{Globals.ApplicationURL(selectTab.TabID)}&language={this.LanguageList.SelectedValue}",
+                                       this._portalSettings)
+                                   : Globals.FriendlyUrl(
+                                       selectTab,
+                                       Globals.ApplicationURL(selectTab.TabID),
+                                       this._portalSettings);
 
                 // Relative Url
-                fileName = Globals.ResolveUrl(Regex.Replace(fileName, sDomainName, "~", RegexOptions.IgnoreCase));
+                fileName = Globals.ResolveUrl(Regex.Replace(fileName, domainName, "~", RegexOptions.IgnoreCase));
 
                 this.rblLinkType.Items[0].Text = Regex.Replace(
                     this.rblLinkType.Items[0].Text,
                     "/Images/MyImage.jpg",
-                    Globals.ResolveUrl(Regex.Replace(fileName, sDomainName, "~", RegexOptions.IgnoreCase)),
+                    Globals.ResolveUrl(Regex.Replace(fileName, domainName, "~", RegexOptions.IgnoreCase)),
                     RegexOptions.IgnoreCase);
 
                 // Absolute Url
@@ -3392,28 +3474,31 @@ namespace WatchersNET.CKEditor.Browser
                 this.rblLinkType.Items[1].Text = Regex.Replace(
                     this.rblLinkType.Items[1].Text,
                     "http://www.MyWebsite.com/Images/MyImage.jpg",
-                    string.Format("{2}/tabid/{0}/{1}Default.aspx", selectTab.TabID, locale, sDomainName),
+                    string.Format("{2}/tabid/{0}/{1}Default.aspx", selectTab.TabID, locale, domainName),
                     RegexOptions.IgnoreCase);
             }
 
             /////
             var secureLink = Globals.LinkClick(
-               selectTab.TabID.ToString(), int.Parse(this.request.QueryString["tabid"]), Null.NullInteger);
+                selectTab.TabID.ToString(),
+                int.Parse(this.request.QueryString["tabid"]),
+                Null.NullInteger);
 
             if (secureLink.Contains("&language"))
             {
-                secureLink = secureLink.Remove(secureLink.IndexOf("&language"));
+                secureLink = secureLink.Remove(secureLink.IndexOf("&language", StringComparison.Ordinal));
             }
 
-            this.rblLinkType.Items[2].Text =
-                this.rblLinkType.Items[2].Text.Replace(@"/LinkClick.aspx?fileticket=xyz", secureLink);
+            this.rblLinkType.Items[2].Text = this.rblLinkType.Items[2].Text.Replace(
+                @"/LinkClick.aspx?fileticket=xyz",
+                secureLink);
 
             var absoluteUrl =
                 $"{HttpContext.Current.Request.Url.Scheme}://{HttpContext.Current.Request.Url.Authority}{secureLink}";
 
-            this.rblLinkType.Items[3].Text =
-                this.rblLinkType.Items[3].Text.Replace(
-                    @"http://www.MyWebsite.com/LinkClick.aspx?fileticket=xyz", absoluteUrl);
+            this.rblLinkType.Items[3].Text = this.rblLinkType.Items[3].Text.Replace(
+                @"http://www.MyWebsite.com/LinkClick.aspx?fileticket=xyz",
+                absoluteUrl);
 
             if (this.currentSettings.UseAnchorSelector)
             {
@@ -3615,11 +3700,10 @@ namespace WatchersNET.CKEditor.Browser
                 usedSpace = $"{spaceUsedDouble:0.##}{suffix[index]}";
             }
 
-            this.FileSpaceUsedLabel.Text =
-                string.Format(
-                    Localization.GetString("SpaceUsed.Text", this.ResXFile, this.LanguageCode),
-                    usedSpace,
-                    spaceAvailable);
+            this.FileSpaceUsedLabel.Text = string.Format(
+                Localization.GetString("SpaceUsed.Text", this.ResXFile, this.LanguageCode),
+                usedSpace,
+                spaceAvailable);
         }
 
         /// <summary>
@@ -3650,9 +3734,16 @@ namespace WatchersNET.CKEditor.Browser
         {
             var currentFolderInfo = Utility.ConvertFilePathToFolderInfo(this.lblCurrentDir.Text, this._portalSettings);
 
-            FolderManager.Instance.Synchronize(this._portalSettings.PortalId, currentFolderInfo.FolderPath, false, true);
+            FolderManager.Instance.Synchronize(
+                this._portalSettings.PortalId,
+                currentFolderInfo.FolderPath,
+                false,
+                true);
+
+            // Reload Folder
+            this.ShowFilesIn(this.lblCurrentDir.Text);
         }
 
-#endregion
+        #endregion
     }
 }
