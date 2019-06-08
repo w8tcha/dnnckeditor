@@ -207,7 +207,8 @@
         encodedEmailLinkRegex = /^javascript:void\(location\.href='mailto:'\+String\.fromCharCode\(([^)]+)\)(?:\+'(.*)')?\)$/,
         functionCallProtectedEmailLinkRegex = /^javascript:([^(]+)\(([^)]+)\)$/,
         popupRegex = /\s*window.open\(\s*this\.href\s*,\s*(?:'([^']*)'|null)\s*,\s*'([^']*)'\s*\)\s*;\s*return\s*false;*\s*/,
-        popupFeaturesRegex = /(?:^|,)([^=]+)=(\d+|yes|no)/gi;
+        popupFeaturesRegex = /(?:^|,)([^=]+)=(\d+|yes|no)/gi,
+        telRegex = /^tel:(.*)$/;
 
     var advAttrNames = {
         id: 'advId',
@@ -443,7 +444,7 @@
             var href = (element && (element.data('cke-saved-href') || element.getAttribute('href'))) || '',
                 compiledProtectionFunction = editor.plugins.link.compiledProtectionFunction,
                 emailProtection = editor.config.emailProtection,
-                javascriptMatch, emailMatch, anchorMatch, urlMatch,
+                javascriptMatch, emailMatch, anchorMatch, urlMatch, telMatch,
                 retval = {};
 
             if ((javascriptMatch = href.match(javascriptProtocolRegex))) {
@@ -483,6 +484,10 @@
                     retval.type = 'anchor';
                     retval.anchor = {};
                     retval.anchor.name = retval.anchor.id = anchorMatch[1];
+                }
+                else if ((telMatch = href.match(telRegex))) {
+                    retval.type = 'tel';
+                    retval.tel = telMatch[1];
                 }
                 // Protected email link as encoded string.
                 else if ((emailMatch = href.match(emailRegex))) {
@@ -663,6 +668,9 @@
                 }
 
                 set['data-cke-saved-href'] = linkHref.join('');
+                    break;
+            case 'tel':
+                set['data-cke-saved-href'] = 'tel:' + data.tel;
                 break;
             }
 
@@ -861,7 +869,7 @@
             var editor = ev.editor;
             var linkTypeChanged = function() {
                 var dialog = this.getDialog();
-                var partIds = ['urlOptions', 'localPageOptions', 'anchorOptions', 'emailOptions'],
+                var partIds = ['urlOptions', 'localPageOptions', 'anchorOptions', 'emailOptions', 'telOptions'],
                     typeValue = this.getValue(),
                     uploadTab = dialog.definition.getContents('upload'),
                     uploadInitiallyHidden = uploadTab && uploadTab.hidden;
@@ -1016,7 +1024,8 @@
                 [urlTitle, 'url'],
                 [editor.lang.dnnpages.dnnpages, 'localPage'],
                 [editor.lang.link.toAnchor, 'anchor'],
-                [editor.lang.link.toEmail, 'email']
+                [editor.lang.link.toEmail, 'email'],
+                [editor.lang.link.toPhone, 'tel']
             ];
             linkType.onChange = linkTypeChanged;
             infoTab.add({
