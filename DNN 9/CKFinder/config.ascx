@@ -16,8 +16,8 @@
     /// <returns></returns>
     public override bool CheckAuthentication()
     {
-        return (this.Session["CKDNNIsAuthorized"] != null && (bool)this.Session["CKDNNIsAuthorized"] &&
-                HttpContext.Current.Request.IsAuthenticated);
+        return this.Session["CKDNNIsAuthorized"] != null && (bool)this.Session["CKDNNIsAuthorized"] &&
+               HttpContext.Current.Request.IsAuthenticated;
     }
 
     /// <summary>
@@ -229,7 +229,7 @@
         }
         catch (Exception)
         {
-            portalSettings = (PortalSettings)(HttpContext.Current.Items["PortalSettings"]);
+            portalSettings = (PortalSettings)HttpContext.Current.Items["PortalSettings"];
         }
 
         return portalSettings;

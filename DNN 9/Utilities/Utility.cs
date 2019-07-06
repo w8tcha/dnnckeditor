@@ -526,7 +526,7 @@ namespace WatchersNET.CKEditor.Utilities
                 {
                     var denyRole = role.Replace("!", string.Empty);
 
-                    if ((!context.Request.IsAuthenticated && denyRole.Equals(Globals.glbRoleUnauthUserName)) || denyRole.Equals(Globals.glbRoleAllUsersName) ||
+                    if (!context.Request.IsAuthenticated && denyRole.Equals(Globals.glbRoleUnauthUserName) || denyRole.Equals(Globals.glbRoleAllUsersName) ||
                         objUserInfo.IsInRole(denyRole))
                     {
                         break;

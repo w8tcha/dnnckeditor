@@ -287,9 +287,7 @@ namespace WatchersNET.CKEditor.Module
 
             this.pageType = typeof(Page);
 
-            var scriptHolder = this.Page.FindControl("SCRIPTS") as PlaceHolder;
-
-            if (scriptHolder != null)
+            if (this.Page.FindControl("SCRIPTS") is PlaceHolder scriptHolder)
             {
                 var jqueryScriptLink = new HtmlGenericControl("script");
 
@@ -308,17 +306,24 @@ namespace WatchersNET.CKEditor.Module
                 var jqueryUiScriptLink = new HtmlGenericControl("script");
 
                 jqueryUiScriptLink.Attributes["type"] = "text/javascript";
-                jqueryUiScriptLink.Attributes["src"] = "//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js";
+                jqueryUiScriptLink.Attributes["src"] =
+                    "//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js";
 
                 scriptHolder.Controls.Add(jqueryUiScriptLink);
             }
             else
             {
                 ScriptManager.RegisterClientScriptInclude(
-                    this, this.pageType, "jquery.Latest", "//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js");
+                    this,
+                    this.pageType,
+                    "jquery.Latest",
+                    "//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js");
 
                 ScriptManager.RegisterClientScriptInclude(
-                        this, this.pageType, "jquery.Migrate", "//code.jquery.com/jquery-migrate-1.0.0.js");
+                    this,
+                    this.pageType,
+                    "jquery.Migrate",
+                    "//code.jquery.com/jquery-migrate-1.0.0.js");
 
                 ScriptManager.RegisterClientScriptInclude(
                     this,
@@ -327,7 +332,7 @@ namespace WatchersNET.CKEditor.Module
                     "//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js");
             }
 
-           ScriptManager.RegisterClientScriptInclude(
+            ScriptManager.RegisterClientScriptInclude(
                 this,
                 this.pageType,
                 "jquery.notification",
@@ -409,7 +414,7 @@ namespace WatchersNET.CKEditor.Module
         private void RenderTabNode(
             TreeNode parentNode,
             TabInfo tabInfo,
-            ModuleController moduleController,
+            IModuleController moduleController,
             List<EditorHostSetting> editorHostSettings)
         {
             var tabKey = $"DNNCKT#{tabInfo.TabID}#";

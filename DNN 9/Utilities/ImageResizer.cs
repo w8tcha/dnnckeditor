@@ -64,10 +64,7 @@
         /// </value>
         public int ImageQuality
         {
-            get
-            {
-                return this.imageQuality;
-            }
+            get => this.imageQuality;
 
             set
             {

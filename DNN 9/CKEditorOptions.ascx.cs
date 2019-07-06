@@ -2647,7 +2647,7 @@ namespace WatchersNET.CKEditor
 
             var roles = this.chblBrowsGr.Items.Cast<ListItem>()
                 .Where(item => item.Selected)
-                .Aggregate(string.Empty, (current, item) => current + (item.Value + ";"));
+                .Aggregate(string.Empty, (current, item) => current + item.Value + ";");
 
             if (roles != string.Empty)
             {
@@ -3715,7 +3715,7 @@ namespace WatchersNET.CKEditor
 
             var browserRoles = this.chblBrowsGr.Items.Cast<ListItem>()
                 .Where(item => item.Selected)
-                .Aggregate(string.Empty, (current, item) => current + (item.Value + ";"));
+                .Aggregate(string.Empty, (current, item) => current + item.Value + ";");
 
             if (browserRoles != string.Empty)
             {

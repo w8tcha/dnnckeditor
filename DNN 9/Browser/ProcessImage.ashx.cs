@@ -129,7 +129,7 @@ namespace WatchersNET.CKEditor.Browser
             else
             {
                 srcX = 0;
-                dstX = imageX + ((imageW - width) / 2);
+                dstX = imageX + (imageW - width) / 2;
             }
 
             if (height > viewPortH)
@@ -140,7 +140,7 @@ namespace WatchersNET.CKEditor.Browser
             else
             {
                 srcY = 0;
-                dstY = imageY + ((imageH - height) / 2);
+                dstY = imageY + (imageH - height) / 2;
             }
 
             // Get Image viewed into the ViewPort

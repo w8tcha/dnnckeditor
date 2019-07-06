@@ -19,6 +19,9 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WatchersNET.CKEditor", "DNN 9\WatchersNET.CKEditor.csproj", "{C6FD76D7-A04A-4EA5-8E5C-6B62201B5F61}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "plugins", "plugins", "{0B74DC04-7B76-4530-9EE5-246B9FA6F962}"
+	ProjectSection(SolutionItems) = preProject
+		CKEditor\plugins\dnnpages\plugin.js = CKEditor\plugins\dnnpages\plugin.js
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "newsarticleslinks", "newsarticleslinks", "{EBAC1765-5BF2-4943-A79A-9CC27AAE09A1}"
 	ProjectSection(SolutionItems) = preProject

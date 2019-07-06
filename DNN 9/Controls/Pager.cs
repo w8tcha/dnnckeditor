@@ -237,7 +237,7 @@ namespace WatchersNET.CKEditor.Controls
             var lastColumn = new TableCell { CssClass = "PagerLastColumn" };
 
             // Next Page
-            if (this.CurrentPageIndex < (this.PageCount - 1))
+            if (this.CurrentPageIndex < this.PageCount - 1)
             {
                 var nextElement = new HtmlGenericControl("li");
 

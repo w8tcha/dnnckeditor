@@ -1251,10 +1251,10 @@ namespace WatchersNET.CKEditor.Browser
             var w = image.Width;
             var h = image.Height;
 
-            var longestDimension = (w > h) ? w : h;
-            var shortestDimension = (w < h) ? w : h;
+            var longestDimension = w > h ? w : h;
+            var shortestDimension = w < h ? w : h;
 
-            var factor = ((float)longestDimension) / shortestDimension;
+            var factor = (float)longestDimension / shortestDimension;
 
             double newWidth = 400;
             double newHeight = 300 / factor;
@@ -3688,7 +3688,7 @@ namespace WatchersNET.CKEditor.Browser
 
             if (spaceUsed > 1024)
             {
-                for (index = 0; (spaceUsed / 1024) > 0; index++, spaceUsed /= 1024)
+                for (index = 0; spaceUsed / 1024 > 0; index++, spaceUsed /= 1024)
                 {
                     spaceUsedDouble = spaceUsed / 1024.0;
                 }
